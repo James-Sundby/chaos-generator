@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
 
-    <main className="flex-1 justify-center items-center px-4">
+    <main className="flex flex-col flex-1 justify-center items-center px-4">
 
       <button
         onClick={fetchWarband}
