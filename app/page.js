@@ -8,24 +8,24 @@ export default function Home() {
   const [warbandName, setWarbandName] = useState("");
   const [pattern, setPattern] = useState("");
   const [slug, setSlug] = useState("");
-
+  const [loading, setLoading] = useState(false);
 
   const fetchWarband = async () => {
     try {
-      const res = await fetch(`/api/warband-generator?cb=${Date.now()}`, {
+      setLoading(true); // Set loading to true when fetching starts
+      const res = await fetch('/api/warband-generator', {
         method: 'GET',
-        headers: {
-          'Cache-Control': 'no-cache',
-        },
+        cache: 'no-store',
       });
       const data = await res.json();
       setWarbandName(data.warbandName);
       setColors(data.colors);
       setPattern(data.pattern);
       setSlug(data.slug);
-      console.log(data.warbandName, data.colors, data.pattern, data.slug);
     } catch (error) {
       console.error("Failed to fetch Warband data:", error);
+    } finally {
+      setLoading(false); // Set loading to false once fetching is complete
     }
   };
 
@@ -36,8 +36,9 @@ export default function Home() {
       <button
         onClick={fetchWarband}
         className="px-6 py-2 btn btn-primary mb-7"
+        disabled={loading}
       >
-        Get Warband
+        {loading ? "Loading..." : "Get Warband"}
       </button>
 
       {warbandName && (
