@@ -46,6 +46,10 @@ const adjectives = [
     "Insidious", "Malevolent", "Broken", "Spectral", "Grim", "Bleeding"
 ];
 
+const patterns = [
+    "/Arms.png", "/Centered.png", "/Full.png", "/Horizontal.png", "/Quartered.png", "/Vertical.png"
+]
+
 function generateWarbandName() {
     const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
 
@@ -64,18 +68,6 @@ function generateWarbandName() {
 
     ];
 
-    //     [Warrior Term] of[Dark Entity]	                        Blades of Oblivion
-    //     [Chaotic Descriptor][Warrior Term]	                    Crimson Reavers
-    //     [Abstract Noun][Warrior Term]	                        Carnage Knights
-    //     [Adjective][Warrior Term]of[Dark Entity]	                Shattered Sons of Pox
-    //     [Abstract Noun]of[Dark Entity or Chaotic Descriptor]	    Hunger of the Abyss
-    //     The[Adjective][Warrior Term]	                            The Twisted Hunters
-    //     Children of[Chaotic Descriptor]	                        Children of Shadows
-    //     [Adjective][Warrior Term]of[Abstract Noun]	            Forsaken Blades of Pain
-    //     The[Chaotic Descriptor][Warrior Term]                    The Blighted Legion
-    //     The [Warrior Term] of [Chaotic Descriptor]               The Claws of Shadow
-    //     [Dark Entity] [Warrior Term]                             Abyss Hunters
-
     return randomElement(formulas)();
 }
 
@@ -86,13 +78,34 @@ function generateRandomColors() {
     });
 }
 
+function generateRandomPattern() {
+    const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
+    return `${randomElement(patterns)}`
+}
+
+function generateSlug(name, colors, pattern) {
+    const nameSlug = name
+        .toLowerCase()
+        .replace(/[^a-z0-9 ]/g, "") // Remove special characters
+        .replace(/\s+/g, "-") // Replace spaces with hyphens
+        .trim();
+
+    const colorSlug = colors.map(color => color.replace("#", "")).join("-");
+    const patternSlug = pattern.split("/").pop().split(".")[0].toLowerCase();
+
+    return `${nameSlug}-${colorSlug}-${patternSlug}`;
+}
+
 export async function GET() {
     try {
         const warbandName = generateWarbandName();
         const colors = generateRandomColors();
+        const pattern = generateRandomPattern();
+
+        const slug = generateSlug(warbandName, colors, pattern);
 
         return new Response(
-            JSON.stringify({ warbandName, colors }),
+            JSON.stringify({ warbandName, colors, pattern, slug }),
             {
                 status: 200,
                 headers: { 'Content-Type': 'application/json' },

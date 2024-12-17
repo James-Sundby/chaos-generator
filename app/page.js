@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import TradingCard from "./components/trading-card";
 
 export default function Home() {
   const [colors, setColors] = useState([]);
   const [warbandName, setWarbandName] = useState("");
+  const [pattern, setPattern] = useState("");
+  const [slug, setSlug] = useState("");
 
 
   const fetchWarband = async () => {
@@ -14,7 +17,9 @@ export default function Home() {
       console.log(data.warbandName, data.colors);
       setWarbandName(data.warbandName);
       setColors(data.colors);
-      console.log(data.warbandName, data.colors);
+      setPattern(data.pattern);
+      setSlug(data.slug);
+      console.log(data.warbandName, data.colors, data.pattern, data.slug);
     } catch (error) {
       console.error("Failed to fetch Warband data:", error);
     }
@@ -22,25 +27,23 @@ export default function Home() {
 
   return (
 
-    <main className="flex-1 justify-center items-center">
+    <main className="flex-1 justify-center items-center px-4">
+
       <button
         onClick={fetchWarband}
-        className="px-6 py-2 btn btn-primary"
+        className="px-6 py-2 btn btn-primary mb-7"
       >
         Get Warband
       </button>
-      <p>{warbandName}</p>
-      <div className="mt-8 join join-vertical lg:join-horizontal">
-        {colors.map((color, index) => (
-          <div
-            key={index}
-            className="lg:w-96 lg:h-96 join-item"
-            style={{ backgroundColor: color }}
-          >
-            <p className="text-center mt-12 text-white">{color}</p>
-          </div>
-        ))}
-      </div>
+
+      {warbandName && (
+        <TradingCard
+          warbandName={warbandName}
+          pattern={pattern}
+          colors={colors}
+          slug={slug}
+        />
+      )}
     </main>
 
   );
