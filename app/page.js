@@ -12,7 +12,12 @@ export default function Home() {
 
   const fetchWarband = async () => {
     try {
-      const res = await fetch('/api/warband-generator');
+      const res = await fetch('/api/warband-generator', {
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      });
       const data = await res.json();
       console.log(data.warbandName, data.colors);
       setWarbandName(data.warbandName);
