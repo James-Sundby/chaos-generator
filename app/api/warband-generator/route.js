@@ -110,6 +110,8 @@ export async function GET() {
                 headers: {
                     'Content-Type': 'application/json',
                     'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+                    'CDN-Cache-Control': 'no-store',
+                    'Vercel-CDN-Cache-Control': 'no-store',
                     'Pragma': 'no-cache',
                     'Expires': '0',
                 },
