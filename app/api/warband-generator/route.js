@@ -88,10 +88,9 @@ function generateRandomPattern() {
 function generateSlug(name, colors, pattern) {
     const nameSlug = name
         .toLowerCase()
-        .replace(/[^a-z0-9 ]/g, "") // Remove special characters
-        .replace(/\s+/g, "-") // Replace spaces with hyphens
+        .replace(/[^a-z0-9 ]/g, "")
+        .replace(/\s+/g, "-")
         .trim();
-
     const colorSlug = colors.map(color => color.replace("#", "")).join("-");
     const patternSlug = pattern.split("/").pop().split(".")[0].toLowerCase();
 
