@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives } from "@/lib/chaosData";
-import { colorList } from "@/lib/colours";
+import { colorList } from "@/lib/colors";
 import { patterns } from "@/lib/armourPatterns";
 
 function generateWarbandName() {
@@ -23,13 +23,6 @@ function generateWarbandName() {
     return randomElement(formulas)();
 }
 
-// function generateRandomColors() {
-//     return Array(3).fill().map(() => {
-//         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-//         return `#${randomColor.padStart(6, '0')}`;
-//     });
-// }
-
 function generateRandomColors() {
     const selectedColors = [];
     const usedIndices = new Set();
@@ -42,7 +35,7 @@ function generateRandomColors() {
         }
     }
 
-    return selectedColors; // Returns the full color object
+    return selectedColors;
 }
 
 function generateRandomPattern() {
