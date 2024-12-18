@@ -4,7 +4,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col flex-1 justify-center items-center px-4">
-      <WarbandButton className="" />
+      <WarbandButton message="Generate a New Warband" />
     </main>
   );
 }

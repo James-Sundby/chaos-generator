@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function WarbandButton({ className }) {
+export default function WarbandButton({ message }) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
@@ -27,10 +27,10 @@ export default function WarbandButton({ className }) {
     return (
         <button
             onClick={generateWarband}
-            className={`px-6 py-2 btn btn-primary ${className}`}
+            className={`px-6 py-2 btn btn-primary`}
             disabled={loading}
         >
-            {loading ? "Loading..." : "Generate a New Warband"}
+            {loading ? "Loading..." : `${message}`}
         </button>
     );
 }

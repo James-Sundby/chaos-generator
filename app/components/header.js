@@ -14,7 +14,7 @@ export default function Header() {
         <Link href="/" className="btn btn-ghost text-xl font-bold">Warband Generator</Link>
       </div>
       <div className="flex-none">
-        {pathname !== "/" && <WarbandButton className="btn-secondary" />}
+        {pathname !== "/" && <WarbandButton message="Re-roll" />}
       </div>
     </header>
   </>
