@@ -30,10 +30,12 @@ export function parseSlug(slug) {
 
     const name = slugParts.join(" ").replace(/-/g, " ");
     const warbandName = capitalizeName(name);
+    const capitalizedPattern = capitalizeName(pattern)
 
     return {
         warbandName,
         patternSrc,
         namedColors,
+        capitalizedPattern
     };
 }

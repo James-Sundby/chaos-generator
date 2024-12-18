@@ -3,7 +3,7 @@ import TradingCard from "@/app/components/trading-card.js";
 
 export default function WarbandPage({ params }) {
     const { slug } = params;
-    const { warbandName, patternSrc, namedColors } = parseSlug(slug);
+    const { warbandName, patternSrc, namedColors, capitalizedPattern } = parseSlug(slug);
 
     return (
         <div className="flex flex-1 justify-center mt-4">
@@ -12,6 +12,7 @@ export default function WarbandPage({ params }) {
                 patternSrc={patternSrc}
                 namedColors={namedColors}
                 slug={slug}
+                patternName={capitalizedPattern}
             />
         </div>
     );
