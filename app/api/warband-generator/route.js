@@ -50,7 +50,8 @@ function generateSlug(name, colors, pattern) {
         .replace(/\s+/g, "-")
         .trim();
     const colorSlug = colors.map(color => color.replace("#", "")).join("-");
-    const patternSlug = pattern.split("/").pop().split(".")[0].toLowerCase();
+    // const patternSlug = pattern.split("/").pop().split(".")[0].toLowerCase();
+    const patternSlug = pattern.toLowerCase();
 
     return `${nameSlug}-${colorSlug}-${patternSlug}`;
 }

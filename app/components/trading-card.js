@@ -1,8 +1,23 @@
-import ArmsTest from "./model/arms2";
+import Arms from "./model/arms";
+import Shoulders from "./model/shoulders";
+import Legs from "./model/legs";
+import Centered from "./model/centered";
 
 export default function TradingCard({ warbandName, patternSrc, namedColors, slug, patternName }) {
-    console.log(namedColors);
-    console.log(namedColors[0].hex);
+
+    function ImageDisplay(patternName) {
+        if (patternName === "Arms") {
+            return <Arms color1={namedColors[0].hex} color2={namedColors[1].hex} />;
+        } else if (patternName === "Shoulders") {
+            return <Shoulders color1={namedColors[0].hex} color2={namedColors[1].hex} />;
+        } else if (patternName === "Legs") {
+            return <Legs color1={namedColors[0].hex} color2={namedColors[1].hex} />;
+        } else if (patternName === "Centered") {
+            return <Centered color1={namedColors[0].hex} color2={namedColors[1].hex} />;
+        } else {
+            return null; // Return null if no valid patternName is provided
+        }
+    }
 
     return (
         <div id="trading-card" className="card bg-yellow-600 text-primary-content w-full max-w-96 h-fit">
@@ -11,9 +26,8 @@ export default function TradingCard({ warbandName, patternSrc, namedColors, slug
                 <h2 className="card-title">{warbandName}</h2>
                 <div className="flex flex-row gap-2">
                     <div >
-                        <ArmsTest color1={namedColors[0].hex} color2={namedColors[1].hex} />
+                        {ImageDisplay(patternName)}
                     </div>
-
                     <div className="flex-1 join join-vertical">
                         {namedColors.map((color, index) => (
                             <div
