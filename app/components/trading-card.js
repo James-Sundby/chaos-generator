@@ -1,6 +1,4 @@
-import Image from "next/image";
-import ArmsTest from "./model/arms";
-;
+import ArmsTest from "./model/arms2";
 
 export default function TradingCard({ warbandName, patternSrc, namedColors, slug, patternName }) {
     console.log(namedColors);
