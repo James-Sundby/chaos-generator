@@ -18,10 +18,10 @@ export function parseSlug(slug) {
     const pattern = slugParts.pop();
     const patternSrc = `/${pattern}.png`;
 
-    const colorHex3 = `#${slugParts.pop()}`;
+    // const colorHex3 = `#${slugParts.pop()}`;
     const colorHex2 = `#${slugParts.pop()}`;
     const colorHex1 = `#${slugParts.pop()}`;
-    const colors = [colorHex1, colorHex2, colorHex3];
+    const colors = [colorHex1, colorHex2];
 
     const namedColors = colors.map((hex) => {
         const color = colorList.find((c) => c.hex.toLowerCase() === hex.toLowerCase());

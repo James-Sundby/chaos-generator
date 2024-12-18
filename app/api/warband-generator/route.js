@@ -27,7 +27,7 @@ function generateRandomColors() {
     const selectedColors = [];
     const usedIndices = new Set();
 
-    while (selectedColors.length < 3) {
+    while (selectedColors.length < 2) {
         const randomIndex = Math.floor(Math.random() * colorList.length);
         if (!usedIndices.has(randomIndex)) {
             selectedColors.push(colorList[randomIndex].hex);
