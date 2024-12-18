@@ -6,7 +6,7 @@ export default function WarbandPage({ params }) {
     const { warbandName, patternSrc, namedColors } = parseSlug(slug);
 
     return (
-        <div className="flex flex-1 justify-center">
+        <div className="flex flex-1 justify-center mt-4">
             <TradingCard
                 warbandName={warbandName}
                 patternSrc={patternSrc}

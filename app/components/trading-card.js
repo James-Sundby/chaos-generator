@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function TradingCard({ warbandName, patternSrc, namedColors, slug }) {
     return (
-        <div id="trading-card" className="card bg-yellow-600 text-primary-content w-full max-w-96 my-auto">
+        <div id="trading-card" className="card bg-yellow-600 text-primary-content w-full max-w-96 h-fit">
             <div className="card-body p-2 m-2 bg-white rounded-lg">
                 <h2 className="card-title">{warbandName}</h2>
                 <div className="flex flex-row gap-2">
