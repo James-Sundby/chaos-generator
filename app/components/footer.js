@@ -18,7 +18,7 @@ export default function Footer() {
         </svg>
       </Link> */}
       <div>
-        <Link href="https://www.deviantart.com/40kresources" target="_blank"> Based on line art by{" "}<span className="underline">40kResources</span> </Link>
+        <p>Based on line art by{" "}<Link className="underline" href="https://www.deviantart.com/40kresources" target="_blank">40kResources</Link>{" "}under{" "}<Link className="underline" href="https://creativecommons.org/licenses/by/3.0/ " target="_blank">CC 3.0</Link></p>
       </div>
     </footer>
   );
