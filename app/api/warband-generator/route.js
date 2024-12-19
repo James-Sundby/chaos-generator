@@ -1,40 +1,41 @@
 export const dynamic = 'force-dynamic';
 
-import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives } from "@/lib/chaosData";
+// import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives } from "@/lib/chaosData";
 import { colorList } from "@/lib/colors";
 import { patterns } from "@/lib/armourPatterns";
-// import { honorableAdjectives, virtues, warriorTerms, placesOrEntities, adjectives } from "@/lib/loyalData";
-
-function generateWarbandName() {
-    const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
-    const formulas = [
-        () => `${randomElement(warriorTerms)} of ${randomElement(darkEntities)}`,
-        () => `${randomElement(chaoticDescriptors)} ${randomElement(warriorTerms)}`,
-        () => `${randomElement(abstractNouns)} ${randomElement(warriorTerms)}`,
-        () => `${randomElement(adjectives)} ${randomElement(warriorTerms)} of ${randomElement(darkEntities)}`,
-        () => `${randomElement(abstractNouns)} of ${randomElement([...darkEntities, ...chaoticDescriptors])}`,
-        () => `The ${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
-        () => `Children of ${randomElement(chaoticDescriptors)}`,
-        () => `${randomElement(adjectives)} ${randomElement(warriorTerms)} of ${randomElement(abstractNouns)}`,
-        () => `The ${randomElement(chaoticDescriptors)} ${randomElement(warriorTerms)}`,
-        () => `The ${randomElement(warriorTerms)} of ${randomElement(chaoticDescriptors)}`,
-        () => `${randomElement(darkEntities)} ${randomElement(warriorTerms)}`
-
-    ];
-    return randomElement(formulas)();
-}
+import { virtues, warriorTerms, placesOrEntities, adjectives, animals } from "@/lib/loyalData";
 
 // function generateWarbandName() {
 //     const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
 //     const formulas = [
-//         () => `${randomElement(honorableAdjectives)} ${randomElement(warriorTerms)}`,
-//         () => `${randomElement(virtues)} ${randomElement(warriorTerms)}`,
-//         () => `${randomElement(warriorTerms)} of ${randomElement(placesOrEntities)}`,
-//         () => `The ${randomElement(honorableAdjectives)} ${randomElement(warriorTerms)}`,
-//         () => `${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
+//         () => `${randomElement(warriorTerms)} of ${randomElement(darkEntities)}`,
+//         () => `${randomElement(chaoticDescriptors)} ${randomElement(warriorTerms)}`,
+//         () => `${randomElement(abstractNouns)} ${randomElement(warriorTerms)}`,
+//         () => `${randomElement(adjectives)} ${randomElement(warriorTerms)} of ${randomElement(darkEntities)}`,
+//         () => `${randomElement(abstractNouns)} of ${randomElement([...darkEntities, ...chaoticDescriptors])}`,
+//         () => `The ${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
+//         () => `Children of ${randomElement(chaoticDescriptors)}`,
+//         () => `${randomElement(adjectives)} ${randomElement(warriorTerms)} of ${randomElement(abstractNouns)}`,
+//         () => `The ${randomElement(chaoticDescriptors)} ${randomElement(warriorTerms)}`,
+//         () => `The ${randomElement(warriorTerms)} of ${randomElement(chaoticDescriptors)}`,
+//         () => `${randomElement(darkEntities)} ${randomElement(warriorTerms)}`
+
 //     ];
 //     return randomElement(formulas)();
 // }
+
+function generateWarbandName() {
+    const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
+    const formulas = [
+        () => `${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
+        () => `${randomElement(warriorTerms)} of ${randomElement(virtues)} `,
+        () => `${randomElement(warriorTerms)} of ${randomElement(placesOrEntities)}`,
+        () => `The ${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
+        () => `${randomElement(adjectives)} ${randomElement(animals)}`,
+        () => `${randomElement(animals)} of ${randomElement(placesOrEntities)}`,
+    ];
+    return randomElement(formulas)();
+}
 
 function generateRandomColors() {
     const selectedColors = [];
