@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives } from "@/lib/chaosData";
 import { colorList } from "@/lib/colors";
 import { patterns } from "@/lib/armourPatterns";
+// import { honorableAdjectives, virtues, warriorTerms, placesOrEntities, adjectives } from "@/lib/loyalData";
 
 function generateWarbandName() {
     const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
@@ -22,6 +23,18 @@ function generateWarbandName() {
     ];
     return randomElement(formulas)();
 }
+
+// function generateWarbandName() {
+//     const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
+//     const formulas = [
+//         () => `${randomElement(honorableAdjectives)} ${randomElement(warriorTerms)}`,
+//         () => `${randomElement(virtues)} ${randomElement(warriorTerms)}`,
+//         () => `${randomElement(warriorTerms)} of ${randomElement(placesOrEntities)}`,
+//         () => `The ${randomElement(honorableAdjectives)} ${randomElement(warriorTerms)}`,
+//         () => `${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
+//     ];
+//     return randomElement(formulas)();
+// }
 
 function generateRandomColors() {
     const selectedColors = [];
