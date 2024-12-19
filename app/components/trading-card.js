@@ -4,6 +4,9 @@ import Legs from "./model/legs";
 import Centered from "./model/centered";
 import Half from "./model/half";
 import Quarter from "./model/quarter";
+import Crusader from "./model/crusader";
+import Talons from "./model/talons";
+import Disciple from "./model/disciple";
 
 export default function TradingCard({ warbandName, patternSrc, namedColors, slug, patternName }) {
 
@@ -20,6 +23,12 @@ export default function TradingCard({ warbandName, patternSrc, namedColors, slug
             return <Half color1={namedColors[0].hex} color2={namedColors[1].hex} />;
         } else if (patternName === "Quarter") {
             return <Quarter color1={namedColors[0].hex} color2={namedColors[1].hex} />;
+        } else if (patternName === "Crusader") {
+            return <Crusader color1={namedColors[0].hex} color2={namedColors[1].hex} />;
+        } else if (patternName === "Disciple") {
+            return <Disciple color1={namedColors[0].hex} color2={namedColors[1].hex} />;
+        } else if (patternName === "Talons") {
+            return <Talons color1={namedColors[0].hex} color2={namedColors[1].hex} />;
         } else {
             return null;
         }
