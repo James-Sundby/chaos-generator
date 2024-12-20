@@ -10,15 +10,15 @@ export default function WarbandButton({ message }) {
     const generateWarband = async () => {
         try {
             setLoading(true);
-            const res = await fetch("/api/warband-generator", {
+            const res = await fetch("/api/chapter-generator", {
                 method: "GET",
                 cache: "no-store",
             });
             const data = await res.json();
             const { slug } = data;
-            router.push(`/warband/${slug}`);
+            router.push(`/chapter/${slug}`);
         } catch (error) {
-            console.error("Failed to fetch Warband data:", error);
+            console.error("Failed to fetch Chapter data:", error);
         } finally {
             setLoading(false);
         }

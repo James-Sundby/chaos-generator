@@ -5,7 +5,7 @@ import { patterns } from "@/lib/armourPatterns";
 import { virtues, warriorTerms, placesOrEntities, adjectives, animals } from "@/lib/loyalData";
 import { metals } from "@/lib/metals";
 
-function generateWarbandName() {
+function generateChapterName() {
     const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
     const formulas = [
         () => `${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
@@ -58,7 +58,7 @@ function generateSlug(name, colors, pattern, metal) {
 
 export async function GET() {
     try {
-        const warbandName = generateWarbandName();
+        const warbandName = generateChapterName();
         const colors = generateRandomColors();
         const pattern = generateRandomPattern();
         const metal = generateRandomMetal();
@@ -77,7 +77,7 @@ export async function GET() {
             }
         );
     } catch (error) {
-        console.error("Error generating Warband data:", error);
+        console.error("Error generating Chapter data:", error);
         return new Response(
             JSON.stringify({ error: "Internal Server Error" }),
             { status: 500, headers: { 'Content-Type': 'application/json' } }
