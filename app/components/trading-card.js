@@ -12,7 +12,7 @@ import Blazoned from "./models/blazoned";
 import Eradicant from "./models/eradicant";
 import Scythes from "./models/scythes";
 
-export default function TradingCard({ warbandName, patternSrc, namedColors, slug, patternName }) {
+export default function TradingCard({ warbandName, namedColors, slug, patternName, metal }) {
 
     function ImageDisplay(patternName) {
         const components = {
@@ -32,7 +32,12 @@ export default function TradingCard({ warbandName, patternSrc, namedColors, slug
         };
 
         const Component = components[patternName];
-        return Component ? <Component color1={namedColors[0].hex} color2={namedColors[1].hex} /> : null;
+        return Component ?
+            <Component
+                color1={namedColors[0].hex}
+                color2={namedColors[1].hex}
+                metals={[metal.hex1, metal.hex2, metal.hex3]}
+            /> : null;
     }
 
     return (
@@ -54,6 +59,7 @@ export default function TradingCard({ warbandName, patternSrc, namedColors, slug
                     ))}
                 </div>
                 <p className="text-sm">Colors: <span className="font-bold">{namedColors[0].name}, {namedColors[1].name}</span></p>
+                <p className="text-sm">Metal: <span className="font-bold">{metal.name}</span></p>
                 <div className=" justify-end text-xs">
                     <p>{slug}</p>
                 </div>

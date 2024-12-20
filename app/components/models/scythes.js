@@ -1,4 +1,4 @@
-export default function Crusader({ color1, color2 }) {
+export default function Scythes({ color1, color2 }) {
     return (
         <svg
             width="100%"

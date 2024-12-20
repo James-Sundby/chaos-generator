@@ -1,4 +1,5 @@
 import { colorList } from "@/lib/colors";
+import { metals } from "@/lib/metals";
 
 export function capitalizeName(name) {
     const smallWords = ["of", "the"];
@@ -15,8 +16,16 @@ export function capitalizeName(name) {
 
 export function parseSlug(slug) {
     const slugParts = slug.split("-");
+    const metalCode = slugParts.pop();
+
+    const metal = metals.find(m => m.code.toLowerCase() === metalCode.toLowerCase()) || {
+        name: "Unknown",
+        hex1: "#000000",
+        hex2: "#000000",
+        hex3: "#000000",
+    };
+
     const pattern = slugParts.pop();
-    const patternSrc = `/${pattern}.png`;
 
     // const colorHex3 = `#${slugParts.pop()}`;
     const colorHex2 = `#${slugParts.pop()}`;
@@ -34,8 +43,8 @@ export function parseSlug(slug) {
 
     return {
         warbandName,
-        patternSrc,
         namedColors,
-        capitalizedPattern
+        capitalizedPattern,
+        metal,
     };
 }

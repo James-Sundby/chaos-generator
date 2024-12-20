@@ -1,28 +1,9 @@
 export const dynamic = 'force-dynamic';
 
-// import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives } from "@/lib/chaosData";
 import { colorList } from "@/lib/colors";
 import { patterns } from "@/lib/armourPatterns";
 import { virtues, warriorTerms, placesOrEntities, adjectives, animals } from "@/lib/loyalData";
-
-// function generateWarbandName() {
-//     const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
-//     const formulas = [
-//         () => `${randomElement(warriorTerms)} of ${randomElement(darkEntities)}`,
-//         () => `${randomElement(chaoticDescriptors)} ${randomElement(warriorTerms)}`,
-//         () => `${randomElement(abstractNouns)} ${randomElement(warriorTerms)}`,
-//         () => `${randomElement(adjectives)} ${randomElement(warriorTerms)} of ${randomElement(darkEntities)}`,
-//         () => `${randomElement(abstractNouns)} of ${randomElement([...darkEntities, ...chaoticDescriptors])}`,
-//         () => `The ${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
-//         () => `Children of ${randomElement(chaoticDescriptors)}`,
-//         () => `${randomElement(adjectives)} ${randomElement(warriorTerms)} of ${randomElement(abstractNouns)}`,
-//         () => `The ${randomElement(chaoticDescriptors)} ${randomElement(warriorTerms)}`,
-//         () => `The ${randomElement(warriorTerms)} of ${randomElement(chaoticDescriptors)}`,
-//         () => `${randomElement(darkEntities)} ${randomElement(warriorTerms)}`
-
-//     ];
-//     return randomElement(formulas)();
-// }
+import { metals } from "@/lib/metals";
 
 function generateWarbandName() {
     const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
@@ -57,17 +38,22 @@ function generateRandomPattern() {
     return `${randomElement(patterns)}`
 }
 
-function generateSlug(name, colors, pattern) {
+function generateRandomMetal() {
+    const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
+    return randomElement(metals)
+}
+
+function generateSlug(name, colors, pattern, metal) {
     const nameSlug = name
         .toLowerCase()
         .replace(/[^a-z0-9 ]/g, "")
         .replace(/\s+/g, "-")
         .trim();
     const colorSlug = colors.map(color => color.replace("#", "")).join("-");
-    // const patternSlug = pattern.split("/").pop().split(".")[0].toLowerCase();
     const patternSlug = pattern.toLowerCase();
+    const metalSlug = metal.code.toLowerCase();
 
-    return `${nameSlug}-${colorSlug}-${patternSlug}`;
+    return `${nameSlug}-${colorSlug}-${patternSlug}-${metalSlug}`;
 }
 
 export async function GET() {
@@ -75,10 +61,11 @@ export async function GET() {
         const warbandName = generateWarbandName();
         const colors = generateRandomColors();
         const pattern = generateRandomPattern();
-        const slug = generateSlug(warbandName, colors, pattern);
+        const metal = generateRandomMetal();
+        const slug = generateSlug(warbandName, colors, pattern, metal);
 
         return new Response(
-            JSON.stringify({ warbandName, colors, pattern, slug }),
+            JSON.stringify({ warbandName, colors, pattern, slug, metal }),
             {
                 status: 200,
                 headers: {

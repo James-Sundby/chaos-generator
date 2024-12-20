@@ -15,6 +15,7 @@ import Scythes from "./models/scythes";
 
 import { colorList } from "@/lib/colors";
 import { patterns } from "@/lib/armourPatterns";
+import { metals } from "@/lib/metals";
 
 export default function Background() {
     function generateRandomColors() {
@@ -37,7 +38,12 @@ export default function Background() {
         return randomElement(patterns);
     }
 
-    function ImageDisplay({ patternName, colors }) {
+    function generateRandomMetal() {
+        const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
+        return randomElement(metals);
+    }
+
+    function ImageDisplay({ patternName, colors, metal }) {
         const components = {
             Arms: Arms,
             Shoulders: Shoulders,
@@ -55,12 +61,13 @@ export default function Background() {
         };
 
         const Component = components[patternName];
-        return Component ? <Component color1={colors[0]} color2={colors[1]} /> : null;
+        return Component ? <Component color1={colors[0]} color2={colors[1]} metals={[metal.hex1, metal.hex2, metal.hex3]} /> : null;
     }
 
     const items = Array.from({ length: 12 }, () => ({
         pattern: generateRandomPattern(),
         colors: generateRandomColors(),
+        metal: generateRandomMetal(),
     }));
 
     return (
@@ -68,7 +75,7 @@ export default function Background() {
             <div className="flex flex-wrap justify-around overflow-hidden h-full">
                 {items.map((item, index) => (
                     <div key={index} className="w-28 h-28 sm:h-fit sm:w-fit opacity-25 aspect-square" >
-                        <ImageDisplay patternName={item.pattern} colors={item.colors} />
+                        <ImageDisplay patternName={item.pattern} colors={item.colors} metal={item.metal} />
                     </div>
                 ))}
             </div>
