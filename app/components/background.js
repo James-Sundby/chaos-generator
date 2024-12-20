@@ -58,7 +58,7 @@ export default function Background() {
         return Component ? <Component color1={colors[0]} color2={colors[1]} /> : null;
     }
 
-    const items = Array.from({ length: 24 }, () => ({
+    const items = Array.from({ length: 12 }, () => ({
         pattern: generateRandomPattern(),
         colors: generateRandomColors(),
     }));
@@ -67,7 +67,7 @@ export default function Background() {
         <div className="absolute inset-0 z-[-1]">
             <div className="flex flex-wrap justify-around overflow-hidden h-full">
                 {items.map((item, index) => (
-                    <div key={index} className="h-52 w-52 opacity-25">
+                    <div key={index} className="w-28 h-28 sm:h-fit sm:w-fit opacity-25 aspect-square" >
                         <ImageDisplay patternName={item.pattern} colors={item.colors} />
                     </div>
                 ))}
