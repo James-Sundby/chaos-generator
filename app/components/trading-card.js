@@ -47,19 +47,30 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
                 <div className="h-96">
                     {ImageDisplay(patternName)}
                 </div>
-                <div className="flex flex-1 join join-horizontal">
+                <div className="flex flex-1 join join-horizontal rounded-lg">
                     {namedColors.map((color, index) => (
                         <div
                             key={index}
-                            className="w-full h-6 join-item border border-primary-content"
+                            className="w-full h-8 join-item border border-neutral"
                             style={{ backgroundColor: color.hex }}
                             title={color.name}
                         >
                         </div>
                     ))}
+                    <div
+                        key={metal.name}
+                        className="w-full h-8 join-item border border-neutral"
+                        style={{
+                            background: `radial-gradient(circle, ${metal.hex1}, ${metal.hex2}, ${metal.hex3})`,
+                        }}
+                        title={metal.name}
+                    >
+                    </div>
                 </div>
-                <p className="text-sm">Colors: <span className="font-bold">{namedColors[0].name}, {namedColors[1].name}</span></p>
-                <p className="text-sm">Metal: <span className="font-bold">{metal.name}</span></p>
+
+                <p className="text-sm"><span className="font-bold">{namedColors[0].name}, {namedColors[1].name}, {metal.name}</span></p>
+                {/* <p className="text-sm">Colors: <span className="font-bold">{namedColors[0].name}, {namedColors[1].name}</span></p> */}
+                {/* <p className="text-sm">Metal: <span className="font-bold">{metal.name}</span></p> */}
                 <div className=" justify-end text-xs">
                     <p>{slug}</p>
                 </div>
