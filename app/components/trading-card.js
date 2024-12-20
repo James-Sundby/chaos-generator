@@ -1,37 +1,38 @@
-import Arms from "./model/arms";
-import Shoulders from "./model/shoulders";
-import Legs from "./model/legs";
-import Centered from "./model/centered";
-import Half from "./model/half";
-import Quarter from "./model/quarter";
-import Crusader from "./model/crusader";
-import Talons from "./model/talons";
-import Disciple from "./model/disciple";
+import Arms from "./models/arms";
+import Shoulders from "./models/shoulders";
+import Legs from "./models/legs";
+import Centered from "./models/centered";
+import Half from "./models/half";
+import Quarter from "./models/quarter";
+import Crusader from "./models/crusader";
+import Talons from "./models/talons";
+import Disciple from "./models/disciple";
+import Accipiters from "./models/accipiters";
+import Blazoned from "./models/blazoned";
+import Eradicant from "./models/eradicant";
+import Scythes from "./models/scythes";
 
 export default function TradingCard({ warbandName, patternSrc, namedColors, slug, patternName }) {
 
     function ImageDisplay(patternName) {
-        if (patternName === "Arms") {
-            return <Arms color1={namedColors[0].hex} color2={namedColors[1].hex} />;
-        } else if (patternName === "Shoulders") {
-            return <Shoulders color1={namedColors[0].hex} color2={namedColors[1].hex} />;
-        } else if (patternName === "Legs") {
-            return <Legs color1={namedColors[0].hex} color2={namedColors[1].hex} />;
-        } else if (patternName === "Centered") {
-            return <Centered color1={namedColors[0].hex} color2={namedColors[1].hex} />;
-        } else if (patternName === "Half") {
-            return <Half color1={namedColors[0].hex} color2={namedColors[1].hex} />;
-        } else if (patternName === "Quarter") {
-            return <Quarter color1={namedColors[0].hex} color2={namedColors[1].hex} />;
-        } else if (patternName === "Crusader") {
-            return <Crusader color1={namedColors[0].hex} color2={namedColors[1].hex} />;
-        } else if (patternName === "Disciple") {
-            return <Disciple color1={namedColors[0].hex} color2={namedColors[1].hex} />;
-        } else if (patternName === "Talons") {
-            return <Talons color1={namedColors[0].hex} color2={namedColors[1].hex} />;
-        } else {
-            return null;
-        }
+        const components = {
+            Arms: Arms,
+            Shoulders: Shoulders,
+            Legs: Legs,
+            Centered: Centered,
+            Half: Half,
+            Quarter: Quarter,
+            Crusader: Crusader,
+            Disciple: Disciple,
+            Talons: Talons,
+            Accipiters: Accipiters,
+            Blazoned: Blazoned,
+            Eradicant: Eradicant,
+            Scythes: Scythes,
+        };
+
+        const Component = components[patternName];
+        return Component ? <Component color1={namedColors[0].hex} color2={namedColors[1].hex} /> : null;
     }
 
     return (
