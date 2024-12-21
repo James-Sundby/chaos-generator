@@ -43,7 +43,7 @@ export const useWarbandStore = create(
         }),
         {
             name: 'warband-store',
-            storage: createJSONStorage(() => localStorage),
+            storage: createJSONStorage(() => sessionStorage),
             partialize: (state) => ({ warband: state.warband }),
         }
     )
