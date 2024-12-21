@@ -1,19 +1,24 @@
-import { parseSlug } from "../../_utils/helpers.js";
-import TradingCard from "@/app/components/trading-card.js";
+"use client";
 
-export default function WarbandPage({ params }) {
-    const { slug } = params;
-    const { warbandName, namedColors, capitalizedPattern, metal } = parseSlug(slug);
+import TradingCard from "@/app/components/trading-card.js";
+import { useWarbandStore } from "@/app/stores/warbandStore.js";
+
+export default function WarbandPage() {
+    const warband = useWarbandStore((state) => state.warband);
+    { console.log("warband store", warband) }
 
     return (
-        <div className="flex flex-1 justify-center mt-4">
-            <TradingCard
-                warbandName={warbandName}
-                namedColors={namedColors}
-                slug={slug}
-                patternName={capitalizedPattern}
-                metal={metal}
-            />
-        </div>
+        <>
+            <div className="flex flex-1 flex-col gap-4 items-center mt-4">
+                <TradingCard
+                    warbandName={warband.warbandName}
+                    namedColors={warband.colors}
+                    slug={warband.slug}
+                    patternName={warband.pattern}
+                    metal={warband.metal}
+                />
+                <div className="btn btn-primary">Options</div>
+            </div>
+        </>
     );
 }
