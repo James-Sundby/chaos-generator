@@ -25,7 +25,8 @@ function generateRandomColors() {
     while (selectedColors.length < 2) {
         const randomIndex = Math.floor(Math.random() * colorList.length);
         if (!usedIndices.has(randomIndex)) {
-            selectedColors.push(colorList[randomIndex].hex);
+            // selectedColors.push(colorList[randomIndex].hex);
+            selectedColors.push(colorList[randomIndex]);
             usedIndices.add(randomIndex);
         }
     }
@@ -49,7 +50,7 @@ function generateSlug(name, colors, pattern, metal) {
         .replace(/[^a-z0-9 ]/g, "")
         .replace(/\s+/g, "-")
         .trim();
-    const colorSlug = colors.map(color => color.replace("#", "")).join("-");
+    const colorSlug = colors.map(color => color.hex.replace("#", "")).join("-");
     const patternSlug = pattern.toLowerCase();
     const metalSlug = metal.code.toLowerCase();
 

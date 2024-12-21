@@ -69,8 +69,6 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
                 </div>
 
                 <p className="text-sm"><span className="font-bold">{namedColors[0].name}, {namedColors[1].name}, {metal.name}</span></p>
-                {/* <p className="text-sm">Colors: <span className="font-bold">{namedColors[0].name}, {namedColors[1].name}</span></p> */}
-                {/* <p className="text-sm">Metal: <span className="font-bold">{metal.name}</span></p> */}
                 <div className=" justify-end text-xs">
                     <p>{slug}</p>
                 </div>
