@@ -5,7 +5,6 @@ import { useWarbandStore } from "@/app/stores/warbandStore.js";
 
 export default function WarbandPage() {
     const warband = useWarbandStore((state) => state.warband);
-    { console.log("warband store", warband) }
 
     return (
         <>
@@ -17,7 +16,7 @@ export default function WarbandPage() {
                     patternName={warband.pattern}
                     metal={warband.metal}
                 />
-                <div className="btn btn-primary">Options</div>
+                {/* <div className="btn btn-primary">Options</div> */}
             </div>
         </>
     );

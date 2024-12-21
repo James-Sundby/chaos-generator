@@ -13,6 +13,7 @@ import Eradicant from "./models/eradicant";
 import Scythes from "./models/scythes";
 
 export default function TradingCard({ warbandName, namedColors, slug, patternName, metal }) {
+    const isLoading = !warbandName || !namedColors || !slug || !patternName || !metal;
 
     function ImageDisplay(patternName) {
         const components = {
@@ -43,35 +44,52 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
     return (
         <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-80 h-fit rounded-lg">
             <div className="card-body p-2 m-2 bg-white rounded-lg">
-                <h2 className="card-title justify-center">{warbandName}</h2>
-                <div className="h-96">
-                    {ImageDisplay(patternName)}
-                </div>
-                <div className="flex flex-1 join join-horizontal rounded-lg">
-                    {namedColors.map((color, index) => (
-                        <div
-                            key={index}
-                            className="w-full h-8 join-item border border-neutral"
-                            style={{ backgroundColor: color.hex }}
-                            title={color.name}
-                        >
-                        </div>
-                    ))}
-                    <div
-                        key={metal.name}
-                        className="w-full h-8 join-item border border-neutral"
-                        style={{
-                            background: `radial-gradient(circle, ${metal.hex1}, ${metal.hex2}, ${metal.hex3})`,
-                        }}
-                        title={metal.name}
-                    >
-                    </div>
-                </div>
+                {isLoading ? (
+                    <div className="flex justify-center items-center h-full">
+                        <div className="flex w-52 flex-col gap-4 my-4">
+                            <div className="skeleton h-4 w-full"></div>
+                            <div className="skeleton h-80 w-full"></div>
+                            <div className="skeleton h-8 w-full"></div>
+                            <div className="skeleton h-4 w-28"></div>
+                            <div className="skeleton h-4 w-full"></div>
 
-                <p className="text-sm"><span className="font-bold">{namedColors[0].name}, {namedColors[1].name}, {metal.name}</span></p>
-                <div className=" justify-end text-xs">
-                    <p>{slug}</p>
-                </div>
+                        </div>
+                    </div>
+                ) : (
+
+                    <>
+                        <h2 className="card-title justify-center">{warbandName}</h2>
+                        <div className="h-96">{ImageDisplay(patternName)}</div>
+                        <div className="flex flex-1 join join-horizontal rounded-lg">
+                            {namedColors.map((color, index) => (
+                                <div
+                                    key={index}
+                                    className="w-full h-8 join-item border border-neutral"
+                                    style={{ backgroundColor: color.hex }}
+                                    title={color.name}
+                                >
+                                </div>
+                            ))}
+                            <div
+                                key={metal.name}
+                                className="w-full h-8 join-item border border-neutral"
+                                style={{
+                                    background: `radial-gradient(circle, ${metal.hex1}, ${metal.hex2}, ${metal.hex3})`,
+                                }}
+                                title={metal.name}
+                            >
+                            </div>
+                        </div>
+                        <p className="text-sm">
+                            <span className="font-bold">
+                                {namedColors[0].name}, {namedColors[1].name}, {metal.name}
+                            </span>
+                        </p>
+                        <div className="justify-end text-xs">
+                            <p>{slug}</p>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );
