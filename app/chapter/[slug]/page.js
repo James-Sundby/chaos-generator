@@ -17,7 +17,6 @@ export default function WarbandPage({ params }) {
             if (warband.slug !== slug) {
                 try {
                     const response = await fetch(`/api/chapter-generator?slug=${slug}`);
-                    console.log(response);
                     if (response.ok) {
                         const fetchedWarband = await response.json();
                         setWarband(fetchedWarband);
@@ -36,16 +35,14 @@ export default function WarbandPage({ params }) {
 
 
     return (
-        <>
-            <div className="flex flex-1 flex-col gap-4 items-center mt-4">
-                <TradingCard
-                    warbandName={warband.warbandName}
-                    namedColors={warband.colors}
-                    slug={warband.slug}
-                    patternName={warband.pattern}
-                    metal={warband.metal}
-                />
-            </div>
-        </>
+        <main className="flex flex-1 flex-col gap-4 items-center mt-4">
+            <TradingCard
+                warbandName={warband.warbandName}
+                namedColors={warband.colors}
+                slug={warband.slug}
+                patternName={warband.pattern}
+                metal={warband.metal}
+            />
+        </main>
     );
 }

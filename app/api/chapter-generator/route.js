@@ -100,6 +100,7 @@ export async function GET(req) {
             if (warbandName && namedColors.length === 2 && pattern && metal) {
                 return new Response(
                     JSON.stringify({
+                        message: "valid",
                         warbandName,
                         colors: namedColors,
                         pattern,
@@ -125,7 +126,7 @@ export async function GET(req) {
         const newSlug = generateSlug(warbandName, colors, pattern, metal);
 
         return new Response(
-            JSON.stringify({ warbandName, colors, pattern, slug: newSlug, metal }),
+            JSON.stringify({ message: "new warband", warbandName, colors, pattern, slug: newSlug, metal }),
             {
                 status: 200,
                 headers: {
