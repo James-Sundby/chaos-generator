@@ -9,7 +9,7 @@ function generateChapterName() {
     const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
     const formulas = [
         () => `${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
-        () => `${randomElement(warriorTerms)} of ${randomElement(virtues)} `,
+        () => `${randomElement(warriorTerms)} of ${randomElement(virtues)}`,
         () => `${randomElement(warriorTerms)} of ${randomElement(placesOrEntities)}`,
         () => `The ${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
         () => `${randomElement(adjectives)} ${randomElement(animals)}`,
