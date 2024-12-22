@@ -57,23 +57,82 @@ function generateSlug(name, colors, pattern, metal) {
     return `${nameSlug}-${colorSlug}-${patternSlug}-${metalSlug}`;
 }
 
-export async function GET() {
+function capitalizeName(name) {
+    const smallWords = ["of", "the"];
+    return name
+        .split(" ")
+        .map((word, index) => {
+            if (index === 0 || !smallWords.includes(word)) {
+                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            }
+            return word.toLowerCase();
+        })
+        .join(" ");
+}
+
+export async function GET(req) {
+    const url = new URL(req.url);
+    const slug = url.searchParams.get("slug");
+
+    if (slug) {
+        try {
+            const slugParts = slug.split("-");
+
+            const metalCode = slugParts.pop();
+            const metal = metals.find((m) => m.code.toLowerCase() === metalCode);
+
+            const patternCode = slugParts.pop();
+            const pattern = patterns.find((p) => p.toLowerCase() === patternCode);
+
+            const colorHex2 = `#${slugParts.pop()}`;
+            const colorHex1 = `#${slugParts.pop()}`;
+            const namedColors = [colorHex1, colorHex2].map((hex) => {
+                const color = colorList.find((c) => c.hex.toLowerCase() === hex.toLowerCase());
+                if (!color) {
+                    throw new Error(`Color not found for hex: ${hex}`);
+                }
+                return color;
+            });
+
+            const name = slugParts.join(" ").replace(/-/g, " ");
+            const warbandName = capitalizeName(name);
+
+            if (warbandName && namedColors.length === 2 && pattern && metal) {
+                return new Response(
+                    JSON.stringify({
+                        warbandName,
+                        colors: namedColors,
+                        pattern,
+                        slug,
+                        metal,
+                    }),
+                    { status: 200 }
+                );
+            } else {
+                throw new Error("Invalid slug components");
+            }
+        } catch (error) {
+            console.warn("Invalid slug, generating a new warband instead:");
+        }
+    }
+
+    // Generate a new warband if no slug is provided or slug is invalid
     try {
         const warbandName = generateChapterName();
         const colors = generateRandomColors();
         const pattern = generateRandomPattern();
         const metal = generateRandomMetal();
-        const slug = generateSlug(warbandName, colors, pattern, metal);
+        const newSlug = generateSlug(warbandName, colors, pattern, metal);
 
         return new Response(
-            JSON.stringify({ warbandName, colors, pattern, slug, metal }),
+            JSON.stringify({ warbandName, colors, pattern, slug: newSlug, metal }),
             {
                 status: 200,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-                    'Pragma': 'no-cache',
-                    'Expires': '0',
+                    "Content-Type": "application/json",
+                    "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+                    "Pragma": "no-cache",
+                    "Expires": "0",
                 },
             }
         );
@@ -81,7 +140,7 @@ export async function GET() {
         console.error("Error generating Chapter data:", error);
         return new Response(
             JSON.stringify({ error: "Internal Server Error" }),
-            { status: 500, headers: { 'Content-Type': 'application/json' } }
+            { status: 500, headers: { "Content-Type": "application/json" } }
         );
     }
 }
