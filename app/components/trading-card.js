@@ -70,13 +70,14 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
         );
     }
 
-    if (isLoading) {
-        return (
-            <div className="flex flex-1">
-                <span className="loading loading-spinner loading-lg"></span>
-            </div>
-        );
-    }
+    // Causes trading-card to flash, prefer loading shown through re-roll button on header 
+    // if (isLoading) {
+    //     return (
+    //         <div className="flex flex-1">
+    //             <span className="loading loading-spinner loading-lg"></span>
+    //         </div>
+    //     );
+    // }
 
     if (error) {
         return (

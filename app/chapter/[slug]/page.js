@@ -28,11 +28,11 @@ export default function WarbandPage({ params }) {
                         setWarband(fetchedWarband);
                         router.replace(`/chapter/${fetchedWarband.slug}`);
                     } else {
-                        console.error("Invalid slug or error fetching warband data");
+                        // console.error("Invalid slug or error fetching warband data");
                         setError("Failed to fetch warband data. Please try again.");
                     }
                 } catch (error) {
-                    console.error("Error fetching warband data:", error);
+                    // console.error("Error fetching warband data:", error);
                     setError("An unexpected error occurred. Please try again.");
                 } finally {
                     setIsLoading(false); // Stop loading
