@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import { useWarbandStore } from "../stores/warbandStore";
-import { useState } from "react";
 
 export default function WarbandSearch() {
     const {
@@ -47,7 +46,7 @@ export default function WarbandSearch() {
                 }, 3000);
             }
         } catch (error) {
-            console.error("Error validating chapter code:", error);
+            // console.error("Error validating chapter code:", error);
             setError("lookupCode", {
                 type: "manual",
                 message: "Something went wrong. Please try again later.",
