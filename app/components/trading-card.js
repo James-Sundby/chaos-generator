@@ -15,8 +15,7 @@ import Eradicant from "./models/eradicant";
 import Scythes from "./models/scythes";
 import { useRouter } from "next/navigation";
 
-export default function TradingCard({ warbandName, namedColors, slug, patternName, metal }) {
-    const isLoading = !warbandName || !namedColors || !slug || !patternName || !metal;
+export default function TradingCard({ warbandName, namedColors, slug, patternName, metal, isLoading, error }) {
     const [loadingTime, setLoadingTime] = useState(0);
     const router = useRouter();
 
@@ -60,28 +59,36 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
         ) : null;
     }
 
-    if (isLoading) {
+    if (loadingTime >= 5) {
         return (
-            <>
-                {loadingTime >= 5 ?
-                    (
-                        <div className="flex flex-1 flex-col justify-center items-center gap-4">
-                            <p>Error loading data</p>
-                            <button className="btn btn-primary rounded-lg" onClick={() => router.push("/")}>
-                                Go Back to Home
-                            </button>
-                        </div >
-
-                    ) : (
-                        <div className="flex flex-1">
-                            <span className="loading loading-spinner loading-lg"></span >
-                        </div >
-                    )
-                }
-            </>
+            <div className="flex flex-1 flex-col justify-center items-center gap-4">
+                <p className="text-error font-bold">Error loading data. Please try again later.</p>
+                <button className="btn btn-primary rounded-lg" onClick={() => router.push("/")}>
+                    Go Back to Home
+                </button>
+            </div>
         );
     }
 
+    // Causes trading-card to flash, prefer loading shown through re-roll button on header 
+    // if (isLoading) {
+    //     return (
+    //         <div className="flex flex-1">
+    //             <span className="loading loading-spinner loading-lg"></span>
+    //         </div>
+    //     );
+    // }
+
+    if (error) {
+        return (
+            <div className="flex flex-1 flex-col justify-center items-center gap-4">
+                <p className="text-error font-bold">{error}</p>
+                <button className="btn btn-primary rounded-lg" onClick={() => router.push("/")}>
+                    Go Back to Home
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-80 h-fit rounded-lg">

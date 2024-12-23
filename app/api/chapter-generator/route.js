@@ -5,8 +5,15 @@ import { patterns } from "@/lib/armourPatterns";
 import { virtues, warriorTerms, placesOrEntities, adjectives, animals } from "@/lib/loyalData";
 import { metals } from "@/lib/metals";
 
+const metalsMap = Object.fromEntries(metals.map((metal) => [metal.code.toLowerCase(), metal]));
+const patternsSet = new Set(patterns.map((p) => p.toLowerCase()));
+const colorMap = Object.fromEntries(colorList.map((color) => [color.hex.toLowerCase(), color]));
+
+function randomElement(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
 function generateChapterName() {
-    const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
     const formulas = [
         () => `${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
         () => `${randomElement(warriorTerms)} of ${randomElement(virtues)}`,
@@ -19,29 +26,15 @@ function generateChapterName() {
 }
 
 function generateRandomColors() {
-    const selectedColors = [];
-    const usedIndices = new Set();
-
-    while (selectedColors.length < 2) {
-        const randomIndex = Math.floor(Math.random() * colorList.length);
-        if (!usedIndices.has(randomIndex)) {
-            // selectedColors.push(colorList[randomIndex].hex);
-            selectedColors.push(colorList[randomIndex]);
-            usedIndices.add(randomIndex);
-        }
-    }
-
-    return selectedColors;
+    return colorList.sort(() => 0.5 - Math.random()).slice(0, 2);
 }
 
 function generateRandomPattern() {
-    const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
-    return `${randomElement(patterns)}`
+    return randomElement(patterns);
 }
 
 function generateRandomMetal() {
-    const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
-    return randomElement(metals)
+    return randomElement(metals);
 }
 
 function generateSlug(name, colors, pattern, metal) {
@@ -61,12 +54,10 @@ function capitalizeName(name) {
     const smallWords = ["of", "the"];
     return name
         .split(" ")
-        .map((word, index) => {
-            if (index === 0 || !smallWords.includes(word)) {
-                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-            }
-            return word.toLowerCase();
-        })
+        .map((word, index) => (index === 0 || !smallWords.includes(word))
+            ? word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+            : word.toLowerCase()
+        )
         .join(" ");
 }
 
@@ -75,43 +66,39 @@ export async function GET(req) {
     const slug = url.searchParams.get("slug");
 
     if (slug) {
+        const slugParts = slug.split("-");
         try {
-            const slugParts = slug.split("-");
-
             const metalCode = slugParts.pop();
-            const metal = metals.find((m) => m.code.toLowerCase() === metalCode);
+            const metal = metalsMap[metalCode];
+            if (!metal) throw new Error(`Invalid metal code: ${metalCode}`);
 
             const patternCode = slugParts.pop();
-            const pattern = patterns.find((p) => p.toLowerCase() === patternCode);
+            const isValidPattern = patternsSet.has(patternCode);
+            if (!isValidPattern) throw new Error(`Invalid pattern code: ${patternCode}`);
+            const patternCapital = capitalizeName(patternCode);
 
             const colorHex2 = `#${slugParts.pop()}`;
             const colorHex1 = `#${slugParts.pop()}`;
             const namedColors = [colorHex1, colorHex2].map((hex) => {
-                const color = colorList.find((c) => c.hex.toLowerCase() === hex.toLowerCase());
-                if (!color) {
-                    throw new Error(`Color not found for hex: ${hex}`);
-                }
+                const color = colorMap[hex.toLowerCase()];
+                if (!color) throw new Error(`Color not found for hex: ${hex}`);
                 return color;
             });
 
             const name = slugParts.join(" ").replace(/-/g, " ");
             const warbandName = capitalizeName(name);
 
-            if (warbandName && namedColors.length === 2 && pattern && metal) {
-                return new Response(
-                    JSON.stringify({
-                        message: "valid",
-                        warbandName,
-                        colors: namedColors,
-                        pattern,
-                        slug,
-                        metal,
-                    }),
-                    { status: 200 }
-                );
-            } else {
-                throw new Error("Invalid slug components");
-            }
+            return new Response(
+                JSON.stringify({
+                    message: "valid",
+                    warbandName,
+                    colors: namedColors,
+                    pattern: patternCapital,
+                    slug,
+                    metal,
+                }),
+                { status: 200 }
+            );
         } catch (error) {
             console.warn("Invalid slug, generating a new warband instead:");
         }

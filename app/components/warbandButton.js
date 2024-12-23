@@ -21,7 +21,7 @@ export default function WarbandButton({ message }) {
             setWarband(data);
             router.push(`/chapter/${data.slug}`);
         } catch (error) {
-            console.error("Failed to fetch Chapter data:", error);
+            // console.error("Failed to fetch Chapter data:", error);
         } finally {
             setLoading(false);
         }
