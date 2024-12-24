@@ -15,9 +15,10 @@ export default function WarbandButton({ message }) {
             setLoading(true);
             const res = await fetch("/api/chapter-generator", {
                 method: "GET",
-                cache: "no-store",
+                // cache: "no-store",
             });
             const data = await res.json();
+            // console.log(slug);
             setWarband(data);
             router.push(`/chapter/${data.slug}`);
         } catch (error) {
@@ -30,7 +31,7 @@ export default function WarbandButton({ message }) {
     return (
         <button
             onClick={generateWarband}
-            className={`px-6 py-2 btn btn-primary rounded-lg`}
+            className="btn btn-primary rounded-lg items-center justify-center w-full h-auto px-6 py-2"
             disabled={loading}
         >
             {loading ?
