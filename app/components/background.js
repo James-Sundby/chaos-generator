@@ -17,29 +17,23 @@ import { colorList } from "@/lib/colors";
 import { patterns } from "@/lib/armourPatterns";
 import { metals } from "@/lib/metals";
 
+
+
 export default function Background() {
+
+    function randomElement(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
     function generateRandomColors() {
-        const selectedColors = [];
-        const usedIndices = new Set();
-
-        while (selectedColors.length < 2) {
-            const randomIndex = Math.floor(Math.random() * colorList.length);
-            if (!usedIndices.has(randomIndex)) {
-                selectedColors.push(colorList[randomIndex].hex);
-                usedIndices.add(randomIndex);
-            }
-        }
-
-        return selectedColors;
+        return colorList.sort(() => 0.5 - Math.random()).slice(0, 2);
     }
 
     function generateRandomPattern() {
-        const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
         return randomElement(patterns);
     }
 
     function generateRandomMetal() {
-        const randomElement = (array) => array[Math.floor(Math.random() * array.length)];
         return randomElement(metals);
     }
 
@@ -61,7 +55,7 @@ export default function Background() {
         };
 
         const Component = components[patternName];
-        return Component ? <Component color1={colors[0]} color2={colors[1]} metals={[metal.hex1, metal.hex2, metal.hex3]} /> : null;
+        return Component ? <Component color1={colors[0].hex} color2={colors[1].hex} metals={[metal.hex1, metal.hex2, metal.hex3]} /> : null;
     }
 
     const items = Array.from({ length: 12 }, () => ({

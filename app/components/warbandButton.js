@@ -15,9 +15,10 @@ export default function WarbandButton({ message }) {
             setLoading(true);
             const res = await fetch("/api/chapter-generator", {
                 method: "GET",
-                cache: "no-store",
+                // cache: "no-store",
             });
             const data = await res.json();
+            // console.log(slug);
             setWarband(data);
             router.push(`/chapter/${data.slug}`);
         } catch (error) {

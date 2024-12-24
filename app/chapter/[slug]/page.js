@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
 import TradingCard from "@/app/components/trading-card.js";
 import { useWarbandStore } from "@/app/stores/warbandStore.js";
 
-export default function WarbandPage({ params }) {
-    const { slug } = params;
+export default function WarbandPage() {
+    const params = useParams();
     const router = useRouter();
     const warband = useWarbandStore((state) => state.warband);
     const setWarband = useWarbandStore((state) => state.setWarband);
@@ -17,12 +17,15 @@ export default function WarbandPage({ params }) {
 
     useEffect(() => {
         async function fetchWarbandData() {
-            if (warband.slug !== slug) {
+            // console.log("Dynamic page slug: ", params.slug);
+            // console.log("Stored warband slug: ", warband.slug);
+            if (warband.slug !== params.slug) {
+                // console.log("Slug discrepancy:  ", params.slug, warband.slug);
                 setIsLoading(true);
                 setError(null);
 
                 try {
-                    const response = await fetch(`/api/chapter-generator?slug=${slug}`);
+                    const response = await fetch(`/api/chapter-generator?slug=${params.slug}`);
                     if (response.ok) {
                         const fetchedWarband = await response.json();
                         setWarband(fetchedWarband);
@@ -39,6 +42,7 @@ export default function WarbandPage({ params }) {
                 }
             } else {
                 setIsLoading(false); // Stop loading if warband data matches the slug
+                // console.log("Slugs match", params.slug, warband.slug);
             }
         }
         fetchWarbandData();
