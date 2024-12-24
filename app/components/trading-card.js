@@ -1,19 +1,7 @@
 import { useState, useEffect } from "react";
-
-import Arms from "./models/arms";
-import Shoulders from "./models/shoulders";
-import Legs from "./models/legs";
-import Centered from "./models/centered";
-import Half from "./models/half";
-import Quarter from "./models/quarter";
-import Crusader from "./models/crusader";
-import Talons from "./models/talons";
-import Disciple from "./models/disciple";
-import Accipiters from "./models/accipiters";
-import Blazoned from "./models/blazoned";
-import Eradicant from "./models/eradicant";
-import Scythes from "./models/scythes";
 import { useRouter } from "next/navigation";
+
+import { modelComponents } from "./componentsMap";
 
 export default function TradingCard({ warbandName, namedColors, slug, patternName, metal, isLoading, error }) {
     const [loadingTime, setLoadingTime] = useState(0);
@@ -33,23 +21,7 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
     }, [isLoading]);
 
     function ImageDisplay(patternName) {
-        const components = {
-            Arms: Arms,
-            Shoulders: Shoulders,
-            Legs: Legs,
-            Centered: Centered,
-            Half: Half,
-            Quarter: Quarter,
-            Crusader: Crusader,
-            Disciple: Disciple,
-            Talons: Talons,
-            Accipiters: Accipiters,
-            Blazoned: Blazoned,
-            Eradicant: Eradicant,
-            Scythes: Scythes,
-        };
-
-        const Component = components[patternName];
+        const Component = modelComponents[patternName];
         return Component ? (
             <Component
                 color1={namedColors[0].hex}
