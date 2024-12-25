@@ -21,7 +21,7 @@ export const useWarbandStore = create(
             },
             setWarband: (data) => {
                 // console.log('Updating warband with data:', data);
-                set({ warband: data });
+                set((state) => ({ warband: { ...state.warband, ...data } }))
             },
             resetWarband: () => {
                 // console.log('Resetting warband to initial state.');

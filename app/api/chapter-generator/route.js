@@ -127,7 +127,8 @@ export async function GET(req) {
     } catch (error) {
         console.error("Error generating Chapter data:", error);
         return new Response(
-            JSON.stringify({ error: "Internal Server Error" }),
+            //  JSON.stringify({ error: "Internal Server Error" }),
+            JSON.stringify({ error: "Internal Server Error", message: error.message }),
             { status: 500, headers: { "Content-Type": "application/json" } }
         );
     }

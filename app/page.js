@@ -1,6 +1,7 @@
 import WarbandButton from "./components/warbandButton";
 import Background from "./components/background";
 import WarbandSearch from "./components/warbandSearch";
+import CustomizerButton from "./components/customizerButton";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <div className="flex flex-col gap-4 items-center w-full max-w-lg">
         <WarbandButton message="Generate a New Chapter" />
         <WarbandSearch />
+        <CustomizerButton />
       </div>
       <Background />
     </main>
