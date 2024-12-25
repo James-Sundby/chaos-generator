@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { colorList } from "@/lib/colors";
 import { metals } from "@/lib/metals";
 import { patterns } from "@/lib/armourPatterns";
@@ -29,99 +28,102 @@ const ImageDisplay = ({ pattern, colors, metal }) => {
     const Component = modelComponents[pattern];
     return Component ? (
         <Component
-            color1={colors[0].hex}
-            color2={colors[1].hex}
+            color1={colors[0]?.hex}
+            color2={colors[1]?.hex}
             metals={[metal.hex1, metal.hex2, metal.hex3]}
         />
     ) : null;
 };
 
+const generateSlug = ({ warbandName, colors, pattern, metal }) => {
+    const nameSlug = warbandName
+        .toLowerCase()
+        .replace(/[^a-z0-9 ]/g, "")
+        .replace(/\s+/g, "-")
+        .trim();
+    const colorSlug = colors.map(color => color.hex.replace("#", "")).join("-");
+    const patternSlug = pattern.toLowerCase();
+    const metalSlug = metal.code.toLowerCase();
+
+    return `${nameSlug}-${colorSlug}-${patternSlug}-${metalSlug}`;
+}
+
 export default function Painter() {
     const warband = useWarbandStore((state) => state.warband);
+    const setWarband = useWarbandStore((state) => state.setWarband);
 
-    const [selectedWarband, setSelectedWarband] = useState({
-        name: "",
-        colors: [colorList[0], colorList[0]],
-        metal: metals[0],
-        pattern: patterns[0],
-    });
-
-    useEffect(() => {
-        if (warband.warbandName !== "") {
-            setSelectedWarband({
-                name: warband.warbandName,
-                colors: warband.colors || [colorList[0], colorList[0]],
-                metal: warband.metal || metals[0],
-                pattern: warband.pattern || patterns[0],
-            });
-        }
-    }, [warband]);
+    const updateWarband = (updatedProperties) => {
+        const updatedWarband = { ...warband, ...updatedProperties };
+        const newSlug = generateSlug(updatedWarband);
+        setWarband({ ...updatedProperties, slug: newSlug });
+    };
 
     const handleColorChange = (index, value) => {
         const color = colorList.find((c) => c.hex === value);
-        setSelectedWarband((prev) => {
-            const newColors = [...prev.colors];
-            newColors[index] = color;
-            return { ...prev, colors: newColors };
-        });
+        const newColors = [...warband.colors];
+        newColors[index] = color;
+        updateWarband({ colors: newColors });
     };
 
     const handleMetalChange = (value) => {
         const metal = metals.find((m) => m.code === value);
-        setSelectedWarband((prev) => ({ ...prev, metal }));
+        updateWarband({ metal: metal });
     };
 
     const handlePatternChange = (value) => {
-        setSelectedWarband((prev) => ({ ...prev, pattern: value }));
+        updateWarband({ pattern: value });
     };
 
     const handleNameChange = (value) => {
-        setSelectedWarband((prev) => ({ ...prev, name: value }));
+        updateWarband({ warbandName: value });
     };
 
     const areColorsDifferent =
-        selectedWarband.colors[0].hex !== selectedWarband.colors[1].hex;
+        warband.colors[0]?.hex !== warband.colors[1]?.hex;
 
     return (
         <main className="flex flex-1 flex-col sm:flex-row justify-center items-center gap-4 sm:gap-16">
             <div className="card bg-yellow-600 text-neutral w-full max-w-80 h-fit rounded-lg">
                 <div className="card-body p-2 m-2 bg-white rounded-lg">
-                    <h2 className="card-title justify-center">{selectedWarband.name}</h2>
+                    <h2 className="card-title justify-center">{warband.warbandName}</h2>
                     <div className="h-96">
                         <ImageDisplay
-                            pattern={selectedWarband.pattern}
-                            colors={selectedWarband.colors}
-                            metal={selectedWarband.metal}
+                            pattern={warband.pattern}
+                            colors={warband.colors}
+                            metal={warband.metal}
                         />
                     </div>
                     <div className="flex flex-1 join join-horizontal rounded-lg">
                         <div
                             className="w-full h-8 join-item border border-neutral"
-                            style={{ backgroundColor: selectedWarband.colors[0].hex }}
-                            title={selectedWarband.colors[0].name}
+                            style={{ backgroundColor: warband.colors[0]?.hex }}
+                            title={warband.colors[0]?.name}
                         ></div>
                         {areColorsDifferent && (
                             <div
                                 className="w-full h-8 join-item border border-neutral"
-                                style={{ backgroundColor: selectedWarband.colors[1].hex }}
-                                title={selectedWarband.colors[1].name}
+                                style={{ backgroundColor: warband.colors[1]?.hex }}
+                                title={warband.colors[1]?.name}
                             ></div>
                         )}
                         <div
                             className="w-full h-8 join-item border border-neutral"
                             style={{
-                                background: `radial-gradient(circle, ${selectedWarband.metal.hex1}, ${selectedWarband.metal.hex2}, ${selectedWarband.metal.hex3})`,
+                                background: `radial-gradient(circle, ${warband.metal.hex1}, ${warband.metal.hex2}, ${warband.metal.hex3})`,
                             }}
-                            title={selectedWarband.metal.name}
+                            title={warband.metal.name}
                         ></div>
                     </div>
                     <p className="text-sm">
                         <span className="font-bold">
                             {areColorsDifferent
-                                ? `${selectedWarband.colors[0].name}, ${selectedWarband.colors[1].name}, ${selectedWarband.metal.name}`
-                                : `${selectedWarband.colors[0].name}, ${selectedWarband.metal.name}`}
+                                ? `${warband.colors[0]?.name}, ${warband.colors[1]?.name}, ${warband.metal.name}`
+                                : `${warband.colors[0]?.name}, ${warband.metal.name}`}
                         </span>
                     </p>
+                    <div className="justify-end text-xs">
+                        <p>{warband.slug}</p>
+                    </div>
                 </div>
             </div>
             <div className="card card-compact card-outline w-full max-w-80">
@@ -132,7 +134,7 @@ export default function Painter() {
                         <div className="label label-text">Name:</div>
                         <input
                             type="text"
-                            value={selectedWarband.name}
+                            value={warband.warbandName}
                             onChange={(e) => handleNameChange(e.target.value)}
                             className="input input-bordered rounded-lg"
                             maxLength={50}
@@ -142,28 +144,28 @@ export default function Painter() {
                     <Dropdown
                         label="Primary color"
                         options={colorList}
-                        value={selectedWarband.colors[0].hex}
+                        value={warband.colors[0]?.hex}
                         onChange={(value) => handleColorChange(0, value)}
                     />
 
                     <Dropdown
                         label="Secondary color"
                         options={colorList}
-                        value={selectedWarband.colors[1].hex}
+                        value={warband.colors[1]?.hex}
                         onChange={(value) => handleColorChange(1, value)}
                     />
 
                     <Dropdown
                         label="Metal"
                         options={metals}
-                        value={selectedWarband.metal.code}
+                        value={warband.metal.code}
                         onChange={handleMetalChange}
                     />
 
                     <Dropdown
                         label="Pattern"
                         options={patterns.map((p) => ({ name: p, value: p }))}
-                        value={selectedWarband.pattern}
+                        value={warband.pattern}
                         onChange={handlePatternChange}
                     />
                 </div>

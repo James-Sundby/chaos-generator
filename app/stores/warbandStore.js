@@ -8,15 +8,15 @@ export const useWarbandStore = create(
             warband: {
                 warbandName: '',
                 slug: '',
-                pattern: '',
+                pattern: 'Arms',
                 metal: {
-                    code: '',
-                    hex1: '',
-                    hex2: '',
-                    hex3: '',
-                    name: '',
+                    code: "gks",
+                    name: "Grey Knight's Steel",
+                    hex1: "#ffffff",
+                    hex2: "#a5b4be",
+                    hex3: "#465863",
                 },
-                colors: [],
+                colors: [{ name: "White Scar", hex: "#FFFFFF" }, { name: "White Scar", hex: "#FFFFFF" },],
                 message: '',
             },
             setWarband: (data) => {
