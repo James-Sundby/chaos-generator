@@ -24,8 +24,8 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
         const Component = modelComponents[patternName];
         return Component ? (
             <Component
-                color1={namedColors[0].hex}
-                color2={namedColors[1].hex}
+                color1={namedColors[0]?.hex}
+                color2={namedColors[1]?.hex}
                 metals={[metal.hex1, metal.hex2, metal.hex3]}
             />
         ) : null;
@@ -41,15 +41,6 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
             </div>
         );
     }
-
-    // Causes trading-card to flash, prefer loading shown through re-roll button on header 
-    // if (isLoading) {
-    //     return (
-    //         <div className="flex flex-1">
-    //             <span className="loading loading-spinner loading-lg"></span>
-    //         </div>
-    //     );
-    // }
 
     if (error) {
         return (
@@ -85,11 +76,13 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
                         title={metal.name}
                     ></div>
                 </div>
+
                 <p className="text-sm">
                     <span className="font-bold">
-                        {namedColors[0].name}, {namedColors[1].name}, {metal.name}
+                        {namedColors[0]?.name}, {namedColors[1]?.name}, {metal.name}
                     </span>
                 </p>
+
                 <div className="justify-end text-xs">
                     <p>{slug}</p>
                 </div>
