@@ -51,7 +51,7 @@ export default function WarbandPage() {
 
 
     return (
-        <main className="flex flex-1 flex-col gap-4 items-center mt-4">
+        <main className="flex flex-1 flex-col gap-4 items-center justify-center mt-4">
             <TradingCard
                 warbandName={warband.warbandName}
                 namedColors={warband.colors}

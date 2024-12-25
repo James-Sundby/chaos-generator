@@ -17,6 +17,7 @@ export const useWarbandStore = create(
                     name: '',
                 },
                 colors: [],
+                message: '',
             },
             setWarband: (data) => {
                 // console.log('Updating warband with data:', data);
@@ -37,6 +38,7 @@ export const useWarbandStore = create(
                             name: '',
                         },
                         colors: [],
+                        message: '',
                     },
                 });
             },
