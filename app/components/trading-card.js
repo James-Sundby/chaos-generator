@@ -84,7 +84,8 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
                 </p>
 
                 <div className="justify-end text-xs">
-                    <p>{slug}</p>
+                    <p className="font-bold">ID: <span className="font-normal">{slug}</span></p>
+
                 </div>
             </div>
         </div>
