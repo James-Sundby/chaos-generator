@@ -128,7 +128,7 @@ export default function Painter() {
                     </div>
                 </div>
             </div>
-            <div className="card  w-full max-w-80">
+            <div className="card w-full max-w-80">
                 <div className="card-body p-0">
                     <div className="card-title">Options</div>
 
