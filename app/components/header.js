@@ -13,9 +13,9 @@ export default function Header() {
       <div className="flex-1">
         <Link href="/" className="btn btn-ghost text-xl font-bold rounded-lg">Chapter Generator</Link>
       </div>
-      <div className="flex-none">
+      {/* <div className="flex-none">
         {pathname !== "/" && <WarbandButton message="Re-roll" />}
-      </div>
+      </div> */}
     </header>
   </>
   );

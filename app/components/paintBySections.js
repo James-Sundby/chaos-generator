@@ -120,7 +120,7 @@ export default function PaintBySections({ sectionColors, selectedSections, handl
                     fill: sectionColors["Right-Thigh"] || "#ffffff",
                     cursor: "pointer",
                     stroke: selectedSections.includes("Right-Thigh") ? "#11ff44" : "none",
-                    strokeWidth: selectedSections.includes("Right-Thigh") ? "2px" : "0px",
+                    strokeWidth: selectedSections.includes("Right-Thigh") ? "3px" : "0px",
                 }}>
                 <path d="M132.2,245.913L133.413,248.688L134.215,255.841L123.783,279.012L119.573,273.433L116.845,270.518L113.312,267.428L108.905,264.281L103.356,261.372L98.747,259.646L93.688,258.373L88.929,257.756L84.627,257.59L80.485,257.878L77.391,258.414L72.792,259.499L88.961,210.502L92.815,210.09L95.823,204.529C100.359,205.538 104.695,206.847 108.974,208.241L109.609,209.784L110.483,215.568L111.17,218.83L112.17,221.901L113.888,225.792L115.574,228.69L117.462,231.122L120.925,234.623L125.177,238.464L129.06,241.858L131.087,244.157L132.2,245.913Z" />
             </g>
@@ -180,7 +180,7 @@ export default function PaintBySections({ sectionColors, selectedSections, handl
                     fill: sectionColors["Left-Thigh"] || "#ffffff",
                     cursor: "pointer",
                     stroke: selectedSections.includes("Left-Thigh") ? "#11ff44" : "none",
-                    strokeWidth: selectedSections.includes("Left-Thigh") ? "2px" : "0px",
+                    strokeWidth: selectedSections.includes("Left-Thigh") ? "3px" : "0px",
                 }}>
                 <path d="M132.2,245.894L133.413,248.688L134.215,255.841L123.783,279.012L119.573,273.433L116.845,270.518L113.312,267.428L108.905,264.281L103.356,261.372L98.747,259.646L93.688,258.373L88.929,257.756L84.627,257.59L80.485,257.878L77.391,258.414L72.792,259.499L88.961,210.502L92.815,210.09L95.823,204.529C100.359,205.538 104.695,206.847 108.974,208.241L109.609,209.784L110.483,215.568L112.247,221.998L113.888,225.792L115.574,228.69L117.462,231.122L120.925,234.623L125.177,238.464L129.06,241.858L131.087,244.157L132.2,245.894Z" />
             </g>
@@ -216,7 +216,7 @@ export default function PaintBySections({ sectionColors, selectedSections, handl
                     fill: sectionColors["Cod-Right"] || "#ffffff",
                     cursor: "pointer",
                     stroke: selectedSections.includes("Cod-Right") ? "#11ff44" : "none",
-                    strokeWidth: selectedSections.includes("Cod-Right") ? "3px" : "0px",
+                    strokeWidth: selectedSections.includes("Cod-Right") ? "4px" : "0px",
                 }}>
                 <path d="M148.137,200.236L148.137,240.18C146.665,239.749 145.317,239.539 143.989,238.964C142.814,238.455 141.664,237.498 140.48,236.662L138.737,234.967L135.704,230.258L133.568,225.571L131.708,220.261L129.417,213.223L127.895,208.152L125.693,200.96L125.172,198.387L125.429,196.066L126.213,194.529L127.001,194.399L127.611,194.616L130.03,196.273L133.582,198.092L138.049,199.212L142.962,199.889L148.137,200.236Z" />
             </g>
@@ -228,7 +228,7 @@ export default function PaintBySections({ sectionColors, selectedSections, handl
                     fill: sectionColors["Cod-Left"] || "#ffffff",
                     cursor: "pointer",
                     stroke: selectedSections.includes("Cod-Left") ? "#11ff44" : "none",
-                    strokeWidth: selectedSections.includes("Cod-Left") ? "3px" : "0px",
+                    strokeWidth: selectedSections.includes("Cod-Left") ? "4px" : "0px",
                 }}>
                 <path d="M148.011,200.236L148.011,239.943C144.993,239.357 142.736,237.98 140.456,236.594L138.289,234.29L135.704,230.258L133.473,225.587L131.565,220.276L129.244,213.302L125.629,200.976L125.093,198.276L125.287,195.892L126.213,194.529L127.001,194.399L127.611,194.616L130.03,196.273L133.582,198.092L138.049,199.212L142.962,199.889L148.011,200.236Z" />
             </g>
