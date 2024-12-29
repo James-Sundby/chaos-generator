@@ -21,7 +21,7 @@ export default function Home() {
           Free Paint
         </Link>
       </div>
-      <div className="fixed bottom-16 right-4 ml-4 z-50"><StorageAlert /></div>
+      <div className="fixed bottom-4 right-4 ml-4 z-50"><StorageAlert /></div>
       <Background />
     </main>
   );
