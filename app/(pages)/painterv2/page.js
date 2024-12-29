@@ -23,7 +23,6 @@ export default function Home() {
     const handleColorChange = (value) => {
         const color = colorList.find((c) => c.hex === value);
         if (!selectedSections.length) return;
-
         setColor(selectedSections, color.hex);
     };
 
@@ -36,15 +35,12 @@ export default function Home() {
     return (
         <main className="flex flex-1 flex-col justify-center items-center gap-4 px-4">
 
-            <div className="flex justify-center w-full max-w-96 sm:max-w-[52rem] ">
-
+            <aside className="flex justify-center w-full max-w-96 sm:max-w-[52rem] ">
                 <ImportWarband />
+            </aside>
 
-            </div>
-
-            <div className="flex flex-1 flex-col sm:flex-row gap-4 sm:gap-16 w-full justify-center items-center sm:items-start">
-
-                <div className="flex flex-col w-full max-w-96 gap-4">
+            <section className="flex flex-1 flex-col sm:flex-row gap-4 sm:gap-16 w-full justify-center items-center sm:items-start">
+                <section id="space-marine-display" className="flex flex-col w-full max-w-96 gap-4">
                     <div className="bg-white rounded-lg ">
                         <PaintBySections
                             sectionColors={sections}
@@ -52,18 +48,18 @@ export default function Home() {
                             handleSectionClick={handleSectionClick}
                         />
                     </div>
-                    <div
+                    <button
                         className="btn btn-primary rounded-lg"
                         onClick={() => {
                             setSelectedSections([]);
                             resetColors();
                         }}
+                        aria-label="Reset all colors and clear selections"
                     >
                         Reset to Blank
-                    </div>
-                </div>
-
-                <div className="card w-full max-w-96">
+                    </button>
+                </section>
+                <section id="customization-options" className="card w-full max-w-96">
                     <div className="card-body p-0">
                         <div className="flex flex-col gap-2">
                             <p className="card-title">Sections</p>
@@ -71,20 +67,24 @@ export default function Home() {
                                 Selected Sections: {selectedSections.length ? selectedSections.join(", ") : "None"}
                             </p>
 
-                            <div
+                            <button
                                 className="btn btn-primary rounded-lg mb-8"
                                 onClick={() => setSelectedSections([])}
+                                aria-label="Clear selected sections"
                             >
                                 Clear Selections
-                            </div>
+                            </button>
                         </div>
                         <div className="flex flex-col gap-2">
                             <p className="card-title">Colours</p>
-                            <label className="form-control w-full">
+                            <label htmlFor="color-select" className="form-control w-full">
                                 <select
+                                    id="color-select"
                                     onChange={(e) => handleColorChange(e.target.value)}
                                     value=""
                                     className="select select-bordered rounded-lg mb-8"
+                                    disabled={!selectedSections.length}
+                                    aria-label="Select a color"
                                 >
                                     <option value="" disabled>
                                         Select a color
@@ -97,13 +97,13 @@ export default function Home() {
                                 </select>
                             </label>
                         </div>
-                        <div className="flex flex-col gap-2">
-                            <p className="card-title">Paints Needed</p>
+                        <div className="flex flex-col gap-2" aria-labelledby="paints-needed-heading" >
+                            <p id="paints-needed-heading" className="card-title">Paints Needed</p>
                             <p>{getRequiredPaints().length ? getRequiredPaints().join(", ") : "White Scar"}</p>
                         </div>
                     </div>
-                </div>
-            </div>
+                </section>
+            </section>
         </main>
     );
 }

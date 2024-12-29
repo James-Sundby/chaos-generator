@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="flex flex-col flex-1 justify-center items-center px-4 relative">
-      <div className="flex flex-col gap-4 items-center w-full max-w-lg">
+      <div className="flex flex-col gap-4 items-center w-full max-w-md">
         <WarbandButton message="Generate a New Chapter" />
         <WarbandSearch />
         <Link
