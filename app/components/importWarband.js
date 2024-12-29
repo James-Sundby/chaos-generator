@@ -14,7 +14,7 @@ function setChapterSectionValues(chapter, setColor) {
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
                 "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
                 "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
-                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Eagle",
+                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt",
             ],
             secondary: ["Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"],
         },
@@ -33,7 +33,7 @@ function setChapterSectionValues(chapter, setColor) {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
                 "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
-                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Eagle", "Right-Hand",
+                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Right-Hand",
                 "Right-Forearm", "Left-Forearm", "Left-Hand"
             ],
             secondary: ["Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",],
@@ -42,7 +42,7 @@ function setChapterSectionValues(chapter, setColor) {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
                 "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
-                "Right-Backpack", "Left-Backpack", "Eagle", "Right-Hand",
+                "Right-Backpack", "Left-Backpack", "Right-Hand",
                 "Right-Forearm", "Left-Forearm", "Left-Hand"
             ],
             secondary: ["Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
@@ -53,7 +53,7 @@ function setChapterSectionValues(chapter, setColor) {
             primary: [
                 "Left-Shoulder-Trim", "Left-Shoulder-Pad", "Left-Boot", "Left-Shin", "Left-Thigh",
                 "Left-Helmet", "Cod-Left", "Torso-Left", "Left-Backpack",
-                "Left-Belt", "Eagle", "Left-Forearm", "Left-Hand"
+                "Left-Belt", "Left-Forearm", "Left-Hand"
             ],
             secondary: ["Right-Shoulder-Trim", "Right-Shoulder-Pad", "Right-Thigh", "Right-Boot", "Right-Shin",
                 "Cod-Right", "Torso-Right", "Right-Backpack", "Right-Hand", "Right-Forearm", "Right-Belt",
@@ -68,13 +68,13 @@ function setChapterSectionValues(chapter, setColor) {
             ],
             secondary: ["Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Boot", "Left-Shin", "Left-Thigh",
                 "Right-Helmet", "Cod-Left", "Torso-Right", "Right-Backpack", "Right-Belt",
-                "Eagle", "Right-Hand", "Right-Forearm",],
+                "Right-Hand", "Right-Forearm",],
         },
         Crusader: {
             primary: [
                 "Right-Shoulder-Trim", "Left-Shoulder-Trim", "Right-Thigh", "Right-Boot", "Left-Boot",
                 "Right-Shin", "Left-Shin", "Left-Thigh", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
-                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Eagle", "Right-Hand",
+                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Right-Hand",
                 "Right-Forearm", "Left-Forearm", "Left-Hand"
             ],
             secondary: ["Right-Shoulder-Pad", "Left-Shoulder-Pad", "Right-Helmet", "Left-Helmet",],
@@ -83,7 +83,7 @@ function setChapterSectionValues(chapter, setColor) {
             primary: [
                 "Right-Shoulder-Trim", "Left-Shoulder-Trim", "Right-Thigh", "Right-Boot", "Left-Boot",
                 "Left-Thigh", "Cod-Right", "Cod-Left", "Right-Backpack", "Left-Backpack", "Right-Belt",
-                "Left-Belt", "Eagle", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Left-Belt", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"
             ],
             secondary: ["Right-Shin", "Left-Shin", "Right-Helmet", "Left-Helmet", "Torso-Right",
                 "Torso-Left", "Right-Shoulder-Pad", "Left-Shoulder-Pad",
@@ -91,53 +91,54 @@ function setChapterSectionValues(chapter, setColor) {
         },
         Talons: {
             primary: [
-                "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
-                "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
-                "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
-                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Eagle", "Right-Hand",
-                "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Shoulder-Trim", "Left-Shoulder-Trim", "Cod-Right", "Cod-Left", "Torso-Right",
+                "Torso-Left", "Right-Belt", "Left-Belt", "Right-Hand", "Right-Forearm", "Left-Forearm",
+                "Left-Hand"
             ],
-            secondary: [],
+            secondary: ["Right-Backpack", "Left-Backpack", "Right-Shoulder-Pad", "Left-Shoulder-Pad",
+                "Right-Helmet", "Left-Helmet", "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin",
+                "Left-Shin", "Left-Thigh",
+            ],
         },
         Accipiters: {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
-                "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
-                "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
-                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Eagle", "Right-Hand",
-                "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Helmet", "Left-Helmet", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"
             ],
-            secondary: [],
+            secondary: ["Right-Backpack", "Left-Backpack", "Torso-Right", "Torso-Left", "Right-Belt",
+                "Left-Belt", "Cod-Right", "Cod-Left", "Right-Thigh", "Right-Boot", "Left-Boot",
+                "Right-Shin", "Left-Shin", "Left-Thigh",
+            ],
         },
         Blazoned: {
             primary: [
-                "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
-                "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
-                "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
-                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Eagle", "Right-Hand",
-                "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Backpack", "Left-Backpack", "Right-Shoulder-Trim", "Left-Shoulder-Trim",
+                "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left", "Right-Belt", "Left-Belt",
+
             ],
-            secondary: [],
+            secondary: ["Right-Shoulder-Pad", "Left-Shoulder-Pad", "Right-Helmet", "Left-Helmet", "Right-Hand",
+                "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
+                "Right-Forearm", "Left-Forearm", "Left-Hand"],
         },
         Eradicant: {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
-                "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
-                "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
-                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Eagle", "Right-Hand",
-                "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Backpack", "Left-Backpack", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"
             ],
-            secondary: [],
+            secondary: ["Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
+                "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
+                "Right-Belt", "Left-Belt",
+            ],
         },
         Scythes: {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
                 "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
-                "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
-                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Eagle", "Right-Hand",
-                "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Helmet", "Left-Helmet", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"
             ],
-            secondary: [],
+            secondary: ["Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Cod-Right", "Cod-Left",
+                "Torso-Right", "Torso-Left",
+            ],
         },
     };
 
@@ -149,6 +150,7 @@ function setChapterSectionValues(chapter, setColor) {
     const { primary, secondary } = patternMappings[pattern];
     if (primary.length > 0) setColor(primary, primaryColor);
     if (secondary.length > 0) setColor(secondary, secondaryColor);
+    setColor(['Ribbing', 'Eagle'], "#3E494A");
 }
 
 export default function ImportWarband() {
