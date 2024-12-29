@@ -26,7 +26,6 @@ export default function WarbandPage() {
                     const response = await fetch(`/api/chapter-generator?slug=${params.slug}`);
                     if (response.ok) {
                         const fetchedWarband = await response.json();
-                        console.log(fetchedWarband);
                         setWarband(fetchedWarband);
                         if (params.slug !== fetchedWarband.slug) {
                             router.replace(`/chapter/${fetchedWarband.slug}`);
