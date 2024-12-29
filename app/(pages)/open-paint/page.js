@@ -35,12 +35,12 @@ export default function Home() {
     return (
         <main className="flex flex-1 flex-col justify-center items-center gap-4 px-4">
 
-            <aside className="flex justify-center w-full max-w-96 sm:max-w-[52rem] ">
+            <aside className="w-full max-w-96 sm:max-w-[52rem] ">
                 <ImportWarband />
             </aside>
 
-            <section className="flex flex-1 flex-col sm:flex-row gap-4 sm:gap-16 w-full justify-center items-center sm:items-start">
-                <section id="space-marine-display" className="flex flex-col w-full max-w-96 gap-4">
+            <section className="flex flex-grow flex-col sm:flex-row gap-4 sm:gap-16 w-full justify-center items-center sm:items-start">
+                <section id="space-marine-display" className="grid grid-cols-1 w-full max-w-96 gap-4">
                     <div className="bg-white rounded-lg ">
                         <PaintBySections
                             sectionColors={sections}

@@ -21,14 +21,14 @@ export default function StorageAlert() {
     return (
         <>
             {showAlert && (
-                <div role="alert" className="card card-compact bg-base-300 max-w-sm shadow-lg">
+                <div role="alert" className="card card-compact bg-base-300 max-w-xs shadow-lg rounded-lg border border-primary">
                     <div className="card-body">
-                        <p className="w-full h-auto">
+                        <p className="">
                             This site uses session storage to temporarily save your chapter data and paint scheme to your browser. This data is not shared or stored after your session ends.
                         </p>
                         <div className="card-actions justify-end">
                             <button
-                                className="btn btn-sm btn-primary"
+                                className="btn btn-sm btn-primary rounded-lg"
                                 onClick={handleDismiss}
                             >
                                 Got it
