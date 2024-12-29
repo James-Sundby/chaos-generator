@@ -5,6 +5,7 @@ import { metals } from "@/lib/metals";
 import { patterns } from "@/lib/armourPatterns";
 import { modelComponents } from "@/app/components/componentsMap";
 import { useWarbandStore } from "@/app/stores/warbandStore";
+import { useRouter } from "next/navigation";
 
 const Dropdown = ({ label, options, value, onChange }) => (
     <label className="form-control w-full max-w-xs">
@@ -51,6 +52,7 @@ const generateSlug = ({ warbandName, colors, pattern, metal }) => {
 export default function Painter() {
     const warband = useWarbandStore((state) => state.warband);
     const setWarband = useWarbandStore((state) => state.setWarband);
+    const router = useRouter();
 
     const updateWarband = (updatedProperties) => {
         const updatedWarband = { ...warband, ...updatedProperties };
@@ -170,8 +172,15 @@ export default function Painter() {
                         value={warband.pattern}
                         onChange={handlePatternChange}
                     />
+
+
                 </div>
+                <button className="btn btn-primary rounded-lg mt-4" onClick={() => router.push(`/chapter/${warband.slug}`)}>
+                    Back to Randomizer
+                </button>
             </div>
+
+
         </main>
     );
 }
