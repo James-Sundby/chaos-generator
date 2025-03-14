@@ -39,7 +39,7 @@ export default function Home() {
                 <ImportWarband />
             </aside>
 
-            <section className="flex flex-grow flex-col sm:flex-row gap-4 sm:gap-16 w-full justify-center items-center sm:items-start">
+            <section className="flex grow flex-col sm:flex-row gap-4 sm:gap-16 w-full justify-center items-center sm:items-start">
                 <section id="space-marine-display" className="grid grid-cols-1 w-full max-w-96 gap-4">
                     <div className="bg-white rounded-lg ">
                         <PaintBySections
