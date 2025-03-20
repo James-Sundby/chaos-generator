@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Space Marine Chapter Generator
+
+A web-based tool for Warhammer 40K hobbyists to create unique Space Marine chapter color schemes. Generates random color combinations for armor, weapons, and heraldry.
+
+![Space Marine Generator Screenshot](./images/main.png)
+
+## Features
+
+- **Randomized color schemes** – Generates three unique colors for your chapter.
+- **Inspiration for painters** – Helps hobbyists visualize unique Space Marine liveries.
+- **Simple and fast** – Generate new schemes with a single click.
+- **Accessible design** – Mobile-friendly interface with a clean UI.
+
+## 📸 Screenshots
+
+| Home Screen                                            | Chapter Generator                          |
+| ------------------------------------------------------ | ------------------------------------------ |
+| ![Home Screen](./images/homescreen.png)                | ![Chapter Generator](./images/chapter.png) |
+| Chapter Customizer                                     | Free Paint                                 |
+| ---------------------------------                      | --------------------------------           |
+| ![Chapter Customizer](./images/chapter-customizer.png) | ![Free Paint](./images/free-paint.png)     |
 
 ## Getting Started
 
-First, run the development server:
+To run this project locally, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 1️⃣ Clone the Repository
+
+```sh
+git clone https://github.com/James-Sundby/chaos-generator.git
+cd chaos-generator
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ Install Dependencies
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```sh
+npm install
+# or
+yarn install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 3️⃣ Run the App
 
-## Learn More
+```sh
+npm run dev
 
-To learn more about Next.js, take a look at the following resources:
+# or
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+yarn dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The app will be available at http://localhost:3000
 
-## Deploy on Vercel
+## API
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The Space Marine Generator includes a dynamic API endpoint that allows users to generate and retrieve Space Marine chapter details based on a unique slug.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### **Endpoint**
+
+```
+GET /api/chapter-generator
+```
+
+### **Query Parameters**
+
+- **slug** _(optional)_ – If provided, the API will parse the slug and return the corresponding warband details. Otherwise, a new warband will be generated.
+
+### **Response Format**
+
+A successful request returns JSON with the following structure:
+
+```json
+{
+  "message": "new warband",
+  "warbandName": "The Virtuous Storm",
+  "colors": [
+    { "hex": "#664A22", "name": "XV-88" },
+    { "hex": "#8CBDA5", "name": "Gauss Blaster Green" }
+  ],
+  "pattern": "Quartered",
+  "slug": "the-virtuous-storm-664A22-8CBDA5-arms-ldb",
+  "metal": {
+    "code": "ldb",
+    "name": "Leadbelcher",
+    "hex1": "#f0f0f0",
+    "hex2": "#8a8a8a",
+    "hex3": "#152724"
+  }
+}
+```
+
+If the slug is invalid or not provided, a new warband is generated.
+
+## State Management with Zustand
+
+This project uses Zustand for managing application state across various pages. Zustand handles:
+
+- **Generated Warband Data** – Stores chapter name, colors, armor pattern, and associated metal.
+
+## Tech Stack
+
+- **Next.js** – React framework for fast and scalable web apps.
+- **Tailwind CSS** – Styling for a clean and modern UI.
+- **Zustand** – Lightweight state management.
+- **Custom API** – Fetches random color combinations and generates Space Marine chapter names dynamically.
+
+## Contributing
+
+If you have suggestions or improvements, feel free to open an issue or submit a pull request.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
