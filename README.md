@@ -110,4 +110,4 @@ If you have suggestions or improvements, feel free to open an issue or submit a 
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE). x
+This project is open source and available under the [MIT License](LICENSE).
