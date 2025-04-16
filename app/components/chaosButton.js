@@ -3,25 +3,26 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { useWarbandStore } from "../stores/warbandStore";
+import { useChaosStore } from "@/app/stores/chaosStore";
 
-export default function WarbandButton({ message }) {
+export default function ChaosButton({ message }) {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const setWarband = useWarbandStore((state) => state.setWarband);
+    const setChaosBand = useChaosStore((state) => state.setChaosBand);
 
-    const generateWarband = async () => {
+    const generateChaosBand = async () => {
         try {
             setLoading(true);
-            const res = await fetch("/api/chapter-generator", {
+            const res = await fetch("/api/warband-generator", {
                 method: "GET",
             });
             const data = await res.json();
+            console.log("Chaos Data", data)
             // console.log(slug);
-            setWarband(data);
-            router.push(`/chapter/${data.slug}`);
+            setChaosBand(data);
+            router.push(`/chaos/${data.slug}`);
         } catch (error) {
-            // console.error("Failed to fetch Chapter data:", error);
+            // console.error("Failed to fetch Warband data:", error);
         } finally {
             setLoading(false);
         }
@@ -29,8 +30,8 @@ export default function WarbandButton({ message }) {
 
     return (
         <button
-            onClick={generateWarband}
-            className="btn btn-primary rounded-lg items-center justify-center w-full h-auto px-6 py-2"
+            onClick={generateChaosBand}
+            className="btn btn-error rounded-lg items-center justify-center w-full h-auto px-6 py-2"
             disabled={loading}
         >
             {loading ?
