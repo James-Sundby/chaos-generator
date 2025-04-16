@@ -20,6 +20,12 @@ export default function Home() {
           </svg>
           Open Paint
         </Link>
+        <Link
+          className="btn btn-error rounded-lg items-center justify-center w-full h-auto px-6 py-2"
+          href={"/chaos"}
+        >
+          Coming Soon - preview
+        </Link>
       </div>
       <div className="fixed bottom-4 right-4 ml-4 z-50"><StorageAlert /></div>
       <Background />
