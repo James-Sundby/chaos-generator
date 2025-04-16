@@ -1,45 +1,37 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function StorageAlert() {
     const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
-        // Check if the alert has already been dismissed in the current session
         const alertDismissed = sessionStorage.getItem("storageAlertDismissed");
         if (!alertDismissed) {
-            setShowAlert(true); // Show the alert if it hasn't been dismissed
+            setShowAlert(true);
         }
     }, []);
 
     const handleDismiss = () => {
-        sessionStorage.setItem("storageAlertDismissed", "true"); // Mark the alert as dismissed for the session
+        sessionStorage.setItem("storageAlertDismissed", "true");
         setShowAlert(false);
     };
 
     return (
         <>
             {showAlert && (
-                // <div role="alert" className="card card-sm bg-base-300 max-w-xs shadow-lg rounded-lg border border-primary">
-                //     <div className="card-body">
-                //         <p className="">
-                //             This site uses session storage to temporarily save your chapter data and paint scheme to your browser. This data is not shared or stored after your session ends.
-                //         </p>
-                //         <div className="card-actions justify-end">
-                //             <button
-                //                 className="btn btn-sm btn-primary rounded-lg"
-                //                 onClick={handleDismiss}
-                //             >
-                //                 Got it
-                //             </button>
-                //         </div>
-                //     </div>
-                // </div>
-                <div role="alert" className="alert alert-vertical max-w-xs text-left rounded-lg border border-primary">
-                    <p className="">
-                        This site uses session storage to temporarily save your chapter data and paint scheme to your browser. This data is not shared or stored after your session ends.
-                    </p>
+                <div
+                    role="alert"
+                    className="alert max-w-md mx-auto my-8 rounded-lg border border-primary text-sm shadow"
+                >
+                    <div className="flex flex-col gap-2">
+                        We use session storage to keep your chapter and paint data while you&apos;re here. It&apos;s gone when you close this tab.
+                        <Link href="/privacy" className="link link-hover" aria-label="Read the privacy policy">
+                            Learn more
+                        </Link>
+                    </div>
+
                     <button
                         className="btn btn-primary rounded-lg ml-auto"
                         onClick={handleDismiss}

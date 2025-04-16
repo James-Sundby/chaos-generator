@@ -8,7 +8,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Chapter Generator",
-  description: "Generate a random Space Marine chapter, or create and customize your own Space Marine chapter with our open painter.",
+  description:
+    "An unofficial fan tool for creating custom Space Marine chapters. Generate random colors or design your own from scratch.",
   creator: "James",
   publisher: "James",
   keywords: "Space Marines, Chapter Generator, Paint Schemes, Color Schemes, Customization, Chapter Creator, Painting Guide, Hobby Tools, Miniature Painting, Chapter Customizer, Hobbyist Tools",
@@ -28,15 +29,15 @@ export const metadata = {
   },
   openGraph: {
     title: "Chapter Generator",
-    description: "Generate a random Space Marine chapter, or create and customize your own Space Marine chapter with our open painter.",
+    description: "Stuck with primer? Generate a chapter and break the block.",
     url: "https://chaos-generator.vercel.app",
     siteName: "Chapter Generator",
     images: [
       {
-        url: "/card.png",
+        url: "/card.jpg",
         width: 1200,
-        height: 600,
-        alt: "Grey card with 6 randomly generated space marine colour schemes",
+        height: 630,
+        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
       },
     ],
     locale: 'en_US',
@@ -45,8 +46,13 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Chapter Generator",
-    description: "Generate a random Space Marine chapter, or create and customize your own Space Marine chapter with our open painter.",
-    images: ["/card.png"],
+    description: "Stuck with primer? Generate a chapter and break the block.",
+    images: [
+      {
+        url: "/card.jpg",
+        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
+      }
+    ],
   },
 };
 
