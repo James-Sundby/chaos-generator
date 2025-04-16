@@ -54,7 +54,7 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
     }
 
     return (
-        <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-80 h-fit rounded-lg">
+        <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 h-fit rounded-lg">
             <div className="card-body p-2 m-2 bg-white rounded-lg">
                 <h2 className="card-title justify-center text-center">{warbandName}</h2>
                 <div className="h-96">{ImageDisplay(patternName)}</div>
