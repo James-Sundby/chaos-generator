@@ -1,13 +1,15 @@
 # Space Marine Chapter Generator
 
-A web-based tool for Warhammer 40K hobbyists to create unique Space Marine chapter color schemes. Generates random color combinations for armor, weapons, and heraldry.
+> ⚠️ This is an unofficial fan-made project. Not affiliated with Games Workshop.
+
+An unofficial web-based tool for Warhammer 40K hobbyists to create unique Space Marine chapter color schemes. Generates random color combinations for armor, weapons, and heraldry.
 
 ![Space Marine Generator Screenshot](./images/main.png)
 
 ## Features
 
-- **Randomized color schemes** – Generates three unique colors for your chapter.
-- **Inspiration for painters** – Helps hobbyists visualize unique Space Marine liveries.
+- **Randomized color schemes** – Generates three unique colors for your custom chapter.
+- **Inspiration for painters** – Helps hobbyists visualize original chapter liveries.
 - **Simple and fast** – Generate new schemes with a single click.
 - **Accessible design** – Mobile-friendly interface with a clean UI.
 
@@ -107,6 +109,12 @@ This project uses Zustand for managing application state across various pages. Z
 ## Contributing
 
 If you have suggestions or improvements, feel free to open an issue or submit a pull request.
+
+## Disclaimer
+
+This project is an unofficial fan tool and is not affiliated with, endorsed by, or supported by Games Workshop.
+
+All names, logos, characters, and distinctive likenesses related to Warhammer 40K are the intellectual property of Games Workshop. This tool does not use any official artwork, rules, or assets, and is intended solely for non-commercial, fan-driven hobby use.
 
 ## License
 
