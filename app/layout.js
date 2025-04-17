@@ -30,7 +30,7 @@ export const metadata = {
   openGraph: {
     title: "Chapter Generator",
     description: "Stuck with primer? Generate a chapter and break the block.",
-    url: "https://chaos-generator.vercel.app",
+    url: "https://chapter-gen.jsundby.dev",
     siteName: "Chapter Generator",
     images: [
       {
