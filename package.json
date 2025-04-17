@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@eslint/config-array": "^0.19.1",
+    "@eslint/config-array": "^0.19.2",
     "@eslint/object-schema": "^2.1.5",
     "chaos-generator": "file:",
     "glob": "^11.0.0",
