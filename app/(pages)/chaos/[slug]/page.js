@@ -86,7 +86,7 @@ export default function Page() {
 
             <div className="flex flex-col w-full max-w-96 items-center justify-center">
                 <div className="w-full">
-                    <ChaosButton message="Re-roll" />
+                    <ChaosButton message="Roll" />
                 </div>
             </div>
         </main>
