@@ -50,7 +50,7 @@ export default function Page() {
     const { warbandName, colors = [], slug } = chaosBand;
 
     return (
-        <main className="flex flex-1 flex-col gap-4 sm:gap-8 items-center justify-center px-4">
+        <main className="flex flex-1 flex-col gap-4 sm:gap-8 px-4 items-center sm:justify-center">
             <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 rounded-lg">
                 <div className="card-body p-2 m-2 bg-white rounded-lg">
                     <h1 className="card-title justify-center text-center">{warbandName}</h1>
