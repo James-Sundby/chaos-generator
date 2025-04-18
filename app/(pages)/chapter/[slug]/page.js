@@ -48,7 +48,7 @@ export default function WarbandPage() {
 
 
     return (
-        <main className="flex flex-1 flex-col gap-4 sm:gap-16 items-center justify-center p-4">
+        <main className="flex flex-1 flex-col sm:flex-row gap-4 sm:gap-8 items-center justify-center p-4">
             <TradingCard
                 warbandName={warband.warbandName}
                 namedColors={warband.colors}
@@ -58,9 +58,9 @@ export default function WarbandPage() {
                 isLoading={isLoading}
                 error={error}
             />
-            <div className="flex flex-col w-full max-w-96 items-center justify-center">
-                <div className="w-full max-w-96 mb-4">
-                    <WarbandButton message="Re-roll" />
+            <div className="flex flex-row sm:flex-col w-full max-w-96 items-center justify-center gap-4">
+                <div className="w-full max-w-96">
+                    <WarbandButton message="New" />
                 </div>
                 <div className="w-full max-w-96">
                     <CustomizerButton />
