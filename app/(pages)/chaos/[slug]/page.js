@@ -54,7 +54,7 @@ export default function Page() {
             <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 rounded-lg">
                 <div className="card-body p-2 m-2 bg-white rounded-lg">
                     <h1 className="card-title justify-center text-center">{warbandName}</h1>
-                    <div className="h-auto">
+                    <div className="h-[50dvh] sm:h-auto">
                         <ChaosMarine
                             body={colors[0]?.hex}
                             edge={colors[1]?.hex}
