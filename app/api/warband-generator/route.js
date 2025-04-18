@@ -28,7 +28,20 @@ function generateWarbandName() {
 }
 
 function generateRandomColors() {
-    return colorList.sort(() => 0.5 - Math.random()).slice(0, 3);
+    const shuffled = [...colorList].sort(() => 0.5 - Math.random());
+
+    const baseColors = shuffled.slice(0, 2);
+
+    const nonMetal = shuffled.find(
+        color =>
+            color.type !== "Metallic" &&
+            !baseColors.some(c => c.hex.toLowerCase() === color.hex.toLowerCase())
+    );
+
+    return [
+        ...baseColors,
+        nonMetal ?? { name: "White Scar", hex: "#FFFFFF", type: "Base", brand: "Citadel" }
+    ];
 }
 
 function generateSlug(name, colors) {
@@ -102,7 +115,7 @@ export async function GET(req) {
             }
         );
     } catch (error) {
-        console.error("Error generating Chapter data:", error);
+        //console.error("Error generating Chapter data:", error);
         return new Response(
             JSON.stringify({ error: "Internal Server Error", message: error.message }),
             { status: 500, headers: { "Content-Type": "application/json" } }
