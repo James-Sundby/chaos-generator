@@ -9,8 +9,7 @@ export default function ChaosMarine({ body, edge, accent }) {
 
     return (
         <svg
-            width="100%"
-            height="100%"
+            className="w-full h-full"
             viewBox="0 0 2293 3072"
             style={{
                 fillRule: "evenodd",

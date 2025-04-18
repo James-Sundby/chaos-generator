@@ -50,11 +50,11 @@ export default function Page() {
     const { warbandName, colors = [], slug } = chaosBand;
 
     return (
-        <main className="flex flex-1 flex-col gap-4 sm:gap-16 items-center justify-center p-4">
-            <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 h-fit rounded-lg">
+        <main className="flex flex-1 flex-col gap-4 sm:gap-8 items-center justify-center px-4">
+            <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 rounded-lg">
                 <div className="card-body p-2 m-2 bg-white rounded-lg">
                     <h1 className="card-title justify-center text-center">{warbandName}</h1>
-                    <div className="h-96">
+                    <div className="h-[45svh] sm:h-auto">
                         <ChaosMarine
                             body={colors[0]?.hex}
                             edge={colors[1]?.hex}
@@ -86,7 +86,7 @@ export default function Page() {
 
             <div className="flex flex-col w-full max-w-96 items-center justify-center">
                 <div className="w-full">
-                    <ChaosButton message="Re-roll" />
+                    <ChaosButton message="Roll" />
                 </div>
             </div>
         </main>

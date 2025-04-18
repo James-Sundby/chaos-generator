@@ -8,12 +8,12 @@ import { useWarbandStore } from "@/app/stores/warbandStore";
 import { useRouter } from "next/navigation";
 
 const Dropdown = ({ label, options, value, onChange }) => (
-    <label className="form-control w-full max-w-xs">
+    <label className="form-control w-full">
         <div className="label label-text">{label}:</div>
         <select
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="select select-bordered rounded-lg"
+            className="select select-bordered rounded-lg w-full"
             aria-label={`Select ${label}`}
         >
             {options.map((option, index) => (
@@ -84,11 +84,11 @@ export default function Painter() {
         warband.colors[0]?.hex !== warband.colors[1]?.hex;
 
     return (
-        <main className="flex flex-1 flex-col sm:flex-row justify-center items-center gap-4 sm:gap-16 px-4">
+        <main className="flex flex-1 flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 px-4">
             <div className="card bg-yellow-600 text-neutral w-full max-w-96 h-fit rounded-lg">
                 <div className="card-body p-2 m-2 bg-white rounded-lg">
-                    <h2 className="card-title justify-center">{warband.warbandName}</h2>
-                    <div className="h-96">
+                    <h1 className="card-title justify-center">{warband.warbandName}</h1>
+                    <div className="h-[45svh] sm:h-auto">
                         <ImageDisplay
                             pattern={warband.pattern}
                             colors={warband.colors}
@@ -130,17 +130,17 @@ export default function Painter() {
                     </div>
                 </div>
             </div>
-            <div className="card w-full max-w-80">
+            <div className="card w-full max-w-96">
                 <div className="card-body p-0">
                     <div className="card-title">Options</div>
 
-                    <label className="form-control w-full max-w-xs">
+                    <label className="form-control w-full">
                         <div className="label label-text">Name:</div>
                         <input
                             type="text"
                             value={warband.warbandName}
                             onChange={(e) => handleNameChange(e.target.value)}
-                            className="input input-bordered rounded-lg"
+                            className="input input-bordered rounded-lg w-full"
                             maxLength={50}
                         />
                     </label>
