@@ -33,8 +33,7 @@ export default function Home() {
     };
 
     return (
-        <main className="flex flex-1 flex-col justify-center items-center gap-4 px-4">
-
+        <main className="flex flex-1 flex-col justify-center items-center gap-4 px-4 pb-4">
             <aside className="w-full max-w-96 sm:max-w-[52rem] ">
                 <ImportWarband />
             </aside>
