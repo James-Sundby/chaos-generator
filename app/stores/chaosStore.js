@@ -7,6 +7,7 @@ export const useChaosStore = create(
             chaosBand: {
                 warbandName: 'Loading...',
                 slug: 'loading',
+                pattern: 'Basic',
                 colors: [
                     { name: "White Scar", hex: "#FFFFFF" },
                     { name: "White Scar", hex: "#FFFFFF" },
@@ -24,6 +25,7 @@ export const useChaosStore = create(
                     chaosBand: {
                         warbandName: '',
                         slug: '',
+                        pattern: '',
                         colors: [],
                         message: '',
                     },

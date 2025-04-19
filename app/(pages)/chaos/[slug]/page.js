@@ -47,7 +47,7 @@ export default function Page() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const { warbandName, colors = [], slug } = chaosBand;
+    const { warbandName, colors = [], slug, pattern } = chaosBand;
 
     return (
         <main className="flex flex-1 flex-col gap-4 sm:gap-8 p-4 items-center sm:justify-center">
@@ -56,31 +56,40 @@ export default function Page() {
                     <h1 className="card-title justify-center text-center">{warbandName}</h1>
                     <div className="h-[45svh] sm:h-auto">
                         <ChaosMarine
-                            body={colors[0]?.hex}
-                            edge={colors[1]?.hex}
-                            accent={colors[2]?.hex}
+                            primary={colors[0]?.hex}
+                            secondary={colors[1]?.hex}
+                            edge={colors[2]?.hex}
+                            accent={colors[3]?.hex}
+                            pattern={pattern}
                         />
                     </div>
                     <div className="flex flex-1 join join-horizontal rounded-lg">
-                        {(colors || []).map((color, index) => (
-                            <div
-                                key={index}
-                                className="w-full h-8 join-item border border-neutral"
-                                style={{ backgroundColor: color.hex }}
-                                title={color.name}
-                            ></div>
-                        ))}
+                        {(pattern === "Basic"
+                            ? [0, 2, 3] // only these indices for Basic
+                            : colors.map((_, i) => i) // otherwise use all indices
+                        ).map(index => {
+                            const color = colors[index];
+                            return (
+                                color && (
+                                    <div
+                                        key={index}
+                                        className="w-full h-8 join-item border border-neutral"
+                                        style={{ backgroundColor: color.hex }}
+                                        title={color.name}
+                                    />
+                                )
+                            );
+                        })}
                     </div>
 
-                    <p className="text-sm">
-                        <span className="font-bold">
-                            {colors[0]?.name}, {colors[1]?.name}, {colors[2]?.name}
-                        </span>
+                    <p className="text-sm font-bold">
+                        {pattern === "Basic"
+                            ? [colors[0].name, colors[2].name, colors[3].name].join(", ")
+                            : [colors[0].name, colors[1].name, colors[2].name, colors[3]?.name].join(", ")
+                        }
                     </p>
 
-                    <div className="justify-end text-xs">
-                        <p className="font-bold">ID: <span className="font-normal">{slug}</span></p>
-                    </div>
+                    <p className="font-bold text-xs text-wrap">ID: <span className="font-normal">{slug}</span></p>
                 </div>
             </div>
 

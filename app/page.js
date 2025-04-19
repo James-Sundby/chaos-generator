@@ -24,7 +24,7 @@ export default function Home() {
         </Link>
         <ChaosButton message="Roll for Chaos - WiP preview" />
       </div>
-      <div className="fixed bottom-4 right-4 ml-4 z-50"><StorageAlert /></div>
+      {/* <div className="fixed bottom-4 right-4 ml-4 z-50"><StorageAlert /></div> */}
       <Background />
     </main>
   );
