@@ -1,9 +1,12 @@
 export const dynamic = 'force-dynamic';
 
 import { colorList } from "@/lib/colors2";
+import { chaosPatterns } from "@/lib/armourPatterns";
+
 import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives } from "@/lib/chaosData";
 
 const colorMap = Object.fromEntries(colorList.map((color) => [color.hex.toLowerCase(), color]));
+const patternsSet = new Set(chaosPatterns.map((p) => p.toLowerCase()));
 
 function randomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
@@ -17,7 +20,7 @@ function generateWarbandName() {
         () => `${randomElement(adjectives)} ${randomElement(warriorTerms)} of ${randomElement(darkEntities)}`,
         () => `${randomElement(abstractNouns)} of ${randomElement([...darkEntities, ...chaoticDescriptors])}`,
         () => `The ${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
-        () => `Children of ${randomElement(chaoticDescriptors)}`,
+        () => `Children of the ${randomElement(chaoticDescriptors)}`,
         () => `${randomElement(adjectives)} ${randomElement(warriorTerms)} of ${randomElement(abstractNouns)}`,
         () => `The ${randomElement(chaoticDescriptors)} ${randomElement(warriorTerms)}`,
         () => `The ${randomElement(warriorTerms)} of ${randomElement(chaoticDescriptors)}`,
@@ -29,9 +32,7 @@ function generateWarbandName() {
 
 function generateRandomColors() {
     const shuffled = [...colorList].sort(() => 0.5 - Math.random());
-
-    const baseColors = shuffled.slice(0, 2);
-
+    const baseColors = shuffled.slice(0, 3);
     const nonMetal = shuffled.find(
         color =>
             color.type !== "Metallic" &&
@@ -44,15 +45,20 @@ function generateRandomColors() {
     ];
 }
 
-function generateSlug(name, colors) {
+function generateRandomPattern() {
+    return randomElement(chaosPatterns);
+}
+
+function generateSlug(name, colors, pattern) {
     const nameSlug = name
         .toLowerCase()
         .replace(/[^a-z0-9 ]/g, "")
         .replace(/\s+/g, "-")
         .trim();
     const colorSlug = colors.map(color => color.hex.replace("#", "")).join("-");
+    const patternSlug = pattern.toLowerCase();
 
-    return `${nameSlug}-${colorSlug}`;
+    return `${nameSlug}-${colorSlug}-${patternSlug}`;
 }
 
 function capitalizeName(name) {
@@ -73,10 +79,16 @@ export async function GET(req) {
     if (slug) {
         const slugParts = slug.split("-");
         try {
+            const patternCode = slugParts.pop();
+            const isValidPattern = patternsSet.has(patternCode);
+            if (!isValidPattern) throw new Error(`Invalid pattern code: ${patternCode}`);
+            const patternCapital = capitalizeName(patternCode);
+
+            const colorHex4 = `#${slugParts.pop()}`;
             const colorHex3 = `#${slugParts.pop()}`;
             const colorHex2 = `#${slugParts.pop()}`;
             const colorHex1 = `#${slugParts.pop()}`;
-            const namedColors = [colorHex1, colorHex2, colorHex3].map((hex) => {
+            const namedColors = [colorHex1, colorHex2, colorHex3, colorHex4].map((hex) => {
                 const color = colorMap[hex.toLowerCase()];
                 if (!color) throw new Error(`Color not found for hex: ${hex}`);
                 return color;
@@ -90,6 +102,7 @@ export async function GET(req) {
                     message: "valid",
                     warbandName,
                     colors: namedColors,
+                    pattern: patternCapital,
                     slug,
                 }),
                 { status: 200 }
@@ -103,10 +116,11 @@ export async function GET(req) {
     try {
         const warbandName = generateWarbandName();
         const colors = generateRandomColors();
-        const newSlug = generateSlug(warbandName, colors);
+        const pattern = generateRandomPattern();
+        const newSlug = generateSlug(warbandName, colors, pattern);
 
         return new Response(
-            JSON.stringify({ message: "new warband", warbandName, colors, slug: newSlug }),
+            JSON.stringify({ message: "new warband", warbandName, colors, pattern, slug: newSlug }),
             {
                 status: 200,
                 headers: {

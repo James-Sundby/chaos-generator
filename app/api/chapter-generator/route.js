@@ -100,7 +100,7 @@ export async function GET(req) {
                 { status: 200 }
             );
         } catch (error) {
-            console.warn("Invalid slug, generating a new warband instead:");
+            console.warn("Invalid slug, generating a new chapter instead:");
         }
     }
 

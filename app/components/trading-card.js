@@ -1,24 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { modelComponents } from "./componentsMap";
 
-export default function TradingCard({ warbandName, namedColors, slug, patternName, metal, isLoading, error }) {
-    const [loadingTime, setLoadingTime] = useState(0);
-    const router = useRouter();
-
-    // Increment loading time while isLoading is true
-    useEffect(() => {
-        if (isLoading) {
-            const interval = setInterval(() => {
-                setLoadingTime((prevTime) => prevTime + 1);
-            }, 1000);
-
-            return () => clearInterval(interval); // Cleanup on component unmount or when loading stops
-        } else {
-            setLoadingTime(0); // Reset loading time when loading stops
-        }
-    }, [isLoading]);
+export default function TradingCard({ warbandName, namedColors, slug, patternName, metal }) {
 
     function ImageDisplay(patternName) {
         const Component = modelComponents[patternName];
@@ -29,28 +14,6 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
                 metals={[metal.hex1, metal.hex2, metal.hex3]}
             />
         ) : null;
-    }
-
-    if (loadingTime >= 5) {
-        return (
-            <div className="flex flex-1 flex-col justify-center items-center gap-4">
-                <p className="text-error font-bold">Error loading data. Please try again later.</p>
-                <button className="btn btn-primary rounded-lg" onClick={() => router.push("/")}>
-                    Go Back to Home
-                </button>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="flex flex-1 flex-col justify-center items-center gap-4">
-                <p className="text-error font-bold">{error}</p>
-                <button className="btn btn-primary rounded-lg" onClick={() => router.push("/")}>
-                    Go Back to Home
-                </button>
-            </div>
-        );
     }
 
     return (
