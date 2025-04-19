@@ -12,6 +12,7 @@ export const useChaosStore = create(
                     { name: "White Scar", hex: "#FFFFFF" },
                     { name: "White Scar", hex: "#FFFFFF" },
                     { name: "White Scar", hex: "#FFFFFF" },
+                    { name: "White Scar", hex: "#FFFFFF" },
                 ],
                 message: '',
             },
