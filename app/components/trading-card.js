@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-
 import { modelComponents } from "./componentsMap";
 
 export default function TradingCard({ warbandName, namedColors, slug, patternName, metal }) {
@@ -17,7 +14,7 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
     }
 
     return (
-        <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 h-fit rounded-lg">
+        <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 rounded-lg opacity-0 animate-fade-in">
             <div className="card-body p-2 m-2 bg-white rounded-lg">
                 <h1 className="card-title justify-center text-center">{warbandName}</h1>
                 <div className="h-[45svh] sm:h-auto">{ImageDisplay(patternName)}</div>
@@ -40,16 +37,15 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
                     ></div>
                 </div>
 
-                <p className="text-sm">
-                    <span className="font-bold">
-                        {namedColors[0]?.name}, {namedColors[1]?.name}, {metal.name}
-                    </span>
+                <p className="text-sm font-bold">
+                    {namedColors[0]?.name}, {namedColors[1]?.name}, {metal.name}
                 </p>
 
-                <div className="justify-end text-xs">
-                    <p className="font-bold">ID: <span className="font-normal">{slug}</span></p>
+                <p className="justify-end text-xs font-bold">
+                    ID: <span className="font-normal">{slug}</span>
+                </p>
 
-                </div>
+
             </div>
         </div>
     );
