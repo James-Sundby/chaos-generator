@@ -81,16 +81,16 @@ export default function WarbandPage() {
     }
 
     return (
-        <main className="flex flex-1 flex-col sm:flex-row gap-4 sm:gap-8 items-center sm:justify-center p-4">
-            <div className="opacity-0 animate-fade-in">
-                <TradingCard
-                    warbandName={warband.warbandName}
-                    namedColors={warband.colors}
-                    slug={warband.slug}
-                    patternName={warband.pattern}
-                    metal={warband.metal}
-                />
-            </div>
+        <main className="flex flex-1 flex-col gap-4 sm:gap-8 items-center sm:justify-center p-4">
+
+            <TradingCard
+                warbandName={warband.warbandName}
+                namedColors={warband.colors}
+                slug={warband.slug}
+                patternName={warband.pattern}
+                metal={warband.metal}
+            />
+
 
             <div className="flex flex-row sm:flex-col w-full max-w-96 items-center justify-center gap-4">
                 <div className="w-full max-w-96">
