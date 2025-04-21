@@ -22,6 +22,10 @@ export default function Page() {
     const shouldRenderCard = chaosBand.slug === params.slug && !isLoading && !error;
 
     useEffect(() => {
+        debug("skipSlug: ", skipSlug);
+        debug("stored slug: ", chaosBand.slug);
+        debug("param slug: ", params.slug);
+
         if (!params.slug || !chaosBand.slug || chaosBand.slug === "loading") {
             debug("Waiting on valid slugs");
             return;
