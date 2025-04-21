@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { debug } from "@/lib/debug";
 
 import { useChaosStore } from "@/app/stores/chaosStore";
 
@@ -11,14 +12,18 @@ export default function ChaosButton({ message }) {
     const setChaosBand = useChaosStore((state) => state.setChaosBand);
 
     const generateChaosBand = async () => {
+
         try {
+            debug("Fetching new warband from api route");
             setLoading(true);
             const res = await fetch("/api/warband-generator");
             const data = await res.json();
             setChaosBand(data);
+            debug("New warband", data)
             router.push(`/chaos/${data.slug}`);
+            debug("Pushing to new url");
         } catch (error) {
-            // console.error("Failed to fetch Warband data:", error);
+            debug("Failed to fetch Warband data:", error);
         } finally {
             setLoading(false);
         }
