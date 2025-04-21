@@ -22,6 +22,7 @@ export default function Page() {
     const shouldRenderCard = chaosBand.slug === params.slug && !isLoading && !error;
 
     useEffect(() => {
+        const skipSlug = sessionStorage.getItem("justPushedSlug");
         debug("skipSlug: ", skipSlug);
         debug("stored slug: ", chaosBand.slug);
         debug("param slug: ", params.slug);
@@ -37,7 +38,7 @@ export default function Page() {
             return;
         }
 
-        const skipSlug = sessionStorage.getItem("justPushedSlug");
+        // const skipSlug = sessionStorage.getItem("justPushedSlug");
         if (skipSlug && chaosBand.slug === skipSlug) {
             debug("Skipping fetch — router not caught up yet");
             return;
