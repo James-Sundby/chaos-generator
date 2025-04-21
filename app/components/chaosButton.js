@@ -12,12 +12,14 @@ export default function ChaosButton({ message }) {
     const setChaosBand = useChaosStore((state) => state.setChaosBand);
 
     const generateChaosBand = async () => {
-
         try {
             debug("Fetching new warband from api route");
             setLoading(true);
             const res = await fetch("/api/warband-generator");
             const data = await res.json();
+
+            sessionStorage.setItem("justPushedSlug", data.slug);
+
             debug("Pushing to new url");
             router.push(`/chaos/${data.slug}`);
             debug("New warband", data);

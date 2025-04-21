@@ -33,6 +33,12 @@ export default function Page() {
             return;
         }
 
+        const skipSlug = sessionStorage.getItem("justPushedSlug");
+        if (skipSlug && chaosBand.slug === skipSlug) {
+            debug("Skipping fetch — router not caught up yet");
+            return;
+        }
+
         const timeout = setTimeout(() => {
             debug("Slug mismatch — fetching", chaosBand.slug, "vs", params.slug);
             fetchChaosBandFromSlug(params.slug);
