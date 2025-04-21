@@ -18,10 +18,11 @@ export default function ChaosButton({ message }) {
             setLoading(true);
             const res = await fetch("/api/warband-generator");
             const data = await res.json();
-            setChaosBand(data);
-            debug("New warband", data)
-            router.push(`/chaos/${data.slug}`);
             debug("Pushing to new url");
+            router.push(`/chaos/${data.slug}`);
+            debug("New warband", data);
+            setChaosBand(data);
+
         } catch (error) {
             debug("Failed to fetch Warband data:", error);
         } finally {
