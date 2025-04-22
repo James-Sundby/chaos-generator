@@ -1,23 +1,18 @@
-import { modelComponents } from "./componentsMap";
+import SpaceMarine from "./spaceMarine";
 
 export default function TradingCard({ warbandName, namedColors, slug, patternName, metal }) {
-
-    function ImageDisplay(patternName) {
-        const Component = modelComponents[patternName];
-        return Component ? (
-            <Component
-                color1={namedColors[0]?.hex}
-                color2={namedColors[1]?.hex}
-                metals={[metal.hex1, metal.hex2, metal.hex3]}
-            />
-        ) : null;
-    }
-
     return (
         <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 rounded-lg opacity-0 animate-fade-in">
             <div className="card-body p-2 m-2 bg-white rounded-lg">
                 <h1 className="card-title justify-center text-center">{warbandName}</h1>
-                <div className="h-[45svh] sm:h-auto">{ImageDisplay(patternName)}</div>
+                <div className="h-[45svh] sm:h-auto">
+                    <SpaceMarine
+                        primary={namedColors[0]?.hex}
+                        secondary={namedColors[1]?.hex}
+                        trim={metal.hex2}
+                        pattern={patternName}
+                    />
+                </div>
                 <div className="flex flex-1 join join-horizontal rounded-lg">
                     {namedColors.map((color, index) => (
                         <div
@@ -44,7 +39,6 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
                 <p className="justify-end text-xs font-bold">
                     ID: <span className="font-normal">{slug}</span>
                 </p>
-
 
             </div>
         </div>

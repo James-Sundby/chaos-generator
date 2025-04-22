@@ -4,7 +4,7 @@ import { colorList } from "@/lib/colors";
 import { patterns } from "@/lib/armourPatterns";
 import { metals } from "@/lib/metals";
 
-import { modelComponents } from "./componentsMap";
+import SpaceMarine from "./spaceMarine";
 
 export default function Background() {
 
@@ -24,11 +24,6 @@ export default function Background() {
         return randomElement(metals);
     }
 
-    function ImageDisplay({ patternName, colors, metal }) {
-        const Component = modelComponents[patternName];
-        return Component ? <Component color1={colors[0].hex} color2={colors[1].hex} metals={[metal.hex1, metal.hex2, metal.hex3]} /> : null;
-    }
-
     const items = useMemo(
         () =>
             Array.from({ length: 12 }, () => ({
@@ -36,7 +31,6 @@ export default function Background() {
                 colors: generateRandomColors(),
                 metal: generateRandomMetal(),
             })),
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     );
@@ -46,7 +40,12 @@ export default function Background() {
             <div className="flex flex-wrap justify-around overflow-hidden h-full">
                 {items.map((item, index) => (
                     <div key={index} className="w-28 h-28 sm:h-auto sm:w-auto opacity-40 aspect-square" >
-                        <ImageDisplay patternName={item.pattern} colors={item.colors} metal={item.metal} />
+                        <SpaceMarine
+                            primary={item.colors[0]?.hex}
+                            secondary={item.colors[1]?.hex}
+                            trim={item.metal.hex2}
+                            pattern={item.pattern}
+                        />
                     </div>
                 ))}
             </div>

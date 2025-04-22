@@ -3,9 +3,11 @@
 import { colorList } from "@/lib/colors";
 import { metals } from "@/lib/metals";
 import { patterns } from "@/lib/armourPatterns";
-import { modelComponents } from "@/app/components/componentsMap";
+// import { modelComponents } from "@/app/components/componentsMap";
 import { useWarbandStore } from "@/app/stores/warbandStore";
 import { useRouter } from "next/navigation";
+
+import SpaceMarine from "@/app/components/spaceMarine";
 
 const Dropdown = ({ label, options, value, onChange }) => (
     <label className="form-control w-full">
@@ -25,16 +27,16 @@ const Dropdown = ({ label, options, value, onChange }) => (
     </label>
 );
 
-const ImageDisplay = ({ pattern, colors, metal }) => {
-    const Component = modelComponents[pattern];
-    return Component ? (
-        <Component
-            color1={colors[0]?.hex}
-            color2={colors[1]?.hex}
-            metals={[metal.hex1, metal.hex2, metal.hex3]}
-        />
-    ) : null;
-};
+// const ImageDisplay = ({ pattern, colors, metal }) => {
+//     const Component = modelComponents[pattern];
+//     return Component ? (
+//         <Component
+//             color1={colors[0]?.hex}
+//             color2={colors[1]?.hex}
+//             metals={[metal.hex1, metal.hex2, metal.hex3]}
+//         />
+//     ) : null;
+// };
 
 const generateSlug = ({ warbandName, colors, pattern, metal }) => {
     const nameSlug = warbandName
@@ -89,10 +91,11 @@ export default function Painter() {
                 <div className="card-body p-2 m-2 bg-white rounded-lg">
                     <h1 className="card-title justify-center">{warband.warbandName}</h1>
                     <div className="h-[45svh] sm:h-auto">
-                        <ImageDisplay
+                        <SpaceMarine
+                            primary={warband.colors[0]?.hex}
+                            secondary={warband.colors[1]?.hex}
+                            trim={warband.metal.hex2}
                             pattern={warband.pattern}
-                            colors={warband.colors}
-                            metal={warband.metal}
                         />
                     </div>
                     <div className="flex flex-1 join join-horizontal rounded-lg">

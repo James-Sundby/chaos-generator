@@ -22,63 +22,39 @@ export default function Page() {
     const shouldRenderCard = chaosBand.slug === params.slug && !isLoading && !error;
 
     useEffect(() => {
-        const skipSlug = sessionStorage.getItem("justPushedSlug");
-        debug("skipSlug: ", skipSlug);
-        debug("stored slug: ", chaosBand.slug);
-        debug("param slug: ", params.slug);
-
-        if (!params.slug || !chaosBand.slug || chaosBand.slug === "loading") {
-            debug("Waiting on valid slugs");
-            return;
-        }
-
-        if (chaosBand.slug === params.slug) {
-            debug("Stored slug matches params.slug");
-            setIsLoading(false);
-            return;
-        }
-
-        // const skipSlug = sessionStorage.getItem("justPushedSlug");
-        if (skipSlug && chaosBand.slug === skipSlug) {
-            debug("Skipping fetch — router not caught up yet");
-            return;
-        }
-
-        const timeout = setTimeout(() => {
-            debug("Slug mismatch — fetching", chaosBand.slug, "vs", params.slug);
-            fetchChaosBandFromSlug(params.slug);
-        }, 50); // Slight delay to let router catch up
-
-        return () => clearTimeout(timeout);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [chaosBand.slug, params.slug]);
-
-    async function fetchChaosBandFromSlug(slug) {
-        setIsLoading(true);
-        setError(null);
-
-        try {
-            debug("Checking slug validity:", slug);
-            const response = await fetch(`/api/warband-generator?slug=${slug}`);
-            if (response.ok) {
-                const fetchedChaosBand = await response.json();
-                debug("Refetched warband:", fetchedChaosBand.slug);
-                setChaosBand(fetchedChaosBand);
-
-                if (slug !== fetchedChaosBand.slug) {
-                    debug("Slug mismatch after fetch — redirecting");
-                    router.replace(`/chaos/${fetchedChaosBand.slug}`);
-                }
-            } else {
-                setError("Failed to fetch warband data. Please try again.");
+        async function fetchChaosBandData() {
+            if (chaosBand.slug === params.slug) {
+                debug("Slugs match stored: ", chaosBand.slug, " vs params: ", params.slug);
+                setIsLoading(false);
+                return;
             }
-        } catch (error) {
-            debug("Fetch error:", error);
-            setError("An unexpected error occurred. Please try again.");
-        } finally {
-            setIsLoading(false);
+
+            setIsLoading(true);
+            setError(null);
+
+            try {
+                debug("Slug mismatch stored: ", chaosBand.slug, " vs params: ", params.slug);
+                const response = await fetch(`/api/warband-generator?slug=${params.slug}`);
+                if (response.ok) {
+                    const fetchedChaosBand = await response.json();
+                    setChaosBand(fetchedChaosBand);
+                    if (params.slug !== fetchedChaosBand.slug) {
+                        router.replace(`/chaos/${fetchedChaosBand.slug}`);
+                    }
+                } else {
+                    setError("Failed to fetch warband data. Please try again.");
+                }
+            } catch (error) {
+                setError("An unexpected error occurred. Please try again.");
+            } finally {
+                setIsLoading(false);
+            }
+
         }
-    }
+        fetchChaosBandData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
 
     useEffect(() => {
         if (isLoading) {
