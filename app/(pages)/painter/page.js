@@ -1,44 +1,46 @@
 "use client";
 
-import { colorList } from "@/lib/colors";
-import { metals } from "@/lib/metals";
+import { colorList } from "@/lib/colors2";
 import { patterns } from "@/lib/armourPatterns";
-// import { modelComponents } from "@/app/components/componentsMap";
 import { useWarbandStore } from "@/app/stores/warbandStore";
 import { useRouter } from "next/navigation";
 
 import SpaceMarine from "@/app/components/spaceMarine";
 
-const Dropdown = ({ label, options, value, onChange }) => (
-    <label className="form-control w-full">
-        <div className="label label-text">{label}:</div>
-        <select
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="select select-bordered rounded-lg w-full"
-            aria-label={`Select ${label}`}
-        >
-            {options.map((option, index) => (
-                <option key={index} value={option.value || option.hex || option.code}>
-                    {option.name}
-                </option>
-            ))}
-        </select>
-    </label>
-);
+const Dropdown = ({ label, options, value, onChange }) => {
+    const isGrouped = Array.isArray(options) === false;
 
-// const ImageDisplay = ({ pattern, colors, metal }) => {
-//     const Component = modelComponents[pattern];
-//     return Component ? (
-//         <Component
-//             color1={colors[0]?.hex}
-//             color2={colors[1]?.hex}
-//             metals={[metal.hex1, metal.hex2, metal.hex3]}
-//         />
-//     ) : null;
-// };
+    return (
+        <label className="form-control w-full">
+            <div className="label label-text">{label}:</div>
+            <select
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="select select-bordered rounded-lg w-full"
+                aria-label={`Select ${label}`}
+            >
+                {isGrouped
+                    ? Object.entries(options).map(([group, items]) => (
+                        <optgroup key={group} label={group} >
+                            {items.map((option, index) => (
+                                <option key={index} value={option.hex} >
+                                    {option.name}
+                                </option>
+                            ))}
+                        </optgroup>
+                    ))
+                    : options.map((option, index) => (
+                        <option key={index} value={option.value || option.hex || option.code}>
+                            {option.name}
+                        </option>
+                    ))}
+            </select>
+        </label>
+    );
+};
 
-const generateSlug = ({ warbandName, colors, pattern, metal }) => {
+
+const generateSlug = ({ warbandName, colors, pattern }) => {
     const nameSlug = warbandName
         .toLowerCase()
         .replace(/[^a-z0-9 ]/g, "")
@@ -46,10 +48,19 @@ const generateSlug = ({ warbandName, colors, pattern, metal }) => {
         .trim();
     const colorSlug = colors.map(color => color.hex.replace("#", "")).join("-");
     const patternSlug = pattern.toLowerCase();
-    const metalSlug = metal.code.toLowerCase();
 
-    return `${nameSlug}-${colorSlug}-${patternSlug}-${metalSlug}`;
+    return `${nameSlug}-${colorSlug}-${patternSlug}`;
 }
+
+const groupedColors = {
+    Base: colorList.filter((c) => c.type === "Base"),
+    Layer: colorList.filter((c) => c.type === "Layer"),
+    Metallic: colorList.filter((c) => c.type === "Metallic"),
+};
+
+const metallics = {
+    Metallic: colorList.filter((c) => c.type === "Metallic"),
+};
 
 export default function Painter() {
     const warband = useWarbandStore((state) => state.warband);
@@ -67,11 +78,6 @@ export default function Painter() {
         const newColors = [...warband.colors];
         newColors[index] = color;
         updateWarband({ colors: newColors });
-    };
-
-    const handleMetalChange = (value) => {
-        const metal = metals.find((m) => m.code === value);
-        updateWarband({ metal: metal });
     };
 
     const handlePatternChange = (value) => {
@@ -94,7 +100,7 @@ export default function Painter() {
                         <SpaceMarine
                             primary={warband.colors[0]?.hex}
                             secondary={warband.colors[1]?.hex}
-                            trim={warband.metal.hex2}
+                            trim={warband.colors[2]?.hex}
                             pattern={warband.pattern}
                         />
                     </div>
@@ -113,22 +119,19 @@ export default function Painter() {
                         )}
                         <div
                             className="w-full h-8 join-item border border-neutral"
-                            style={{
-                                background: `radial-gradient(circle, ${warband.metal.hex1}, ${warband.metal.hex2}, ${warband.metal.hex3})`,
-                            }}
-                            title={warband.metal.name}
+                            style={{ backgroundColor: warband.colors[2]?.hex }}
+                            title={warband.colors[2]?.name}
                         ></div>
                     </div>
                     <p className="text-sm">
                         <span className="font-bold">
                             {areColorsDifferent
-                                ? `${warband.colors[0]?.name}, ${warband.colors[1]?.name}, ${warband.metal.name}`
-                                : `${warband.colors[0]?.name}, ${warband.metal.name}`}
+                                ? `${warband.colors[0]?.name}, ${warband.colors[1]?.name}, ${warband.colors[2]?.name}`
+                                : `${warband.colors[0]?.name}, ${warband.colors[2]?.name}`}
                         </span>
                     </p>
 
                     <div className="justify-end text-xs">
-
                         <p className="font-bold">ID: <span className="font-normal">{warband.slug}</span></p>
                     </div>
                 </div>
@@ -150,23 +153,23 @@ export default function Painter() {
 
                     <Dropdown
                         label="Primary color"
-                        options={colorList}
+                        options={groupedColors}
                         value={warband.colors[0]?.hex}
                         onChange={(value) => handleColorChange(0, value)}
                     />
 
                     <Dropdown
                         label="Secondary color"
-                        options={colorList}
+                        options={groupedColors}
                         value={warband.colors[1]?.hex}
                         onChange={(value) => handleColorChange(1, value)}
                     />
 
                     <Dropdown
-                        label="Metal"
-                        options={metals}
-                        value={warband.metal.code}
-                        onChange={handleMetalChange}
+                        label="Trim color"
+                        options={metallics}
+                        value={warband.colors[2]?.hex}
+                        onChange={(value) => handleColorChange(2, value)}
                     />
 
                     <Dropdown
