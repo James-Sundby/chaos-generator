@@ -1,16 +1,60 @@
 "use client";
 
 import { useState } from "react";
-import { colorList } from "@/lib/colors";
+import { colorList } from "@/lib/colors2";
 import PaintBySections from "@/app/components/paintBySections";
+
+import { debug } from "@/lib/debug";
 
 import { usePainterStore } from "@/app/stores/painterStore";
 
 import ImportWarband from "@/app/components/importWarband";
 
+const Dropdown = ({ label, options, value, onChange, isDisabled }) => {
+    const isGrouped = Array.isArray(options) === false;
+
+    return (
+        <label className="form-control w-full">
+            <select
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="select select-bordered rounded-lg w-full"
+                aria-label={`Select ${label}`}
+                disabled={isDisabled}
+            >
+                <option value="" disabled>
+                    Select a color
+                </option>
+                {isGrouped
+                    ? Object.entries(options).map(([group, items]) => (
+                        <optgroup key={group} label={group} >
+                            {items.map((option, index) => (
+                                <option key={index} value={option.hex} >
+                                    {option.name}
+                                </option>
+                            ))}
+                        </optgroup>
+                    ))
+                    : options.map((option, index) => (
+                        <option key={index} value={option.value || option.hex || option.code}>
+                            {option.name}
+                        </option>
+                    ))}
+            </select>
+        </label>
+    );
+};
+
+const groupedColors = {
+    Base: colorList.filter((c) => c.type === "Base"),
+    Layer: colorList.filter((c) => c.type === "Layer"),
+    Metallic: colorList.filter((c) => c.type === "Metallic"),
+};
+
 export default function Home() {
     const { sections, setColor, resetColors } = usePainterStore();
     const [selectedSections, setSelectedSections] = useState([]);
+    const [selectedColor, setSelectedColor] = useState("");
 
     const handleSectionClick = (sectionId) => {
         setSelectedSections((prev) =>
@@ -18,12 +62,21 @@ export default function Home() {
                 ? prev.filter((id) => id !== sectionId)
                 : [...prev, sectionId]
         );
+        setSelectedColor("");
+        debug("Setting selectedSections to: ", selectedSections);
+        debug("Selected color: ", selectedColor);
+
     };
 
     const handleColorChange = (value) => {
         const color = colorList.find((c) => c.hex === value);
+        debug("color:", color)
         if (!selectedSections.length) return;
         setColor(selectedSections, color.hex);
+        debug("Setting: ", selectedSections, " to ", color.name);
+        setSelectedColor(value);
+        debug("Set selected color to :", value);
+
     };
 
     const getRequiredPaints = () => {
@@ -51,9 +104,11 @@ export default function Home() {
                         className="btn btn-primary rounded-lg"
                         onClick={() => {
                             setSelectedSections([]);
+                            setSelectedColor("");
                             resetColors();
                         }}
                         aria-label="Reset all colors and clear selections"
+                        title="Reset all colors and clear selections"
                     >
                         Reset to Blank
                     </button>
@@ -76,25 +131,13 @@ export default function Home() {
                         </div>
                         <div className="flex flex-col gap-2">
                             <p className="card-title">Colours</p>
-                            <label htmlFor="color-select" className="form-control w-full">
-                                <select
-                                    id="color-select"
-                                    onChange={(e) => handleColorChange(e.target.value)}
-                                    value=""
-                                    className="select select-bordered rounded-lg mb-8"
-                                    disabled={!selectedSections.length}
-                                    aria-label="Select a color"
-                                >
-                                    <option value="" disabled>
-                                        Select a color
-                                    </option>
-                                    {colorList.map((color, index) => (
-                                        <option key={index} value={color.hex}>
-                                            {color.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
+                            <Dropdown
+                                label="Color"
+                                options={groupedColors}
+                                value={selectedColor}
+                                onChange={handleColorChange}
+                                isDisabled={!selectedSections.length}
+                            />
                         </div>
                         <div className="flex flex-col gap-2" aria-labelledby="paints-needed-heading" >
                             <p id="paints-needed-heading" className="card-title">Paints Needed</p>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { debug } from "@/lib/debug";
 
 import TradingCard from "@/app/components/trading-card.js";
 import { useWarbandStore } from "@/app/stores/warbandStore.js";
@@ -22,26 +23,30 @@ export default function WarbandPage() {
 
     useEffect(() => {
         async function fetchWarbandData() {
+            if (warband.slug === params.slug) {
+                debug("Slugs match stored: ", warband.slug, " vs params: ", params.slug);
+                setIsLoading(false);
+                return;
+            }
+
             setIsLoading(true);
             setError(null);
-            if (warband.slug !== params.slug) {
-                try {
-                    const response = await fetch(`/api/chapter-generator?slug=${params.slug}`);
-                    if (response.ok) {
-                        const fetchedWarband = await response.json();
-                        setWarband(fetchedWarband);
-                        if (params.slug !== fetchedWarband.slug) {
-                            router.replace(`/chapter/${fetchedWarband.slug}`);
-                        }
-                    } else {
-                        setError("Failed to fetch chapter data. Please try again.");
+
+            try {
+                debug("Slug mismatch stored: ", warband.slug, " vs params: ", params.slug);
+                const response = await fetch(`/api/chapter-generator?slug=${params.slug}`);
+                if (response.ok) {
+                    const fetchedWarband = await response.json();
+                    setWarband(fetchedWarband);
+                    if (params.slug !== fetchedWarband.slug) {
+                        router.replace(`/chapter/${fetchedWarband.slug}`);
                     }
-                } catch (error) {
-                    setError("An unexpected error occurred. Please try again.");
-                } finally {
-                    setIsLoading(false);
+                } else {
+                    setError("Failed to fetch chapter data. Please try again.");
                 }
-            } else {
+            } catch (error) {
+                setError("An unexpected error occurred. Please try again.");
+            } finally {
                 setIsLoading(false);
             }
         }
@@ -88,7 +93,6 @@ export default function WarbandPage() {
                 namedColors={warband.colors}
                 slug={warband.slug}
                 patternName={warband.pattern}
-                metal={warband.metal}
             />
 
 

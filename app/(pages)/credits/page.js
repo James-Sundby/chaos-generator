@@ -11,14 +11,15 @@ export default function Page() {
             <h2>Disclaimer</h2>
             <p>
                 This site is a fan-made, non-commercial project inspired by the Warhammer 40K universe.
-                <strong> Space Marines</strong>, <strong>Chaos Space Marines</strong>, and related names, designs, and imagery are the intellectual
+                Space Marines, Chaos Space Marines, and related names, designs, and imagery are the intellectual
                 property of{" "}
                 <Link
                     href="https://www.warhammer.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="link"
-                    aria-label="Visit Games Workshop website"
+                    aria-label="Visit the Games Workshop website"
+                    title="Visit the Games Workshop website"
                 >
                     Games Workshop
                 </Link>
@@ -49,6 +50,7 @@ export default function Page() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Visit 40kResources on DeviantArt"
+                        title="Visit 40kResources on DeviantArt"
                         className="link"
                     >
                         40kResources on DeviantArt
@@ -60,6 +62,7 @@ export default function Page() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Visit ShawnPleil on DeviantArt"
+                        title="Visit ShawnPleil on DeviantArt"
                         className="link"
                     >
                         ShawnPleil on DeviantArt
@@ -73,32 +76,56 @@ export default function Page() {
 
             <h2>Open Graph Image Credit</h2>
             <p>
-                The background image used in the site&apos;s social media preview card is licensed under the Pixabay license:
+                The background image used in the site&apos;s social media preview card is by{" "}
+                <Link
+                    href="https://pixabay.com/users/jan_photo-2842014/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4226688"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link"
+                    aria-label="View Jan Mateboer's profile on Pixabay"
+                    title="View Jan Mateboer's profile on Pixabay"
+                >
+                    Jan Mateboer
+                </Link>
+                {" "}and is licensed under the{" "}
+                <Link
+                    href="https://pixabay.com/service/license-summary/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link"
+                    aria-label="View Pixabay's content license"
+                    title="View Pixabay's content license"
+                >
+                    Pixabay content license
+                </Link>.
             </p>
 
-            <ul>
-                <li>
-                    Image by{" "}
-                    <Link
-                        href="https://pixabay.com/users/jan_photo-2842014/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4226688"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="link"
-                        aria-label="View Jan Mateboer's profile on Pixabay"
-                    >
-                        Jan Mateboer
-                    </Link>{" "}
-                    from{" "}
-                    <Link
-                        href="https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4226688"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="link"
-                        aria-label="Visit Pixabay"
-                    >
-                        Pixabay
-                    </Link>
-                </li></ul>
+            <h2>Icon Credits</h2>
+            <p>
+                This site uses icons provided by{" "}
+                <Link
+                    href="https://fontawesome.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link"
+                    aria-label="Visit Font Awesome"
+                    title="Visit Font Awesome"
+                >
+                    Font Awesome Free
+                </Link>
+                , licensed under {" "}
+                <Link
+                    href="https://creativecommons.org/licenses/by/4.0/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link"
+                    aria-label="View Creative Commons Attribution 4.0 License"
+                    title="View Creative Commons Attribution 4.0 License"
+                >
+                    Creative Commons Attribution 4.0 (CC BY 4.0)
+                </Link>
+                .
+            </p>
         </main>
     );
 }

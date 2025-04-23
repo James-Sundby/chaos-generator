@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { debug } from "@/lib/debug";
 import Link from "next/link";
 
 import { useChaosStore } from "@/app/stores/chaosStore";
@@ -14,8 +15,6 @@ export default function Page() {
     const chaosBand = useChaosStore((state) => state.chaosBand);
     const setChaosBand = useChaosStore((state) => state.setChaosBand);
 
-    const { warbandName, colors = [], slug, pattern } = chaosBand;
-
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [loadingTime, setLoadingTime] = useState(0);
@@ -24,32 +23,38 @@ export default function Page() {
 
     useEffect(() => {
         async function fetchChaosBandData() {
+            if (chaosBand.slug === params.slug) {
+                debug("Slugs match stored: ", chaosBand.slug, " vs params: ", params.slug);
+                setIsLoading(false);
+                return;
+            }
+
             setIsLoading(true);
             setError(null);
-            if (chaosBand.slug !== params.slug) {
-                try {
-                    const response = await fetch(`/api/warband-generator?slug=${params.slug}`);
-                    if (response.ok) {
-                        const fetchedChaosBand = await response.json();
-                        setChaosBand(fetchedChaosBand);
-                        if (params.slug !== fetchedChaosBand.slug) {
-                            router.replace(`/chaos/${fetchedChaosBand.slug}`);
-                        }
-                    } else {
-                        setError("Failed to fetch warband data. Please try again.");
+
+            try {
+                debug("Slug mismatch stored: ", chaosBand.slug, " vs params: ", params.slug);
+                const response = await fetch(`/api/warband-generator?slug=${params.slug}`);
+                if (response.ok) {
+                    const fetchedChaosBand = await response.json();
+                    setChaosBand(fetchedChaosBand);
+                    if (params.slug !== fetchedChaosBand.slug) {
+                        router.replace(`/chaos/${fetchedChaosBand.slug}`);
                     }
-                } catch (error) {
-                    setError("An unexpected error occurred. Please try again.");
-                } finally {
-                    setIsLoading(false);
+                } else {
+                    setError("Failed to fetch warband data. Please try again.");
                 }
-            } else {
+            } catch (error) {
+                setError("An unexpected error occurred. Please try again.");
+            } finally {
                 setIsLoading(false);
             }
+
         }
         fetchChaosBandData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
 
     useEffect(() => {
         if (isLoading) {
@@ -89,19 +94,19 @@ export default function Page() {
                     className="card bg-yellow-600 text-neutral w-full max-w-96 rounded-lg opacity-0 animate-fade-in"
                 >
                     <div className="card-body p-2 m-2 bg-white rounded-lg">
-                        <h1 className="card-title justify-center text-center">{warbandName}</h1>
+                        <h1 className="card-title justify-center text-center">{chaosBand.warbandName}</h1>
                         <div className="h-[45svh] sm:h-auto">
                             <ChaosMarine
-                                primary={colors[0]?.hex}
-                                secondary={colors[1]?.hex}
-                                edge={colors[2]?.hex}
-                                accent={colors[3]?.hex}
-                                pattern={pattern}
+                                primary={chaosBand.colors[0]?.hex}
+                                secondary={chaosBand.colors[1]?.hex}
+                                edge={chaosBand.colors[2]?.hex}
+                                accent={chaosBand.colors[3]?.hex}
+                                pattern={chaosBand.pattern}
                             />
                         </div>
                         <div className="flex flex-1 join join-horizontal rounded-lg">
-                            {(pattern === "Basic" ? [0, 2, 3] : colors.map((_, i) => i)).map((index) => {
-                                const color = colors[index];
+                            {(chaosBand.pattern === "Basic" ? [0, 2, 3] : chaosBand.colors.map((_, i) => i)).map((index) => {
+                                const color = chaosBand.colors[index];
                                 return (
                                     color && (
                                         <div
@@ -116,19 +121,17 @@ export default function Page() {
                         </div>
 
                         <p className="text-sm font-bold">
-                            {pattern === "Basic"
-                                ? [colors[0]?.name, colors[2]?.name, colors[3]?.name].filter(Boolean).join(", ")
-                                : [colors[0]?.name, colors[1]?.name, colors[2]?.name, colors[3]?.name].filter(Boolean).join(", ")}
+                            {chaosBand.pattern === "Basic"
+                                ? [chaosBand.colors[0]?.name, chaosBand.colors[2]?.name, chaosBand.colors[3]?.name].filter(Boolean).join(", ")
+                                : [chaosBand.colors[0]?.name, chaosBand.colors[1]?.name, chaosBand.colors[2]?.name, chaosBand.colors[3]?.name].filter(Boolean).join(", ")}
                         </p>
 
                         <p className="font-bold text-xs text-wrap">
-                            ID: <span className="font-normal">{slug}</span>
+                            ID: <span className="font-normal">{chaosBand.slug}</span>
                         </p>
                     </div>
                 </div>
             )}
-
-
 
             <div className="flex flex-row sm:flex-col w-full max-w-96 items-center justify-center gap-4">
                 <div className="w-full max-w-96">

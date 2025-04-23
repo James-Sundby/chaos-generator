@@ -14,6 +14,14 @@ export default function Footer() {
           Credits
         </Link>
         <Link
+          href="/help"
+          aria-label="View the help section"
+          title="View the help section"
+          className="link link-hover"
+        >
+          Help
+        </Link>
+        <Link
           href="/privacy"
           aria-label="View our privacy policy"
           title="View our privacy policy"

@@ -1,11 +1,10 @@
 export const dynamic = 'force-dynamic';
 
-import { colorList } from "@/lib/colors";
+import { colorList } from "@/lib/colors2";
 import { patterns } from "@/lib/armourPatterns";
-import { virtues, warriorTerms, placesOrEntities, adjectives, animals } from "@/lib/loyalData";
-import { metals } from "@/lib/metals";
 
-const metalsMap = Object.fromEntries(metals.map((metal) => [metal.code.toLowerCase(), metal]));
+import { virtues, warriorTerms, placesOrEntities, adjectives, animals } from "@/lib/loyalData";
+
 const patternsSet = new Set(patterns.map((p) => p.toLowerCase()));
 const colorMap = Object.fromEntries(colorList.map((color) => [color.hex.toLowerCase(), color]));
 
@@ -26,16 +25,24 @@ function generateChapterName() {
 }
 
 function generateRandomColors() {
-    return colorList.sort(() => 0.5 - Math.random()).slice(0, 2);
+    const shuffled = [...colorList].sort(() => 0.5 - Math.random());
+    const baseColors = shuffled.slice(0, 2);
+    const metal = shuffled.find(
+        color =>
+            color.type === "Metallic" &&
+            !baseColors.some(c => c.hex.toLowerCase() === color.hex.toLowerCase())
+    );
+
+    return [
+        ...baseColors,
+        metal ?? { name: "Retributor Armour", hex: "#ebb854", type: "Metallic", brand: "Citadel" }
+    ];
 }
 
 function generateRandomPattern() {
     return randomElement(patterns);
 }
 
-function generateRandomMetal() {
-    return randomElement(metals);
-}
 
 function generateSlug(name, colors, pattern, metal) {
     const nameSlug = name
@@ -45,9 +52,8 @@ function generateSlug(name, colors, pattern, metal) {
         .trim();
     const colorSlug = colors.map(color => color.hex.replace("#", "")).join("-");
     const patternSlug = pattern.toLowerCase();
-    const metalSlug = metal.code.toLowerCase();
 
-    return `${nameSlug}-${colorSlug}-${patternSlug}-${metalSlug}`;
+    return `${nameSlug}-${colorSlug}-${patternSlug}`;
 }
 
 function capitalizeName(name) {
@@ -68,18 +74,15 @@ export async function GET(req) {
     if (slug) {
         const slugParts = slug.split("-");
         try {
-            const metalCode = slugParts.pop();
-            const metal = metalsMap[metalCode];
-            if (!metal) throw new Error(`Invalid metal code: ${metalCode}`);
-
             const patternCode = slugParts.pop();
             const isValidPattern = patternsSet.has(patternCode);
             if (!isValidPattern) throw new Error(`Invalid pattern code: ${patternCode}`);
             const patternCapital = capitalizeName(patternCode);
 
+            const colorHex3 = `#${slugParts.pop()}`;
             const colorHex2 = `#${slugParts.pop()}`;
             const colorHex1 = `#${slugParts.pop()}`;
-            const namedColors = [colorHex1, colorHex2].map((hex) => {
+            const namedColors = [colorHex1, colorHex2, colorHex3].map((hex) => {
                 const color = colorMap[hex.toLowerCase()];
                 if (!color) throw new Error(`Color not found for hex: ${hex}`);
                 return color;
@@ -95,7 +98,6 @@ export async function GET(req) {
                     colors: namedColors,
                     pattern: patternCapital,
                     slug,
-                    metal,
                 }),
                 { status: 200 }
             );
@@ -109,11 +111,10 @@ export async function GET(req) {
         const warbandName = generateChapterName();
         const colors = generateRandomColors();
         const pattern = generateRandomPattern();
-        const metal = generateRandomMetal();
-        const newSlug = generateSlug(warbandName, colors, pattern, metal);
+        const newSlug = generateSlug(warbandName, colors, pattern);
 
         return new Response(
-            JSON.stringify({ message: "new warband", warbandName, colors, pattern, slug: newSlug, metal }),
+            JSON.stringify({ message: "new warband", warbandName, colors, pattern, slug: newSlug }),
             {
                 status: 200,
                 headers: {
