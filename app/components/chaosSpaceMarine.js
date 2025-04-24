@@ -5,6 +5,7 @@ export default function ChaosMarine({ primary, secondary, edge, accent, pattern 
     const belt = "#443333"; // Mournfang Brown
 
     const trim = edge;
+    //Also applied to lenses
     const loincloth = accent;
 
     switch (pattern) {
@@ -35,6 +36,16 @@ export default function ChaosMarine({ primary, secondary, edge, accent, pattern 
         case "Quarter":
             leftHelmet = leftBackpack = leftChest = leftShoulder = leftArm = rightLeg = primary;
             rightHelmet = rightBackpack = rightChest = rightArm = rightShoulder = leftLeg = secondary;
+            break;
+
+        case "Shoulders":
+            leftHelmet = rightHelmet = leftBackpack = rightBackpack = leftChest = rightChest = leftArm = rightArm = leftLeg = rightLeg = primary;
+            leftShoulder = rightShoulder = secondary;
+            break;
+
+        case "Alternating":
+            leftHelmet = rightBackpack = leftChest = rightShoulder = leftArm = rightLeg = primary;
+            rightHelmet = leftBackpack = rightChest = leftShoulder = rightArm = leftLeg = secondary;
             break;
 
         // Add more as needed

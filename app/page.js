@@ -1,3 +1,5 @@
+// export const dynamic = 'force-static';
+
 import WarbandButton from "./components/warbandButton";
 import Background from "./components/background";
 import WarbandSearch from "./components/warbandSearch";
