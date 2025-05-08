@@ -1,5 +1,10 @@
 import Link from "next/link";
 
+export const metadata = {
+    title: "Privacy Policy - Chapter Generator",
+    description: "Learn how your data is handled when using Chapter Generator. This fan tool respects user privacy and avoids tracking or cookies.",
+};
+
 export default function Page() {
     return (
         <main role="main" className="flex flex-1 flex-col max-w-3xl mx-auto p-4 prose prose-sm md:prose-base dark:prose-invert">

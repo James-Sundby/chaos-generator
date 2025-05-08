@@ -7,6 +7,11 @@ import { useRouter } from "next/navigation";
 
 import SpaceMarine from "@/app/components/spaceMarine";
 
+export const metadata = {
+    title: "Custom Chapter - Chapter Generator",
+    description: "Customize your custom Space Marine chapter with hand-picked colors and patterns. Preview armor schemes and generate a unique chapter ID."
+}
+
 const Dropdown = ({ label, options, value, onChange }) => {
     const isGrouped = Array.isArray(options) === false;
 

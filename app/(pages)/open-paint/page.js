@@ -10,6 +10,11 @@ import { usePainterStore } from "@/app/stores/painterStore";
 
 import ImportWarband from "@/app/components/importWarband";
 
+export const metadata = {
+    title: "Chapter Free Paint - Chapter Generator",
+    description: "Customize your Space Marine down to the armor segment. Click to color each section and get a complete list of paints used."
+}
+
 const Dropdown = ({ label, options, value, onChange, isDisabled }) => {
     const isGrouped = Array.isArray(options) === false;
 

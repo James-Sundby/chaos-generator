@@ -10,6 +10,11 @@ const metals = [
     { code: "blg", name: "Balthasar Gold", hex1: "#ffc28a", hex2: "#9b684b", hex3: "#1d0f07" },
 ];
 
+export const metadata = {
+    title: "Help - Chapter Generator",
+    description: "Instructions for updating old chapter IDs with new hex codes for metallic paints. Includes a visual reference table for each code.",
+};
+
 export default function Page() {
     return (
         <main

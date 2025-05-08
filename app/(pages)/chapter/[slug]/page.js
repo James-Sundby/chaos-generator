@@ -42,6 +42,7 @@ export default function WarbandPage() {
                         router.replace(`/chapter/${fetchedWarband.slug}`);
                     }
                 } else {
+                    debug(response);
                     setError("Failed to fetch chapter data. Please try again.");
                 }
             } catch (error) {

@@ -76,6 +76,11 @@ export async function GET(req) {
     const url = new URL(req.url);
     const slug = url.searchParams.get("slug");
 
+    const slugRegex = /^[a-zA-Z0-9-]+$/;
+    if (slug && !slugRegex.test(slug)) {
+        return new Response(JSON.stringify({ error: "Invalid slug format" }), { status: 400 });
+    }
+
     if (slug) {
         const slugParts = slug.split("-");
         try {
@@ -88,6 +93,15 @@ export async function GET(req) {
             const colorHex3 = `#${slugParts.pop()}`;
             const colorHex2 = `#${slugParts.pop()}`;
             const colorHex1 = `#${slugParts.pop()}`;
+
+            const hexColorRegex = /^#[0-9A-Fa-f]{6}$/;
+            if (!hexColorRegex.test(colorHex1) ||
+                !hexColorRegex.test(colorHex2) ||
+                !hexColorRegex.test(colorHex3) ||
+                !hexColorRegex.test(colorHex4)) {
+                throw new Error("Invalid color hex code.");
+            }
+
             const namedColors = [colorHex1, colorHex2, colorHex3, colorHex4].map((hex) => {
                 const color = colorMap[hex.toLowerCase()];
                 if (!color) throw new Error(`Color not found for hex: ${hex}`);

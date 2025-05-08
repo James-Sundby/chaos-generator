@@ -6,6 +6,11 @@ import ChaosMarine from "@/app/components/chaosSpaceMarine";
 import { useChaosStore } from "@/app/stores/chaosStore";
 import { useRouter } from "next/navigation";
 
+export const metadata = {
+    title: "Custom Warband - Chapter Generator",
+    description: "Customize your custom Chaos Space Marine warband with hand-picked colors and patterns. Preview armor schemes and generate a unique warband ID."
+}
+
 const Dropdown = ({ label, options, value, onChange }) => {
     const isGrouped = Array.isArray(options) === false;
 
