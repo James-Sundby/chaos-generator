@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-    title: "Privacy Policy - Chapter Generator",
+    title: "Privacy Policy",
     description: "Learn how your data is handled when using Chapter Generator. This fan tool respects user privacy and avoids tracking or cookies.",
 };
 
