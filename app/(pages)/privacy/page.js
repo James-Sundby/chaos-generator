@@ -7,10 +7,28 @@ export const metadata = {
         title: "Privacy Policy & Project Information",
         description: "Learn how Chapter Generator protects your privacy while you design custom Space Marine chapters.",
         url: "https://chapter-gen.jsundby.dev/privacy",
+        siteName: "Chapter Generator",
+        images: [
+            {
+                url: "/card.jpg",
+                width: 1200,
+                height: 630,
+                alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
+            },
+        ],
+        locale: 'en_US',
+        type: 'website',
     },
     twitter: {
         title: "Privacy Policy & Project Information",
         description: "This fan tool doesn't use cookies or trackers. Find out how your data is handled.",
+        card: 'summary_large_image',
+        images: [
+            {
+                url: "/card.jpg",
+                alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
+            }
+        ],
     },
 };
 

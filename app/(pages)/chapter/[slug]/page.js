@@ -14,10 +14,28 @@ export async function generateMetadata({ params }) {
                 title: `${chapterName}`,
                 description: `Custom Space Marine scheme: ${colorNames} + ${pattern}.`,
                 url: `https://chapter-gen.jsundby.dev/chapter/${slug}`,
+                siteName: "Chapter Generator",
+                images: [
+                    {
+                        url: "/card.jpg",
+                        width: 1200,
+                        height: 630,
+                        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
+                    },
+                ],
+                locale: 'en_US',
+                type: 'website',
             },
             twitter: {
                 title: `${chapterName}`,
                 description: `Space Marine paint scheme: ${colorNames}, ${pattern} pattern.`,
+                card: 'summary_large_image',
+                images: [
+                    {
+                        url: "/card.jpg",
+                        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
+                    }
+                ],
             },
         };
     } catch {
