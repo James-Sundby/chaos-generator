@@ -1,5 +1,3 @@
-// export const dynamic = 'force-static';
-
 import WarbandButton from "./components/warbandButton";
 import Background from "./components/background";
 import WarbandSearch from "./components/warbandSearch";
@@ -8,6 +6,23 @@ import ChaosButton from "./components/chaosButton";
 import ChaosSearch from "./components/chaosSearch";
 
 import Link from "next/link";
+
+export const metadata = {
+  title: "Chapter Generator",
+  description:
+    "Generate your own custom Warhammer 40K chapter or chaos warband. An unofficial tool for warhammer hobbyists to break painter's block and explore unique paint schemes.",
+  openGraph: {
+    title: "Create Your Custom Chapter or Warband",
+    description:
+      "Use Chapter Generator to build unique paint schemes for your loyalist or chaos force. Unofficial fan tool for warhammer hobbyists.",
+    url: "https://chapter-gen.jsundby.dev/",
+  },
+  twitter: {
+    title: "Chapter Generator, the Unofficial Warhammer Paint Scheme Generator",
+    description:
+      "Design a Space Marine chapter or Chaos warband with random or manual color schemes. An unofficial tool for warhammer inspiration.",
+  },
+};
 
 export default function Home() {
   return (
