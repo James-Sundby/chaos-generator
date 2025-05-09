@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <main className="flex flex-col flex-1 justify-center items-center px-4 relative">
 
-      <h1 className="font-semibold rounded bg-base-100 p-4 text-xl max-w-md xl:max-w-full sm:text-2xl xl:text-4xl text-center mb-8 xl:mb-32 border-2">
+      <h1 className="font-semibold rounded bg-base-100/80 p-4 text-xl max-w-md xl:max-w-full sm:text-2xl xl:text-4xl text-center mb-8 xl:mb-32 ">
         Unofficial Warhammer Paint Scheme Generator
       </h1>
       <div className="flex flex-col gap-8 items-center w-full max-w-md">

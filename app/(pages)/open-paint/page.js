@@ -1,4 +1,4 @@
-import FreePaint from "./freePaint";
+import FreePaint from "@/app/components/freePaint";
 
 export const metadata = {
     title: "Loyalist Free Paint",
