@@ -10,7 +10,7 @@ export const metadata = {
         siteName: "Chapter Generator",
         images: [
             {
-                url: "https://chapter-gen.jsundby.dev/card.jpg",
+                url: "https://chapter-gen.jsundby.dev/card-image.jpg",
                 width: 1200,
                 height: 630,
                 alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
@@ -25,7 +25,7 @@ export const metadata = {
         card: 'summary_large_image',
         images: [
             {
-                url: "https://chapter-gen.jsundby.dev/card.jpg",
+                url: "https://chapter-gen.jsundby.dev/card-image.jpg",
                 alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
             }
         ],
