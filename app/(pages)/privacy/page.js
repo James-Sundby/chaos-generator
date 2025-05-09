@@ -1,5 +1,19 @@
 import Link from "next/link";
 
+export const metadata = {
+    title: "Privacy Policy",
+    description: "Read how Chapter Generator handles your data. This fan-made tool avoids tracking and respects your privacy by using only session-based storage.",
+    openGraph: {
+        title: "Privacy Policy",
+        description: "Learn how Chapter Generator protects your privacy while you design custom Space Marine chapters.",
+        url: "https://chapter-gen.jsundby.dev/privacy",
+    },
+    twitter: {
+        title: "Privacy Policy",
+        description: "This fan tool doesn't use cookies or trackers. Find out how your data is handled.",
+    },
+};
+
 export default function Page() {
     return (
         <main role="main" className="flex flex-1 flex-col max-w-3xl mx-auto p-4 prose prose-sm md:prose-base dark:prose-invert">
