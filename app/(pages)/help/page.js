@@ -1,8 +1,17 @@
 import { metals } from "@/lib/colourChart";
 
 export const metadata = {
-    title: "Help",
-    description: "Instructions for updating old chapter IDs with new hex codes for metallic paints. Includes a visual reference table for each code.",
+    title: "Help & Conversion Guide",
+    description: "Use this guide to convert old chapter IDs with outdated metal codes into updated versions using hex codes. Includes a color chart for reference.",
+    openGraph: {
+        title: "Help & Conversion Guide",
+        description: "Having trouble with old chapter IDs? This guide helps you update them using the new color codes.",
+        url: "https://chapter-gen.jsundby.dev/help",
+    },
+    twitter: {
+        title: "Help & Conversion Guide",
+        description: "Update old metal color codes with ease using this chart-based guide.",
+    },
 };
 
 export default function Page() {

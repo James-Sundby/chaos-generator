@@ -1,8 +1,18 @@
 import Link from "next/link";
 
+
 export const metadata = {
     title: "Credits & Attribution",
     description: "Attribution and credits for fan art, icons, and external assets used in Chapter Generator. Includes contact info for takedown or update requests.",
+    openGraph: {
+        title: "Credits & Attribution",
+        description: "Attribution and credits for fan art, icons, and external assets used in Chapter Generator. ",
+        url: "https://chapter-gen.jsundby.dev/credits",
+    },
+    twitter: {
+        title: "Credits & Attribution",
+        description: "Attribution and credits for fan art, icons, and external assets used in Chapter Generator. ",
+    },
 };
 
 export default function Page() {
