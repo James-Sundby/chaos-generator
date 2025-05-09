@@ -34,7 +34,7 @@ export const metadata = {
     siteName: "Chapter Generator",
     images: [
       {
-        url: "/card.jpg",
+        url: "/card-image.jpg",
         width: 1200,
         height: 630,
         alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
@@ -49,7 +49,7 @@ export const metadata = {
     description: "Stuck with primer? Generate a chapter and break the block.",
     images: [
       {
-        url: "/card.jpg",
+        url: "/card-image.jpg",
         alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
       }
     ],
