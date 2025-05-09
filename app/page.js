@@ -16,6 +16,17 @@ export const metadata = {
     description:
       "Use Chapter Generator to build unique paint schemes for your loyalist or chaos force. Unofficial fan tool for warhammer hobbyists.",
     url: "https://chapter-gen.jsundby.dev/",
+    siteName: "Chapter Generator",
+    images: [
+      {
+        url: "https://chapter-gen.jsundby.dev/card-image.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
   },
   twitter: {
     title: "Chapter Generator, the Unofficial Warhammer Paint Scheme Generator",
