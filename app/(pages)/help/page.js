@@ -7,10 +7,28 @@ export const metadata = {
         title: "Help & Conversion Guide",
         description: "Having trouble with old chapter IDs? This guide helps you update them using the new color codes.",
         url: "https://chapter-gen.jsundby.dev/help",
+        siteName: "Chapter Generator",
+        images: [
+            {
+                url: "/card.jpg",
+                width: 1200,
+                height: 630,
+                alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
+            },
+        ],
+        locale: 'en_US',
+        type: 'website',
     },
     twitter: {
         title: "Help & Conversion Guide",
         description: "Update old metal color codes with ease using this chart-based guide.",
+        card: 'summary_large_image',
+        images: [
+            {
+                url: "/card.jpg",
+                alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
+            }
+        ],
     },
 };
 
