@@ -1,4 +1,4 @@
-import Painter from "./painter";
+import Painter from "@/app/components/painter";
 
 export const metadata = {
     title: "Custom Chapter",

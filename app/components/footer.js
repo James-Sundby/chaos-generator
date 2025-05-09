@@ -2,9 +2,14 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="footer footer-center p-4 text-xs text-neutral-content space-y-2">
+    <footer className="footer footer-center p-4 text-xs text-neutral-content flex flex-col gap-4">
 
-      <div className="flex flex-wrap justify-center gap-4">
+      <p className="max-w-md text-center">
+        This is a fan-made project and is not affiliated with or endorsed by Games Workshop.
+        No challenge to their trademarks or intellectual property is intended.
+      </p>
+
+      <div className="flex flex-wrap justify-center gap-x-4">
         <Link
           href="/credits"
           className="link link-hover"
@@ -59,6 +64,9 @@ export default function Footer() {
           GitHub
         </Link>
       </div>
+
+
+
     </footer>
   );
 }

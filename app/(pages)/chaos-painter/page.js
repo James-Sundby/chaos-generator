@@ -1,4 +1,4 @@
-import ChaosPainter from "./chaosPainter";
+import ChaosPainter from "@/app/components/chaosPainter";
 
 export const metadata = {
     title: "Custom Warband",

@@ -56,7 +56,7 @@ export default function Page() {
 
             <h2>Line Art & Fan Asset Credits</h2>
             <p>
-                This project includes original fan-made artwork inspired by Warhammer 40K. Special thanks to the following creators:
+                This project relies on original fan-made artwork inspired by the Warhammer 40K universe. Special thanks to the following creators:
             </p>
             <ul>
                 <li>
