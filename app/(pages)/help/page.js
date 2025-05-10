@@ -43,11 +43,11 @@ export default function Page() {
 
             <h2>Color Hex Changes - May 5th, 2025</h2>
             <p>
-                I've recently updated the colour codes to match Citadel paint references more accurately.
+                I&apos;ve recently updated the colour codes to match Citadel paint references more accurately.
                 Previously, the hex codes were sampled from screenshots, which resulted in reduced saturation when converting back from RGB values.
             </p>
             <p>
-                If you're revisiting a saved URL or bookmark and encounter an error, it's likely due to an outdated hex code.
+                If you&apos;re revisiting a saved URL or bookmark and encounter an error, it&apos;s likely due to an outdated hex code.
                 To fix this, I recommend recreating your scheme using the{" "}
                 <Link
                     href="/painter"
