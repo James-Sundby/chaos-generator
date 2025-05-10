@@ -95,7 +95,7 @@ export default function Painter() {
             <div className="card bg-yellow-600 text-neutral w-full max-w-96 h-fit rounded-lg">
                 <div className="card-body p-2 m-2 bg-white rounded-lg">
                     <h1 className="card-title justify-center">{warband.warbandName}</h1>
-                    <div className="h-[45svh] sm:h-auto">
+                    <div className="h-[45svh]">
                         <SpaceMarine
                             primary={warband.colors[0]?.hex}
                             secondary={warband.colors[1]?.hex}
@@ -151,21 +151,21 @@ export default function Painter() {
                     </label>
 
                     <Dropdown
-                        label="Primary color"
+                        label="Primary colour"
                         options={groupedColors}
                         value={warband.colors[0]?.hex}
                         onChange={(value) => handleColorChange(0, value)}
                     />
 
                     <Dropdown
-                        label="Secondary color"
+                        label="Secondary colour"
                         options={groupedColors}
                         value={warband.colors[1]?.hex}
                         onChange={(value) => handleColorChange(1, value)}
                     />
 
                     <Dropdown
-                        label="Trim color"
+                        label="Trim colour"
                         options={metallics}
                         value={warband.colors[2]?.hex}
                         onChange={(value) => handleColorChange(2, value)}

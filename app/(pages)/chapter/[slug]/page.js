@@ -9,7 +9,7 @@ export async function generateMetadata({ params }) {
 
         return {
             title: `${chapterName}`,
-            description: `Custom chapter: ${chapterName} using ${colorNames}, ${pattern} pattern.`,
+            description: `Custom chapter: ${chapterName} using ${colorNames}, in the "${pattern}" pattern.`,
             openGraph: {
                 title: `${chapterName}`,
                 description: `Custom Space Marine scheme: ${colorNames} + ${pattern}.`,
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
             },
             twitter: {
                 title: `${chapterName}`,
-                description: `Space Marine paint scheme: ${colorNames}, ${pattern} pattern.`,
+                description: `Space Marine paint scheme: ${colorNames}, "${pattern}" pattern.`,
                 card: 'summary_large_image',
                 images: [
                     {

@@ -93,7 +93,7 @@ export default function ChaosPainter() {
             <div className="card bg-yellow-600 text-neutral w-full max-w-96 h-fit rounded-lg">
                 <div className="card-body p-2 m-2 bg-white rounded-lg">
                     <h1 className="card-title justify-center">{warband.warbandName}</h1>
-                    <div className="h-[45svh] sm:h-auto">
+                    <div className="h-[45svh]">
                         <ChaosMarine
                             primary={warband.colors[0]?.hex}
                             secondary={warband.colors[1]?.hex}
