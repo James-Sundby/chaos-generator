@@ -87,7 +87,7 @@ export default function WarbandView() {
     }
 
     return (
-        <main className="flex flex-1 flex-col gap-4 sm:gap-8 p-4 items-center sm:justify-center">
+        <main className="flex flex-1 flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 p-4">
             {shouldRenderCard && (
                 <div
                     id="trading-card"
@@ -95,7 +95,7 @@ export default function WarbandView() {
                 >
                     <div className="card-body p-2 m-2 bg-white rounded-lg">
                         <h1 className="card-title justify-center text-center">{chaosBand.warbandName}</h1>
-                        <div className="h-[45svh] sm:h-auto">
+                        <div className="h-[45svh]">
                             <ChaosMarine
                                 primary={chaosBand.colors[0]?.hex}
                                 secondary={chaosBand.colors[1]?.hex}

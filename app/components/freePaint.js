@@ -23,7 +23,7 @@ const Dropdown = ({ label, options, value, onChange, isDisabled }) => {
                 disabled={isDisabled}
             >
                 <option value="" disabled>
-                    Select a color
+                    Select a colour
                 </option>
                 {isGrouped
                     ? Object.entries(options).map(([group, items]) => (
@@ -89,7 +89,7 @@ export default function FreePaint() {
         <main className="flex flex-1 flex-col justify-center items-center gap-4 p-4">
 
             <h1 className="font-semibold text-2xl text-center m4-8 ">
-                Free Paint - Loyalists
+                Free Paint - Loyalist
             </h1>
 
             <aside className="w-full max-w-96 sm:max-w-[52rem] ">
@@ -98,7 +98,7 @@ export default function FreePaint() {
 
             <section className="flex grow flex-col sm:flex-row gap-4 sm:gap-16 w-full justify-center items-center sm:items-start">
                 <section id="space-marine-display" className="w-full max-w-96">
-                    <div className="bg-white rounded-lg ">
+                    <div className="bg-white rounded-lg h-[60svh]">
                         <PaintBySections
                             sectionColors={sections}
                             selectedSections={selectedSections}

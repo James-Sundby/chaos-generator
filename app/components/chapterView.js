@@ -88,7 +88,7 @@ export default function ChapterView
     }
 
     return (
-        <main className="flex flex-1 flex-col gap-4 sm:gap-8 items-center sm:justify-center p-4">
+        <main className="flex flex-1 flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 p-4">
 
             <TradingCard
                 warbandName={warband.warbandName}

@@ -6,8 +6,8 @@ export const useWarbandStore = create(
     persist(
         (set, get) => ({
             warband: {
-                warbandName: '',
-                slug: '',
+                warbandName: 'Sample',
+                slug: 'sample',
                 pattern: 'Arms',
                 colors: [
                     { name: "White Scar", hex: "#FFFFFF" },

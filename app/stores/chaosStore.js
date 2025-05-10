@@ -5,8 +5,8 @@ export const useChaosStore = create(
     persist(
         (set, get) => ({
             chaosBand: {
-                warbandName: 'Loading...',
-                slug: 'loading',
+                warbandName: 'Sample',
+                slug: 'sample',
                 pattern: 'Basic',
                 colors: [
                     { name: "White Scar", hex: "#FFFFFF" },

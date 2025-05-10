@@ -8,7 +8,7 @@ export async function generateMetadata({ params }) {
 
         return {
             title: `${warbandName}`,
-            description: `Custom Chaos warband: ${warbandName} using ${colorNames} in ${pattern} pattern.`,
+            description: `Custom Chaos warband: ${warbandName} using ${colorNames} in the "${pattern}" pattern.`,
             openGraph: {
                 title: `${warbandName}`,
                 description: `Chaos Space Marine scheme: ${colorNames} + ${pattern}.`,
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }) {
             },
             twitter: {
                 title: `${warbandName}`,
-                description: `Custom warband colors: ${colorNames}, ${pattern} pattern.`,
+                description: `Custom warband colors: ${colorNames}, using the "${pattern}" pattern.`,
                 card: 'summary_large_image',
                 images: [
                     {

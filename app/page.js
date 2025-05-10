@@ -46,14 +46,14 @@ export default function Home() {
   return (
     <main className="flex flex-col flex-1 justify-center items-center px-4 relative">
 
-      <h1 className="font-semibold rounded bg-base-100/80 p-4 text-xl max-w-md xl:max-w-full sm:text-2xl xl:text-4xl text-center mb-8 xl:mb-32 ">
+      <h1 className="font-semibold rounded bg-base-100/80 p-2 text-xl max-w-md xl:max-w-full sm:text-2xl xl:text-4xl text-center mb-8">
         Unofficial Warhammer Paint Scheme Generator
       </h1>
       <div className="flex flex-col gap-8 items-center w-full max-w-md">
 
         <fieldset className="fieldset bg-base-100 border-primary rounded-box w-full border-2 p-4">
           <h2 id="loyalist-section" className="sr-only">Loyalist Chapter Generator</h2>
-          <legend className="translate-y-[-46%] text-sm font-semibold bg-base-100 px-2 rounded-t border-l-2 border-t-2 border-r-2 border-primary border-b-2 border-b-transparent">Loyalists</legend>
+          <legend className="translate-y-[-46%] text-sm xl:text-base font-semibold bg-base-100 px-2 rounded-t border-l-2 border-t-2 border-r-2 border-primary border-b-2 border-b-transparent">Loyalists</legend>
           <WarbandButton message="Generate a New Chapter" />
           <WarbandSearch />
           <Link
@@ -75,7 +75,7 @@ export default function Home() {
 
         <fieldset className="fieldset bg-base-100 border-error rounded-box w-full border-2 p-4">
           <h2 id="chaos-section" className="sr-only">Chaos Warband Generator</h2>
-          <legend className="translate-y-[-46%] text-sm font-semibold bg-base-100 px-2 rounded-t border-l-2 border-t-2 border-r-2 border-error border-b-2 border-b-transparent">Chaos</legend>
+          <legend className="translate-y-[-46%] text-sm xl:text-base font-semibold bg-base-100 px-2 rounded-t border-l-2 border-t-2 border-r-2 border-error border-b-2 border-b-transparent">Chaos</legend>
           <ChaosButton message="Generate a New Chaos Warband" />
           <ChaosSearch />
         </fieldset>

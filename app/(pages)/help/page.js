@@ -1,4 +1,5 @@
 import { metals } from "@/lib/colourChart";
+import Link from "next/link";
 
 export const metadata = {
     title: "Help & Conversion Guide",
@@ -39,6 +40,35 @@ export default function Page() {
             className="flex flex-1 flex-col max-w-3xl mx-auto px-4 py-10 prose prose-sm md:prose-base dark:prose-invert"
         >
             <h1>Help</h1>
+
+            <h2>Color Hex Changes - May 5th, 2025</h2>
+            <p>
+                I've recently updated the colour codes to match Citadel paint references more accurately.
+                Previously, the hex codes were sampled from screenshots, which resulted in reduced saturation when converting back from RGB values.
+            </p>
+            <p>
+                If you're revisiting a saved URL or bookmark and encounter an error, it's likely due to an outdated hex code.
+                To fix this, I recommend recreating your scheme using the{" "}
+                <Link
+                    href="/painter"
+                    aria-label="Open the Chapter Customizer tool to generate a new chapter ID"
+                    className="link"
+                    title="Open the Chapter Customizer tool to generate a new chapter ID"
+                >
+                    Chapter Customizer
+                </Link>
+                {" or "}
+                <Link
+                    href="/chaos-painter"
+                    aria-label="Open the Warband Customizer tool to generate a new warband ID"
+                    className="link"
+                    title="Open the Warband Customizer tool to generate a new warband ID"
+                >
+                    Warband Customizer
+                </Link>
+                {" "}to generate a fresh ID.
+            </p>
+
             <h2>Updating Your ID</h2>
             <p>
                 If your old id used a metal code (like <code>ihs</code>), you now need to replace it with the corresponding <strong>hex value</strong> listed below.
