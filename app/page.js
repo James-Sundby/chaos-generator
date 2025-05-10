@@ -32,6 +32,13 @@ export const metadata = {
     title: "Chapter Generator, the Unofficial Warhammer Paint Scheme Generator",
     description:
       "Design a Space Marine chapter or Chaos warband with random or manual color schemes. An unofficial tool for warhammer inspiration.",
+    card: 'summary_large_image',
+    images: [
+      {
+        url: "https://chapter-gen.jsundby.dev/card-image.jpeg",
+        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
+      }
+    ],
   },
 };
 
