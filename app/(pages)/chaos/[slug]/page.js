@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { parseChaosSlug } from "@/lib/slugParser";
 import WarbandView from "@/app/components/warbandView";
 
