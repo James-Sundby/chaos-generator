@@ -1,4 +1,5 @@
-// app/chapter/[slug]/page.tsx
+export const dynamic = "force-dynamic";
+
 import { parseChapterSlug } from "@/lib/slugParser";
 import ChapterView from "@/app/components/chapterView";
 
