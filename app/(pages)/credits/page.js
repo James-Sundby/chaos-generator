@@ -11,7 +11,7 @@ export const metadata = {
         siteName: "Chapter Generator",
         images: [
             {
-                url: "https://chapter-gen.jsundby.dev/card-image.jpeg",
+                url: "https://chapter-gen.jsundby.dev/card.png",
                 width: 1200,
                 height: 630,
                 alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
@@ -26,7 +26,7 @@ export const metadata = {
         card: 'summary_large_image',
         images: [
             {
-                url: "https://chapter-gen.jsundby.dev/card-image.jpeg",
+                url: "https://chapter-gen.jsundby.dev/card.png",
                 alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
             }
         ],
@@ -107,7 +107,7 @@ export default function Page() {
                 feel free to reach out via the contact above.
             </p>
 
-            <h2>Open Graph Image Credit</h2>
+            {/* <h2>Open Graph Image Credit</h2>
             <p>
                 The background image used in the site&apos;s social media preview card is by{" "}
                 <Link
@@ -131,7 +131,7 @@ export default function Page() {
                 >
                     Pixabay content license
                 </Link>.
-            </p>
+            </p> */}
 
             <h2>Icon Credits</h2>
             <p>

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
                 siteName: "Chapter Generator",
                 images: [
                     {
-                        url: "https://chapter-gen.jsundby.dev/card-image.jpeg",
+                        url: "https://chapter-gen.jsundby.dev/card.png",
                         width: 1200,
                         height: 630,
                         alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
                 card: 'summary_large_image',
                 images: [
                     {
-                        url: "https://chapter-gen.jsundby.dev/card-image.jpeg",
+                        url: "https://chapter-gen.jsundby.dev/card.png",
                         alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
                     }
                 ],
