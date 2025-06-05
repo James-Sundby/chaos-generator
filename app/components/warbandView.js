@@ -80,7 +80,7 @@ export default function WarbandView() {
 
     if (isLoading || !shouldRenderCard) {
         return (
-            <div className="flex flex-1 items-center justify-center h-full">
+            <div className="flex flex-1 items-center justify-center">
                 <span className="loading loading-dots loading-xl"></span>
             </div>
         );
