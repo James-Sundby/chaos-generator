@@ -6,6 +6,7 @@ import { usePainterStore } from "@/app/stores/painterStore";
 function setChapterSectionValues(chapter, setColor) {
     const primaryColor = chapter.colors[0].hex;
     const secondaryColor = chapter.colors[1].hex;
+    const trimColor = chapter.colors[2].hex;
     const pattern = chapter.pattern;
 
     const patternMappings = {
@@ -13,10 +14,11 @@ function setChapterSectionValues(chapter, setColor) {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
                 "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
-                "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
-                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt",
+                "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
+                "Right-Backpack", "Left-Backpack",
             ],
             secondary: ["Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"],
+            trim: ["Right-Helmet", "Left-Helmet", "Right-Belt", "Left-Belt", "Eagle"]
         },
         Shoulders: {
             primary: [
@@ -26,8 +28,8 @@ function setChapterSectionValues(chapter, setColor) {
                 "Right-Forearm", "Left-Forearm", "Left-Hand"
             ],
             secondary: ["Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
-                "Right-Helmet", "Left-Helmet",
             ],
+            trim: ["Right-Helmet", "Left-Helmet", "Eagle"]
         },
         Legs: {
             primary: [
@@ -37,6 +39,7 @@ function setChapterSectionValues(chapter, setColor) {
                 "Right-Forearm", "Left-Forearm", "Left-Hand"
             ],
             secondary: ["Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",],
+            trim: ["Eagle"]
         },
         Centered: {
             primary: [
@@ -48,6 +51,7 @@ function setChapterSectionValues(chapter, setColor) {
             secondary: ["Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
                 "Right-Belt", "Left-Belt",
             ],
+            trim: ["Eagle"]
         },
         Half: {
             primary: [
@@ -59,6 +63,7 @@ function setChapterSectionValues(chapter, setColor) {
                 "Cod-Right", "Torso-Right", "Right-Backpack", "Right-Hand", "Right-Forearm", "Right-Belt",
                 "Right-Helmet",
             ],
+            trim: ["Eagle"]
         },
         Quarter: {
             primary: [
@@ -69,6 +74,7 @@ function setChapterSectionValues(chapter, setColor) {
             secondary: ["Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Boot", "Left-Shin", "Left-Thigh",
                 "Right-Helmet", "Cod-Left", "Torso-Right", "Right-Backpack", "Right-Belt",
                 "Right-Hand", "Right-Forearm",],
+            trim: ["Eagle"]
         },
         Crusader: {
             primary: [
@@ -78,6 +84,7 @@ function setChapterSectionValues(chapter, setColor) {
                 "Right-Forearm", "Left-Forearm", "Left-Hand"
             ],
             secondary: ["Right-Shoulder-Pad", "Left-Shoulder-Pad", "Right-Helmet", "Left-Helmet",],
+            trim: ["Eagle"]
         },
         Disciple: {
             primary: [
@@ -88,6 +95,7 @@ function setChapterSectionValues(chapter, setColor) {
             secondary: ["Right-Shin", "Left-Shin", "Right-Helmet", "Left-Helmet", "Torso-Right",
                 "Torso-Left", "Right-Shoulder-Pad", "Left-Shoulder-Pad",
             ],
+            trim: ["Eagle"]
         },
         Talons: {
             primary: [
@@ -99,6 +107,7 @@ function setChapterSectionValues(chapter, setColor) {
                 "Right-Helmet", "Left-Helmet", "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin",
                 "Left-Shin", "Left-Thigh",
             ],
+            trim: ["Eagle"]
         },
         Accipiters: {
             primary: [
@@ -109,6 +118,7 @@ function setChapterSectionValues(chapter, setColor) {
                 "Left-Belt", "Cod-Right", "Cod-Left", "Right-Thigh", "Right-Boot", "Left-Boot",
                 "Right-Shin", "Left-Shin", "Left-Thigh",
             ],
+            trim: ["Eagle"]
         },
         Blazoned: {
             primary: [
@@ -119,6 +129,7 @@ function setChapterSectionValues(chapter, setColor) {
             secondary: ["Right-Shoulder-Pad", "Left-Shoulder-Pad", "Right-Helmet", "Left-Helmet", "Right-Hand",
                 "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
                 "Right-Forearm", "Left-Forearm", "Left-Hand"],
+            trim: ["Eagle"]
         },
         Eradicant: {
             primary: [
@@ -129,6 +140,7 @@ function setChapterSectionValues(chapter, setColor) {
                 "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
                 "Right-Belt", "Left-Belt",
             ],
+            trim: ["Eagle"]
         },
         Scythes: {
             primary: [
@@ -139,6 +151,7 @@ function setChapterSectionValues(chapter, setColor) {
             secondary: ["Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Cod-Right", "Cod-Left",
                 "Torso-Right", "Torso-Left",
             ],
+            trim: ["Eagle"]
         },
     };
 
@@ -147,10 +160,11 @@ function setChapterSectionValues(chapter, setColor) {
         return;
     }
 
-    const { primary, secondary } = patternMappings[pattern];
+    const { primary, secondary, trim } = patternMappings[pattern];
     if (primary.length > 0) setColor(primary, primaryColor);
     if (secondary.length > 0) setColor(secondary, secondaryColor);
-    setColor(['Ribbing', 'Eagle'], "#3E494A");
+    if (trim.length > 0) setColor(trim, trimColor);
+    setColor(['Ribbing'], "#3E494A");
 }
 
 export default function ImportWarband() {
