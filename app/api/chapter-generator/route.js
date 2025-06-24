@@ -31,29 +31,6 @@ function hueDistance(a, b) {
     return Math.min(diff, 360 - diff); // Need to remember that color wheels are circular. 
 }
 
-// function findClosestByHue(targetHue, excludeHexes = []) {
-//     const cleanedExcludes = excludeHexes.map(hex => hex.toLowerCase());
-
-//     const eligibleColors = colorList.filter(color =>
-//         // color.type !== "Metallic" &&
-//         !cleanedExcludes.includes(color.hex.toLowerCase())
-//     );
-
-//     let closestColor = null;
-//     let smallestDifference = 361; // (Greatest possible h value + 1)
-
-//     for (const color of eligibleColors) {
-//         const diff = hueDistance(color.h, targetHue);
-//         if (diff < smallestDifference) {
-//             smallestDifference = diff;
-//             closestColor = color;
-//             console.log(closestColor.name, " h: ", closestColor.h, " diff: ", diff)
-//         }
-//     }
-
-//     return closestColor;
-// }
-
 function findClosestColor(target, excludeHexes = []) {
     const cleanedExcludes = excludeHexes.map(h => h.toLowerCase());
     const eligibleColors = colorList.filter(c =>
@@ -80,47 +57,6 @@ function findClosestColor(target, excludeHexes = []) {
 
     return bestMatch;
 }
-
-// function generateComplementaryColors() {
-//     //const base = randomElement(colorList.filter(c => c.type !== "Metallic"));
-//     const base = randomElement(colorList);
-//     console.log("Base color: ", base.name);
-//     const complementHue = (base.h + 180) % 360;
-//     console.log("Finding complement color");
-//     const complement = findClosestByHue(complementHue, [base.hex.toLowerCase()]);
-
-//     const metallic = colorList.filter(c => c.type === "Metallic");
-//     const metal = randomElement(metallic);
-
-//     return [base, complement, metal ?? fallbackMetal];
-// }
-
-// function generateSplitComplementaryColors() {
-//     //const base = randomElement(colorList.filter(c => c.type !== "Metallic"));
-//     const base = randomElement(colorList);
-//     console.log("Base color: ", base.name);
-//     const hueA = (base.h + 150) % 360;
-//     const hueB = (base.h + 210) % 360;
-//     console.log("Finding first complement");
-//     const colorA = findClosestByHue(hueA, [base.hex.toLowerCase()]);
-//     console.log("Finding second complement");
-//     const colorB = findClosestByHue(hueB, [base.hex.toLowerCase(), colorA?.hex?.toLowerCase()]);
-
-//     return [base, colorA, colorB];
-// }
-
-// function generateTriadicColors() {
-//     //const base = randomElement(colorList.filter(c => c.type !== "Metallic"));
-//     const base = randomElement(colorList);
-//     console.log("Base color: ", base.name);
-//     const hueA = (base.h + 120) % 360;
-//     const hueB = (base.h + 240) % 360;
-//     console.log("Finding first triadic");
-//     const colorA = findClosestByHue(hueA, [base.hex.toLowerCase()]);
-//     console.log("Finding second triadic");
-//     const colorB = findClosestByHue(hueB, [base.hex.toLowerCase(), colorA?.hex?.toLowerCase()]);
-//     return [base, colorA, colorB];
-// }
 
 function generateComplementaryColors() {
     const base = randomElement(colorList);
