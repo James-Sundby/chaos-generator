@@ -1,69 +1,14 @@
 export const dynamic = 'force-dynamic';
 
-import { randomElement } from "@/utils/randomElement";
-import { generateWarbandName } from "@/utils/chaosNames";
-import {
-    generateComplementaryColors,
-    generateSplitComplementaryColors,
-    generateTriadicColors,
-    generateTetradicColors,
-    generateAnalogousColors,
-    generateFullyRandomColors
-} from "@/utils/generateColours";
+import { randomElement } from "@/app/utils/randomElement";
+import { generateWarbandName } from "@/app/utils/generateWarbandName";
+import { generateRandomColors } from "@/app/utils/generateColourScheme";
 
 import { colourList } from "@/lib/colours";
 import { chaosPatterns } from "@/lib/armourPatterns";
 
 const colorMap = Object.fromEntries(colourList.map((color) => [color.hex.toLowerCase(), color]));
 const patternsSet = new Set(chaosPatterns.map((p) => p.toLowerCase()));
-
-function weightedRandomSelect(modes) {
-    const totalWeight = modes.reduce((sum, m) => sum + m.weight, 0);
-    const roll = Math.random() * totalWeight;
-    let cumulative = 0;
-
-    for (const m of modes) {
-        cumulative += m.weight;
-        if (roll < cumulative) return m.mode;
-    }
-}
-
-const generationModes = [
-    { mode: "random", weight: 2 },
-    { mode: "complementary", weight: 3 },
-    { mode: "split-complementary", weight: 4 },
-    { mode: "triadic", weight: 1 },
-    { mode: "tetradic", weight: 1 },
-    { mode: "analogous", weight: 2 },
-];
-
-function generateRandomColors() {
-    const mode = weightedRandomSelect(generationModes);
-
-    let colors;
-    switch (mode) {
-        case "complementary":
-            colors = generateComplementaryColors();
-            break;
-        case "split-complementary":
-            colors = generateSplitComplementaryColors();
-            break;
-        case "triadic":
-            colors = generateTriadicColors();
-            break;
-        case "tetradic":
-            colors = generateTetradicColors();
-            break;
-        case "analogous":
-            colors = generateAnalogousColors();
-            break;
-        default:
-            colors = generateFullyRandomColors();
-            break;
-    }
-    console.log(mode);
-    return { colors, mode };
-}
 
 function generateRandomPattern() {
     return randomElement(chaosPatterns);

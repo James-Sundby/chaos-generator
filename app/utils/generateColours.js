@@ -1,5 +1,5 @@
-import { randomElement } from "@/utils/randomElement";
-import { findClosestColour, findAccentColour } from "@/utils/colourTools";
+import { randomElement } from "@/app/utils/randomElement";
+import { findClosestColour, findAccentColour } from "@/app/utils/colourTools";
 
 import { colourList } from "@/lib/colours";
 
