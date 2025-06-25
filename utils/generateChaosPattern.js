@@ -1,4 +1,4 @@
-import { randomElement } from "@/app/utils/randomElement";
+import { randomElement } from "@/utils/randomElement";
 
 import { chaosPatterns } from "@/lib/armourPatterns";
 

@@ -5,7 +5,7 @@ import {
     generateTetradicColors,
     generateAnalogousColors,
     generateFullyRandomColors
-} from "@/app/utils/generateColours";
+} from "@/utils/generateColours";
 
 const generationStrategies = [
     { mode: "random", weight: 2, fn: generateFullyRandomColors },
@@ -16,7 +16,7 @@ const generationStrategies = [
     { mode: "analogous", weight: 2, fn: generateAnalogousColors },
 ];
 
-function weightedRandomSelect(strategies) {
+export function weightedRandomSelect(strategies) {
     const totalWeight = strategies.reduce((sum, s) => sum + s.weight, 0);
     const roll = Math.random() * totalWeight;
     let cumulative = 0;

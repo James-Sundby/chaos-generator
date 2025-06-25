@@ -1,4 +1,4 @@
-function hueDistance(a, b) {
+export function hueDistance(a, b) {
     if (typeof a !== "number" || typeof b !== "number") {
         throw new Error("hueDistance expects two numeric hue values.");
     }
