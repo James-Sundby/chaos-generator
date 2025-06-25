@@ -2,7 +2,6 @@ export const dynamic = 'force-dynamic';
 
 import { colorList } from "@/lib/colors2";
 import { patterns } from "@/lib/armourPatterns";
-
 import { virtues, warriorTerms, placesOrEntities, adjectives, animals } from "@/lib/loyalData";
 
 const patternsSet = new Set(patterns.map((p) => p.toLowerCase()));
@@ -24,7 +23,94 @@ function generateChapterName() {
     return randomElement(formulas)();
 }
 
-function generateRandomColors() {
+//Testing new color logic
+function hueDistance(a, b) {
+    const diff = Math.abs(a - b);
+    return Math.min(diff, 360 - diff); // Need to remember that color wheels are circular. 
+}
+
+function findClosestColor(target, excludeHexes = []) {
+    const cleanedExcludes = excludeHexes.map(h => h.toLowerCase());
+    const eligibleColors = colorList.filter(c =>
+        // c.type !== "Metallic" &&
+        !cleanedExcludes.includes(c.hex.toLowerCase())
+    );
+
+    let bestMatch = null;
+    let bestScore = Infinity;
+
+    for (const color of eligibleColors) {
+        const hueDiff = hueDistance(color.h, target.h);
+        const satDiff = Math.abs(color.s - target.s);
+        const lightDiff = Math.abs(color.l - target.l);
+
+        const score = hueDiff * 1 + satDiff * 0.5 + lightDiff * 0.5;
+
+        if (score < bestScore) {
+            bestScore = score;
+            bestMatch = color;
+            //console.log(color.name, score)
+        }
+    }
+
+    return bestMatch;
+}
+
+function generateComplementaryColors() {
+    const base = randomElement(colorList);
+    //console.log("Base color:", base.name);
+
+    const target = {
+        h: (base.h + 180) % 360,
+        s: base.s,
+        l: base.l,
+    };
+    //console.log("Generating complement");
+    const complement = findClosestColor(target, [base.hex.toLowerCase()]);
+
+    const metallic = colorList.filter(c => c.type === "Metallic");
+    const metal = randomElement(metallic);
+
+    return [base, complement, metal ?? fallbackMetal];
+}
+
+function generateSplitComplementaryColors() {
+    const base = randomElement(colorList);
+    //console.log("Base color:", base.name);
+
+    const targetA = { h: (base.h + 150) % 360, s: base.s, l: base.l };
+    const targetB = { h: (base.h + 210) % 360, s: base.s, l: base.l };
+
+    //console.log("Generating first complement");
+    const colorA = findClosestColor(targetA, [base.hex.toLowerCase()]);
+    //console.log("Generating second complement");
+    const colorB = findClosestColor(targetB, [
+        base.hex.toLowerCase(),
+        colorA?.hex?.toLowerCase(),
+    ]);
+
+    return [base, colorA, colorB];
+}
+
+function generateTriadicColors() {
+    const base = randomElement(colorList);
+    //console.log("Base color:", base.name);
+
+    const targetA = { h: (base.h + 120) % 360, s: base.s, l: base.l };
+    const targetB = { h: (base.h + 240) % 360, s: base.s, l: base.l };
+
+    //console.log("Generating first triadic");
+    const colorA = findClosestColor(targetA, [base.hex.toLowerCase()]);
+    //console.log("Generating second triadic");
+    const colorB = findClosestColor(targetB, [
+        base.hex.toLowerCase(),
+        colorA?.hex?.toLowerCase(),
+    ]);
+
+    return [base, colorA, colorB];
+}
+
+function generateFullyRandomColors() {
     const shuffled = [...colorList].sort(() => 0.5 - Math.random());
     const baseColors = shuffled.slice(0, 2);
     const metal = shuffled.find(
@@ -33,16 +119,53 @@ function generateRandomColors() {
             !baseColors.some(c => c.hex.toLowerCase() === color.hex.toLowerCase())
     );
 
-    return [
-        ...baseColors,
-        metal ?? { name: "Retributor Armour", hex: "#ebb854", type: "Metallic", brand: "Citadel" }
-    ];
+    return [...baseColors, metal];
 }
+
+const generationModes = [
+    { mode: "random", weight: 2 },
+    { mode: "complementary", weight: 3 },
+    { mode: "split-complementary", weight: 1 },
+    { mode: "triadic", weight: 1 },
+];
+
+function weightedRandomSelect(modes) {
+    const totalWeight = modes.reduce((sum, m) => sum + m.weight, 0);
+    const roll = Math.random() * totalWeight;
+    let cumulative = 0;
+
+    for (const m of modes) {
+        cumulative += m.weight;
+        if (roll < cumulative) return m.mode;
+    }
+}
+
+function generateRandomColors() {
+    const mode = weightedRandomSelect(generationModes);
+
+    let colors;
+    switch (mode) {
+        case "complementary":
+            colors = generateComplementaryColors();
+            break;
+        case "split-complementary":
+            colors = generateSplitComplementaryColors();
+            break;
+        case "triadic":
+            colors = generateTriadicColors();
+            break;
+        default:
+            colors = generateFullyRandomColors();
+            break;
+    }
+
+    return { colors, mode };
+}
+
 
 function generateRandomPattern() {
     return randomElement(patterns);
 }
-
 
 function generateSlug(name, colors, pattern) {
     const nameSlug = name
@@ -122,12 +245,12 @@ export async function GET(req) {
     // Generate a new warband if no slug is provided or slug is invalid
     try {
         const warbandName = generateChapterName();
-        const colors = generateRandomColors();
+        const { colors, mode } = generateRandomColors();
         const pattern = generateRandomPattern();
         const newSlug = generateSlug(warbandName, colors, pattern);
 
         return new Response(
-            JSON.stringify({ message: "new warband", warbandName, colors, pattern, slug: newSlug }),
+            JSON.stringify({ message: "new warband", warbandName, colors, pattern, slug: newSlug, mode }),
             {
                 status: 200,
                 headers: {
