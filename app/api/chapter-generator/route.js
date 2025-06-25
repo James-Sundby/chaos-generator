@@ -158,7 +158,7 @@ function generateRandomColors() {
             colors = generateFullyRandomColors();
             break;
     }
-
+    console.log(mode);
     return { colors, mode };
 }
 

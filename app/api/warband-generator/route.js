@@ -1,219 +1,21 @@
 export const dynamic = 'force-dynamic';
 
-import { colorList } from "@/lib/colors2";
+import { randomElement } from "@/utils/randomElement";
+import { generateWarbandName } from "@/utils/chaosNames";
+import {
+    generateComplementaryColors,
+    generateSplitComplementaryColors,
+    generateTriadicColors,
+    generateTetradicColors,
+    generateAnalogousColors,
+    generateFullyRandomColors
+} from "@/utils/generateColours";
+
+import { colourList } from "@/lib/colours";
 import { chaosPatterns } from "@/lib/armourPatterns";
-import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives } from "@/lib/chaosData";
 
-const colorMap = Object.fromEntries(colorList.map((color) => [color.hex.toLowerCase(), color]));
+const colorMap = Object.fromEntries(colourList.map((color) => [color.hex.toLowerCase(), color]));
 const patternsSet = new Set(chaosPatterns.map((p) => p.toLowerCase()));
-
-function randomElement(array) {
-    return array[Math.floor(Math.random() * array.length)];
-}
-
-function generateWarbandName() {
-    const formulas = [
-        () => `${randomElement(warriorTerms)} of ${randomElement(darkEntities)}`,
-        () => `${randomElement(chaoticDescriptors)} ${randomElement(warriorTerms)}`,
-        () => `${randomElement(abstractNouns)} ${randomElement(warriorTerms)}`,
-        () => `${randomElement(adjectives)} ${randomElement(warriorTerms)} of ${randomElement(darkEntities)}`,
-        () => `${randomElement(abstractNouns)} of ${randomElement([...darkEntities, ...chaoticDescriptors])}`,
-        () => `The ${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
-        () => `Children of the ${randomElement(chaoticDescriptors)}`,
-        () => `${randomElement(adjectives)} ${randomElement(warriorTerms)} of ${randomElement(abstractNouns)}`,
-        () => `The ${randomElement(chaoticDescriptors)} ${randomElement(warriorTerms)}`,
-        () => `The ${randomElement(warriorTerms)} of ${randomElement(chaoticDescriptors)}`,
-        () => `${randomElement(darkEntities)} ${randomElement(warriorTerms)}`
-
-    ];
-    return randomElement(formulas)();
-}
-
-function hueDistance(a, b) {
-    const diff = Math.abs(a - b);
-    return Math.min(diff, 360 - diff);
-}
-
-function findClosestColor(target, excludeHexes = []) {
-    const cleanedExcludes = excludeHexes.map(h => h.toLowerCase());
-    const eligibleColors = colorList.filter(c =>
-        // c.type !== "Metallic" &&
-        !cleanedExcludes.includes(c.hex.toLowerCase())
-    );
-
-    let bestMatch = null;
-    let bestScore = Infinity;
-
-    for (const color of eligibleColors) {
-        const hueDiff = hueDistance(color.h, target.h);
-        const satDiff = Math.abs(color.s - target.s);
-        const lightDiff = Math.abs(color.l - target.l);
-
-        const score = hueDiff * 1 + satDiff * 0.5 + lightDiff * 0.5;
-
-        if (score < bestScore) {
-            bestScore = score;
-            bestMatch = color;
-        }
-    }
-
-    return bestMatch;
-}
-
-function generateComplementaryColors() {
-    const base = randomElement(colorList);
-
-    const target = {
-        h: (base.h + 180) % 360,
-        s: base.s,
-        l: base.l,
-    };
-    const complement = findClosestColor(target, [base.hex.toLowerCase()]);
-
-    const metallic = colorList.filter(c => c.type === "Metallic");
-    const metal = randomElement(metallic);
-
-    const accentPool = colorList.filter(c =>
-        c.type !== "Metallic" &&
-        c.s > 30 &&
-        c.l > 30 &&
-        ![base, complement, metal].some(existing => existing.hex.toLowerCase() === c.hex.toLowerCase())
-    );
-
-    const accent = findAccentColor([base, complement, metal], accentPool);
-
-    return [base, complement, metal, accent];
-}
-
-function generateSplitComplementaryColors() {
-    const base = randomElement(colorList);
-
-    const targetA = { h: (base.h + 150) % 360, s: base.s, l: base.l };
-    const targetB = { h: (base.h + 210) % 360, s: base.s, l: base.l };
-
-    const colorA = findClosestColor(targetA, [base.hex.toLowerCase()]);
-    const colorB = findClosestColor(targetB, [
-        base.hex.toLowerCase(),
-        colorA?.hex?.toLowerCase(),
-    ]);
-
-    const accentPool = colorList.filter(c =>
-        c.type !== "Metallic" &&
-        c.s > 30 &&
-        c.l > 30 &&
-        ![base, colorA, colorB].some(existing => existing.hex.toLowerCase() === c.hex.toLowerCase())
-    );
-
-    const accent = findAccentColor([base, colorA, colorB], accentPool);
-
-    return [base, colorA, colorB, accent];
-}
-
-function generateTriadicColors() {
-    const base = randomElement(colorList);
-
-    const targetA = { h: (base.h + 120) % 360, s: base.s, l: base.l };
-    const targetB = { h: (base.h + 240) % 360, s: base.s, l: base.l };
-
-    const colorA = findClosestColor(targetA, [base.hex.toLowerCase()]);
-    const colorB = findClosestColor(targetB, [
-        base.hex.toLowerCase(),
-        colorA?.hex?.toLowerCase(),
-    ]);
-
-    const accentPool = colorList.filter(c =>
-        c.type !== "Metallic" &&
-        c.s > 30 &&
-        c.l > 30 &&
-        ![base, colorA, colorB].some(existing => existing.hex.toLowerCase() === c.hex.toLowerCase())
-    );
-
-    const accent = findAccentColor([base, colorA, colorB], accentPool);
-
-    return [base, colorA, colorB, accent];
-}
-
-function generateTetradicColors() {
-    const base = randomElement(colorList);
-
-    const hue2 = (base.h + 90) % 360;
-    const hue3 = (base.h + 180) % 360;
-    const hue4 = (hue2 + 180) % 360;
-
-    const target2 = { h: hue2, s: base.s, l: base.l };
-    const target3 = { h: hue3, s: base.s, l: base.l };
-    const target4 = { h: hue4, s: base.s, l: base.l };
-
-    const color2 = findClosestColor(target2, [base.hex.toLowerCase()]);
-    const color3 = findClosestColor(target3, [base.hex.toLowerCase(), color2.hex.toLowerCase()]);
-    const color4 = findClosestColor(target4, [base.hex.toLowerCase(), color2.hex.toLowerCase(), color3.hex.toLowerCase()]);
-
-    return [base, color2, color3, color4];
-}
-
-function generateAnalogousColors() {
-    const base = randomElement(colorList);
-
-    const hueA = (base.h + 30) % 360;
-    const hueB = (base.h + 60) % 360;
-
-    const colorA = findClosestColor({ h: hueA, s: base.s, l: base.l }, [base.hex.toLowerCase()]);
-    const colorB = findClosestColor({ h: hueB, s: base.s, l: base.l }, [
-        base.hex.toLowerCase(),
-        colorA?.hex.toLowerCase()
-    ]);
-
-    const accentPool = colorList.filter(c =>
-        c.type !== "Metallic" &&
-        c.s > 30 &&
-        c.l > 30 &&
-        ![base, colorA, colorB].some(existing => existing.hex.toLowerCase() === c.hex.toLowerCase())
-    );
-
-    const accent = findAccentColor([base, colorA, colorB], accentPool);
-
-    return [base, colorA, colorB, accent];
-}
-
-
-
-function findAccentColor(existingColors, candidatePool) {
-    let bestAccent = null;
-    let bestMinDistance = -1;
-
-    for (const candidate of candidatePool) {
-        const distances = existingColors.map(c => hueDistance(candidate.h, c.h));
-        const minDistance = Math.min(...distances);
-
-        if (minDistance > bestMinDistance) {
-            bestMinDistance = minDistance;
-            bestAccent = candidate;
-        }
-    }
-
-    return bestAccent;
-}
-
-function generateFullyRandomColors() {
-    const shuffled = [...colorList].sort(() => 0.5 - Math.random());
-    const baseColors = shuffled.slice(0, 3);
-    const nonMetal = shuffled.find(
-        color =>
-            color.type !== "Metallic" &&
-            !baseColors.some(c => c.hex.toLowerCase() === color.hex.toLowerCase())
-    );
-
-    return [...baseColors, nonMetal];
-}
-
-const generationModes = [
-    { mode: "random", weight: 2 },
-    { mode: "complementary", weight: 3 },
-    { mode: "split-complementary", weight: 4 },
-    { mode: "triadic", weight: 1 },
-    { mode: "tetradic", weight: 1 },
-    { mode: "analogous", weight: 2 },
-];
 
 function weightedRandomSelect(modes) {
     const totalWeight = modes.reduce((sum, m) => sum + m.weight, 0);
@@ -225,6 +27,15 @@ function weightedRandomSelect(modes) {
         if (roll < cumulative) return m.mode;
     }
 }
+
+const generationModes = [
+    { mode: "random", weight: 2 },
+    { mode: "complementary", weight: 3 },
+    { mode: "split-complementary", weight: 4 },
+    { mode: "triadic", weight: 1 },
+    { mode: "tetradic", weight: 1 },
+    { mode: "analogous", weight: 2 },
+];
 
 function generateRandomColors() {
     const mode = weightedRandomSelect(generationModes);
@@ -250,7 +61,7 @@ function generateRandomColors() {
             colors = generateFullyRandomColors();
             break;
     }
-
+    console.log(mode);
     return { colors, mode };
 }
 
