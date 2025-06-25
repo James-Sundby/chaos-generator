@@ -133,6 +133,50 @@ function generateTriadicColors() {
     return [base, colorA, colorB, accent];
 }
 
+function generateTetradicColors() {
+    const base = randomElement(colorList);
+
+    const hue2 = (base.h + 90) % 360;
+    const hue3 = (base.h + 180) % 360;
+    const hue4 = (hue2 + 180) % 360;
+
+    const target2 = { h: hue2, s: base.s, l: base.l };
+    const target3 = { h: hue3, s: base.s, l: base.l };
+    const target4 = { h: hue4, s: base.s, l: base.l };
+
+    const color2 = findClosestColor(target2, [base.hex.toLowerCase()]);
+    const color3 = findClosestColor(target3, [base.hex.toLowerCase(), color2.hex.toLowerCase()]);
+    const color4 = findClosestColor(target4, [base.hex.toLowerCase(), color2.hex.toLowerCase(), color3.hex.toLowerCase()]);
+
+    return [base, color2, color3, color4];
+}
+
+function generateAnalogousColors() {
+    const base = randomElement(colorList);
+
+    const hueA = (base.h + 30) % 360;
+    const hueB = (base.h + 60) % 360;
+
+    const colorA = findClosestColor({ h: hueA, s: base.s, l: base.l }, [base.hex.toLowerCase()]);
+    const colorB = findClosestColor({ h: hueB, s: base.s, l: base.l }, [
+        base.hex.toLowerCase(),
+        colorA?.hex.toLowerCase()
+    ]);
+
+    const accentPool = colorList.filter(c =>
+        c.type !== "Metallic" &&
+        c.s > 30 &&
+        c.l > 30 &&
+        ![base, colorA, colorB].some(existing => existing.hex.toLowerCase() === c.hex.toLowerCase())
+    );
+
+    const accent = findAccentColor([base, colorA, colorB], accentPool);
+
+    return [base, colorA, colorB, accent];
+}
+
+
+
 function findAccentColor(existingColors, candidatePool) {
     let bestAccent = null;
     let bestMinDistance = -1;
@@ -163,10 +207,12 @@ function generateFullyRandomColors() {
 }
 
 const generationModes = [
-    { mode: "random", weight: 1 },
-    { mode: "complementary", weight: 1 },
-    { mode: "split-complementary", weight: 2 },
-    { mode: "triadic", weight: 2 },
+    { mode: "random", weight: 2 },
+    { mode: "complementary", weight: 3 },
+    { mode: "split-complementary", weight: 4 },
+    { mode: "triadic", weight: 1 },
+    { mode: "tetradic", weight: 1 },
+    { mode: "analogous", weight: 2 },
 ];
 
 function weightedRandomSelect(modes) {
@@ -183,21 +229,29 @@ function weightedRandomSelect(modes) {
 function generateRandomColors() {
     const mode = weightedRandomSelect(generationModes);
 
-    if (mode === "complementary") {
-        //console.log("Complementary");
-        return generateComplementaryColors();
-    }
-    if (mode === "split-complementary") {
-        //console.log("Split-Complementary");
-        return generateSplitComplementaryColors();
-    }
-    if (mode === "triadic") {
-        //console.log("Triadic");
-        return generateTriadicColors();
+    let colors;
+    switch (mode) {
+        case "complementary":
+            colors = generateComplementaryColors();
+            break;
+        case "split-complementary":
+            colors = generateSplitComplementaryColors();
+            break;
+        case "triadic":
+            colors = generateTriadicColors();
+            break;
+        case "tetradic":
+            colors = generateTetradicColors();
+            break;
+        case "analogous":
+            colors = generateAnalogousColors();
+            break;
+        default:
+            colors = generateFullyRandomColors();
+            break;
     }
 
-    //console.log("Fallback to fully random");
-    return generateFullyRandomColors();
+    return { colors, mode };
 }
 
 function generateRandomPattern() {
@@ -284,12 +338,12 @@ export async function GET(req) {
     // Generate a new warband if no slug is provided or slug is invalid
     try {
         const warbandName = generateWarbandName();
-        const colors = generateRandomColors();
+        const { colors, mode } = generateRandomColors();
         const pattern = generateRandomPattern();
         const newSlug = generateSlug(warbandName, colors, pattern);
 
         return new Response(
-            JSON.stringify({ message: "new warband", warbandName, colors, pattern, slug: newSlug }),
+            JSON.stringify({ message: "new warband", warbandName, colors, pattern, slug: newSlug, mode }),
             {
                 status: 200,
                 headers: {

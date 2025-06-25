@@ -7,8 +7,6 @@ import { virtues, warriorTerms, placesOrEntities, adjectives, animals } from "@/
 const patternsSet = new Set(patterns.map((p) => p.toLowerCase()));
 const colorMap = Object.fromEntries(colorList.map((color) => [color.hex.toLowerCase(), color]));
 
-
-
 function randomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
@@ -121,10 +119,7 @@ function generateFullyRandomColors() {
             !baseColors.some(c => c.hex.toLowerCase() === color.hex.toLowerCase())
     );
 
-    return [
-        ...baseColors,
-        metal ?? fallbackMetal
-    ];
+    return [...baseColors, metal];
 }
 
 const generationModes = [
@@ -148,21 +143,23 @@ function weightedRandomSelect(modes) {
 function generateRandomColors() {
     const mode = weightedRandomSelect(generationModes);
 
-    if (mode === "complementary") {
-        //console.log("Complementary");
-        return generateComplementaryColors();
-    }
-    if (mode === "split-complementary") {
-        //console.log("Split-Complementary");
-        return generateSplitComplementaryColors();
-    }
-    if (mode === "triadic") {
-        //console.log("Triadic");
-        return generateTriadicColors();
+    let colors;
+    switch (mode) {
+        case "complementary":
+            colors = generateComplementaryColors();
+            break;
+        case "split-complementary":
+            colors = generateSplitComplementaryColors();
+            break;
+        case "triadic":
+            colors = generateTriadicColors();
+            break;
+        default:
+            colors = generateFullyRandomColors();
+            break;
     }
 
-    //console.log("Fallback to fully random");
-    return generateFullyRandomColors();
+    return { colors, mode };
 }
 
 
@@ -248,12 +245,12 @@ export async function GET(req) {
     // Generate a new warband if no slug is provided or slug is invalid
     try {
         const warbandName = generateChapterName();
-        const colors = generateRandomColors();
+        const { colors, mode } = generateRandomColors();
         const pattern = generateRandomPattern();
         const newSlug = generateSlug(warbandName, colors, pattern);
 
         return new Response(
-            JSON.stringify({ message: "new warband", warbandName, colors, pattern, slug: newSlug }),
+            JSON.stringify({ message: "new warband", warbandName, colors, pattern, slug: newSlug, mode }),
             {
                 status: 200,
                 headers: {
