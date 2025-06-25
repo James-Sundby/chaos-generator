@@ -1,90 +1,43 @@
 export const dynamic = 'force-dynamic';
 
-import { colorList } from "@/lib/colors2";
+
+import { randomElement } from "@/utils/randomElement";
+import { generateChapterName } from "@/utils/generateNames";
+import { generateLoyalistPattern } from "@/utils/generatePatterns";
+
+import { findClosestColour } from "@/utils/colourTools";
+
+import { colourList } from "@/lib/colours";
 import { patterns } from "@/lib/armourPatterns";
-import { virtues, warriorTerms, placesOrEntities, adjectives, animals } from "@/lib/loyalData";
 
 const patternsSet = new Set(patterns.map((p) => p.toLowerCase()));
-const colorMap = Object.fromEntries(colorList.map((color) => [color.hex.toLowerCase(), color]));
-
-function randomElement(array) {
-    return array[Math.floor(Math.random() * array.length)];
-}
-
-function generateChapterName() {
-    const formulas = [
-        () => `${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
-        () => `${randomElement(warriorTerms)} of ${randomElement(virtues)}`,
-        () => `${randomElement(warriorTerms)} of ${randomElement(placesOrEntities)}`,
-        () => `The ${randomElement(adjectives)} ${randomElement(warriorTerms)}`,
-        () => `${randomElement(adjectives)} ${randomElement(animals)}`,
-        () => `${randomElement(animals)} of ${randomElement(placesOrEntities)}`,
-    ];
-    return randomElement(formulas)();
-}
-
-//Testing new color logic
-function hueDistance(a, b) {
-    const diff = Math.abs(a - b);
-    return Math.min(diff, 360 - diff); // Need to remember that color wheels are circular. 
-}
-
-function findClosestColor(target, excludeHexes = []) {
-    const cleanedExcludes = excludeHexes.map(h => h.toLowerCase());
-    const eligibleColors = colorList.filter(c =>
-        // c.type !== "Metallic" &&
-        !cleanedExcludes.includes(c.hex.toLowerCase())
-    );
-
-    let bestMatch = null;
-    let bestScore = Infinity;
-
-    for (const color of eligibleColors) {
-        const hueDiff = hueDistance(color.h, target.h);
-        const satDiff = Math.abs(color.s - target.s);
-        const lightDiff = Math.abs(color.l - target.l);
-
-        const score = hueDiff * 1 + satDiff * 0.5 + lightDiff * 0.5;
-
-        if (score < bestScore) {
-            bestScore = score;
-            bestMatch = color;
-            //console.log(color.name, score)
-        }
-    }
-
-    return bestMatch;
-}
+const colorMap = Object.fromEntries(colourList.map((color) => [color.hex.toLowerCase(), color]));
 
 function generateComplementaryColors() {
-    const base = randomElement(colorList);
-    //console.log("Base color:", base.name);
-
+    const base = randomElement(colourList);
     const target = {
         h: (base.h + 180) % 360,
         s: base.s,
         l: base.l,
     };
-    //console.log("Generating complement");
-    const complement = findClosestColor(target, [base.hex.toLowerCase()]);
 
-    const metallic = colorList.filter(c => c.type === "Metallic");
+    const complement = findClosestColour(target, colourList, [base.hex.toLowerCase()]);
+
+    const metallic = colourList.filter(c => c.type === "Metallic");
     const metal = randomElement(metallic);
 
-    return [base, complement, metal ?? fallbackMetal];
+    return [base, complement, metal];
 }
 
 function generateSplitComplementaryColors() {
-    const base = randomElement(colorList);
-    //console.log("Base color:", base.name);
+    const base = randomElement(colourList);
+
 
     const targetA = { h: (base.h + 150) % 360, s: base.s, l: base.l };
     const targetB = { h: (base.h + 210) % 360, s: base.s, l: base.l };
 
-    //console.log("Generating first complement");
-    const colorA = findClosestColor(targetA, [base.hex.toLowerCase()]);
-    //console.log("Generating second complement");
-    const colorB = findClosestColor(targetB, [
+    const colorA = findClosestColour(targetA, colourList, [base.hex.toLowerCase()]);
+    const colorB = findClosestColour(targetB, colourList, [
         base.hex.toLowerCase(),
         colorA?.hex?.toLowerCase(),
     ]);
@@ -93,16 +46,13 @@ function generateSplitComplementaryColors() {
 }
 
 function generateTriadicColors() {
-    const base = randomElement(colorList);
-    //console.log("Base color:", base.name);
+    const base = randomElement(colourList);
 
     const targetA = { h: (base.h + 120) % 360, s: base.s, l: base.l };
     const targetB = { h: (base.h + 240) % 360, s: base.s, l: base.l };
 
-    //console.log("Generating first triadic");
-    const colorA = findClosestColor(targetA, [base.hex.toLowerCase()]);
-    //console.log("Generating second triadic");
-    const colorB = findClosestColor(targetB, [
+    const colorA = findClosestColour(targetA, colourList, [base.hex.toLowerCase()]);
+    const colorB = findClosestColour(targetB, colourList, [
         base.hex.toLowerCase(),
         colorA?.hex?.toLowerCase(),
     ]);
@@ -111,7 +61,7 @@ function generateTriadicColors() {
 }
 
 function generateFullyRandomColors() {
-    const shuffled = [...colorList].sort(() => 0.5 - Math.random());
+    const shuffled = [...colourList].sort(() => 0.5 - Math.random());
     const baseColors = shuffled.slice(0, 2);
     const metal = shuffled.find(
         color =>
@@ -160,11 +110,6 @@ function generateRandomColors() {
     }
     console.log(mode);
     return { colors, mode };
-}
-
-
-function generateRandomPattern() {
-    return randomElement(patterns);
 }
 
 function generateSlug(name, colors, pattern) {
@@ -246,7 +191,7 @@ export async function GET(req) {
     try {
         const warbandName = generateChapterName();
         const { colors, mode } = generateRandomColors();
-        const pattern = generateRandomPattern();
+        const pattern = generateLoyalistPattern();
         const newSlug = generateSlug(warbandName, colors, pattern);
 
         return new Response(

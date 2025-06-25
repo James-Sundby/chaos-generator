@@ -1,8 +1,8 @@
 export const dynamic = 'force-dynamic';
 
-import { generateWarbandName } from "@/utils/generateWarbandName";
+import { generateWarbandName } from "@/utils/generateNames";
 import { generateRandomColors } from "@/utils/generateColourScheme";
-import { generateRandomPattern } from "@/utils/generateChaosPattern";
+import { generateChaosPattern } from "@/utils/generatePatterns";
 import { generateSlug, parseSlug } from "@/utils/chaosSlugUtils";
 
 import { colourList } from "@/lib/colours";
@@ -38,7 +38,7 @@ export async function GET(req) {
     try {
         const warbandName = generateWarbandName();
         const { colors, mode } = generateRandomColors();
-        const pattern = generateRandomPattern();
+        const pattern = generateChaosPattern();
         const newSlug = generateSlug(warbandName, colors, pattern);
 
         return new Response(JSON.stringify({
