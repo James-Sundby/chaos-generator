@@ -2,10 +2,10 @@ import Painter from "@/app/components/painter";
 
 export const metadata = {
     title: "Custom Chapter",
-    description: "Customize your own Space Marine chapter with hand-picked colors and armor patterns. Preview your scheme and generate a unique chapter ID.",
+    description: "Customize your own Space Marine chapter with hand-picked colours and armor patterns. Preview your scheme and generate a unique chapter ID.",
     openGraph: {
         title: "Custom Chapter",
-        description: "Customize your own Space Marine chapter with hand-picked colors and armor patterns.",
+        description: "Customize your own Space Marine chapter with hand-picked colours and armor patterns.",
         url: "https://chapter-gen.jsundby.dev/painter",
         siteName: "Chapter Generator",
         images: [
@@ -21,7 +21,7 @@ export const metadata = {
     },
     twitter: {
         title: "Custom Chapter",
-        description: "Customize your own Space Marine chapter with hand-picked colors and armor patterns.",
+        description: "Customize your own Space Marine chapter with hand-picked colours and armor patterns.",
         card: 'summary_large_image',
         images: [
             {
