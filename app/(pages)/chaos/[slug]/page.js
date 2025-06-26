@@ -5,15 +5,15 @@ import WarbandView from "@/app/components/warbandView";
 
 export async function generateMetadata({ params }) {
     try {
-        const { warbandName, colors, pattern, slug } = parseChaosSlug(params.slug);
-        const colorNames = colors.map((c) => c.name).join(", ");
+        const { warbandName, colours, pattern, slug } = parseChaosSlug(params.slug);
+        const colourNames = colours.map((c) => c.name).join(", ");
 
         return {
             title: `${warbandName}`,
-            description: `Custom Chaos warband: ${warbandName} using ${colorNames} in the "${pattern}" pattern.`,
+            description: `Custom Chaos warband: ${warbandName} using ${colourNames} in the "${pattern}" pattern.`,
             openGraph: {
                 title: `${warbandName}`,
-                description: `Chaos Space Marine scheme: ${colorNames} + ${pattern}.`,
+                description: `Chaos Space Marine scheme: ${colourNames} + ${pattern}.`,
                 url: `https://chapter-gen.jsundby.dev/chaos/${slug}`,
                 siteName: "Chapter Generator",
                 images: [
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }) {
             },
             twitter: {
                 title: `${warbandName}`,
-                description: `Custom warband colors: ${colorNames}, using the "${pattern}" pattern.`,
+                description: `Custom Chaos warband: ${warbandName} using ${colourNames} in the "${pattern}" pattern.`,
                 card: 'summary_large_image',
                 images: [
                     {

@@ -22,7 +22,7 @@ export function capitalizeName(name) {
         .join(" ");
 }
 
-export function parseSlug(slug, colourMap, patternSet) {
+export function parseChaosSlug(slug, colourMap, patternSet) {
     const slugParts = slug.split("-");
 
     if (slugParts.length < 5) {
@@ -57,5 +57,42 @@ export function parseSlug(slug, colourMap, patternSet) {
     const name = slugParts.join(" ").replace(/-/g, " ");
     const warbandName = capitalizeName(name);
 
-    return { warbandName, colors: namedColours, pattern };
+    return { name: warbandName, colours: namedColours, pattern };
+}
+
+export function parseChapterSlug(slug, colourMap, patternSet) {
+    const slugParts = slug.split("-");
+
+    if (slugParts.length < 4) {
+        throw new Error("Slug is too short to extract 3 colours and a pattern.");
+    }
+
+    const patternCode = slugParts.pop();
+    if (!patternSet.has(patternCode)) {
+        throw new Error(`Invalid pattern code: ${patternCode}`);
+    }
+    const pattern = capitalizeName(patternCode);
+
+    const colourHex3 = `#${slugParts.pop()}`;
+    const colourHex2 = `#${slugParts.pop()}`;
+    const colourHex1 = `#${slugParts.pop()}`;
+
+    const hexColourRegex = /^#[0-9A-Fa-f]{6}$/;
+    const allHexes = [colourHex1, colourHex2, colourHex3];
+    if (!allHexes.every(hex => hexColourRegex.test(hex))) {
+        throw new Error("One or more hex values are invalid.");
+    }
+
+    const namedColours = allHexes.map(hex => {
+        const colour = colourMap[hex.toLowerCase()];
+        if (!colour) {
+            throw new Error(`Colour not found for hex: ${hex}`);
+        }
+        return colour;
+    });
+
+    const name = slugParts.join(" ").replace(/-/g, " ");
+    const chapterName = capitalizeName(name);
+
+    return { name: chapterName, colours: namedColours, pattern };
 }

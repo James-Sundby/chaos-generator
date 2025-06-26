@@ -1,14 +1,14 @@
 export const dynamic = 'force-dynamic';
 
 import { generateWarbandName } from "@/utils/generateNames";
-import { generateRandomColors } from "@/utils/generateColourScheme";
+import { generateWarbandScheme } from "@/utils/generateColourScheme";
 import { generateChaosPattern } from "@/utils/generatePatterns";
-import { generateSlug, parseSlug } from "@/utils/chaosSlugUtils";
+import { generateSlug, parseChaosSlug } from "@/utils/parseSlugs";
 
 import { colourList } from "@/lib/colours";
 import { chaosPatterns } from "@/lib/armourPatterns";
 
-const colorMap = Object.fromEntries(colourList.map((color) => [color.hex.toLowerCase(), color]));
+const colourMap = Object.fromEntries(colourList.map((colour) => [colour.hex.toLowerCase(), colour]));
 const patternsSet = new Set(chaosPatterns.map((p) => p.toLowerCase()));
 
 export async function GET(req) {
@@ -22,32 +22,33 @@ export async function GET(req) {
 
     if (slug) {
         try {
-            const { warbandName, colors, pattern } = parseSlug(slug, colorMap, patternsSet);
+            const { name, colours, pattern } = parseChaosSlug(slug, colourMap, patternsSet);
             return new Response(JSON.stringify({
                 message: "valid",
-                warbandName,
-                colors,
-                pattern,
-                slug
+                warbandName: name,
+                colors: colours,
+                pattern: pattern,
+                slug: slug
             }), { status: 200 });
         } catch (error) {
             console.warn("Invalid slug, generating a new warband instead:", error.message);
         }
     }
 
+    // Generate a new warband if no slug is provided or slug is invalid
     try {
-        const warbandName = generateWarbandName();
-        const { colors, mode } = generateRandomColors();
+        const name = generateWarbandName();
+        const { colours, mode } = generateWarbandScheme();
         const pattern = generateChaosPattern();
-        const newSlug = generateSlug(warbandName, colors, pattern);
+        const newSlug = generateSlug(name, colours, pattern);
 
         return new Response(JSON.stringify({
             message: "new warband",
-            warbandName,
-            colors,
-            pattern,
+            warbandName: name,
+            colors: colours,
+            pattern: pattern,
             slug: newSlug,
-            mode
+            mode: mode
         }), {
             status: 200,
             headers: {
@@ -55,9 +56,14 @@ export async function GET(req) {
             },
         });
     } catch (error) {
-        return new Response(
-            JSON.stringify({ error: "Internal Server Error", message: error.message }),
-            { status: 500, headers: { "Content-Type": "application/json" } }
-        );
+        return new Response(JSON.stringify({
+            error: "Internal Server Error",
+            message: error.message
+        }), {
+            status: 500,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
     }
 }
