@@ -93,11 +93,7 @@ export default function Painter() {
     const generateNewColor = (index) => {
         const currentHex = warband.colors[index]?.hex;
 
-        const validColors = (index === 2)
-            ? colorList.filter((c) => c.type === "Metallic")
-            : colorList;
-
-        const filtered = validColors.filter((c) => c.hex !== currentHex);
+        const filtered = colorList.filter((c) => c.hex !== currentHex);
         const randomColor = filtered[Math.floor(Math.random() * filtered.length)];
 
         const newColors = [...warband.colors];
@@ -228,8 +224,8 @@ export default function Painter() {
 
                     <div className="flex">
                         <Dropdown
-                            label="Trim colour"
-                            options={metallics}
+                            label="Accent colour"
+                            options={groupedColors}
                             value={warband.colors[2]?.hex}
                             onChange={(value) => handleColorChange(2, value)}
                         />

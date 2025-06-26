@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export const metadata = {
     title: "Help & Conversion Guide",
-    description: "Use this guide to convert old chapter IDs with outdated metal codes into updated versions using hex codes. Includes a color chart for reference.",
+    description: "Use this guide to convert old chapter IDs with outdated metal codes into updated versions using hex codes. Includes a colour chart for reference.",
     openGraph: {
         title: "Help & Conversion Guide",
-        description: "Having trouble with old chapter IDs? This guide helps you update them using the new color codes.",
+        description: "Having trouble with old chapter IDs? This guide helps you update them using the new colour codes.",
         url: "https://chapter-gen.jsundby.dev/help",
         siteName: "Chapter Generator",
         images: [
@@ -22,7 +22,7 @@ export const metadata = {
     },
     twitter: {
         title: "Help & Conversion Guide",
-        description: "Update old metal color codes with ease using this chart-based guide.",
+        description: "Update old metal colour codes with ease using this chart-based guide.",
         card: 'summary_large_image',
         images: [
             {
@@ -41,7 +41,7 @@ export default function Page() {
         >
             <h1>Help</h1>
 
-            <h2>Color Hex Changes - May 5th, 2025</h2>
+            <h2>Colour Hex Changes - May 5th, 2025</h2>
             <p>
                 I&apos;ve recently updated the colour codes to match Citadel paint references more accurately.
                 Previously, the hex codes were sampled from screenshots, which resulted in reduced saturation when converting back from RGB values.
