@@ -1,9 +1,14 @@
 import { randomElement } from "@/utils/randomElement";
-import { createNameGenerator } from "@/utils/generateNameFactory";
 
 import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives as chaosAdjectives } from "@/lib/chaosData";
 import { virtues, warriorTerms as loyalTerms, placesOrEntities, adjectives as loyalAdjectives, animals } from "@/lib/loyalData";
 
+
+function nameGenerator(formulae) {
+    return () => randomElement(formulae)();
+}
+
+// Chaos Warbands
 const chaosFormulas = [
     () => `${randomElement(warriorTerms)} of ${randomElement(darkEntities)}`,
     () => `${randomElement(chaoticDescriptors)} ${randomElement(warriorTerms)}`,
@@ -18,8 +23,9 @@ const chaosFormulas = [
     () => `${randomElement(darkEntities)} ${randomElement(warriorTerms)}`
 ];
 
-export const generateWarbandName = createNameGenerator(chaosFormulas);
+export const generateWarbandName = nameGenerator(chaosFormulas);
 
+// Loyalist Chapters
 const loyalistFormulas = [
     () => `${randomElement(loyalAdjectives)} ${randomElement(loyalTerms)}`,
     () => `${randomElement(loyalTerms)} of ${randomElement(virtues)}`,
@@ -29,4 +35,6 @@ const loyalistFormulas = [
     () => `${randomElement(animals)} of ${randomElement(placesOrEntities)}`,
 ];
 
-export const generateChapterName = createNameGenerator(loyalistFormulas);
+export const generateChapterName = nameGenerator(loyalistFormulas);
+
+// Xenos?

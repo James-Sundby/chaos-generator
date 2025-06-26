@@ -1,19 +1,19 @@
 import {
-    generateComplementaryColors,
-    generateSplitComplementaryColors,
-    generateTriadicColors,
-    generateTetradicColors,
-    generateAnalogousColors,
-    generateFullyRandomColors
+    generateComplementaryColours,
+    generateSplitComplementaryColours,
+    generateTriadicColours,
+    generateTetradicColours,
+    generateAnalogousColours,
+    generateFullyRandomColours
 } from "@/utils/generateColours";
 
 const generationStrategies = [
-    { mode: "random", weight: 2, fn: generateFullyRandomColors },
-    { mode: "complementary", weight: 3, fn: generateComplementaryColors },
-    { mode: "split-complementary", weight: 4, fn: generateSplitComplementaryColors },
-    { mode: "triadic", weight: 1, fn: generateTriadicColors },
-    { mode: "tetradic", weight: 1, fn: generateTetradicColors },
-    { mode: "analogous", weight: 2, fn: generateAnalogousColors },
+    { mode: "random", weight: 2, fn: generateFullyRandomColours },
+    { mode: "complementary", weight: 3, fn: generateComplementaryColours },
+    { mode: "split-complementary", weight: 4, fn: generateSplitComplementaryColours },
+    { mode: "triadic", weight: 1, fn: generateTriadicColours },
+    { mode: "tetradic", weight: 1, fn: generateTetradicColours },
+    { mode: "analogous", weight: 2, fn: generateAnalogousColours },
 ];
 
 export function weightedRandomSelect(strategies) {
@@ -27,8 +27,8 @@ export function weightedRandomSelect(strategies) {
     }
 }
 
-export function generateRandomColors() {
+export function generateRandomColours() {
     const strategy = weightedRandomSelect(generationStrategies);
-    const colors = strategy.fn();
-    return { colors, mode: strategy.mode };
+    const colours = strategy.fn();
+    return { colours, mode: strategy.mode };
 }

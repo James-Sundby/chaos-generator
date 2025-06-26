@@ -3,7 +3,7 @@ import { findClosestColour, findAccentColour } from "@/utils/colourTools";
 
 import { colourList } from "@/lib/colours";
 
-export function generateComplementaryColors() {
+export function generateComplementaryColours() {
     const base = randomElement(colourList);
 
     const target = {
@@ -28,7 +28,7 @@ export function generateComplementaryColors() {
     return [base, complement, metal, accent];
 }
 
-export function generateSplitComplementaryColors() {
+export function generateSplitComplementaryColours() {
     const base = randomElement(colourList);
 
     const targetA = { h: (base.h + 150) % 360, s: base.s, l: base.l };
@@ -52,7 +52,7 @@ export function generateSplitComplementaryColors() {
     return [base, colorA, colorB, accent];
 }
 
-export function generateTriadicColors() {
+export function generateTriadicColours() {
     const base = randomElement(colourList);
 
     const targetA = { h: (base.h + 120) % 360, s: base.s, l: base.l };
@@ -76,7 +76,7 @@ export function generateTriadicColors() {
     return [base, colorA, colorB, accent];
 }
 
-export function generateTetradicColors() {
+export function generateTetradicColours() {
     const base = randomElement(colourList);
 
     const hue2 = (base.h + 90) % 360;
@@ -94,7 +94,7 @@ export function generateTetradicColors() {
     return [base, color2, color3, color4];
 }
 
-export function generateAnalogousColors() {
+export function generateAnalogousColours() {
     const base = randomElement(colourList);
 
     const hueA = (base.h + 30) % 360;
@@ -118,14 +118,14 @@ export function generateAnalogousColors() {
     return [base, colorA, colorB, accent];
 }
 
-export function generateFullyRandomColors() {
+export function generateFullyRandomColours() {
     const shuffled = [...colourList].sort(() => 0.5 - Math.random());
-    const baseColors = shuffled.slice(0, 3);
+    const baseColours = shuffled.slice(0, 3);
     const nonMetal = shuffled.find(
         color =>
             color.type !== "Metallic" &&
-            !baseColors.some(c => c.hex.toLowerCase() === color.hex.toLowerCase())
+            !baseColours.some(c => c.hex.toLowerCase() === color.hex.toLowerCase())
     );
 
-    return [...baseColors, nonMetal];
+    return [...baseColours, nonMetal];
 }
