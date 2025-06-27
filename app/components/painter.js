@@ -57,10 +57,6 @@ const groupedColors = {
     Metallic: colorList.filter((c) => c.type === "Metallic"),
 };
 
-const metallics = {
-    Metallic: colorList.filter((c) => c.type === "Metallic"),
-};
-
 export default function Painter() {
     const warband = useWarbandStore((state) => state.warband);
     const setWarband = useWarbandStore((state) => state.setWarband);
