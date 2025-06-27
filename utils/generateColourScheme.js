@@ -5,7 +5,7 @@ import {
     generateTetradicColours,
     generateAnalogousColours,
     generateFullyRandomColours
-} from "@/utils/generateColours";
+} from "@/utils/colourTools";
 
 function schemeGenerator(strategies) {
     return () => generateColours(strategies);
