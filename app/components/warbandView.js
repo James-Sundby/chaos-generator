@@ -21,6 +21,22 @@ export default function WarbandView() {
 
     const shouldRenderCard = chaosBand.slug === params.slug && !isLoading && !error;
 
+    function handleShare(slug) {
+        const url = `${window.location.origin}/chapter/${slug}`;
+
+        if (navigator.share) {
+            navigator.share({
+                title: "Check out this Warband!",
+                text: `Here's a warband I generated: ${slug}`,
+                url,
+            }).catch((error) => console.log("Share failed:", error));
+        } else {
+            navigator.clipboard.writeText(url)
+                .then(() => alert("Link copied to clipboard!"))
+                .catch(() => alert("Failed to copy link."));
+        }
+    }
+
     useEffect(() => {
         async function fetchChaosBandData() {
             if (chaosBand.slug === params.slug) {
@@ -132,29 +148,45 @@ export default function WarbandView() {
                     </div>
                 </div>
             )}
+            <div className="flex flex-col w-full max-w-96 gap-4">
 
-            <div className="flex flex-row sm:flex-col w-full max-w-96 items-center justify-center gap-4">
-                <div className="w-full max-w-96">
-                    <ChaosButton message="Roll" />
-                </div>
-                <div className="w-full max-w-96">
-                    <Link
-                        className="btn btn-error rounded-lg items-center justify-center w-full h-auto px-6 py-2"
-                        href={"/chaos-painter"}
-                        aria-label="Customize your chapter"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 384 512"
-                            className="h-6 w-6 fill-error-content"
-                            aria-hidden="true"
+                <div className="flex flex-row sm:flex-col w-full max-w-96 items-center justify-center gap-4">
+                    <div className="w-full max-w-96">
+                        <ChaosButton message="Roll" />
+                    </div>
+                    <div className="w-full max-w-96">
+                        <Link
+                            className="btn btn-error rounded-lg items-center justify-center w-full h-auto px-6 py-2"
+                            href={"/chaos-painter"}
+                            aria-label="Customize your chapter"
                         >
-                            <path d="M162.4 6c-1.5-3.6-5-6-8.9-6l-19 0c-3.9 0-7.5 2.4-8.9 6L104.9 57.7c-3.2 8-14.6 8-17.8 0L66.4 6c-1.5-3.6-5-6-8.9-6L48 0C21.5 0 0 21.5 0 48L0 224l0 22.4L0 256l9.6 0 364.8 0 9.6 0 0-9.6 0-22.4 0-176c0-26.5-21.5-48-48-48L230.5 0c-3.9 0-7.5 2.4-8.9 6L200.9 57.7c-3.2 8-14.6 8-17.8 0L162.4 6zM0 288l0 32c0 35.3 28.7 64 64 64l64 0 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64l0-64 64 0c35.3 0 64-28.7 64-64l0-32L0 288zM192 432a16 16 0 1 1 0 32 16 16 0 1 1 0-32z" />
-                        </svg>
-                        <p className="">Customize</p>
-                    </Link>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 384 512"
+                                className="h-6 w-6 fill-error-content"
+                                aria-hidden="true"
+                            >
+                                <path d="M162.4 6c-1.5-3.6-5-6-8.9-6l-19 0c-3.9 0-7.5 2.4-8.9 6L104.9 57.7c-3.2 8-14.6 8-17.8 0L66.4 6c-1.5-3.6-5-6-8.9-6L48 0C21.5 0 0 21.5 0 48L0 224l0 22.4L0 256l9.6 0 364.8 0 9.6 0 0-9.6 0-22.4 0-176c0-26.5-21.5-48-48-48L230.5 0c-3.9 0-7.5 2.4-8.9 6L200.9 57.7c-3.2 8-14.6 8-17.8 0L162.4 6zM0 288l0 32c0 35.3 28.7 64 64 64l64 0 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64l0-64 64 0c35.3 0 64-28.7 64-64l0-32L0 288zM192 432a16 16 0 1 1 0 32 16 16 0 1 1 0-32z" />
+                            </svg>
+                            <p className="">Customize</p>
+                        </Link>
+                    </div>
                 </div>
+
+                <div className="flex flex-col w-full max-w-96 items-center justify-center gap-4">
+
+                    <div className="w-full max-w-96">
+                        <button
+                            className="btn btn-primary rounded-lg w-full"
+                            onClick={() => handleShare(chaosBand.slug)}
+                        >
+                            Share
+                        </button>
+                    </div>
+                </div>
+
             </div>
+
         </main>
     );
 }
