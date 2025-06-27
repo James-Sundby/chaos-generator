@@ -9,8 +9,7 @@ import { useWarbandStore } from "@/app/stores/warbandStore.js";
 import CustomizerButton from "@/app/components/customizerButton";
 import WarbandButton from "@/app/components/warbandButton";
 
-export default function ChapterView
-    () {
+export default function ChapterView() {
     const params = useParams();
     const router = useRouter();
     const warband = useWarbandStore((state) => state.warband);
@@ -21,6 +20,23 @@ export default function ChapterView
     const [loadingTime, setLoadingTime] = useState(0);
 
     const shouldRenderCard = warband.slug === params.slug && !isLoading && !error;
+
+    function handleShare(slug) {
+        const url = `${window.location.origin}/chapter/${slug}`;
+
+        if (navigator.share) {
+            navigator.share({
+                title: "Check out this Chapter!",
+                text: `Here's a chapter I generated: ${slug}`,
+                url,
+            }).catch((error) => console.log("Share failed:", error));
+        } else {
+            navigator.clipboard.writeText(url)
+                .then(() => alert("Link copied to clipboard!"))
+                .catch(() => alert("Failed to copy link."));
+        }
+    }
+
 
     useEffect(() => {
         async function fetchWarbandData() {
@@ -97,13 +113,30 @@ export default function ChapterView
                 patternName={warband.pattern}
             />
 
+            <div className="flex flex-col w-full max-w-96 gap-4">
+                <div className="flex flex-row sm:flex-col w-full max-w-96 items-center justify-center gap-4">
+                    <div className="w-full max-w-96">
+                        <WarbandButton message="New" />
+                    </div>
+                    <div className="w-full max-w-96">
+                        <CustomizerButton />
+                    </div>
 
-            <div className="flex flex-row sm:flex-col w-full max-w-96 items-center justify-center gap-4">
-                <div className="w-full max-w-96">
-                    <WarbandButton message="New" />
+
+
                 </div>
-                <div className="w-full max-w-96">
-                    <CustomizerButton />
+                <div className="flex flex-col w-full max-w-96 items-center justify-center gap-4">
+                    {/* <p className="text-xs font-bold justify-start">
+                        ID: <span className="font-normal">{warband.slug}</span>
+                    </p> */}
+                    <div className="w-full max-w-96">
+                        <button
+                            className="btn btn-primary rounded-lg w-full"
+                            onClick={() => handleShare(warband.slug)}
+                        >
+                            Share
+                        </button>
+                    </div>
                 </div>
             </div>
         </main>
