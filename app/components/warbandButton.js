@@ -30,6 +30,7 @@ export default function WarbandButton({ message }) {
             className="btn btn-primary rounded-lg items-center justify-center w-full h-auto px-6 py-2"
             disabled={loading}
             aria-busy={loading}
+            title="Generate a new chapter"
         >
             {loading ? (
                 <>

@@ -7,7 +7,8 @@ import Link from "next/link";
 
 import { useChaosStore } from "@/app/stores/chaosStore";
 import ChaosMarine from "@/app/components/chaosSpaceMarine";
-import ChaosButton from "@/app/components/chaosButton";
+
+import GeneratorButton from "@/app/components/generatorButton";
 
 export default function WarbandView() {
     const params = useParams();
@@ -22,7 +23,7 @@ export default function WarbandView() {
     const shouldRenderCard = chaosBand.slug === params.slug && !isLoading && !error;
 
     function handleShare(slug) {
-        const url = `${window.location.origin}/chapter/${slug}`;
+        const url = `${window.location.origin}/chaos/${slug}`;
 
         if (navigator.share) {
             navigator.share({
@@ -152,13 +153,21 @@ export default function WarbandView() {
 
                 <div className="flex flex-row sm:flex-col w-full max-w-96 items-center justify-center gap-4">
                     <div className="w-full max-w-96">
-                        <ChaosButton message="Roll" />
+                        <GeneratorButton
+                            message="New"
+                            endpoint="/api/warband-generator"
+                            onSetData={setChaosBand}
+                            urlPrefix="chaos"
+                            buttonClass="btn-error"
+                            iconClass="fill-error-content"
+                        />
                     </div>
                     <div className="w-full max-w-96">
                         <Link
                             className="btn btn-error rounded-lg items-center justify-center w-full h-auto px-6 py-2"
                             href={"/chaos-painter"}
-                            aria-label="Customize your chapter"
+                            aria-label="Customize your warband"
+                            title="Customize your warband"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -179,6 +188,7 @@ export default function WarbandView() {
                         <button
                             className="btn btn-error rounded-lg w-full"
                             onClick={() => handleShare(chaosBand.slug)}
+                            aria-label="Share this warband"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

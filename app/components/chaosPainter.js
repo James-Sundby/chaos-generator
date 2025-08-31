@@ -1,10 +1,12 @@
 "use client";
 
-import { colorList } from "@/lib/colors2";
+import { colourList } from "@/lib/colours";
 import { chaosPatterns } from "@/lib/armourPatterns";
 import ChaosMarine from "@/app/components/chaosSpaceMarine";
 import { useChaosStore } from "@/app/stores/chaosStore";
 import { useRouter } from "next/navigation";
+
+import { generateSlug } from "@/utils/parseSlugs";
 
 const Dropdown = ({ label, options, value, onChange }) => {
     const isGrouped = Array.isArray(options) === false;
@@ -39,29 +41,15 @@ const Dropdown = ({ label, options, value, onChange }) => {
 };
 
 const groupedColors = {
-    Base: colorList.filter((c) => c.type === "Base"),
-    Layer: colorList.filter((c) => c.type === "Layer"),
-    Metallic: colorList.filter((c) => c.type === "Metallic"),
+    Base: colourList.filter((c) => c.type === "Base"),
+    Layer: colourList.filter((c) => c.type === "Layer"),
+    Metallic: colourList.filter((c) => c.type === "Metallic"),
 };
 
 const nonMetallics = {
-    Base: colorList.filter((c) => c.type === "Base"),
-    Layer: colorList.filter((c) => c.type === "Layer"),
+    Base: colourList.filter((c) => c.type === "Base"),
+    Layer: colourList.filter((c) => c.type === "Layer"),
 };
-
-function generateSlug({ warbandName, colors, pattern }) {
-    const nameSlug = warbandName
-        .toLowerCase()
-        .replace(/[^a-z0-9 ]/g, "")
-        .replace(/\s+/g, "-")
-        .trim();
-    const colorSlug = colors.map(color => color.hex.replace("#", "")).join("-");
-    const patternSlug = pattern.toLowerCase();
-
-    return `${nameSlug}-${colorSlug}-${patternSlug}`;
-}
-
-
 
 export default function ChaosPainter() {
     const warband = useChaosStore((state) => state.chaosBand);
@@ -71,12 +59,12 @@ export default function ChaosPainter() {
 
     const updateWarband = (updatedProperties) => {
         const updatedWarband = { ...warband, ...updatedProperties };
-        const newSlug = generateSlug(updatedWarband);
+        const newSlug = generateSlug(updatedWarband.warbandName, updatedWarband.colors, updatedWarband.pattern);
         setWarband({ ...updatedProperties, slug: newSlug });
     };
 
     const handleColorChange = (index, value) => {
-        const color = colorList.find((c) => c.hex === value);
+        const color = colourList.find((c) => c.hex === value);
         const newColors = [...warband.colors];
         newColors[index] = color;
         updateWarband({ colors: newColors });
@@ -94,8 +82,8 @@ export default function ChaosPainter() {
         const currentHex = warband.colors[index]?.hex;
 
         const validColors = (index === 3)
-            ? colorList.filter((c) => c.type !== "Metallic")
-            : colorList;
+            ? colourList.filter((c) => c.type !== "Metallic")
+            : colourList;
 
         const filtered = validColors.filter((c) => c.hex !== currentHex);
         const randomColor = filtered[Math.floor(Math.random() * filtered.length)];

@@ -1,9 +1,11 @@
 "use client";
 
-import { colorList } from "@/lib/colors2";
+import { colourList } from "@/lib/colours";
 import { patterns } from "@/lib/armourPatterns";
 import { useWarbandStore } from "@/app/stores/warbandStore";
 import { useRouter } from "next/navigation";
+
+import { generateSlug } from "@/utils/parseSlugs";
 
 import SpaceMarine from "@/app/components/spaceMarine";
 
@@ -39,22 +41,10 @@ const Dropdown = ({ label, options, value, onChange }) => {
     );
 };
 
-const generateSlug = ({ warbandName, colors, pattern }) => {
-    const nameSlug = warbandName
-        .toLowerCase()
-        .replace(/[^a-z0-9 ]/g, "")
-        .replace(/\s+/g, "-")
-        .trim();
-    const colorSlug = colors.map(color => color.hex.replace("#", "")).join("-");
-    const patternSlug = pattern.toLowerCase();
-
-    return `${nameSlug}-${colorSlug}-${patternSlug}`;
-}
-
 const groupedColors = {
-    Base: colorList.filter((c) => c.type === "Base"),
-    Layer: colorList.filter((c) => c.type === "Layer"),
-    Metallic: colorList.filter((c) => c.type === "Metallic"),
+    Base: colourList.filter((c) => c.type === "Base"),
+    Layer: colourList.filter((c) => c.type === "Layer"),
+    Metallic: colourList.filter((c) => c.type === "Metallic"),
 };
 
 export default function Painter() {
@@ -64,12 +54,12 @@ export default function Painter() {
 
     const updateWarband = (updatedProperties) => {
         const updatedWarband = { ...warband, ...updatedProperties };
-        const newSlug = generateSlug(updatedWarband);
+        const newSlug = generateSlug(updatedWarband.warbandName, updatedWarband.colors, updatedWarband.pattern);
         setWarband({ ...updatedProperties, slug: newSlug });
     };
 
     const handleColorChange = (index, value) => {
-        const color = colorList.find((c) => c.hex === value);
+        const color = colourList.find((c) => c.hex === value);
         const newColors = [...warband.colors];
         newColors[index] = color;
         updateWarband({ colors: newColors });
@@ -89,7 +79,7 @@ export default function Painter() {
     const generateNewColor = (index) => {
         const currentHex = warband.colors[index]?.hex;
 
-        const filtered = colorList.filter((c) => c.hex !== currentHex);
+        const filtered = colourList.filter((c) => c.hex !== currentHex);
         const randomColor = filtered[Math.floor(Math.random() * filtered.length)];
 
         const newColors = [...warband.colors];

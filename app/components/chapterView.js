@@ -8,6 +8,7 @@ import TradingCard from "@/app/components/trading-card.js";
 import { useWarbandStore } from "@/app/stores/warbandStore.js";
 import CustomizerButton from "@/app/components/customizerButton";
 import WarbandButton from "@/app/components/warbandButton";
+import GeneratorButton from "./generatorButton";
 
 export default function ChapterView() {
     const params = useParams();
@@ -116,13 +117,18 @@ export default function ChapterView() {
             <div className="flex flex-col w-full max-w-96 gap-4">
                 <div className="flex flex-row sm:flex-col w-full max-w-96 items-center justify-center gap-4">
                     <div className="w-full max-w-96">
-                        <WarbandButton message="New" />
+                        <GeneratorButton
+                            message="New"
+                            endpoint="/api/chapter-generator"
+                            onSetData={setWarband}
+                            urlPrefix="chapter"
+                            buttonClass="btn-primary"
+                            iconClass="fill-primary-content"
+                        />
                     </div>
                     <div className="w-full max-w-96">
                         <CustomizerButton />
                     </div>
-
-
 
                 </div>
                 <div className="flex flex-col w-full max-w-96 items-center justify-center gap-4">
@@ -133,6 +139,8 @@ export default function ChapterView() {
                         <button
                             className="btn btn-primary rounded-lg w-full"
                             onClick={() => handleShare(warband.slug)}
+                            aria-label="Share this chapter"
+                            title="Share this chapter"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
