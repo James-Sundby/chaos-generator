@@ -11,8 +11,16 @@ export function hueDistance(a, b) {
     return Math.min(diff, 360 - diff);
 }
 
-export function findClosestColour(target, colourPool, excludeHexes = []) {
-    const weights = { hue: 1, sat: 0.5, light: 0.5 };
+export function findClosestColour(
+    target,
+    colourPool,
+    excludeHexes = [],
+    options = {}
+) {
+    const weights = { hue: 1, sat: 0.5, light: 0.5, ...(options.weights || {}) };
+    const k = Math.max(1, options.k || 5);
+    const pick = options.pick || "uniform"; // "uniform" | "ranked"
+    const rng = options.rng || Math.random; // optional deterministic RNG
 
     if (
         typeof target !== "object" ||
@@ -29,9 +37,9 @@ export function findClosestColour(target, colourPool, excludeHexes = []) {
         throw new Error("findClosestColour: excludeHexes must be an array.");
     }
 
-    const cleanedExcludes = excludeHexes.map(hex => hex.toLowerCase());
-    const eligibleColours = colourPool.filter(colour =>
-        !cleanedExcludes.includes(colour.hex.toLowerCase())
+    const cleanedExcludes = excludeHexes.map((hex) => String(hex).toLowerCase());
+    const eligibleColours = colourPool.filter(
+        (c) => !cleanedExcludes.includes(String(c.hex).toLowerCase())
     );
 
     if (eligibleColours.length === 0) {
@@ -39,26 +47,36 @@ export function findClosestColour(target, colourPool, excludeHexes = []) {
         return null;
     }
 
-    let bestMatch = null;
-    let bestScore = Infinity;
+    const scored = eligibleColours.map((c) => {
+        const hueDiff = hueDistance(c.h, target.h);
+        const satDiff = Math.abs(c.s - target.s);
+        const lightDiff = Math.abs(c.l - target.l);
+        const score = hueDiff * weights.hue + satDiff * weights.sat + lightDiff * weights.light;
+        return { colour: c, score };
+    });
 
-    for (const colour of eligibleColours) {
-        const hueDiff = hueDistance(colour.h, target.h);
-        const satDiff = Math.abs(colour.s - target.s);
-        const lightDiff = Math.abs(colour.l - target.l);
+    scored.sort((a, b) => a.score - b.score);
 
-        const score =
-            hueDiff * weights.hue +
-            satDiff * weights.sat +
-            lightDiff * weights.light;
+    if (k === 1 || scored.length === 1) return scored[0].colour;
 
-        if (score < bestScore) {
-            bestScore = score;
-            bestMatch = colour;
+    const topK = scored.slice(0, Math.min(k, scored.length));
+
+    // Pick one
+    if (pick === "ranked") {
+        // simple bias toward closest: weights = 1/(rank)
+        const weightsRank = topK.map((_, i) => 1 / (i + 1));
+        const sum = weightsRank.reduce((a, b) => a + b, 0);
+        let r = rng() * sum;
+        for (let i = 0; i < topK.length; i++) {
+            r -= weightsRank[i];
+            if (r <= 0) return topK[i].colour;
         }
+        return topK[topK.length - 1].colour;
+    } else {
+        // uniform among the K closest
+        const idx = Math.floor(rng() * topK.length);
+        return topK[idx].colour;
     }
-
-    return bestMatch;
 }
 
 export function findAccentColour(existingColours, candidatePool) {
