@@ -7,7 +7,6 @@ import Link from "next/link";
 
 import { useChaosStore } from "@/app/stores/chaosStore";
 import ChaosMarine from "@/app/components/chaosSpaceMarine";
-import ChaosButton from "@/app/components/chaosButton";
 
 import GeneratorButton from "@/app/components/generatorButton";
 
@@ -24,7 +23,7 @@ export default function WarbandView() {
     const shouldRenderCard = chaosBand.slug === params.slug && !isLoading && !error;
 
     function handleShare(slug) {
-        const url = `${window.location.origin}/chapter/${slug}`;
+        const url = `${window.location.origin}/chaos/${slug}`;
 
         if (navigator.share) {
             navigator.share({
@@ -154,7 +153,6 @@ export default function WarbandView() {
 
                 <div className="flex flex-row sm:flex-col w-full max-w-96 items-center justify-center gap-4">
                     <div className="w-full max-w-96">
-                        {/* <ChaosButton message="Roll" /> */}
                         <GeneratorButton
                             message="New"
                             endpoint="/api/warband-generator"
