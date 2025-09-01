@@ -49,7 +49,7 @@ export default function WarbandView({ initialBand }) {
 
                     {band.mode && (
                         <p className="text-xs">
-                            Mode: <span className="font-medium">
+                            Palette: <span className="font-medium">
                                 {band.mode === "Splitcomplementary" ? "Split Complementary" : band.mode}
                             </span>
                         </p>
