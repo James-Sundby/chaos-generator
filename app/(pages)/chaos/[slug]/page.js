@@ -1,43 +1,31 @@
-export const dynamic = "force-dynamic";
-
-import { parseChaosSlug } from "@/lib/slugParser";
+import { redirect } from "next/navigation";
+import { parseFromSlugOrThrow, createWarband } from "@/utils/warband";
 import WarbandView from "@/app/components/warbandView";
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+    const params = await props.params;
     try {
-        const { warbandName, colours, pattern, slug } = parseChaosSlug(params.slug);
-        const colourNames = colours.map((c) => c.name).join(", ");
-
+        const { band, canonical } = parseFromSlugOrThrow(params.slug);
+        const colourNames = band.colors.map(c => c.name).join(", ");
         return {
-            title: `${warbandName}`,
-            description: `Custom Chaos warband: ${warbandName} using ${colourNames} in the "${pattern}" pattern.`,
+            title: band.warbandName,
+            description: `Custom Chaos warband: ${band.warbandName} using ${colourNames} in the "${band.pattern}" pattern.`,
             openGraph: {
-                title: `${warbandName}`,
-                description: `Chaos Space Marine scheme: ${colourNames} + ${pattern}.`,
-                url: `https://chapter-gen.jsundby.dev/chaos/${slug}`,
+                title: band.warbandName,
+                description: `Chaos Space Marine scheme: ${colourNames} + ${band.pattern}.`,
+                url: `https://chapter-gen.jsundby.dev/chaos/${canonical}`,
                 siteName: "Chapter Generator",
-                images: [
-                    {
-                        url: "https://chapter-gen.jsundby.dev/card.png",
-                        width: 1200,
-                        height: 630,
-                        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
-                    },
-                ],
-                locale: 'en_US',
-                type: 'website',
+                images: [{ url: "https://chapter-gen.jsundby.dev/card.png", width: 1200, height: 630, alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block." }],
+                locale: "en_US",
+                type: "website",
             },
             twitter: {
-                title: `${warbandName}`,
-                description: `Custom Chaos warband: ${warbandName} using ${colourNames} in the "${pattern}" pattern.`,
-                card: 'summary_large_image',
-                images: [
-                    {
-                        url: "https://chapter-gen.jsundby.dev/card.png",
-                        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
-                    }
-                ],
+                title: band.warbandName,
+                description: `Custom Chaos warband: ${band.warbandName} using ${colourNames} in the "${band.pattern}" pattern.`,
+                card: "summary_large_image",
+                images: [{ url: "https://chapter-gen.jsundby.dev/card.png", alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block." }],
             },
+            alternates: { canonical: `/chaos/${canonical}` },
         };
     } catch {
         return {
@@ -47,6 +35,14 @@ export async function generateMetadata({ params }) {
     }
 }
 
-export default function Page() {
-    return <WarbandView />;
+export default async function Page(props) {
+    const params = await props.params;
+    try {
+        const { band, canonical } = parseFromSlugOrThrow(params.slug);
+        if (canonical !== params.slug) redirect(`/chaos/${canonical}`);
+        return <WarbandView initialBand={band} />;
+    } catch {
+        const band = createWarband();
+        redirect(`/chaos/${band.slug}`);
+    }
 }

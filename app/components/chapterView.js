@@ -1,130 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
-import { debug } from "@/lib/debug";
+import { useEffect } from "react";
 
 import TradingCard from "@/app/components/trading-card.js";
 import { useWarbandStore } from "@/app/stores/warbandStore.js";
+
 import CustomizerButton from "@/app/components/customizerButton";
-import WarbandButton from "@/app/components/warbandButton";
-import GeneratorButton from "./generatorButton";
+import GenerateNewButton from "@/app/components/generateNewButton";
 
-export default function ChapterView() {
-    const params = useParams();
-    const router = useRouter();
-    const warband = useWarbandStore((state) => state.warband);
-    const setWarband = useWarbandStore((state) => state.setWarband);
+export default function ChapterView({ initialChapter }) {
+    const setWarband = useWarbandStore(s => s.setWarband);
+    const warband = useWarbandStore(s => s.warband);
 
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [loadingTime, setLoadingTime] = useState(0);
+    useEffect(() => { setWarband(initialChapter); }, [initialChapter, setWarband]);
+    const band = warband.slug ? warband : initialChapter;
 
-    const shouldRenderCard = warband.slug === params.slug && !isLoading && !error;
-
-    function handleShare(slug) {
-        const url = `${window.location.origin}/chapter/${slug}`;
-
-        if (navigator.share) {
-            navigator.share({
-                title: "Check out this Chapter!",
-                text: `Here's a chapter I generated: ${slug}`,
-                url,
-            }).catch((error) => console.log("Share failed:", error));
-        } else {
-            navigator.clipboard.writeText(url)
-                .then(() => alert("Link copied to clipboard!"))
-                .catch(() => alert("Failed to copy link."));
-        }
-    }
-
-
-    useEffect(() => {
-        async function fetchWarbandData() {
-            if (warband.slug === params.slug) {
-                debug("Slugs match stored: ", warband.slug, " vs params: ", params.slug);
-                setIsLoading(false);
-                return;
-            }
-
-            setIsLoading(true);
-            setError(null);
-
-            try {
-                debug("Slug mismatch stored: ", warband.slug, " vs params: ", params.slug);
-                const response = await fetch(`/api/chapter-generator?slug=${params.slug}`);
-                if (response.ok) {
-                    const fetchedWarband = await response.json();
-                    setWarband(fetchedWarband);
-                    if (params.slug !== fetchedWarband.slug) {
-                        router.replace(`/chapter/${fetchedWarband.slug}`);
-                    }
-                } else {
-                    debug(response);
-                    setError("Failed to fetch chapter data. Please try again.");
-                }
-            } catch (error) {
-                setError("An unexpected error occurred. Please try again.");
-            } finally {
-                setIsLoading(false);
-            }
-        }
-
-        fetchWarbandData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (isLoading) {
-            const interval = setInterval(() => {
-                setLoadingTime((prev) => prev + 1);
-            }, 1000);
-            return () => clearInterval(interval);
-        } else {
-            setLoadingTime(0);
-        }
-    }, [isLoading]);
-
-    if (loadingTime >= 5 || error) {
-        return (
-            <div className="flex flex-1 flex-col justify-center items-center gap-4 text-center p-4">
-                <p className="text-error font-bold">{error || "Error loading data. Please try again later."}</p>
-                <button className="btn btn-primary rounded-lg" onClick={() => router.push("/")}>
-                    Go Back to Home
-                </button>
-            </div>
-        );
-    }
-
-    if (isLoading || !shouldRenderCard) {
-        return (
-            <div className="flex flex-1 items-center justify-center">
-                <span className="loading loading-dots loading-xl"></span>
-            </div>
-        );
-    }
+    const handleShare = () => {
+        const url = `${window.location.origin}/chapter/${band.slug}`;
+        if (navigator.share) navigator.share({ title: "Check out this Chapter!", text: band.slug, url }).catch(() => { });
+        else navigator.clipboard.writeText(url).catch(() => { });
+    };
 
     return (
         <main className="flex flex-1 flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 p-4">
 
             <TradingCard
-                warbandName={warband.warbandName}
-                namedColors={warband.colors}
-                slug={warband.slug}
-                patternName={warband.pattern}
+                warbandName={band.warbandName}
+                namedColors={band.colors}
+                slug={band.slug}
+                patternName={band.pattern}
+                mode={band.mode}
+
             />
 
             <div className="flex flex-col w-full max-w-96 gap-4">
                 <div className="flex flex-row sm:flex-col w-full max-w-96 items-center justify-center gap-4">
                     <div className="w-full max-w-96">
-                        <GeneratorButton
-                            message="New"
-                            endpoint="/api/chapter-generator"
-                            onSetData={setWarband}
-                            urlPrefix="chapter"
-                            buttonClass="btn-primary"
-                            iconClass="fill-primary-content"
-                        />
+                        <GenerateNewButton variant="Chapter" label="New" />
                     </div>
                     <div className="w-full max-w-96">
                         <CustomizerButton />
@@ -132,13 +44,10 @@ export default function ChapterView() {
 
                 </div>
                 <div className="flex flex-col w-full max-w-96 items-center justify-center gap-4">
-                    {/* <p className="text-xs font-bold justify-start">
-                        ID: <span className="font-normal">{warband.slug}</span>
-                    </p> */}
                     <div className="w-full max-w-96">
                         <button
                             className="btn btn-primary rounded-lg w-full"
-                            onClick={() => handleShare(warband.slug)}
+                            onClick={handleShare}
                             aria-label="Share this chapter"
                             title="Share this chapter"
                         >

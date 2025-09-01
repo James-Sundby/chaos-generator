@@ -11,15 +11,17 @@
   "dependencies": {
     "@eslint/config-array": "^0.20.0",
     "@eslint/object-schema": "^2.1.5",
+    "@hookform/resolvers": "^5.2.1",
     "chaos-generator": "file:",
     "glob": "^11.0.0",
     "inflight": "^1.0.6",
     "next": "^15.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-hook-form": "^7.54.2",
+    "react-hook-form": "^7.62.0",
     "rimraf": "^6.0.1",
     "sharp": "^0.34.1",
+    "zod": "^4.1.5",
     "zustand": "^5.0.2"
   },
   "devDependencies": {

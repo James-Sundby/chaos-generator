@@ -1,49 +1,13 @@
-import WarbandButton from "./components/warbandButton";
-import Background from "./components/background";
-import WarbandSearch from "./components/warbandSearch";
-
-import ChaosButton from "./components/chaosButton";
-import ChaosSearch from "./components/chaosSearch";
-
 import Link from "next/link";
 
-export const metadata = {
-  title: "Chapter Generator",
-  description:
-    "Generate your own custom Warhammer 40K chapter or chaos warband. An unofficial tool for warhammer hobbyists to break painter's block and explore unique paint schemes.",
-  openGraph: {
-    title: "Create Your Custom Chapter or Warband",
-    description:
-      "Use Chapter Generator to build unique paint schemes for your loyalist or chaos force. Unofficial fan tool for warhammer hobbyists.",
-    url: "https://chapter-gen.jsundby.dev/",
-    siteName: "Chapter Generator",
-    images: [
-      {
-        url: "https://chapter-gen.jsundby.dev/card.png",
-        width: 1200,
-        height: 630,
-        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    title: "Chapter Generator, the Unofficial Warhammer Paint Scheme Generator",
-    description:
-      "Design a Space Marine chapter or Chaos warband with random or manual color schemes. An unofficial tool for warhammer inspiration.",
-    card: 'summary_large_image',
-    images: [
-      {
-        url: "https://chapter-gen.jsundby.dev/card.png",
-        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
-      }
-    ],
-  },
-};
+//import WarbandButton from "./components/deprecated/warbandButton";
+import Background from "./components/background";
+//import WarbandSearch from "./components/warbandSearch";
+
+import GenerateNewButton from "./components/generateNewButton";
+import SchemeSearch from "./components/schemeSearch";
 
 export default function Home() {
-
   return (
     <main className="flex flex-col flex-1 justify-center items-center px-4 relative">
 
@@ -55,8 +19,8 @@ export default function Home() {
         <fieldset className="fieldset bg-base-100 border-primary rounded-box w-full border-2 p-4">
           <h2 id="loyalist-section" className="sr-only">Loyalist Chapter Generator</h2>
           <legend className="translate-y-[-46%] text-sm xl:text-base font-semibold bg-base-100 px-2 rounded-t border-l-2 border-t-2 border-r-2 border-primary border-b-2 border-b-transparent">Loyalists</legend>
-          <WarbandButton message="Generate a New Chapter" />
-          <WarbandSearch />
+          <GenerateNewButton variant="Chapter" />
+          <SchemeSearch variant="Chapter" id="chapter-search" />
           <Link
             className="btn btn-primary rounded-lg items-center justify-center w-full h-auto px-6 py-2"
             href={"/open-paint"}
@@ -77,8 +41,10 @@ export default function Home() {
         <fieldset className="fieldset bg-base-100 border-error rounded-box w-full border-2 p-4">
           <h2 id="chaos-section" className="sr-only">Chaos Warband Generator</h2>
           <legend className="translate-y-[-46%] text-sm xl:text-base font-semibold bg-base-100 px-2 rounded-t border-l-2 border-t-2 border-r-2 border-error border-b-2 border-b-transparent">Chaos</legend>
-          <ChaosButton message="Generate a New Chaos Warband" />
-          <ChaosSearch />
+
+          <GenerateNewButton variant="Chaos" />
+          <SchemeSearch variant="Chaos" id="chaos-search" />
+
         </fieldset>
       </div>
       <Background />

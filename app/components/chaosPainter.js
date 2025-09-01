@@ -59,8 +59,8 @@ export default function ChaosPainter() {
 
     const updateWarband = (updatedProperties) => {
         const updatedWarband = { ...warband, ...updatedProperties };
-        const newSlug = generateSlug(updatedWarband.warbandName, updatedWarband.colors, updatedWarband.pattern);
-        setWarband({ ...updatedProperties, slug: newSlug });
+        const newSlug = generateSlug(updatedWarband.warbandName, updatedWarband.colors, updatedWarband.pattern, "Custom");
+        setWarband({ ...updatedWarband, slug: newSlug, mode: "Custom" });
     };
 
     const handleColorChange = (index, value) => {
@@ -136,9 +136,8 @@ export default function ChaosPainter() {
                             : [warband.colors[0]?.name, warband.colors[1]?.name, warband.colors[2]?.name, warband.colors[3]?.name].filter(Boolean).join(", ")}
                     </p>
 
-                    <div className="justify-end text-xs">
-
-                        <p className="font-bold">ID: <span className="font-normal">{warband.slug}</span></p>
+                    <div className="mt-2 border-t border-neutral pt-2 text-right text-xs opacity-75">
+                        ID: <span className="font-mono font-normal">{warband.slug}</span>
                     </div>
                 </div>
             </div>

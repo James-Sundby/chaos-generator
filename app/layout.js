@@ -29,7 +29,8 @@ export const metadata = {
   },
   openGraph: {
     title: "Chapter Generator",
-    description: "Stuck with primer? Generate a chapter and break the block.",
+    description:
+      "Use Chapter Generator to build unique paint schemes for your loyalist or chaos force. Unofficial fan tool for warhammer hobbyists.",
     url: "https://chapter-gen.jsundby.dev",
     siteName: "Chapter Generator",
     images: [
@@ -37,7 +38,7 @@ export const metadata = {
         url: "https://chapter-gen.jsundby.dev/card.png",
         width: 1200,
         height: 630,
-        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
+        alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block.",
       },
     ],
     locale: 'en_US',
@@ -45,12 +46,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Chapter Generator",
-    description: "Stuck with primer? Generate a chapter and break the block.",
+    title: "Chapter Generator, the Unofficial Warhammer Paint Scheme Generator", description:
+      "Design a Space Marine chapter or Chaos warband with random or manual color schemes. An unofficial tool for warhammer inspiration.",
     images: [
       {
         url: "https://chapter-gen.jsundby.dev/card.png",
-        alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
+        alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block.",
       }
     ],
   },
