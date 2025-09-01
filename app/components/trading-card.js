@@ -7,7 +7,7 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
     return (
         <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 rounded-lg">
             <div className="card-body p-2 m-2 bg-white rounded-lg">
-                <h1 className="card-title justify-center text-center">{warbandName}</h1>
+                <h1 className="card-title justify-center text-center anton">{warbandName}</h1>
                 <div className="h-[45svh]">
                     <SpaceMarine
                         primary={namedColors[0]?.hex}
@@ -52,7 +52,9 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
 
                 {mode && (
                     <p className="text-xs">
-                        Mode: <span className="not-italic font-medium">{mode}</span>
+                        Mode: <span className="font-medium">
+                            {mode === "Splitcomplementary" ? "Split Complementary" : mode}
+                        </span>
                     </p>
                 )}
 

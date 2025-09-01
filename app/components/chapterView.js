@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { debug } from "@/lib/debug";
 
 import TradingCard from "@/app/components/trading-card.js";
 import { useWarbandStore } from "@/app/stores/warbandStore.js";

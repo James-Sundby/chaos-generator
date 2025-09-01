@@ -46,9 +46,12 @@ export default function WarbandView({ initialBand }) {
                             ? [band.colors[0]?.name, band.colors[2]?.name, band.colors[3]?.name].filter(Boolean).join(", ")
                             : [band.colors[0]?.name, band.colors[1]?.name, band.colors[2]?.name, band.colors[3]?.name].filter(Boolean).join(", ")}
                     </p>
+
                     {band.mode && (
                         <p className="text-xs">
-                            Mode: <span className="not-italic font-medium">{band.mode}</span>
+                            Mode: <span className="font-medium">
+                                {band.mode === "Splitcomplementary" ? "Split Complementary" : band.mode}
+                            </span>
                         </p>
                     )}
 
@@ -71,7 +74,7 @@ export default function WarbandView({ initialBand }) {
                     </svg>
                     Customize
                 </Link>
-                <button className="btn btn-error rounded-lg w-full" onClick={handleShare} aria-label="Share this warband">
+                <button className="btn btn-error rounded-lg w-full" onClick={handleShare} aria-label="Share this warband" title="Share this warband">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512"
