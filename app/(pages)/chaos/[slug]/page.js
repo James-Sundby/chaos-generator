@@ -1,10 +1,9 @@
-export const dynamic = "force-dynamic";
-
 import { redirect } from "next/navigation";
-import { parseFromSlugOrThrow, createWarband } from "@/lib/warband";
-import WarbandView from "./warbandView";
+import { parseFromSlugOrThrow, createWarband } from "@/utils/warband";
+import WarbandView from "@/app/components/warbandView";
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+    const params = await props.params;
     try {
         const { band, canonical } = parseFromSlugOrThrow(params.slug);
         const colourNames = band.colors.map(c => c.name).join(", ");
@@ -36,7 +35,8 @@ export async function generateMetadata({ params }) {
     }
 }
 
-export default async function Page({ params }) {
+export default async function Page(props) {
+    const params = await props.params;
     try {
         const { band, canonical } = parseFromSlugOrThrow(params.slug);
         if (canonical !== params.slug) redirect(`/chaos/${canonical}`);

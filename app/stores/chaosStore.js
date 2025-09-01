@@ -15,6 +15,7 @@ export const useChaosStore = create(
                     { name: "White Scar", hex: "#FFFFFF" },
                 ],
                 message: '',
+                mode: '',
             },
             setChaosBand: (data) => {
                 set((state) => ({
@@ -29,6 +30,7 @@ export const useChaosStore = create(
                         pattern: '',
                         colors: [],
                         message: '',
+                        mode: '',
                     },
                 });
             },

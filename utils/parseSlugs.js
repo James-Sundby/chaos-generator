@@ -1,4 +1,4 @@
-export function generateSlug(name, colours, pattern) {
+export function generateSlug(name, colours, pattern, mode) {
     const nameSlug = name
         .toLowerCase()
         .replace(/[^a-z0-9 ]/g, "")
@@ -6,8 +6,9 @@ export function generateSlug(name, colours, pattern) {
         .trim();
     const colourSlug = colours.map(colour => colour.hex.replace("#", "")).join("-");
     const patternSlug = pattern.toLowerCase();
+    const modeSlug = mode ? `-${mode.toLowerCase()}` : "";
 
-    return `${nameSlug}-${colourSlug}-${patternSlug}`;
+    return `${nameSlug}-${colourSlug}-${patternSlug}${modeSlug}`;
 }
 
 export function capitalizeName(name) {
@@ -22,11 +23,20 @@ export function capitalizeName(name) {
         .join(" ");
 }
 
-export function parseChaosSlug(slug, colourMap, patternSet) {
+export function parseChaosSlug(slug, colourMap, patternSet, modeSet) {
     const slugParts = slug.split("-");
 
-    if (slugParts.length < 5) {
+    if (slugParts.length < 6) {
         throw new Error("Slug is too short to extract 4 colours and a pattern.");
+    }
+
+    let maybeMode = slugParts[slugParts.length - 1];
+    let mode = null;
+    if (modeSet && modeSet.has(maybeMode.toLowerCase())) {
+        mode = capitalizeName(slugParts.pop()); // consume the mode part
+        if (slugParts.length < 6) {
+            throw new Error("Slug is too short to extract 4 colours and a pattern.");
+        }
     }
 
     const patternCode = slugParts.pop();
@@ -57,14 +67,23 @@ export function parseChaosSlug(slug, colourMap, patternSet) {
     const name = slugParts.join(" ").replace(/-/g, " ");
     const warbandName = capitalizeName(name);
 
-    return { name: warbandName, colours: namedColours, pattern };
+    return { name: warbandName, colours: namedColours, pattern, mode };
 }
 
-export function parseChapterSlug(slug, colourMap, patternSet) {
+export function parseChapterSlug(slug, colourMap, patternSet, modeSet) {
     const slugParts = slug.split("-");
 
-    if (slugParts.length < 4) {
+    if (slugParts.length < 5) {
         throw new Error("Slug is too short to extract 3 colours and a pattern.");
+    }
+
+    let maybeMode = slugParts[slugParts.length - 1];
+    let mode = null;
+    if (modeSet && modeSet.has(maybeMode.toLowerCase())) {
+        mode = capitalizeName(slugParts.pop());
+        if (slugParts.length < 5) {
+            throw new Error("Slug is too short to extract 3 colours and a pattern.");
+        }
     }
 
     const patternCode = slugParts.pop();
@@ -94,5 +113,5 @@ export function parseChapterSlug(slug, colourMap, patternSet) {
     const name = slugParts.join(" ").replace(/-/g, " ");
     const chapterName = capitalizeName(name);
 
-    return { name: chapterName, colours: namedColours, pattern };
+    return { name: chapterName, colours: namedColours, pattern, mode };
 }

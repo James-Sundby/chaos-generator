@@ -33,7 +33,7 @@ function weightedRandomSelect(strategies) {
 const chaosStrategies = [
     { mode: "random", weight: 2, fn: () => generateFullyRandomColours(4) },
     { mode: "complementary", weight: 3, fn: () => generateComplementaryColours() },
-    { mode: "split-complementary", weight: 4, fn: () => generateSplitComplementaryColours() },
+    { mode: "splitcomplementary", weight: 4, fn: () => generateSplitComplementaryColours() },
     { mode: "triadic", weight: 1, fn: () => generateTriadicColours() },
     { mode: "tetradic", weight: 1, fn: () => generateTetradicColours() },
     { mode: "analogous", weight: 2, fn: () => generateAnalogousColours() },
@@ -45,7 +45,7 @@ export const generateWarbandScheme = schemeGenerator(chaosStrategies);
 const loyalistStrategies = [
     { mode: "random", weight: 2, fn: () => generateFullyRandomColours(3) },
     { mode: "complementary", weight: 3, fn: () => generateComplementaryColours({ withAccent: false }) },
-    { mode: "split-complementary", weight: 1, fn: () => generateSplitComplementaryColours({ withAccent: false }) },
+    { mode: "splitcomplementary", weight: 1, fn: () => generateSplitComplementaryColours({ withAccent: false }) },
     { mode: "triadic", weight: 1, fn: () => generateTriadicColours({ withAccent: false }) },
     { mode: "analogous", weight: 2, fn: () => generateAnalogousColours({ withAccent: false }) },
 ];

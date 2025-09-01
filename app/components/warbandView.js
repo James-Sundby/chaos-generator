@@ -3,10 +3,11 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useChaosStore } from "@/app/stores/chaosStore";
-import ChaosMarine from "@/app/components/chaosSpaceMarine";
-import { createWarbandAndGo } from './actions';
 
-export default function WarbandClient({ initialBand }) {
+import ChaosMarine from "@/app/components/chaosSpaceMarine";
+import GenerateNewButton from "@/app/components/generateNewButton";
+
+export default function WarbandView({ initialBand }) {
     const setChaosBand = useChaosStore(s => s.setChaosBand);
     const chaosBand = useChaosStore(s => s.chaosBand);
 
@@ -21,7 +22,7 @@ export default function WarbandClient({ initialBand }) {
 
     return (
         <main className="flex flex-1 flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 p-4">
-            <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 rounded-lg opacity-0 animate-fade-in">
+            <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 rounded-lg ">
                 <div className="card-body p-2 m-2 bg-white rounded-lg">
                     <h1 className="card-title justify-center text-center">{band.warbandName}</h1>
                     <div className="h-[45svh]">
@@ -45,18 +46,20 @@ export default function WarbandClient({ initialBand }) {
                             ? [band.colors[0]?.name, band.colors[2]?.name, band.colors[3]?.name].filter(Boolean).join(", ")
                             : [band.colors[0]?.name, band.colors[1]?.name, band.colors[2]?.name, band.colors[3]?.name].filter(Boolean).join(", ")}
                     </p>
-                    <p className="font-bold text-xs">ID: <span className="font-normal">{band.slug}</span></p>
+                    {band.mode && (
+                        <p className="text-xs">
+                            Mode: <span className="not-italic font-medium">{band.mode}</span>
+                        </p>
+                    )}
+
+                    <div className="mt-2 border-t border-neutral pt-2 text-right text-xs opacity-75">
+                        ID: <span className="font-mono font-normal">{band.slug}</span>
+                    </div>
                 </div>
             </div>
             <div className="flex flex-col w-full max-w-96 gap-4">
-                <form action={createWarbandAndGo}>
-                    <button type="submit" className="btn btn-error rounded-lg w-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" className={`h-6 w-6 fill-error-content`} aria-hidden="true">
-                            <path d="M274.9 34.3c-28.1-28.1-73.7-28.1-101.8 0L34.3 173.1c-28.1 28.1-28.1 73.7 0 101.8L173.1 413.7c28.1 28.1 73.7 28.1 101.8 0L413.7 274.9c28.1-28.1 28.1-73.7 0-101.8L274.9 34.3zM200 224a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zM96 200a24 24 0 1 1 0 48 24 24 0 1 1 0-48zM224 376a24 24 0 1 1 0-48 24 24 0 1 1 0 48zM352 200a24 24 0 1 1 0 48 24 24 0 1 1 0-48zM224 120a24 24 0 1 1 0-48 24 24 0 1 1 0 48zm96 328c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-192c0-35.3-28.7-64-64-64l-114.3 0c11.6 36 3.1 77-25.4 105.5L320 413.8l0 34.2zM480 328a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
-                        </svg>
-                        New
-                    </button>
-                </form>
+                <GenerateNewButton variant="Chaos" label="New" />
+
                 <Link className="btn btn-error rounded-lg w-full" href="/chaos-painter" aria-label="Customize your warband" title="Customize your warband">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

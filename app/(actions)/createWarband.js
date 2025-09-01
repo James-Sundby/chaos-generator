@@ -1,6 +1,6 @@
 'use server';
 
-import { createWarband } from '@/lib/warband';
+import { createWarband } from '@/utils/warband';
 import { redirect } from 'next/navigation';
 
 export async function createWarbandAndGo() {

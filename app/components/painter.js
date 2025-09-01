@@ -54,8 +54,8 @@ export default function Painter() {
 
     const updateWarband = (updatedProperties) => {
         const updatedWarband = { ...warband, ...updatedProperties };
-        const newSlug = generateSlug(updatedWarband.warbandName, updatedWarband.colors, updatedWarband.pattern);
-        setWarband({ ...updatedProperties, slug: newSlug });
+        const newSlug = generateSlug(updatedWarband.warbandName, updatedWarband.colors, updatedWarband.pattern, "Custom");
+        setWarband({ ...updatedWarband, slug: newSlug, mode: "Custom" });
     };
 
     const handleColorChange = (index, value) => {
@@ -127,16 +127,18 @@ export default function Painter() {
                             title={warband.colors[2]?.name}
                         ></div>
                     </div>
-                    <p className="text-sm">
-                        <span className="font-bold">
-                            {areColorsDifferent
-                                ? `${warband.colors[0]?.name}, ${warband.colors[1]?.name}, ${warband.colors[2]?.name}`
-                                : `${warband.colors[0]?.name}, ${warband.colors[2]?.name}`}
-                        </span>
+                    <p className="text-sm font-bold">
+                        {areColorsDifferent
+                            ? `${warband.colors[0]?.name}, ${warband.colors[1]?.name}, ${warband.colors[2]?.name}`
+                            : `${warband.colors[0]?.name}, ${warband.colors[2]?.name}`}
                     </p>
-
-                    <div className="justify-end text-xs">
-                        <p className="font-bold">ID: <span className="font-normal">{warband.slug}</span></p>
+                    {warband.mode && (
+                        <p className="text-xs">
+                            Mode: <span className="not-italic font-medium">{warband.mode}</span>
+                        </p>
+                    )}
+                    <div className="mt-2 border-t border-neutral pt-2 text-right text-xs opacity-75">
+                        ID: <span className="font-mono font-normal">{warband.slug}</span>
                     </div>
                 </div>
             </div>

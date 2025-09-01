@@ -14,6 +14,7 @@ export const useWarbandStore = create(
                     { name: "White Scar", hex: "#FFFFFF" },
                 ],
                 message: '',
+                mode: '',
             },
             setWarband: (data) => {
                 set((state) => ({ warband: { ...state.warband, ...data } }))
@@ -26,6 +27,7 @@ export const useWarbandStore = create(
                         pattern: '',
                         colors: [],
                         message: '',
+                        mode: '',
                     },
                 });
             },

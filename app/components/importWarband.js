@@ -1,7 +1,23 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import { usePainterStore } from "@/app/stores/painterStore";
+import { chapterSearchObjectSchema } from "@/app/schema/chapter";
+import { colourList } from "@/lib/colours";
+import { patterns } from "@/lib/armourPatterns";
+import { chapterModes } from "@/lib/modes";
+import { parseChapterSlug as coreParseChapter, generateSlug } from "@/utils/parseSlugs";
+
+const patternSet = new Set(patterns.map((p) => p.toLowerCase()));
+const colourMap = Object.fromEntries(colourList.map((c) => [c.hex.toLowerCase(), c]));
+const modesSet = new Set(chapterModes.map(m => m.toLowerCase()));
+
+function parseChapterSlug(slug) {
+    return coreParseChapter(slug, colourMap, patternSet, modesSet);
+}
 
 function setChapterSectionValues(chapter, setColor) {
     const primaryColor = chapter.colors[0].hex;
@@ -166,92 +182,90 @@ function setChapterSectionValues(chapter, setColor) {
     if (trim.length > 0) setColor(trim, trimColor);
     setColor(['Ribbing'], "#3E494A");
 }
-
 export default function ImportWarband() {
+    const { setColor } = usePainterStore();
+
     const {
         register,
         handleSubmit,
         clearErrors,
         setError,
         formState: { errors, isSubmitting },
-    } = useForm();
-    const { setColor } = usePainterStore();
-    const onSubmit = async (data) => {
-        const { lookupCode } = data;
+        watch,
+    } = useForm({
+        resolver: zodResolver(chapterSearchObjectSchema),
+        defaultValues: { q: "" },
+        mode: "onSubmit",
+        reValidateMode: "onSubmit",
+    });
+
+    const q = watch("q");
+    const isEmpty = !((q ?? "").trim());
+    const [serverError, setServerError] = useState(null);
+
+    const onSubmit = async ({ q }) => {
+        const raw = (q ?? "").trim();
+        if (!raw) return;
 
         try {
-            const response = await fetch(`/api/chapter-generator?slug=${lookupCode.trim()}`);
-            if (!response.ok) {
-                setError("lookupCode", {
-                    type: "manual",
-                    message: "Invalid chapter code. Please try again.",
-                });
-                setTimeout(() => {
-                    clearErrors();
-                }, 3000);
-                return;
-            }
+            const { name, colours, pattern } = parseChapterSlug(raw);
+            const canonical = generateSlug(name, colours, pattern);
 
-            const fetchedChapter = await response.json();
-            if (fetchedChapter.message === "valid") {
-                setChapterSectionValues(fetchedChapter, setColor);
-            } else {
-                setError("lookupCode", {
-                    type: "manual",
-                    message: "No chapter found.",
-                });
-                setTimeout(() => {
-                    clearErrors();
-                }, 3000);
-            }
-        } catch (error) {
-            setError("lookupCode", {
+            const chapter = {
+                warbandName: name,
+                colors: colours,
+                pattern,
+                slug: canonical,
+            };
+
+            setChapterSectionValues(chapter, setColor);
+            if (errors.q) clearErrors("q");
+            if (serverError) setServerError(null);
+        } catch (e) {
+            setError("q", {
                 type: "manual",
-                message: "Something went wrong. Please try again later.",
+                message: e?.message || "Invalid chapter code. Please try again.",
             });
-            setTimeout(() => {
-                clearErrors();
-            }, 3000);
+            setTimeout(() => clearErrors("q"), 3000);
         }
     };
 
+
+    useEffect(() => {
+        if (isEmpty && errors.q) clearErrors("q");
+        if (serverError) setServerError(null);
+    }, [isEmpty, errors.q, clearErrors, serverError]);
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex items-center gap-2 w-full">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex items-center gap-2 w-full" noValidate>
             <div className="indicator w-full">
                 <input
                     type="text"
-                    className="input input-bordered rounded-lg w-full"
-                    placeholder="chapter-code-88241C-35468F-"
-                    {...register("lookupCode", {})}
-                    required
-                    aria-invalid={!!errors.lookupCode}
-                    aria-describedby="lookupCodeError"
-                    disabled={isSubmitting || errors.lookupCode}
+                    className={`input input-bordered rounded-lg w-full ${errors.q ? "input-error" : ""}`}
+                    placeholder="angels-of-the-gate-FFFFFF-317E57-989C94-blazoned"
+                    {...register("q")}
+                    aria-invalid={!!errors.q}
+                    aria-describedby={errors.q ? "chapterLookupError" : undefined}
+                    disabled={isSubmitting}
                 />
-                {errors.lookupCode && (
+                {errors.q && (
                     <span
-                        id="lookupCodeError"
+                        id="chapterLookupError"
                         className="indicator-item indicator-center indicator-bottom badge badge-error rounded-lg"
                     >
-                        {errors.lookupCode.message}
+                        {errors.q.message}
                     </span>
                 )}
             </div>
             <button
                 type="submit"
                 className={`btn btn-primary rounded-lg items-center justify-center ${isSubmitting ? "loading" : ""}`}
-                disabled={isSubmitting || errors.lookupCode}
-                aria-label="Look up a Chapter"
+                disabled={isSubmitting || isEmpty}
+                aria-label="Import a Chapter"
             >
                 <p className="hidden sm:block">Import a Chapter</p>
                 <p className="block sm:hidden">Import</p>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="w-4 aspect-square fill-primary-content"
-                    aria-hidden="true"
-                    focusable="false"
-                >
+                <svg viewBox="0 0 512 512" className="w-4 aspect-square fill-primary-content" aria-hidden="true">
                     <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
                 </svg>
             </button>
