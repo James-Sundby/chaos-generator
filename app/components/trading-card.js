@@ -52,7 +52,7 @@ export default function TradingCard({ warbandName, namedColors, slug, patternNam
 
                 {mode && (
                     <p className="text-xs">
-                        Mode: <span className="font-medium">
+                        Palette: <span className="font-medium">
                             {mode === "Splitcomplementary" ? "Split Complementary" : mode}
                         </span>
                     </p>
