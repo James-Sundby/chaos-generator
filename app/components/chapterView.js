@@ -17,7 +17,7 @@ export default function ChapterView({ initialChapter }) {
 
     const handleShare = () => {
         const url = `${window.location.origin}/chapter/${band.slug}`;
-        if (navigator.share) navigator.share({ title: "Check out this Chapter!", text: band.slug, url }).catch(() => { });
+        if (navigator.share) navigator.share({ title: "Check out this Chapter!", text: band.warbandName, url }).catch(() => { });
         else navigator.clipboard.writeText(url).catch(() => { });
     };
 

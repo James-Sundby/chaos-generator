@@ -16,7 +16,7 @@ export default function WarbandView({ initialBand }) {
 
     const handleShare = () => {
         const url = `${window.location.origin}/chaos/${band.slug}`;
-        if (navigator.share) navigator.share({ title: "Check out this Warband!", text: band.slug, url }).catch(() => { });
+        if (navigator.share) navigator.share({ title: "Check out this Warband!", text: band.warbandName, url }).catch(() => { });
         else navigator.clipboard.writeText(url).catch(() => { });
     };
 
