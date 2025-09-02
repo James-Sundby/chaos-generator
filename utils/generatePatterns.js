@@ -1,3 +1,5 @@
+import "server-only";
+
 import { randomElement } from "@/utils/randomElement";
 import { chaosPatterns, patterns as loyalistPatterns } from "@/lib/armourPatterns";
 

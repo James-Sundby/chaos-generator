@@ -46,9 +46,9 @@ export default function TradingCard({
     const prettyMode = mode === "Splitcomplementary" ? "Split Complementary" : mode;
 
     return (
-        <div id="trading-card" className="card w-full max-w-96 bg-base-200 text-base-content">
-            <div className="card-body gap-3">
-                <h1 className="card-title justify-center text-center">{warbandName}</h1>
+        <div id="trading-card" className="card w-full max-w-96 bg-white text-neutral border-8 border-yellow-600">
+            <div className="card-body p-2 m-0 rounded-lg">
+                <h1 className="card-title justify-center text-center uppercase font-black">{warbandName}</h1>
 
                 <div className="h-[45svh]">
                     <Marine {...marineProps} />
@@ -79,13 +79,13 @@ export default function TradingCard({
                 {/* Palette mode */}
                 {prettyMode && (
                     <p className="text-xs">
-                        Palette: <span className="font-medium">{prettyMode}</span>
+                        Palette: <span className="font-normal">{prettyMode}</span>
                     </p>
                 )}
 
                 {/* ID footer */}
                 <div className="mt-2 border-t border-base-300 pt-2 text-right text-xs opacity-75">
-                    ID: <span className="font-mono font-normal">{slug}</span>
+                    ID: <span className="font-mono">{slug}</span>
                 </div>
             </div>
         </div>

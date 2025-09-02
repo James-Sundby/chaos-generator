@@ -11,7 +11,7 @@ export default function CustomizerButton({
 
     return (
         <Link
-            className={`btn ${typeColour} btn-block`}
+            className={`btn ${typeColour} btn-block rounded-sm`}
             href={href}
             aria-label={aria}
             title={aria}

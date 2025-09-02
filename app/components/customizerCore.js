@@ -135,7 +135,7 @@ export default function CustomizerCore({
         </button>
     );
     return (
-        <main className="flex flex-1 flex-col items-center sm:items-start justify-center gap-4 p-4 sm:flex-row sm:gap-8">
+        <main className="flex flex-1 flex-col items-center justify-center gap-4 p-4 sm:flex-row sm:gap-8">
             <TradingCard variant={variant} band={band} />
 
             <div className="card w-full max-w-96 bg-base-200 text-base-content">
@@ -145,6 +145,7 @@ export default function CustomizerCore({
                         <div className="label">
                             <span className="label-text">Name</span>
                         </div>
+
                         <input
                             type="text"
                             value={band.warbandName}
@@ -211,7 +212,7 @@ export default function CustomizerCore({
                         <ActionBtn title="Random pattern" action={generateNewPattern} />
                     </ControlRow>
                     <button
-                        className={`btn ${colourClass} btn-block mt-2`}
+                        className={`btn ${colourClass} btn-block rounded-sm mt-2`}
                         onClick={() => router.push(backHref)}
                         type="button"
                     >

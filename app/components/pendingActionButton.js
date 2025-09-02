@@ -13,7 +13,7 @@ export default function PendingActionButton({
     return (
         <button
             type="submit"
-            className={`btn ${typeColour} btn-block`}
+            className={`btn ${typeColour} btn-block rounded-sm`}
             disabled={pending}
             aria-busy={pending}
         >

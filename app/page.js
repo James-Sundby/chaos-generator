@@ -11,13 +11,13 @@ export default function Home() {
         Unofficial Warhammer Paint Scheme Generator
       </h1>
       <div className="flex flex-col gap-8 items-center w-full max-w-md">
-        <fieldset className="fieldset bg-base-100 border-primary w-full border-2 p-4 gap-4">
+        <fieldset className="fieldset bg-base-100 border-primary w-full border-2 p-4 gap-4 rounded-sm">
           <h2 id="loyalist-section" className="sr-only">Loyalist Chapter Generator</h2>
-          <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-primary">Loyalists</legend>
+          <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-primary rounded-sm">Loyalists</legend>
           <GenerateNewButton variant="Chapter" />
           <SchemeSearch variant="Chapter" id="chapter-search" />
           <Link
-            className="btn btn-primary btn-block"
+            className="btn btn-primary btn-block rounded-sm"
             href={"/open-paint"}
             aria-label="Open the free paint tool"
           >
@@ -32,9 +32,9 @@ export default function Home() {
             Open Paint
           </Link>
         </fieldset>
-        <fieldset className="fieldset bg-base-100 border-accent w-full border-2 p-4 gap-4">
+        <fieldset className="fieldset bg-base-100 border-accent w-full border-2 p-4 gap-4 rounded-sm">
           <h2 id="chaos-section" className="sr-only">Chaos Warband Generator</h2>
-          <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-accent">Chaos</legend>
+          <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-accent rounded-sm">Chaos</legend>
           <GenerateNewButton variant="Chaos" />
           <SchemeSearch variant="Chaos" id="chaos-search" />
         </fieldset>

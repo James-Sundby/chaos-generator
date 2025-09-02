@@ -1,6 +1,8 @@
-import { redirect } from "next/navigation";
-import { parseFromSlugOrThrow, createChapter } from "@/utils/chapter";
+import { redirect, notFound } from "next/navigation";
+import { parseFromSlugOrThrow } from "@/utils/chapter";
 import ChapterView from "@/app/components/chapterView";
+
+export const dynamic = "force-static";
 
 export async function generateMetadata(props) {
     const params = await props.params;
@@ -42,7 +44,6 @@ export default async function Page(props) {
         if (canonical !== params.slug) redirect(`/chapter/${canonical}`);
         return <ChapterView initialChapter={chapter} />;
     } catch {
-        const chapter = createChapter();
-        redirect(`/chapter/${chapter.slug}`);
+        notFound();
     }
 }

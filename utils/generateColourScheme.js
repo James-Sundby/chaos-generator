@@ -1,3 +1,5 @@
+import "server-only";
+
 import {
     generateComplementaryColours,
     generateSplitComplementaryColours,
@@ -40,7 +42,6 @@ const chaosStrategies = [
 ];
 
 export const generateWarbandScheme = schemeGenerator(chaosStrategies);
-
 
 const loyalistStrategies = [
     { mode: "random", weight: 2, fn: () => generateFullyRandomColours(3) },

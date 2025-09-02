@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { colorList } from "@/lib/colors2";
+import { colourList } from "@/lib/colours";
 import PaintBySections from "@/app/components/paintBySections";
 
 import { debug } from "@/lib/debug";
@@ -46,9 +46,9 @@ const Dropdown = ({ label, options, value, onChange, isDisabled }) => {
 };
 
 const groupedColors = {
-    Base: colorList.filter((c) => c.type === "Base"),
-    Layer: colorList.filter((c) => c.type === "Layer"),
-    Metallic: colorList.filter((c) => c.type === "Metallic"),
+    Base: colourList.filter((c) => c.type === "Base"),
+    Layer: colourList.filter((c) => c.type === "Layer"),
+    Metallic: colourList.filter((c) => c.type === "Metallic"),
 };
 
 export default function FreePaint() {
@@ -69,7 +69,7 @@ export default function FreePaint() {
     };
 
     const handleColorChange = (value) => {
-        const color = colorList.find((c) => c.hex === value);
+        const color = colourList.find((c) => c.hex === value);
         debug("color:", color)
         if (!selectedSections.length) return;
         setColor(selectedSections, color.hex);
@@ -81,7 +81,7 @@ export default function FreePaint() {
 
     const getRequiredPaints = () => {
         const usedColors = Object.values(sections)
-            .map((hex) => colorList.find((color) => color.hex === hex)?.name);
+            .map((hex) => colourList.find((color) => color.hex === hex)?.name);
         return [...new Set(usedColors)];
     };
 

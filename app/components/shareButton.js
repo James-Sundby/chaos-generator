@@ -34,7 +34,7 @@ export default function ShareButton({
     return (
         <>
             <button
-                className={`btn ${typeColour} btn-block`}
+                className={`btn ${typeColour} btn-block rounded-sm`}
                 onClick={handleShare}
                 aria-label={aria}
                 title={aria}
