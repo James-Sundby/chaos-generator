@@ -19,8 +19,8 @@ export default function WarbandView({ initialBand }) {
     return (
         <main className="flex flex-1 flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 p-4">
             <TradingCard variant="Chaos" band={band} />
-            <div className="flex flex-col w-full max-w-96 gap-4">
-                <div className="flex flex-row sm:flex-col w-full items-center justify-center gap-4">
+            <div className="flex w-full max-w-96 flex-col gap-4">
+                <div className="flex w-full flex-row items-center justify-center gap-4 sm:flex-col">
                     <div className="w-full">
                         <GenerateNewButton variant="Chaos" label="New" />
                     </div>
@@ -31,5 +31,5 @@ export default function WarbandView({ initialBand }) {
                 <ShareButton variant="Chaos" slug={band.slug} title={band.warbandName} />
             </div>
         </main>
-    );
+    )
 }

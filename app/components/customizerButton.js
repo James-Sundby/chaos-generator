@@ -5,13 +5,13 @@ export default function CustomizerButton({
     label
 }) {
     const href = variant === "Chapter" ? "/painter" : "/chaos-painter";
-    const typeColour = variant === "Chapter" ? "btn-primary" : "btn-error";
+    const typeColour = variant === "Chapter" ? "btn-primary" : "btn-accent";
     const labelNoun = variant === "Chapter" ? "chapter" : "warband";
     const aria = label ?? `Customize your ${labelNoun}`;
 
     return (
         <Link
-            className={`btn ${typeColour} rounded-lg w-full`}
+            className={`btn ${typeColour} btn-block`}
             href={href}
             aria-label={aria}
             title={aria}
@@ -19,7 +19,7 @@ export default function CustomizerButton({
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 384 512"
-                className="h-6 w-6 fill-current"
+                className="size-5 fill-current"
                 aria-hidden="true"
 
             >

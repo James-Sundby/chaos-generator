@@ -1,4 +1,4 @@
-import Painter from "@/app/components/painter";
+import CustomizerChapter from "@/app/components/customizerChapter";
 
 export const metadata = {
     title: "Custom Chapter",
@@ -34,5 +34,5 @@ export const metadata = {
 
 
 export default function Page() {
-    return <Painter />;
+    return <CustomizerChapter />;
 }

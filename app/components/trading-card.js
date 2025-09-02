@@ -43,15 +43,12 @@ export default function TradingCard({
         .filter(Boolean)
         .join(", ");
 
-    const prettyMode =
-        mode === "Splitcomplementary" ? "Split Complementary" : mode;
+    const prettyMode = mode === "Splitcomplementary" ? "Split Complementary" : mode;
 
     return (
-        <div id="trading-card" className="card bg-yellow-600 text-neutral w-full max-w-96 rounded-lg">
-            <div className="card-body p-2 m-2 bg-white rounded-lg">
-                <h1 className="card-title justify-center text-center anton">
-                    {warbandName}
-                </h1>
+        <div id="trading-card" className="card w-full max-w-96 bg-base-200 text-base-content">
+            <div className="card-body gap-3">
+                <h1 className="card-title justify-center text-center">{warbandName}</h1>
 
                 <div className="h-[45svh]">
                     <Marine {...marineProps} />
@@ -59,13 +56,13 @@ export default function TradingCard({
 
                 {/* Swatches */}
                 <div
-                    className="flex flex-1 join join-horizontal rounded-lg"
+                    className="join join-horizontal"
                     aria-label="Color palette"
                 >
                     {swatchIndices.map((i) => (
                         <div
                             key={i}
-                            className="w-full h-8 join-item border border-neutral tooltip"
+                            className="join-item h-8 w-full border border-base-300 tooltip"
                             data-tip={colors[i]?.name}
                             style={{ backgroundColor: colors[i]?.hex }}
                             aria-label={colors[i]?.name}
@@ -87,7 +84,7 @@ export default function TradingCard({
                 )}
 
                 {/* ID footer */}
-                <div className="mt-2 border-t border-neutral pt-2 text-right text-xs opacity-75">
+                <div className="mt-2 border-t border-base-300 pt-2 text-right text-xs opacity-75">
                     ID: <span className="font-mono font-normal">{slug}</span>
                 </div>
             </div>
