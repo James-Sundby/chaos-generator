@@ -1,4 +1,4 @@
-import ChaosPainter from "@/app/components/chaosPainter";
+import CustomizerChaos from "@/app/components/customizerChaos";
 
 export const metadata = {
     title: "Custom Warband",
@@ -34,5 +34,5 @@ export const metadata = {
 
 
 export default function Page() {
-    return <ChaosPainter />;
+    return <CustomizerChaos />;
 }

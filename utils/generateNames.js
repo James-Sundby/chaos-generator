@@ -1,3 +1,5 @@
+import "server-only";
+
 import { randomElement } from "@/utils/randomElement";
 
 import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives as chaosAdjectives } from "@/lib/chaosData";

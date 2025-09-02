@@ -1,5 +1,6 @@
-import { colourList } from "@/lib/colours";
+import "server-only";
 
+import { colourList } from "@/lib/colours";
 import { randomElement } from "@/utils/randomElement";
 
 export function hueDistance(a, b) {
@@ -43,7 +44,9 @@ export function findClosestColour(
     );
 
     if (eligibleColours.length === 0) {
-        console.warn("findClosestColour: No eligible colours after exclusions.");
+        if (process.env.NODE_ENV !== "production") {
+            console.warn("findClosestColour: No eligible colours after exclusions.");
+        }
         return null;
     }
 

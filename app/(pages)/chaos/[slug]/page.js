@@ -1,6 +1,8 @@
-import { redirect } from "next/navigation";
-import { parseFromSlugOrThrow, createWarband } from "@/utils/warband";
+import { redirect, notFound } from "next/navigation";
+import { parseFromSlugOrThrow } from "@/utils/warband";
 import WarbandView from "@/app/components/warbandView";
+
+export const dynamic = "force-static";
 
 export async function generateMetadata(props) {
     const params = await props.params;
@@ -42,7 +44,6 @@ export default async function Page(props) {
         if (canonical !== params.slug) redirect(`/chaos/${canonical}`);
         return <WarbandView initialBand={band} />;
     } catch {
-        const band = createWarband();
-        redirect(`/chaos/${band.slug}`);
+        notFound();
     }
 }

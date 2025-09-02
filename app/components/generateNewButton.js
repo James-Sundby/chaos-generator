@@ -13,10 +13,8 @@ export default function GenerateNewButton({
         variant === "Chaos" ? "Generate a New Chaos Warband" : "Generate a New Chapter";
 
     return (
-        <form action={action}>
-            <PendingActionButton
-                variant={variant}
-            >
+        <form action={action} className="w-full">
+            <PendingActionButton variant={variant}>
                 {label ?? defaultLabel}
             </PendingActionButton>
         </form>
