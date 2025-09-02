@@ -115,6 +115,7 @@ export default function SpaceMarine({ primary, secondary, trim, pattern }) {
 
     return (
         <svg
+            xmlns="http://www.w3.org/2000/svg"
             className="w-full h-full"
             viewBox="0 0 300 424"
             style={{

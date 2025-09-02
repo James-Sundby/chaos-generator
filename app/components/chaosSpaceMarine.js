@@ -55,6 +55,7 @@ export default function ChaosMarine({ primary, secondary, edge, accent, pattern 
 
     return (
         <svg
+            xmlns="http://www.w3.org/2000/svg"
             className="w-full h-full"
             viewBox="0 0 2293 3072"
             style={{

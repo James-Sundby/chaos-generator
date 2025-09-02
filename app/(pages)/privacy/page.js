@@ -13,7 +13,7 @@ export const metadata = {
                 url: "https://chapter-gen.jsundby.dev/card.png",
                 width: 1200,
                 height: 630,
-                alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block.",
+                alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block.",
             },
         ],
         locale: 'en_US',
@@ -21,12 +21,12 @@ export const metadata = {
     },
     twitter: {
         title: "Privacy Policy & Project Information",
-        description: "This fan tool doesn't use cookies or trackers. Find out how your data is handled.",
+        description: "This fan tool doesn't use cookies. Find out how your data is handled.",
         card: 'summary_large_image',
         images: [
             {
                 url: "https://chapter-gen.jsundby.dev/card.png",
-                alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block."
+                alt: "Line-art image of a Space Marine.  Text overlay: Stuck with primer? Generate a chapter and break the block."
             }
         ],
     },

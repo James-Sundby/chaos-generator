@@ -21,7 +21,7 @@ export default function ShareButton({
 
         if (navigator.share) {
             navigator
-                .share({ title: shareTitle, text: shareTitle, shareText, url: url })
+                .share({ title: shareTitle, text: shareTitle + " " + shareText, url: url })
                 .catch(() => { });
         } else {
             navigator.clipboard.writeText(url).then(() => {

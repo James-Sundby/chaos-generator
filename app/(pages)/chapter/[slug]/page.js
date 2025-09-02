@@ -18,7 +18,7 @@ export async function generateMetadata(props) {
                 description: `Custom Space Marine scheme: ${colorNames} in the ${chapter.pattern} pattern.`,
                 url: `https://chapter-gen.jsundby.dev/chapter/${canonical}`,
                 siteName: "Chapter Generator",
-                images: [{ url: "https://chapter-gen.jsundby.dev/card.png", width: 1200, height: 630, alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block." }],
+                images: [{ url: "https://chapter-gen.jsundby.dev/card.png", width: 1200, height: 630, alt: "Line-art image of a Space Marine.  Text overlay: Stuck with primer? Generate a chapter and break the block." }],
                 locale: "en_US",
                 type: "website",
             },
@@ -26,7 +26,7 @@ export async function generateMetadata(props) {
                 title: chapter.warbandName,
                 description: `Space Marine paint scheme: ${colorNames}, "${chapter.pattern}" pattern.`,
                 card: "summary_large_image",
-                images: [{ url: "https://chapter-gen.jsundby.dev/card.png", alt: "Paintbrushes in a jar. Text overlay: Stuck with primer? Generate a chapter and break the block." }],
+                images: [{ url: "https://chapter-gen.jsundby.dev/card.png", alt: "Line-art image of a Space Marine.  Text overlay: Stuck with primer? Generate a chapter and break the block." }],
             },
         };
     } catch {
