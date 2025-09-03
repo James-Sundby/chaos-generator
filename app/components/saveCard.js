@@ -56,58 +56,64 @@ export default function SaveCard({
 }) {
     const typeColour = variant === "Chapter" ? "btn-primary" : "btn-accent";
     const [busy, setBusy] = useState(false);
-    const [showToast, setShowToast] = useState(false);
-
 
     const onClick = useCallback(async () => {
         const node = document.getElementById(targetId);
         if (!node) {
             console.error(`[SaveCardPngTTF] target #${targetId} not found`);
-            return alert("Card not found. Check targetId and the card's id.");
+            alert("Card not found. Check targetId and the card's id.");
+            return;
         }
 
         try {
             setBusy(true);
             const fontDatas = await Promise.all(
-                fonts.map(async (f) => ({
-                    ...f,
-                    dataUrl: await fileToDataURL(f.src),
-                }))
+                fonts.map(async (f) => ({ ...f, dataUrl: await fileToDataURL(f.src) }))
             );
+
             const clone = node.cloneNode(true);
             const style = document.createElement("style");
             style.textContent = buildFontCSS(fontDatas);
             if (forceFamily) clone.style.fontFamily = forceFamily;
             clone.insertBefore(style, clone.firstChild);
+
             const mount = mountOffscreen(clone);
             try {
                 node.scrollIntoView({ block: "nearest" });
                 await new Promise((r) => requestAnimationFrame(r));
                 try { if (document.fonts?.ready) await document.fonts.ready; } catch { }
+
                 const rect = node.getBoundingClientRect();
                 const dataUrl = await htmlToImage.toPng(clone, {
                     cacheBust: true,
                     backgroundColor: "#ffffff",
                     pixelRatio,
                     skipFonts: true,
-                    style: {
-                        transform: "none",
-                        width: `${rect.width}px`,
-                        height: `${rect.height}px`,
-                    },
+                    style: { transform: "none", width: `${rect.width}px`, height: `${rect.height}px` },
                     filter: (n) => n?.dataset?.noExport !== "true" && !n?.classList?.contains("tooltip"),
                 });
-                const a = document.createElement("a");
-                a.href = dataUrl;
-                a.download = `${filename}.png`;
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
+
+                // Convert dataURL -> Blob -> object URL
+                const blob = await (await fetch(dataUrl)).blob();
+                const objectUrl = URL.createObjectURL(blob);
+
+                const tryDirectDownload = () => {
+                    const a = document.createElement("a");
+                    a.href = objectUrl;
+                    a.download = `${filename}.png`;
+                    // Some browsers require it in the DOM:
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                };
+                try {
+                    tryDirectDownload();
+                } catch {
+                    window.open(objectUrl, "_blank", "noopener,noreferrer");
+                }
             } finally {
                 mount.remove();
             }
-            setShowToast(true);
-            setTimeout(() => setShowToast(false), 2000);
         } catch (err) {
             console.error("[SaveCardPngTTF] export failed:", err);
             alert("PNG export failed. See console for details.");
@@ -117,26 +123,15 @@ export default function SaveCard({
     }, [targetId, filename, fonts, forceFamily, pixelRatio]);
 
     return (
-        <>
-            <div className="" data-no-export="true">
-                <button
-                    className={`btn ${typeColour} btn-block rounded-sm`}
-                    onClick={onClick}
-                    disabled={busy}
-                    aria-label="Download card as PNG"
-                >
-                    {busy ? "Rendering…" : "Save PNG"}
-                </button>
-            </div>
-
-            {showToast && (
-                <div className="toast toast-end toast-bottom">
-                    <div className="alert alert-success">
-                        <span>Download finished: {filename}.png</span>
-                    </div>
-                </div>
-            )}
-
-        </>
+        <div className="" data-no-export="true">
+            <button
+                className={`btn ${typeColour} btn-block rounded-sm`}
+                onClick={onClick}
+                disabled={busy}
+                aria-label="Download card as PNG"
+            >
+                {busy ? "Rendering…" : "Save PNG"}
+            </button>
+        </div>
     );
 }
