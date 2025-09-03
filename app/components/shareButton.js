@@ -16,12 +16,12 @@ export default function ShareButton({
 
     const handleShare = () => {
         const url = `${window.location.origin}${basePath}/${slug}`;
-        const shareTitle = `Check out this ${variant}!`;
+        const shareTitle = `Check out this ${labelNoun}!`;
         const shareText = title ?? "";
 
         if (navigator.share) {
             navigator
-                .share({ title: shareTitle, text: shareTitle, shareText, url: url })
+                .share({ title: shareTitle, text: shareTitle + " " + shareText, url: url })
                 .catch(() => { });
         } else {
             navigator.clipboard.writeText(url).then(() => {
