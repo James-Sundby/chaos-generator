@@ -56,6 +56,9 @@ export default function SaveCard({
 }) {
     const typeColour = variant === "Chapter" ? "btn-primary" : "btn-accent";
     const [busy, setBusy] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+
+
     const onClick = useCallback(async () => {
         const node = document.getElementById(targetId);
         if (!node) {
@@ -103,6 +106,8 @@ export default function SaveCard({
             } finally {
                 mount.remove();
             }
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 2000);
         } catch (err) {
             console.error("[SaveCardPngTTF] export failed:", err);
             alert("PNG export failed. See console for details.");
@@ -112,15 +117,26 @@ export default function SaveCard({
     }, [targetId, filename, fonts, forceFamily, pixelRatio]);
 
     return (
-        <div className="" data-no-export="true">
-            <button
-                className={`btn ${typeColour} btn-block rounded-sm`}
-                onClick={onClick}
-                disabled={busy}
-                aria-label="Download card as PNG"
-            >
-                {busy ? "Rendering…" : "Save PNG"}
-            </button>
-        </div>
+        <>
+            <div className="" data-no-export="true">
+                <button
+                    className={`btn ${typeColour} btn-block rounded-sm`}
+                    onClick={onClick}
+                    disabled={busy}
+                    aria-label="Download card as PNG"
+                >
+                    {busy ? "Rendering…" : "Save PNG"}
+                </button>
+            </div>
+
+            {showToast && (
+                <div className="toast toast-end toast-bottom">
+                    <div className="alert alert-success">
+                        <span>Download finished: {filename}.png</span>
+                    </div>
+                </div>
+            )}
+
+        </>
     );
 }
