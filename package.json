@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^5.2.1",
     "chaos-generator": "file:",
     "glob": "^11.0.0",
+    "html-to-image": "^1.11.13",
     "inflight": "^1.0.6",
     "next": "^15.3.0",
     "react": "^19.1.0",

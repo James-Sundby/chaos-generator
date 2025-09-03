@@ -8,6 +8,7 @@ import TradingCard from "@/app/components/trading-card.js";
 import CustomizerButton from "@/app/components/customizerButton";
 import GenerateNewButton from "@/app/components/generateNewButton";
 import ShareButton from "@/app/components/shareButton";
+import SaveCard from "./saveCard";
 
 export default function ChapterView({ initialChapter }) {
     const setWarband = useWarbandStore(s => s.setWarband);
@@ -15,10 +16,12 @@ export default function ChapterView({ initialChapter }) {
 
     useEffect(() => { setWarband(initialChapter); }, [initialChapter, setWarband]);
     const band = warband.slug ? warband : initialChapter;
+    const cardId = `marine-${band.slug}`;
+
 
     return (
         <main className="flex flex-1 flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 p-4">
-            <TradingCard variant="Chapter" band={band} />
+            <TradingCard variant="Chapter" band={band} id={cardId} />
             <div className="flex w-full max-w-96 flex-col gap-4">
                 <div className="flex w-full flex-row items-center justify-center gap-4 sm:flex-col">
                     <div className="w-full">
@@ -29,6 +32,11 @@ export default function ChapterView({ initialChapter }) {
                     </div>
                 </div>
                 <ShareButton variant="Chapter" slug={band.slug} title={band.warbandName} />
+                <SaveCard
+                    variant="Chapter"
+                    targetId={cardId}
+                    filename={band.slug || band.warbandName || "trading-card"}
+                />
             </div>
         </main>
     );
