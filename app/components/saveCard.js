@@ -77,6 +77,12 @@ export default function SaveCard({
             if (forceFamily) clone.style.fontFamily = forceFamily;
             clone.insertBefore(style, clone.firstChild);
 
+            const liveStage = node.querySelector(".marine-stage");
+            const cloneStage = clone.querySelector(".marine-stage");
+            if (liveStage && cloneStage) {
+                cloneStage.style.height = `${liveStage.clientHeight}px`;
+            }
+
             const mount = mountOffscreen(clone);
             try {
                 node.scrollIntoView({ block: "nearest" });
