@@ -4,17 +4,28 @@ import { useRouter } from "next/navigation";
 import TradingCard from "@/app/components/trading-card";
 import { colourList } from "@/lib/colours";
 import { generateSlug } from "@/utils/parseSlugs";
+import ColorListbox from "./colourSelect";
 
 function ControlRow({ id, label, children, hint }) {
+    const labelId = `${id}-label`;
+    const hintId = hint ? `${id}-hint` : undefined;
+
     return (
         <div className="form-control w-full">
-            <label htmlFor={id} className="label">
+            <label id={labelId} htmlFor={id} className="label">
                 <span className="label-text">{label}</span>
             </label>
-            <div className="join w-full">{children}</div>
+
+            <div className="join w-full">
+                {typeof children === "function"
+                    ? children({ labelId, hintId })
+                    : children
+                }
+            </div>
+
             {hint && (
                 <div className="label">
-                    <span className="label-text-alt">{hint}</span>
+                    <span id={hintId} className="label-text-alt">{hint}</span>
                 </div>
             )}
         </div>
@@ -154,51 +165,86 @@ export default function CustomizerCore({
                             maxLength={50}
                         />
                     </label>
-                    <ControlRow id="primary-colour" label="Primary colour">
-                        <SelectControl
-                            id="primary-colour"
-                            options={paletteOptionsForIndex(0)}
-                            value={band.colors[0]?.hex}
-                            onChange={(val) => handleColorChange(0, val)}
-                            ariaLabel="Primary colour"
-                        />
-                        <ActionBtn title="Random primary colour" action={() => generateNewColor(0)} />
+                    <ControlRow id="primary-colour" label="Primary colour" >
+                        {({ labelId, hintId }) => (
+                            <>
+                                <ColorListbox
+                                    id="primary-colour"
+                                    options={paletteOptionsForIndex(0)}
+                                    value={band.colors[0]?.hex}
+                                    onChange={(val) => handleColorChange(0, val)}
+                                    labelledById={labelId}
+                                    describedById={hintId}
+                                    ariaLabel="Primary colour"
+                                />
+                                <ActionBtn title="Random primary colour" action={() => generateNewColor(0)} />
+                            </>
+                        )}
                     </ControlRow>
                     {showSecondary && (
                         <ControlRow id="secondary-colour" label="Secondary colour">
-                            <SelectControl
-                                id="secondary-colour"
-                                options={paletteOptionsForIndex(1)}
-                                value={band.colors[1]?.hex}
-                                onChange={(val) => handleColorChange(1, val)}
-                                ariaLabel="Secondary colour"
-                            />
-                            <ActionBtn title="Random secondary colour" action={() => generateNewColor(1)} />
+                            {({ labelId, hintId }) => (
+                                <>
+                                    <ColorListbox
+                                        id="secondary-colour"
+                                        options={paletteOptionsForIndex(1)}
+                                        value={band.colors[1]?.hex}
+                                        onChange={(val) => handleColorChange(1, val)}
+                                        labelledById={labelId}
+                                        describedById={hintId}           // will be undefined unless you add a hint
+                                        ariaLabel="Secondary colour"     // optional fallback
+                                    />
+                                    <ActionBtn
+                                        title="Random secondary colour"
+                                        action={() => generateNewColor(1)}
+                                    />
+                                </>
+                            )}
                         </ControlRow>
                     )}
+
                     <ControlRow
                         id="trim-colour"
                         label={variant === "Chaos" ? "Trim colour" : "Accent colour"}
                     >
-                        <SelectControl
-                            id="trim-colour"
-                            options={paletteOptionsForIndex(2)}
-                            value={band.colors[2]?.hex}
-                            onChange={(val) => handleColorChange(2, val)}
-                            ariaLabel={variant === "Chaos" ? "Trim colour" : "Accent colour"}
-                        />
-                        <ActionBtn title="Random trim colour" action={() => generateNewColor(2)} />
+                        {({ labelId, hintId }) => (
+                            <>
+                                <ColorListbox
+                                    id="trim-colour"
+                                    options={paletteOptionsForIndex(2)}
+                                    value={band.colors[2]?.hex}
+                                    onChange={(val) => handleColorChange(2, val)}
+                                    labelledById={labelId}
+                                    describedById={hintId}
+                                    ariaLabel={variant === "Chaos" ? "Trim colour" : "Accent colour"}
+                                />
+                                <ActionBtn
+                                    title="Random trim colour"
+                                    action={() => generateNewColor(2)}
+                                />
+                            </>
+                        )}
                     </ControlRow>
+
                     {variant === "Chaos" && (
                         <ControlRow id="accent-colour" label="Accent colour">
-                            <SelectControl
-                                id="accent-colour"
-                                options={paletteOptionsForIndex(3)}
-                                value={band.colors[3]?.hex}
-                                onChange={(val) => handleColorChange(3, val)}
-                                ariaLabel="Accent colour"
-                            />
-                            <ActionBtn title="Random accent colour" action={() => generateNewColor(3)} />
+                            {({ labelId, hintId }) => (
+                                <>
+                                    <ColorListbox
+                                        id="accent-colour"
+                                        options={paletteOptionsForIndex(3)}
+                                        value={band.colors[3]?.hex}
+                                        onChange={(val) => handleColorChange(3, val)}
+                                        labelledById={labelId}
+                                        describedById={hintId}
+                                        ariaLabel="Accent colour"
+                                    />
+                                    <ActionBtn
+                                        title="Random accent colour"
+                                        action={() => generateNewColor(3)}
+                                    />
+                                </>
+                            )}
                         </ControlRow>
                     )}
                     <ControlRow id="pattern" label="Pattern">

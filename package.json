@@ -11,6 +11,7 @@
   "dependencies": {
     "@eslint/config-array": "^0.20.0",
     "@eslint/object-schema": "^2.1.5",
+    "@headlessui/react": "^2.2.8",
     "@hookform/resolvers": "^5.2.1",
     "chaos-generator": "file:",
     "glob": "^11.0.0",
