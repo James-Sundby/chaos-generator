@@ -2,48 +2,14 @@
 
 import { useState } from "react";
 import { colourList } from "@/lib/colours";
-import PaintBySections from "@/app/components/paintBySections";
 
-import { debug } from "@/lib/debug";
+import PaintBySections from "@/app/components/paintBySections";
+import ImportWarband from "@/app/components/importWarband";
+import ColorListbox from "./colourSelect";
 
 import { usePainterStore } from "@/app/stores/painterStore";
 
-import ImportWarband from "@/app/components/importWarband";
-
-const Dropdown = ({ label, options, value, onChange, isDisabled }) => {
-    const isGrouped = Array.isArray(options) === false;
-
-    return (
-        <label className="form-control w-full">
-            <select
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-                className="select select-bordered rounded-lg w-full"
-                aria-label={`Select ${label}`}
-                disabled={isDisabled}
-            >
-                <option value="" disabled>
-                    Select a colour
-                </option>
-                {isGrouped
-                    ? Object.entries(options).map(([group, items]) => (
-                        <optgroup key={group} label={group} >
-                            {items.map((option, index) => (
-                                <option key={index} value={option.hex} >
-                                    {option.name}
-                                </option>
-                            ))}
-                        </optgroup>
-                    ))
-                    : options.map((option, index) => (
-                        <option key={index} value={option.value || option.hex || option.code}>
-                            {option.name}
-                        </option>
-                    ))}
-            </select>
-        </label>
-    );
-};
+import { debug } from "@/lib/debug";
 
 const groupedColors = {
     Base: colourList.filter((c) => c.type === "Base"),
@@ -84,13 +50,9 @@ export default function FreePaint() {
             .map((hex) => colourList.find((color) => color.hex === hex)?.name);
         return [...new Set(usedColors)];
     };
-
     return (
         <main className="flex flex-1 flex-col justify-center items-center gap-4 p-4">
-
-            <h1 className="font-semibold text-2xl text-center m4-8 ">
-                Free Paint - Loyalist
-            </h1>
+            <h1 className="font-semibold text-2xl text-center">Free Paint - Loyalist</h1>
 
             <aside className="w-full max-w-96 sm:max-w-[52rem] ">
                 <ImportWarband />
@@ -124,20 +86,27 @@ export default function FreePaint() {
                                 Clear Selections
                             </button>
                         </div>
+
                         <div className="flex flex-col gap-2 mb-8">
-                            <p className="card-title">Colours</p>
-                            <Dropdown
-                                label="Color"
-                                options={groupedColors}
-                                value={selectedColor}
-                                onChange={handleColorChange}
-                                isDisabled={!selectedSections.length}
-                            />
+                            <label id="freepaint-colour-label" className="card-title">Colours</label>
+                            <div className="join w-full">
+                                <ColorListbox
+                                    id="freepaint-colour"
+                                    options={groupedColors}
+                                    value={selectedColor}
+                                    onChange={handleColorChange}
+                                    labelledById="freepaint-colour-label"
+                                    ariaLabel="Colours"
+                                    disabled={!selectedSections.length}
+                                />
+                            </div>
                         </div>
-                        <div className="flex flex-col gap-2 mb-8" aria-labelledby="paints-needed-heading" >
+
+                        <div className="flex flex-col gap-2 mb-8" aria-labelledby="paints-needed-heading">
                             <p id="paints-needed-heading" className="card-title">Paints Needed</p>
                             <p>{getRequiredPaints().length ? getRequiredPaints().join(", ") : "White Scar"}</p>
                         </div>
+
                         <button
                             className="btn btn-primary rounded-lg"
                             onClick={() => {

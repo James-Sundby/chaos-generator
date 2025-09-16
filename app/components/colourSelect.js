@@ -1,20 +1,15 @@
 import { Fragment, useMemo } from "react";
-import {
-    Listbox,
-    Transition,
-    ListboxButton,
-    ListboxOptions,
-    ListboxOption,
-} from "@headlessui/react";
+import { Listbox, Transition, ListboxButton, ListboxOptions, ListboxOption, } from "@headlessui/react";
 
 export default function ColorListbox({
     id,
     options,
     value,
     onChange,
-    ariaLabel,       // optional fallback
-    labelledById,    // `${id}-label` from ControlRow
-    describedById,   // optional `${id}-hint` from ControlRow
+    ariaLabel,
+    labelledById,
+    describedById,
+    disabled = false,
 }) {
     const isGrouped = Array.isArray(options) === false;
 
@@ -38,6 +33,7 @@ export default function ColorListbox({
                 value={selectedOption}
                 onChange={(opt) => onChange(getVal(opt))}
                 by={(a, b) => getVal(a) === getVal(b)}
+                disabled={disabled}
             >
                 <ListboxButton
                     id={id}
@@ -45,7 +41,7 @@ export default function ColorListbox({
                     aria-label={ariaLabel}
                     aria-labelledby={labelledById}
                     aria-describedby={describedById}
-                    className="select select-bordered join-item w-full"
+                    className={`select select-bordered join-item w-full ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                     <span className="flex items-center gap-2 truncate">
                         <span
