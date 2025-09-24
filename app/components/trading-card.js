@@ -1,5 +1,6 @@
 import SpaceMarine from "./spaceMarine";
 import ChaosMarine from "./chaosSpaceMarine";
+import Terminator from "./terminator";
 
 export default function TradingCard({
     variant = "Chapter", // "Chaos" or "Chapter"
@@ -9,7 +10,7 @@ export default function TradingCard({
     const isChaos = variant === "Chaos";
     const { warbandName, colors = [], slug, pattern, mode } = band ?? {};
 
-    const Marine = isChaos ? ChaosMarine : SpaceMarine;
+    const Marine = isChaos ? ChaosMarine : Terminator;
 
     const marineProps = isChaos
         ? {
