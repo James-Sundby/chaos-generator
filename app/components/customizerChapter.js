@@ -25,6 +25,7 @@ export default function CustomizerChapter() {
             paletteOptionsForIndex={() => groupedColors} // 0..2 all use full grouped set
             randomPoolForIndex={() => colourList}        // random from all paints
             backBase="/chapter"
+            hasSecondModel={true}
         />
     );
 }
