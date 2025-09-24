@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export const metadata = {
     title: "Privacy Policy & Project Information",
     description: "Read how Chapter Generator handles your data. This fan-made tool avoids tracking and respects your privacy by using only session-based storage.",
@@ -34,7 +32,7 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <main role="main" className="flex flex-1 flex-col max-w-3xl mx-auto p-4 prose prose-sm md:prose-base dark:prose-invert">
+        <section className="flex flex-1 flex-col max-w-full mx-auto prose prose-sm md:prose-base dark:prose-invert">
 
             <h1>Privacy Policy</h1>
             <p>
@@ -46,14 +44,14 @@ export default function Page() {
             <p>
                 <strong>Chapter Generator</strong> is a personal hobby project maintained by me.
                 You can contact me at:{" "}
-                <Link
+                <a
                     href="mailto:james@jsundby.dev"
                     className="link"
                     aria-label="Email James at james@jsundby.dev"
                     title="Email James at james@jsundby.dev"
                 >
                     james@jsundby.dev
-                </Link>
+                </a>
             </p>
 
             <h2>2. Data & Tracking</h2>
@@ -64,7 +62,7 @@ export default function Page() {
             <h2>3. Third-party Services</h2>
             <p>This site is hosted on Vercel:
                 {" "}
-                <Link
+                <a
                     href="https://vercel.com/legal/privacy-policy"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -73,7 +71,7 @@ export default function Page() {
                     title="Read the Vercel privacy policy"
                 >
                     Vercel Privacy Policy
-                </Link>
+                </a>
 
             </p>
 
@@ -93,16 +91,16 @@ export default function Page() {
             <h2>5. Questions or Requests</h2>
             <p>
                 If you have any questions about privacy, attribution, or content usage, you can reach me at:{" "}
-                <Link
+                <a
                     href="mailto:james@jsundby.dev"
                     className="link"
                     aria-label="Email James at james@jsundby.dev"
                     title="Email James at james@jsundby.dev"
                 >
                     james@jsundby.dev
-                </Link>
+                </a>
             </p>
 
-        </main>
+        </section>
     );
 }

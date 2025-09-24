@@ -5,8 +5,9 @@ import GenerateNewButton from "./components/generateNewButton";
 import SchemeSearch from "./components/schemeSearch";
 
 export default function Home() {
-  return (
-    <main className="flex flex-col flex-1 justify-center items-center px-4 relative">
+  return (<>
+    <section className="relative flex flex-col flex-1 items-center justify-center">
+      <Background />
       <h1 className="font-semibold rounded bg-base-100/80 p-2 text-xl max-w-md xl:max-w-full sm:text-2xl xl:text-4xl text-center mb-8">
         Unofficial Warhammer Paint Scheme Generator
       </h1>
@@ -39,7 +40,9 @@ export default function Home() {
           <SchemeSearch variant="Chaos" id="chaos-search" />
         </fieldset>
       </div>
-      <Background />
-    </main>
+
+    </section>
+
+  </>
   );
 }

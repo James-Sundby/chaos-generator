@@ -53,7 +53,7 @@ export default function TradingCard({
             <div className="card-body p-2 m-0 rounded-lg">
                 <h1 className="card-title justify-center text-center uppercase font-black">{warbandName}</h1>
 
-                <div className="h-[45svh]">
+                <div className="h-[40svh]">
                     <Marine {...marineProps} />
                 </div>
 
