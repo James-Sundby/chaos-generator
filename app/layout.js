@@ -60,9 +60,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html data-theme="chaos" lang="en">
-      <body className={`${inter.className} min-h-dvh flex flex-col`}>
+      <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
         <Header />
-        {children}
+        <main className="container mx-auto p-4 md:p-8 flex flex-col flex-1 justify-center gap-4 md:gap-8">{children}</main>
         <Footer />
       </body>
     </html>

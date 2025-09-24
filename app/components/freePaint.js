@@ -51,7 +51,7 @@ export default function FreePaint() {
         return [...new Set(usedColors)];
     };
     return (
-        <main className="flex flex-1 flex-col justify-center items-center gap-4 p-4">
+        <section className="flex flex-1 flex-col justify-center items-center gap-4 p-4">
             <h1 className="font-semibold text-2xl text-center">Free Paint - Loyalist</h1>
 
             <aside className="w-full max-w-96 sm:max-w-[52rem] ">
@@ -122,6 +122,6 @@ export default function FreePaint() {
                     </div>
                 </section>
             </section>
-        </main>
+        </section>
     );
 }

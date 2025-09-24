@@ -35,10 +35,8 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <main
-            role="main"
-            className="flex flex-1 flex-col max-w-3xl mx-auto px-4 py-10 prose prose-sm md:prose-base dark:prose-invert"
-        >
+        <section className="flex flex-1 flex-col max-w-full mx-auto prose prose-sm md:prose-base dark:prose-invert">
+
             <h1>Credits & Attribution</h1>
 
             <h2>Disclaimer</h2>
@@ -46,7 +44,7 @@ export default function Page() {
                 This site is a fan-made, non-commercial project inspired by the Warhammer 40K universe.
                 Space Marines, Chaos Space Marines, and related names, designs, and imagery are the intellectual
                 property of{" "}
-                <Link
+                <a
                     href="https://www.warhammer.com"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -55,20 +53,20 @@ export default function Page() {
                     title="Visit the Games Workshop website"
                 >
                     Games Workshop
-                </Link>
+                </a>
                 . This project is not affiliated with, endorsed by, or supported by Games Workshop in any way.
             </p>
 
             <p>
                 If you are the owner of any artwork or IP featured here and would like it removed or updated, please contact me at{" "}
-                <Link
+                <a
                     href="mailto:james@jsundby.dev"
                     className="link"
                     aria-label="Email James Sundby"
                     title="Email James Sundby"
                 >
                     james@jsundby.dev
-                </Link>
+                </a>
                 .
             </p>
 
@@ -78,7 +76,7 @@ export default function Page() {
             </p>
             <ul>
                 <li>
-                    <Link
+                    <a
                         href="https://www.deviantart.com/40kresources"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -86,11 +84,11 @@ export default function Page() {
                         title="Visit 40kResources on DeviantArt"
                         className="link"
                     >
-                        40kResources on DeviantArt
-                    </Link>
+                        40kResources
+                    </a>{" "}on DeviantArt
                 </li>
                 <li>
-                    <Link
+                    <a
                         href="https://www.deviantart.com/shawnpleil"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -98,45 +96,18 @@ export default function Page() {
                         title="Visit ShawnPleil on DeviantArt"
                         className="link"
                     >
-                        ShawnPleil on DeviantArt
-                    </Link>
+                        ShawnPleil
+                    </a>{" "}on DeviantArt
                 </li>
             </ul>
             <p>
                 If you are one of the credited artists and would like your artwork removed or updated,
                 feel free to reach out via the contact above.
             </p>
-
-            {/* <h2>Open Graph Image Credit</h2>
-            <p>
-                The background image used in the site&apos;s social media preview card is by{" "}
-                <Link
-                    href="https://pixabay.com/users/jan_photo-2842014/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4226688"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="link"
-                    aria-label="View Jan Mateboer's profile on Pixabay"
-                    title="View Jan Mateboer's profile on Pixabay"
-                >
-                    Jan Mateboer
-                </Link>
-                {" "}and is licensed under the{" "}
-                <Link
-                    href="https://pixabay.com/service/license-summary/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="link"
-                    aria-label="View Pixabay's content license"
-                    title="View Pixabay's content license"
-                >
-                    Pixabay content license
-                </Link>.
-            </p> */}
-
             <h2>Icon Credits</h2>
             <p>
                 This site uses icons provided by{" "}
-                <Link
+                <a
                     href="https://fontawesome.com"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -145,9 +116,9 @@ export default function Page() {
                     title="Visit Font Awesome"
                 >
                     Font Awesome Free
-                </Link>
+                </a>
                 , licensed under {" "}
-                <Link
+                <a
                     href="https://creativecommons.org/licenses/by/4.0/"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -156,9 +127,9 @@ export default function Page() {
                     title="View Creative Commons Attribution 4.0 License"
                 >
                     Creative Commons Attribution 4.0 (CC BY 4.0)
-                </Link>
+                </a>
                 .
             </p>
-        </main>
+        </section>
     );
 }

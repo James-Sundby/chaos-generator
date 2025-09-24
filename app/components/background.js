@@ -28,10 +28,12 @@ function renderMarineCard(item, index) {
 
 export default function Background() {
     return (
-        <div className="absolute inset-0 z-[-1]" aria-hidden="true">
-            <div className="flex flex-wrap justify-around overflow-hidden h-full">
+        <div className="absolute h-full w-full -z-10 pointer-events-none overflow-hidden" aria-hidden="true">
+
+            <div className="flex flex-wrap justify-around h-full">
                 {backgroundPresets.map(renderMarineCard)}
             </div>
+
         </div>
     );
 }

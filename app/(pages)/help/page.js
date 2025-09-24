@@ -35,10 +35,8 @@ export const metadata = {
 
 export default function Page() {
     return (
-        <main
-            role="main"
-            className="flex flex-1 flex-col max-w-3xl mx-auto px-4 py-10 prose prose-sm md:prose-base dark:prose-invert"
-        >
+        <section className="flex flex-1 flex-col max-w-full mx-auto prose prose-sm md:prose-base dark:prose-invert">
+
             <h1>Help</h1>
 
             <h2>Colour Hex Changes - May 5th, 2025</h2>
@@ -111,6 +109,6 @@ export default function Page() {
                     ))}
                 </tbody>
             </table>
-        </main>
+        </section>
     );
 }

@@ -18,14 +18,14 @@ export default function ChapterView({ initialChapter }) {
     const [model, setModel] = useState("marine"); // "marine" | "terminator"
 
     return (
-        <main className="flex flex-1 flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 p-4">
+        <section className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
             <div className="w-full max-w-96">
                 <fieldset className="mb-2">
-                    <div className="grid grid-cols-2 w-full">
+                    <div className="join w-full">
                         <input
                             type="radio"
                             name="model"
-                            className="btn btn-sm w-full rounded-l-md"
+                            className="join-item btn btn-sm flex-1"
                             aria-label="Marine"
                             checked={model === "marine"}
                             onChange={() => setModel("marine")}
@@ -33,7 +33,7 @@ export default function ChapterView({ initialChapter }) {
                         <input
                             type="radio"
                             name="model"
-                            className="btn btn-sm w-full rounded-r-md"
+                            className="join-item btn btn-sm flex-1"
                             aria-label="Terminator"
                             checked={model === "terminator"}
                             onChange={() => setModel("terminator")}
@@ -54,6 +54,6 @@ export default function ChapterView({ initialChapter }) {
                 </div>
                 <ShareButton variant="Chapter" slug={band.slug} title={band.warbandName} />
             </div>
-        </main>
+        </section>
     );
 }

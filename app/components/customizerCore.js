@@ -149,17 +149,16 @@ export default function CustomizerCore({
         </button>
     );
     return (
-        <main className="flex flex-1 flex-col items-center justify-center gap-4 p-4 sm:flex-row sm:gap-8">
-
+        <section className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
             <div className="w-full max-w-96">
                 {hasSecondModel &&
                     <fieldset className="mb-2">
                         <legend className="sr-only">Model</legend>
-                        <div className="grid grid-cols-2 w-full">
+                        <div className="join w-full">
                             <input
                                 type="radio"
                                 name="model"
-                                className="btn btn-sm w-full rounded-l-md"
+                                className="join-item btn btn-sm flex-1"
                                 aria-label="Marine"
                                 checked={model === "marine"}
                                 onChange={() => setModel("marine")}
@@ -167,7 +166,7 @@ export default function CustomizerCore({
                             <input
                                 type="radio"
                                 name="model"
-                                className="btn btn-sm w-full rounded-r-md"
+                                className="join-item btn btn-sm flex-1"
                                 aria-label="Terminator"
                                 checked={model === "terminator"}
                                 onChange={() => setModel("terminator")}
@@ -295,6 +294,6 @@ export default function CustomizerCore({
                     </button>
                 </div>
             </div>
-        </main>
+        </section>
     );
 }
