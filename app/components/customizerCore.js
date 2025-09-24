@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import TradingCard from "@/app/components/trading-card";
 import { colourList } from "@/lib/colours";
 import { generateSlug } from "@/utils/parseSlugs";
@@ -82,8 +83,10 @@ export default function CustomizerCore({
     randomPoolForIndex,
     backBase,
     hideSecondaryWhenBasic = false,
+    hasSecondModel = false,
 }) {
     const router = useRouter();
+    const [model, setModel] = useState("marine");
 
     const updateBand = (updated) => {
         const next = { ...band, ...updated };
@@ -147,7 +150,33 @@ export default function CustomizerCore({
     );
     return (
         <main className="flex flex-1 flex-col items-center justify-center gap-4 p-4 sm:flex-row sm:gap-8">
-            <TradingCard variant={variant} band={band} />
+
+            <div className="w-full max-w-96">
+                {hasSecondModel &&
+                    <fieldset className="mb-2">
+                        <legend className="sr-only">Model</legend>
+                        <div className="grid grid-cols-2 w-full">
+                            <input
+                                type="radio"
+                                name="model"
+                                className="btn btn-sm w-full rounded-l-md"
+                                aria-label="Marine"
+                                checked={model === "marine"}
+                                onChange={() => setModel("marine")}
+                            />
+                            <input
+                                type="radio"
+                                name="model"
+                                className="btn btn-sm w-full rounded-r-md"
+                                aria-label="Terminator"
+                                checked={model === "terminator"}
+                                onChange={() => setModel("terminator")}
+                            />
+                        </div>
+                    </fieldset>
+                }
+                <TradingCard variant={variant} band={band} model={model} />
+            </div>
 
             <div className="card w-full max-w-96 bg-base-200 text-base-content">
                 <div className="card-body ">

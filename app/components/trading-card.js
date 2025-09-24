@@ -4,13 +4,15 @@ import Terminator from "./terminator";
 
 export default function TradingCard({
     variant = "Chapter", // "Chaos" or "Chapter"
+    model = "marine",
     band, //warbandName, namedColors[], slug, patternName, mode
 }) {
 
     const isChaos = variant === "Chaos";
     const { warbandName, colors = [], slug, pattern, mode } = band ?? {};
 
-    const Marine = isChaos ? ChaosMarine : Terminator;
+    const LoyalistModel = model === "terminator" ? Terminator : SpaceMarine;
+    const Marine = isChaos ? ChaosMarine : LoyalistModel;
 
     const marineProps = isChaos
         ? {
