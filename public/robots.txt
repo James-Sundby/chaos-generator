@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /chapter/
+Disallow: /chaos/
+Disallow: /painter
+Disallow: /chaos-painter
+
+Sitemap: https://chapter-gen.jsundby.dev/sitemap.xml

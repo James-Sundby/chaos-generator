@@ -234,12 +234,20 @@ export function generateAnalogousColours({ withAccent = true } = {}) {
     return [base, colourA, colourB, accent];
 }
 
-export function generateFullyRandomColours(count) {
+function shuffleInPlace(arr, rng = Math.random) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+export function generateFullyRandomColours(count, rng = Math.random) {
     if (typeof count !== "number" || count < 2) {
         throw new Error("generateFullyRandomScheme: 'count' must be a number ≥ 2");
     }
 
-    const shuffled = [...colourList].sort(() => 0.5 - Math.random());
+    const shuffled = shuffleInPlace([...colourList], rng);
     const baseColours = shuffled.slice(0, count - 1);
     const nonMetal = shuffled.find(
         colour =>
