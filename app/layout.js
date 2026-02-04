@@ -4,6 +4,9 @@ import "./globals.css";
 import Header from "./components/header";
 import Footer from "./components/footer";
 
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -64,6 +67,8 @@ export default function RootLayout({ children }) {
         <Header />
         <main className="container mx-auto p-4 md:p-8 flex flex-col flex-1 justify-center gap-4 md:gap-8">{children}</main>
         <Footer />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
