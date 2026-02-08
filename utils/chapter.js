@@ -7,10 +7,10 @@ import { generateSlug, parseChapterSlug } from "@/utils/parseSlugs";
 
 const slugRegex = /^[a-zA-Z0-9-]+$/;
 
-export function createChapter() {
+export function createChapter(settings) {
     const name = generateChapterName();
-    const { colours, mode } = generateChapterScheme();
-    const pattern = generateLoyalistPattern();
+    const { colours, mode } = generateChapterScheme(settings);
+    const pattern = generateLoyalistPattern(settings);
     const slug = generateSlug(name, colours, pattern, mode);
     return { warbandName: name, colors: colours, pattern, slug, mode };
 }

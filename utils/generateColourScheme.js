@@ -9,8 +9,35 @@ import {
     generateFullyRandomColours
 } from "@/utils/colourTools";
 
+import { colourList } from "@/lib/colours";
+
+function getPool(settings) {
+    const mode = settings?.colourMode ?? "default";
+
+    if (mode === "default") {
+        return colourList.filter(colour => colour.type !== "Contrast");
+    }
+    if (mode === "contrast") {
+        return colourList.filter(colour => colour.type === "Contrast");
+    }
+    if (mode === "sm2") {
+        return colourList.filter(colour => colour.inSM2);
+    }
+    return colourList;
+}
+
+
 function schemeGenerator(strategies) {
-    return () => generateColours(strategies);
+    return (settings) => {
+        const pool = getPool(settings);
+
+        const bound = strategies.map(s => ({
+            ...s,
+            fn: () => s.fn(pool),
+        }));
+
+        return generateColours(bound);
+    };
 }
 
 function generateColours(strategies) {
@@ -33,22 +60,22 @@ function weightedRandomSelect(strategies) {
 }
 
 const chaosStrategies = [
-    { mode: "random", weight: 2, fn: () => generateFullyRandomColours(4) },
-    { mode: "complementary", weight: 3, fn: () => generateComplementaryColours() },
-    { mode: "splitcomplementary", weight: 4, fn: () => generateSplitComplementaryColours() },
-    { mode: "triadic", weight: 1, fn: () => generateTriadicColours() },
-    { mode: "tetradic", weight: 1, fn: () => generateTetradicColours() },
-    { mode: "analogous", weight: 2, fn: () => generateAnalogousColours() },
+    { mode: "random", weight: 2, fn: (pool) => generateFullyRandomColours(4, { pool }) },
+    { mode: "complementary", weight: 3, fn: (pool) => generateComplementaryColours({ pool }) },
+    { mode: "splitcomplementary", weight: 4, fn: (pool) => generateSplitComplementaryColours({ pool }) },
+    { mode: "triadic", weight: 1, fn: (pool) => generateTriadicColours({ pool }) },
+    { mode: "tetradic", weight: 1, fn: (pool) => generateTetradicColours({ pool }) },
+    { mode: "analogous", weight: 2, fn: (pool) => generateAnalogousColours({ pool }) },
 ];
 
 export const generateWarbandScheme = schemeGenerator(chaosStrategies);
 
 const loyalistStrategies = [
-    { mode: "random", weight: 2, fn: () => generateFullyRandomColours(3) },
-    { mode: "complementary", weight: 3, fn: () => generateComplementaryColours({ withAccent: false }) },
-    { mode: "splitcomplementary", weight: 1, fn: () => generateSplitComplementaryColours({ withAccent: false }) },
-    { mode: "triadic", weight: 1, fn: () => generateTriadicColours({ withAccent: false }) },
-    { mode: "analogous", weight: 2, fn: () => generateAnalogousColours({ withAccent: false }) },
+    { mode: "random", weight: 2, fn: (pool) => generateFullyRandomColours(3, { pool }) },
+    { mode: "complementary", weight: 3, fn: (pool) => generateComplementaryColours({ withAccent: false, pool }) },
+    { mode: "splitcomplementary", weight: 1, fn: (pool) => generateSplitComplementaryColours({ withAccent: false, pool }) },
+    { mode: "triadic", weight: 1, fn: (pool) => generateTriadicColours({ withAccent: false, pool }) },
+    { mode: "analogous", weight: 2, fn: (pool) => generateAnalogousColours({ withAccent: false, pool }) },
 ];
 
 export const generateChapterScheme = schemeGenerator(loyalistStrategies);

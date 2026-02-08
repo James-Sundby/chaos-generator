@@ -9,6 +9,7 @@ import CustomizerCore from "./customizerCore";
 const groupedColors = {
     Base: colourList.filter((c) => c.type === "Base"),
     Layer: colourList.filter((c) => c.type === "Layer"),
+    Contrast: colourList.filter((c) => c.type === "Contrast"),
     Metallic: colourList.filter((c) => c.type === "Metallic"),
 };
 

@@ -5,7 +5,7 @@ import ChaosMarine from "./chaosSpaceMarine";
 
 function renderMarineCard(item, index) {
     return (
-        <div key={index} className="w-28 h-28 sm:h-auto sm:w-auto opacity-40 aspect-square">
+        <div key={index} className="w-28 h-28 sm:h-auto sm:w-auto opacity-15 aspect-square">
             {item.type === "chaos" ? (
                 <ChaosMarine
                     primary={item.colors[0]?.hex}

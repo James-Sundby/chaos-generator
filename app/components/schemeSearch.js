@@ -93,7 +93,6 @@ export default function SchemeSearch({
 
     return (
         <form onSubmit={handleSubmit(onSubmit, onInvalid)} noValidate className="w-full">
-            {/* Visible label keeps the “what is this?” context clear */}
             <div className="form-control w-full">
                 <label htmlFor={id} className="sr-only">
                     {ariaLabel}
