@@ -7,10 +7,10 @@ import { generateSlug, parseChaosSlug } from "@/utils/parseSlugs";
 
 const slugRegex = /^[a-zA-Z0-9-]+$/;
 
-export function createWarband() {
+export function createWarband(settings) {
     const name = generateWarbandName();
-    const { colours, mode } = generateWarbandScheme();
-    const pattern = generateChaosPattern();
+    const { colours, mode } = generateWarbandScheme(settings);
+    const pattern = generateChaosPattern(settings);
     const slug = generateSlug(name, colours, pattern, mode);
     return { warbandName: name, colors: colours, pattern, slug, mode };
 }

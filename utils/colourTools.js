@@ -3,6 +3,10 @@ import "server-only";
 import { colourList } from "@/lib/colours";
 import { randomElement } from "@/utils/randomElement";
 
+function resolvePool(pool) {
+    return Array.isArray(pool) && pool.length > 0 ? pool : colourList;
+}
+
 export function hueDistance(a, b) {
     if (typeof a !== "number" || typeof b !== "number") {
         throw new Error("hueDistance expects two numeric hue values.");
@@ -107,23 +111,25 @@ export function findAccentColour(existingColours, candidatePool) {
     return bestAccent;
 }
 
-export function generateComplementaryColours({ withAccent = true } = {}) {
-    const base = randomElement(colourList);
+// NOTE: NO METALS WHEN POOL IS CONTRAST ONLY
+export function generateComplementaryColours({ withAccent = true, pool } = {}) {
+    const colours = resolvePool(pool);
+    const base = randomElement(colours);
 
     const target = {
         h: (base.h + 180) % 360,
         s: base.s,
         l: base.l,
     };
-    const complement = findClosestColour(target, colourList, [base.hex.toLowerCase()]);
+    const complement = findClosestColour(target, colours, [base.hex.toLowerCase()]);
 
-    const metallic = colourList.filter(c => c.type === "Metallic");
-    const metal = randomElement(metallic);
+    const metallic = colours.filter(c => c.type === "Metallic");
+    const metal = metallic.length === 0 ? randomElement(colours) : randomElement(metallic);
 
     // Ignore accent for Chapter Schemes
     if (!withAccent) return [base, complement, metal];
 
-    const accentPool = colourList.filter(c =>
+    const accentPool = colours.filter(c =>
         c.type !== "Metallic" &&
         c.s > 30 &&
         c.l > 30 &&
@@ -135,14 +141,15 @@ export function generateComplementaryColours({ withAccent = true } = {}) {
     return [base, complement, metal, accent];
 }
 
-export function generateSplitComplementaryColours({ withAccent = true } = {}) {
-    const base = randomElement(colourList);
+export function generateSplitComplementaryColours({ withAccent = true, pool } = {}) {
+    const colours = resolvePool(pool);
+    const base = randomElement(colours);
 
     const targetA = { h: (base.h + 150) % 360, s: base.s, l: base.l };
     const targetB = { h: (base.h + 210) % 360, s: base.s, l: base.l };
 
-    const colourA = findClosestColour(targetA, colourList, [base.hex.toLowerCase()]);
-    const colourB = findClosestColour(targetB, colourList, [
+    const colourA = findClosestColour(targetA, colours, [base.hex.toLowerCase()]);
+    const colourB = findClosestColour(targetB, colours, [
         base.hex.toLowerCase(),
         colourA?.hex?.toLowerCase(),
     ]);
@@ -150,7 +157,7 @@ export function generateSplitComplementaryColours({ withAccent = true } = {}) {
     // Ignore accent for Chapter Schemes
     if (!withAccent) return [base, colourA, colourB];
 
-    const accentPool = colourList.filter(c =>
+    const accentPool = colours.filter(c =>
         c.type !== "Metallic" &&
         c.s > 30 &&
         c.l > 30 &&
@@ -162,14 +169,15 @@ export function generateSplitComplementaryColours({ withAccent = true } = {}) {
     return [base, colourA, colourB, accent];
 }
 
-export function generateTriadicColours({ withAccent = true } = {}) {
-    const base = randomElement(colourList);
+export function generateTriadicColours({ withAccent = true, pool } = {}) {
+    const colours = resolvePool(pool);
+    const base = randomElement(colours);
 
     const targetA = { h: (base.h + 120) % 360, s: base.s, l: base.l };
     const targetB = { h: (base.h + 240) % 360, s: base.s, l: base.l };
 
-    const colourA = findClosestColour(targetA, colourList, [base.hex.toLowerCase()]);
-    const colourB = findClosestColour(targetB, colourList, [
+    const colourA = findClosestColour(targetA, colours, [base.hex.toLowerCase()]);
+    const colourB = findClosestColour(targetB, colours, [
         base.hex.toLowerCase(),
         colourA?.hex?.toLowerCase(),
     ]);
@@ -177,7 +185,7 @@ export function generateTriadicColours({ withAccent = true } = {}) {
     // Ignore accent for Chapter Schemes
     if (!withAccent) return [base, colourA, colourB];
 
-    const accentPool = colourList.filter(c =>
+    const accentPool = colours.filter(c =>
         c.type !== "Metallic" &&
         c.s > 30 &&
         c.l > 30 &&
@@ -189,8 +197,9 @@ export function generateTriadicColours({ withAccent = true } = {}) {
     return [base, colourA, colourB, accent];
 }
 
-export function generateTetradicColours() {
-    const base = randomElement(colourList);
+export function generateTetradicColours(pool) {
+    const colours = resolvePool(pool);
+    const base = randomElement(colours);
 
     const hue2 = (base.h + 90) % 360;
     const hue3 = (base.h + 180) % 360;
@@ -200,21 +209,22 @@ export function generateTetradicColours() {
     const target3 = { h: hue3, s: base.s, l: base.l };
     const target4 = { h: hue4, s: base.s, l: base.l };
 
-    const colour2 = findClosestColour(target2, colourList, [base.hex.toLowerCase()]);
-    const colour3 = findClosestColour(target3, colourList, [base.hex.toLowerCase(), colour2.hex.toLowerCase()]);
-    const colour4 = findClosestColour(target4, colourList, [base.hex.toLowerCase(), colour2.hex.toLowerCase(), colour3.hex.toLowerCase()]);
+    const colour2 = findClosestColour(target2, colours, [base.hex.toLowerCase()]);
+    const colour3 = findClosestColour(target3, colours, [base.hex.toLowerCase(), colour2.hex.toLowerCase()]);
+    const colour4 = findClosestColour(target4, colours, [base.hex.toLowerCase(), colour2.hex.toLowerCase(), colour3.hex.toLowerCase()]);
 
     return [base, colour2, colour3, colour4];
 }
 
-export function generateAnalogousColours({ withAccent = true } = {}) {
-    const base = randomElement(colourList);
+export function generateAnalogousColours({ withAccent = true, pool } = {}) {
+    const colours = resolvePool(pool);
+    const base = randomElement(colours);
 
     const hueA = (base.h + 30) % 360;
     const hueB = (base.h + 60) % 360;
 
-    const colourA = findClosestColour({ h: hueA, s: base.s, l: base.l }, colourList, [base.hex.toLowerCase()]);
-    const colourB = findClosestColour({ h: hueB, s: base.s, l: base.l }, colourList, [
+    const colourA = findClosestColour({ h: hueA, s: base.s, l: base.l }, colours, [base.hex.toLowerCase()]);
+    const colourB = findClosestColour({ h: hueB, s: base.s, l: base.l }, colours, [
         base.hex.toLowerCase(),
         colourA?.hex.toLowerCase()
     ]);
@@ -222,7 +232,7 @@ export function generateAnalogousColours({ withAccent = true } = {}) {
     // Ignore accent for Chapter Schemes
     if (!withAccent) return [base, colourA, colourB];
 
-    const accentPool = colourList.filter(c =>
+    const accentPool = colours.filter(c =>
         c.type !== "Metallic" &&
         c.s > 30 &&
         c.l > 30 &&
@@ -242,12 +252,14 @@ function shuffleInPlace(arr, rng = Math.random) {
     return arr;
 }
 
-export function generateFullyRandomColours(count, rng = Math.random) {
+export function generateFullyRandomColours(count, { pool, rng = Math.random } = {}) {
     if (typeof count !== "number" || count < 2) {
         throw new Error("generateFullyRandomScheme: 'count' must be a number ≥ 2");
     }
 
-    const shuffled = shuffleInPlace([...colourList], rng);
+    const colours = resolvePool(pool);
+
+    const shuffled = shuffleInPlace([...colours], rng);
     const baseColours = shuffled.slice(0, count - 1);
     const nonMetal = shuffled.find(
         colour =>
