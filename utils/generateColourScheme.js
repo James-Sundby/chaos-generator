@@ -1,5 +1,6 @@
 import "server-only";
 
+import { colourList } from "@/lib/colours";
 import {
     generateComplementaryColours,
     generateSplitComplementaryColours,
@@ -9,12 +10,26 @@ import {
     generateFullyRandomColours
 } from "@/utils/colourTools";
 
-import { colourList } from "@/lib/colours";
+function prepPool(list) {
+    const metallic = [];
+    const accentCandidates = [];
+
+    for (const c of list) {
+        if (c.type === "Metallic") metallic.push(c);
+        if (c.type !== "Metallic" && c.s > 30 && c.l > 30) accentCandidates.push(c);
+    }
+
+    return Object.freeze({
+        all: list,
+        metallic,
+        accentCandidates,
+    });
+}
 
 const POOLS = {
-    default: colourList.filter(c => c.type !== "Contrast"),
-    contrast: colourList.filter(c => c.type === "Contrast"),
-    sm2: colourList.filter(c => c.inSM2),
+    default: prepPool(colourList.filter((c) => c.type !== "Contrast")),
+    contrast: prepPool(colourList.filter((c) => c.type === "Contrast")),
+    sm2: prepPool(colourList.filter((c) => c.inSM2)),
 };
 
 function getPool(settings) {
@@ -22,45 +37,44 @@ function getPool(settings) {
     return POOLS[mode] ?? POOLS.default;
 }
 
-function schemeGenerator(strategies) {
-    return (settings) => {
-        const pool = getPool(settings);
-        const strategy = weightedRandomSelect(strategies);
-        const colours = strategy.fn(pool);
-        return { colours, mode: strategy.mode };
-    };
-}
-
-function weightedRandomSelect(strategies) {
+function weightedRandomSelect(strategies, rng = Math.random) {
     const totalWeight = strategies.reduce((sum, s) => sum + s.weight, 0);
-    const roll = Math.random() * totalWeight;
-    let cumulative = 0;
+    const roll = rng() * totalWeight;
 
+    let cumulative = 0;
     for (const strategy of strategies) {
         cumulative += strategy.weight;
         if (roll < cumulative) return strategy;
     }
-
     return strategies[strategies.length - 1];
 }
 
+function schemeGenerator(strategies) {
+    return (settings, { rng = Math.random } = {}) => {
+        const pool = getPool(settings);
+        const strategy = weightedRandomSelect(strategies, rng);
+        const colours = strategy.fn(pool, rng);
+        return { colours, mode: strategy.mode };
+    };
+}
+
 const chaosStrategies = [
-    { mode: "random", weight: 2, fn: (pool) => generateFullyRandomColours(4, { pool }) },
-    { mode: "complementary", weight: 3, fn: (pool) => generateComplementaryColours({ pool }) },
-    { mode: "splitcomplementary", weight: 4, fn: (pool) => generateSplitComplementaryColours({ pool }) },
-    { mode: "triadic", weight: 1, fn: (pool) => generateTriadicColours({ pool }) },
-    { mode: "tetradic", weight: 1, fn: (pool) => generateTetradicColours({ pool }) },
-    { mode: "analogous", weight: 2, fn: (pool) => generateAnalogousColours({ pool }) },
+    { mode: "random", weight: 2, fn: (pool, rng) => generateFullyRandomColours(4, { pool, rng }) },
+    { mode: "complementary", weight: 3, fn: (pool, rng) => generateComplementaryColours({ pool, rng }) },
+    { mode: "splitcomplementary", weight: 4, fn: (pool, rng) => generateSplitComplementaryColours({ pool, rng }) },
+    { mode: "triadic", weight: 1, fn: (pool, rng) => generateTriadicColours({ pool, rng }) },
+    { mode: "tetradic", weight: 1, fn: (pool, rng) => generateTetradicColours({ pool, rng }) },
+    { mode: "analogous", weight: 2, fn: (pool, rng) => generateAnalogousColours({ pool, rng }) },
 ];
 
 export const generateWarbandScheme = schemeGenerator(chaosStrategies);
 
 const loyalistStrategies = [
-    { mode: "random", weight: 2, fn: (pool) => generateFullyRandomColours(3, { pool }) },
-    { mode: "complementary", weight: 3, fn: (pool) => generateComplementaryColours({ withAccent: false, pool }) },
-    { mode: "splitcomplementary", weight: 1, fn: (pool) => generateSplitComplementaryColours({ withAccent: false, pool }) },
-    { mode: "triadic", weight: 1, fn: (pool) => generateTriadicColours({ withAccent: false, pool }) },
-    { mode: "analogous", weight: 2, fn: (pool) => generateAnalogousColours({ withAccent: false, pool }) },
+    { mode: "random", weight: 2, fn: (pool, rng) => generateFullyRandomColours(3, { pool, rng }) },
+    { mode: "complementary", weight: 3, fn: (pool, rng) => generateComplementaryColours({ withAccent: false, pool, rng }) },
+    { mode: "splitcomplementary", weight: 1, fn: (pool, rng) => generateSplitComplementaryColours({ withAccent: false, pool, rng }) },
+    { mode: "triadic", weight: 1, fn: (pool, rng) => generateTriadicColours({ withAccent: false, pool, rng }) },
+    { mode: "analogous", weight: 2, fn: (pool, rng) => generateAnalogousColours({ withAccent: false, pool, rng }) },
 ];
 
 export const generateChapterScheme = schemeGenerator(loyalistStrategies);
