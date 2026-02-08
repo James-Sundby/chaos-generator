@@ -11,39 +11,24 @@ import {
 
 import { colourList } from "@/lib/colours";
 
+const POOLS = {
+    default: colourList.filter(c => c.type !== "Contrast"),
+    contrast: colourList.filter(c => c.type === "Contrast"),
+    sm2: colourList.filter(c => c.inSM2),
+};
+
 function getPool(settings) {
     const mode = settings?.colourMode ?? "default";
-
-    if (mode === "default") {
-        return colourList.filter(colour => colour.type !== "Contrast");
-    }
-    if (mode === "contrast") {
-        return colourList.filter(colour => colour.type === "Contrast");
-    }
-    if (mode === "sm2") {
-        return colourList.filter(colour => colour.inSM2);
-    }
-    return colourList;
+    return POOLS[mode] ?? POOLS.default;
 }
-
 
 function schemeGenerator(strategies) {
     return (settings) => {
         const pool = getPool(settings);
-
-        const bound = strategies.map(s => ({
-            ...s,
-            fn: () => s.fn(pool),
-        }));
-
-        return generateColours(bound);
+        const strategy = weightedRandomSelect(strategies);
+        const colours = strategy.fn(pool);
+        return { colours, mode: strategy.mode };
     };
-}
-
-function generateColours(strategies) {
-    const strategy = weightedRandomSelect(strategies);
-    const colours = strategy.fn();
-    return { colours, mode: strategy.mode };
 }
 
 function weightedRandomSelect(strategies) {
