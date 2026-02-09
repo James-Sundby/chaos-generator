@@ -50,7 +50,7 @@ export default function TradingCard({
 
     return (
         <div id="trading-card" className="card w-full max-w-96 bg-white text-neutral border-8 border-yellow-600">
-            <div className="card-body p-2 m-0 rounded-lg">
+            <div className="card-body p-2 m-0">
                 <h1 className="card-title justify-center text-center uppercase font-black">{warbandName}</h1>
 
                 <div className="h-[40svh]">
@@ -65,7 +65,7 @@ export default function TradingCard({
                     {swatchIndices.map((i) => (
                         <div
                             key={i}
-                            className="join-item h-8 w-full border border-base-300 tooltip"
+                            className="join-item h-8 w-full border border-neutral tooltip"
                             data-tip={colors[i]?.name}
                             style={{ backgroundColor: colors[i]?.hex }}
                             aria-label={colors[i]?.name}
