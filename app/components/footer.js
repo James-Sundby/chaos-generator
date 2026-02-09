@@ -52,7 +52,7 @@ export default function Footer() {
           </li>
           <li>
             <a
-              href="https://jsundby.dev"
+              href="https://jsundby.dev/projects/chaos-generator/"
               aria-label="Visit my personal blog on jsundby.dev"
               title="Visit my personal blog on jsundby.dev"
               className="link link-hover"

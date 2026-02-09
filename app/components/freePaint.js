@@ -84,7 +84,7 @@ export default function FreePaint() {
                                 onClick={() => setSelectedSections([])}
                                 aria-label="Clear selected sections"
                             >
-                                Clear Selections
+                                Clear Selected Sections
                             </button>
                         </div>
 
@@ -118,7 +118,7 @@ export default function FreePaint() {
                             aria-label="Reset all colors and clear selections"
                             title="Reset all colors and clear selections"
                         >
-                            Reset to Blank
+                            Reset to Blank Model
                         </button>
                     </div>
                 </section>

@@ -3,7 +3,7 @@
 @plugin "daisyui/theme" {
   name: "chaos";
   default: true;
-  prefersdark: false;
+  prefersdark: true;
   color-scheme: "dark";
   --color-base-100: oklch(24.353% 0 0);
   --color-base-200: oklch(22.648% 0 0);
