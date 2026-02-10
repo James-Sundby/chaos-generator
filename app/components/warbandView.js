@@ -20,15 +20,15 @@ export default function WarbandView({ initialBand }) {
         <section className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
             <TradingCard variant="Chaos" band={band} />
             <div className="flex w-full max-w-96 flex-col gap-4">
+                <GenerateNewButton variant="Chaos" label="New" />
                 <div className="flex w-full flex-row items-center justify-center gap-4 sm:flex-col">
-                    <div className="w-full">
-                        <GenerateNewButton variant="Chaos" label="New" />
-                    </div>
                     <div className="w-full">
                         <CustomizerButton variant="Chaos" />
                     </div>
+                    <div className="w-full">
+                        <ShareButton variant="Chaos" slug={band.slug} title={band.warbandName} />
+                    </div>
                 </div>
-                <ShareButton variant="Chaos" slug={band.slug} title={band.warbandName} />
             </div>
         </section>
     )

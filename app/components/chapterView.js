@@ -44,15 +44,16 @@ export default function ChapterView({ initialChapter }) {
             </div>
 
             <div className="flex w-full max-w-96 flex-col gap-4">
+                <GenerateNewButton variant="Chapter" label="New" />
                 <div className="flex w-full flex-row items-center justify-center gap-4 sm:flex-col">
-                    <div className="w-full">
-                        <GenerateNewButton variant="Chapter" label="New" />
-                    </div>
                     <div className="w-full">
                         <CustomizerButton variant="Chapter" />
                     </div>
+                    <div className="w-full">
+                        <ShareButton variant="Chapter" slug={band.slug} title={band.warbandName} />
+                    </div>
                 </div>
-                <ShareButton variant="Chapter" slug={band.slug} title={band.warbandName} />
+
             </div>
         </section>
     );
