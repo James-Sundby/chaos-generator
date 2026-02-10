@@ -51,7 +51,7 @@ export default function TradingCard({
     return (
         <div id="trading-card" className="card w-full max-w-96 bg-white text-neutral border-8 border-yellow-600">
             <div className="card-body p-2 m-0">
-                <h1 className="card-title justify-center text-center uppercase font-black">{warbandName}</h1>
+                <h1 className="card-title justify-center text-center uppercase font-black border-b pb-2 border-base-300">{warbandName}</h1>
 
                 <div className="h-[40svh]">
                     <Marine {...marineProps} />
@@ -87,8 +87,8 @@ export default function TradingCard({
                 )}
 
                 {/* ID footer */}
-                <div className="mt-2 border-t border-base-300 pt-2 text-right text-xs opacity-75">
-                    ID: <span className="font-mono">{slug}</span>
+                <div className="card-actions border-t border-base-300 pt-2 text-xs opacity-75 font-mono text-left inline-block max-w-full break-all">
+                    ID: {slug}
                 </div>
             </div>
         </div>
