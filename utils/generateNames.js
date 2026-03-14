@@ -5,6 +5,8 @@ import { normalizeName } from "@/utils/normalizeNames";
 
 import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives as chaosAdjectives } from "@/lib/chaosData";
 import { virtues, warriorTerms as loyalTerms, placesOrEntities, adjectives as loyalAdjectives, animals } from "@/lib/loyalData";
+import { eldarAdjectives, eldarWarriorTerms, eldarAbstracts, eldarCelestial } from "@/lib/eldarData";
+
 
 import { OFFICIAL_CHAPTER_BLACKLIST } from "@/lib/blacklistChapter";
 import { OFFICIAL_CHAOS_WARBAND_BLACKLIST } from "@/lib/blacklistChaos";
@@ -71,3 +73,20 @@ export const generateChapterName = nameGenerator({
 });
 
 // Xenos?
+const eldarFormulas = [
+    () => `${randomElement(eldarAdjectives)} ${randomElement(eldarWarriorTerms)}`,
+    () => `${randomElement(eldarWarriorTerms)} of ${randomElement(eldarAbstracts)}`,
+    () => `${randomElement(eldarWarriorTerms)} of the ${randomElement(eldarCelestial)}`,
+    () => `The ${randomElement(eldarAdjectives)} ${randomElement(eldarWarriorTerms)}`,
+    () => `${randomElement(eldarAbstracts)} of the ${randomElement(eldarCelestial)}`,
+    () => `Children of the ${randomElement(eldarCelestial)}`,
+    () => `${randomElement(eldarAdjectives)} ${randomElement(eldarAbstracts)}`,
+    () => `The ${randomElement(eldarAbstracts)} Weavers`,
+    () => `${randomElement(eldarAbstracts)}bound`,
+    () => `${randomElement(eldarCelestial)}borne`,
+];
+
+export const generateEldarName = nameGenerator({
+    formulae: eldarFormulas,
+    mode: "Warhost"
+});

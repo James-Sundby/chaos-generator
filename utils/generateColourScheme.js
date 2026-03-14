@@ -1,14 +1,7 @@
 import "server-only";
 
 import { colourList } from "@/lib/colours";
-import {
-    generateComplementaryColours,
-    generateSplitComplementaryColours,
-    generateTriadicColours,
-    generateTetradicColours,
-    generateAnalogousColours,
-    generateFullyRandomColours
-} from "@/utils/colourTools";
+import { generateChapterSchemeColours, generateChaosSchemeColours, generateEldarSchemeColours } from "./colourTools";
 
 function prepPool(list) {
     const metallic = [];
@@ -59,22 +52,28 @@ function schemeGenerator(strategies) {
 }
 
 const chaosStrategies = [
-    { mode: "random", weight: 2, fn: (pool, rng) => generateFullyRandomColours(4, { pool, rng }) },
-    { mode: "complementary", weight: 3, fn: (pool, rng) => generateComplementaryColours({ pool, rng }) },
-    { mode: "splitcomplementary", weight: 4, fn: (pool, rng) => generateSplitComplementaryColours({ pool, rng }) },
-    { mode: "triadic", weight: 1, fn: (pool, rng) => generateTriadicColours({ pool, rng }) },
-    { mode: "tetradic", weight: 1, fn: (pool, rng) => generateTetradicColours({ pool, rng }) },
-    { mode: "analogous", weight: 2, fn: (pool, rng) => generateAnalogousColours({ pool, rng }) },
+    { mode: "random", weight: 2, fn: (pool, rng) => generateChaosSchemeColours("random", { pool, rng }) },
+    { mode: "complementary", weight: 3, fn: (pool, rng) => generateChaosSchemeColours("complementary", { pool, rng }) },
+    { mode: "splitcomplementary", weight: 4, fn: (pool, rng) => generateChaosSchemeColours("splitcomplementary", { pool, rng }) },
+    { mode: "triadic", weight: 1, fn: (pool, rng) => generateChaosSchemeColours("triadic", { pool, rng }) },
+    { mode: "tetradic", weight: 1, fn: (pool, rng) => generateChaosSchemeColours("tetradic", { pool, rng }) },
+    { mode: "analogous", weight: 2, fn: (pool, rng) => generateChaosSchemeColours("analogous", { pool, rng }) },
+];
+
+const chapterStrategies = [
+    { mode: "random", weight: 2, fn: (pool, rng) => generateChapterSchemeColours("random", { pool, rng }) },
+    { mode: "complementary", weight: 3, fn: (pool, rng) => generateChapterSchemeColours("complementary", { pool, rng }) },
+    { mode: "splitcomplementary", weight: 1, fn: (pool, rng) => generateChapterSchemeColours("splitcomplementary", { pool, rng }) },
+    { mode: "triadic", weight: 1, fn: (pool, rng) => generateChapterSchemeColours("triadic", { pool, rng }) },
+    { mode: "analogous", weight: 2, fn: (pool, rng) => generateChapterSchemeColours("analogous", { pool, rng }) },
+];
+
+const eldarStrategies = [
+    { mode: "random", weight: 2, fn: (pool, rng) => generateEldarSchemeColours("random", { pool, rng }) },
+    { mode: "complementary", weight: 3, fn: (pool, rng) => generateEldarSchemeColours("complementary", { pool, rng }) },
+    { mode: "analogous", weight: 2, fn: (pool, rng) => generateEldarSchemeColours("analogous", { pool, rng }) },
 ];
 
 export const generateWarbandScheme = schemeGenerator(chaosStrategies);
-
-const loyalistStrategies = [
-    { mode: "random", weight: 2, fn: (pool, rng) => generateFullyRandomColours(3, { pool, rng }) },
-    { mode: "complementary", weight: 3, fn: (pool, rng) => generateComplementaryColours({ withAccent: false, pool, rng }) },
-    { mode: "splitcomplementary", weight: 1, fn: (pool, rng) => generateSplitComplementaryColours({ withAccent: false, pool, rng }) },
-    { mode: "triadic", weight: 1, fn: (pool, rng) => generateTriadicColours({ withAccent: false, pool, rng }) },
-    { mode: "analogous", weight: 2, fn: (pool, rng) => generateAnalogousColours({ withAccent: false, pool, rng }) },
-];
-
-export const generateChapterScheme = schemeGenerator(loyalistStrategies);
+export const generateChapterScheme = schemeGenerator(chapterStrategies);
+export const generateEldarScheme = schemeGenerator(eldarStrategies);

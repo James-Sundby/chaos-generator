@@ -1,7 +1,7 @@
 import { backgroundPresets } from "@/lib/backgroundPresets";
 
-import SpaceMarine from "./spaceMarine";
-import ChaosMarine from "./chaosSpaceMarine";
+import SpaceMarine from "./models/spaceMarine";
+import ChaosMarine from "./models/chaosSpaceMarine";
 
 function renderMarineCard(item, index) {
     return (
