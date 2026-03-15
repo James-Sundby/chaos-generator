@@ -5,24 +5,9 @@ import EldarAvenger from "./models/eldarAvenger";
 
 function getLoyalistComponent(model) {
     return model === "terminator" ? Terminator : SpaceMarine;
-    // return model === "terminator" ? Terminator : EldarAvenger;
 }
 
 export const modelRegistry = {
-    // Chapter: {
-    //     getComponent: ({ model }) => getLoyalistComponent(model),
-    //     getModelProps: ({ colors, pattern }) => ({
-    //         primary: colors[0]?.hex,
-    //         secondary: colors[1]?.hex,
-    //         accent: colors[2]?.hex,
-    //         pattern: "1",
-    //     }),
-    //     getSwatchIndices: ({ colors }) => {
-    //         const areColorsDifferent = colors[0]?.hex !== colors[1]?.hex;
-    //         return areColorsDifferent ? [0, 1, 2].filter(i => colors[i]) : [0, 2].filter(i => colors[i]);
-    //     },
-    // },
-
     Chapter: {
         getComponent: ({ model }) => getLoyalistComponent(model),
         getModelProps: ({ colors, pattern }) => ({

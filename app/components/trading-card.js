@@ -1,7 +1,7 @@
 import { modelRegistry } from "./modelRegistry";
 
 export default function TradingCard({
-    variant = "Chapter", // "Chaos" or "Chapter"
+    variant = "Chapter", // "Chaos" or "Chapter" or "Eldar"
     model = "marine",
     band, //warbandName, namedColors[], slug, patternName, mode
 }) {

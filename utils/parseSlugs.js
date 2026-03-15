@@ -115,3 +115,49 @@ export function parseChapterSlug(slug, colourMap, patternSet, modeSet) {
 
     return { name: chapterName, colours: namedColours, pattern, mode };
 }
+
+export function parseEldarSlug(slug, colourMap, patternSet, modeSet) {
+    const slugParts = slug.split("-");
+
+    if (slugParts.length < 5) {
+        throw new Error("Slug is too short to extract 3 colours and a pattern.");
+    }
+
+    let maybeMode = slugParts[slugParts.length - 1];
+    let mode = null;
+    if (modeSet && modeSet.has(maybeMode.toLowerCase())) {
+        mode = capitalizeName(slugParts.pop());
+        if (slugParts.length < 5) {
+            throw new Error("Slug is too short to extract 3 colours and a pattern.");
+        }
+    }
+
+    const patternCode = slugParts.pop();
+    if (!patternSet.has(patternCode)) {
+        throw new Error(`Invalid pattern code: ${patternCode}`);
+    }
+    const pattern = capitalizeName(patternCode);
+
+    const colourHex3 = `#${slugParts.pop()}`;
+    const colourHex2 = `#${slugParts.pop()}`;
+    const colourHex1 = `#${slugParts.pop()}`;
+
+    const hexColourRegex = /^#[0-9A-Fa-f]{6}$/;
+    const allHexes = [colourHex1, colourHex2, colourHex3];
+    if (!allHexes.every(hex => hexColourRegex.test(hex))) {
+        throw new Error("One or more hex values are invalid.");
+    }
+
+    const namedColours = allHexes.map(hex => {
+        const colour = colourMap[hex.toLowerCase()];
+        if (!colour) {
+            throw new Error(`Colour not found for hex: ${hex}`);
+        }
+        return colour;
+    });
+
+    const name = slugParts.join(" ").replace(/-/g, " ");
+    const warhostName = capitalizeName(name);
+
+    return { name: warhostName, colours: namedColours, pattern, mode };
+}

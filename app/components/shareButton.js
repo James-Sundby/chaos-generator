@@ -2,16 +2,33 @@
 
 import { useState } from "react";
 
+const SHARE_VARIANTS = {
+    Chapter: {
+        basePath: "/chapter",
+        labelNoun: "chapter",
+        typeColour: "btn-primary",
+    },
+    Chaos: {
+        basePath: "/chaos",
+        labelNoun: "warband",
+        typeColour: "btn-accent",
+    },
+    Eldar: {
+        basePath: "/warhost",
+        labelNoun: "warhost",
+        typeColour: "btn-info",
+    },
+};
+
 export default function ShareButton({
-    variant = "Chapter", // "Chapter" | "Chaos"
+    variant = "Chapter",
     slug,
     title,
 }) {
     const [copied, setCopied] = useState(false);
 
-    const basePath = variant === "Chapter" ? "/chapter" : "/chaos";
-    const labelNoun = variant === "Chapter" ? "chapter" : "warband";
-    const typeColour = variant === "Chapter" ? "btn-primary" : "btn-accent";
+    const config = SHARE_VARIANTS[variant] ?? SHARE_VARIANTS.Chapter;
+    const { basePath, labelNoun, typeColour } = config;
     const aria = `Share this ${labelNoun}`;
 
     const handleShare = () => {
@@ -21,7 +38,7 @@ export default function ShareButton({
 
         if (navigator.share) {
             navigator
-                .share({ title: shareTitle, text: shareTitle + " " + shareText, url: url })
+                .share({ title: shareTitle, text: `${shareTitle} ${shareText}`.trim(), url })
                 .catch(() => { });
         } else {
             navigator.clipboard.writeText(url).then(() => {
@@ -48,7 +65,7 @@ export default function ShareButton({
                 >
                     <path d="M352 224c53 0 96-43 96-96s-43-96-96-96s-96 43-96 96c0 4 .2 8 .7 11.9l-94.1 47C145.4 170.2 121.9 160 96 160c-53 0-96 43-96 96s43 96 96 96c25.9 0 49.4-10.2 66.6-26.9l94.1 47c-.5 3.9-.7 7.8-.7 11.9c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-25.9 0-49.4 10.2-66.6 26.9l-94.1-47c.5-3.9 .7-7.8 .7-11.9s-.2-8-.7-11.9l94.1-47C302.6 213.8 326.1 224 352 224z" />
                 </svg>
-                <span >Share</span>
+                <span>Share</span>
             </button>
 
             {copied && (

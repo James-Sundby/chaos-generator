@@ -11,6 +11,8 @@ import { eldarAdjectives, eldarWarriorTerms, eldarAbstracts, eldarCelestial } fr
 import { OFFICIAL_CHAPTER_BLACKLIST } from "@/lib/blacklistChapter";
 import { OFFICIAL_CHAOS_WARBAND_BLACKLIST } from "@/lib/blacklistChaos";
 
+const OFFICIAL_WARHOST_BLACKLIST = new Set();
+
 function nameGenerator({
     formulae,
     blacklist = [],
@@ -88,5 +90,6 @@ const eldarFormulas = [
 
 export const generateEldarName = nameGenerator({
     formulae: eldarFormulas,
+    blacklist: OFFICIAL_WARHOST_BLACKLIST,
     mode: "Warhost"
 });

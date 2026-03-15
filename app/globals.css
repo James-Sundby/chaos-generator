@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
 @plugin "daisyui/theme" {
   name: "chaos";
   default: true;
@@ -17,8 +18,8 @@
   --color-accent-content: oklch(100% 0 0);
   --color-neutral: oklch(27.441% 0.013 253.041);
   --color-neutral-content: oklch(85.488% 0.002 253.041);
-  --color-info: oklch(62.616% 0.143 240.033);
-  --color-info-content: oklch(12.523% 0.028 240.033);
+  --color-info: oklch(43% 0.218 303.724);
+  --color-info-content: oklch(97% 0.014 308.299);
   --color-success: oklch(70.226% 0.094 156.596);
   --color-success-content: oklch(14.045% 0.018 156.596);
   --color-warning: oklch(77.482% 0.115 81.519);

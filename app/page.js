@@ -25,6 +25,17 @@ export default function Home() {
           <SchemeSearch variant="Chaos" id="chaos-search" />
         </fieldset>
 
+
+        <fieldset className="fieldset bg-base-100 border-info border-2 p-4 gap-4 rounded-sm w-full">
+          <h2 id="eldar-section" className="sr-only">Eldar Warhost Generator</h2>
+          <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-info rounded-sm text-info-content">
+            Eldar
+          </legend>
+          <GenerateNewButton variant="Eldar" />
+          <SchemeSearch variant="Eldar" id="warhost-search" />
+        </fieldset>
+
+
         <Link
           className="btn btn-secondary btn-block rounded-sm"
           href={"/open-paint"}
@@ -40,6 +51,7 @@ export default function Home() {
           </svg>
           Open Paint
         </Link>
+
       </div>
 
     </section>
