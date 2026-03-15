@@ -99,6 +99,18 @@ export default function Page() {
                         ShawnPleil
                     </a>{" "}on DeviantArt
                 </li>
+                <li>
+                    <a
+                        href="https://www.reddit.com/r/Eldar/comments/sjr2gk/put_together_a_blank_sheet_of_various_eldar_for/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Visit avesDZN on Reddit"
+                        title="Visit avesDZN on Reddit"
+                        className="link"
+                    >
+                        avesDZN
+                    </a>{" "}on Reddit
+                </li>
             </ul>
             <p>
                 If you are one of the credited artists and would like your artwork removed or updated,
