@@ -1,45 +1,16 @@
-import SpaceMarine from "./spaceMarine";
-import ChaosMarine from "./chaosSpaceMarine";
-import Terminator from "./terminator";
+import { modelRegistry } from "./modelRegistry";
 
 export default function TradingCard({
-    variant = "Chapter", // "Chaos" or "Chapter"
+    variant = "Chapter", // "Chaos" or "Chapter" or "Eldar"
     model = "marine",
     band, //warbandName, namedColors[], slug, patternName, mode
 }) {
-
-    const isChaos = variant === "Chaos";
     const { warbandName, colors = [], slug, pattern, mode } = band ?? {};
 
-    const LoyalistModel = model === "terminator" ? Terminator : SpaceMarine;
-    const Marine = isChaos ? ChaosMarine : LoyalistModel;
-
-    const marineProps = isChaos
-        ? {
-            primary: colors[0]?.hex,
-            secondary: colors[1]?.hex,
-            edge: colors[2]?.hex,
-            accent: colors[3]?.hex,
-            pattern,
-        }
-        : {
-            primary: colors[0]?.hex,
-            secondary: colors[1]?.hex,
-            trim: colors[2]?.hex,
-            pattern,
-        };
-
-    let swatchIndices = [];
-    if (isChaos) {
-        if (pattern === "Basic") {
-            swatchIndices = [0, 2, 3].filter((i) => colors[i]);
-        } else {
-            swatchIndices = colors.map((_, i) => i).filter((i) => colors[i]);
-        }
-    } else {
-        const areColorsDifferent = colors[0]?.hex !== colors[1]?.hex;
-        swatchIndices = areColorsDifferent ? [0, 1, 2] : [0, 2];
-    }
+    const config = modelRegistry[variant] ?? modelRegistry.Chapter;
+    const Model = config.getComponent({ model, band });
+    const modelProps = config.getModelProps({ colors, pattern, model, band });
+    const swatchIndices = config.getSwatchIndices({ colors, pattern, model, band });
 
     const paletteNames = swatchIndices
         .map((i) => colors[i]?.name)
@@ -54,7 +25,7 @@ export default function TradingCard({
                 <h1 className="card-title justify-center text-center uppercase font-black border-b pb-2 border-base-300">{warbandName}</h1>
 
                 <div className="h-[40svh]">
-                    <Marine {...marineProps} />
+                    <Model {...modelProps} />
                 </div>
 
                 {/* Swatches */}

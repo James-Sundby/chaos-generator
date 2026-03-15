@@ -132,32 +132,41 @@ function buildAccentPool(p, used) {
     return source.filter((c) => !used.has(String(c.hex).toLowerCase()));
 }
 
-export function generateComplementaryColours({ withAccent = true, pool, rng = Math.random } = {}) {
+function getMetalColour(p, used, rng = Math.random) {
+    const metallic = p.metallic ?? p.all.filter((c) => c.type === "Metallic");
+    const candidates = metallic.filter((c) => !used.has(String(c.hex).toLowerCase()));
+
+    if (candidates.length > 0) return randomElement(candidates, rng);
+    if (metallic.length > 0) return randomElement(metallic, rng);
+
+    const fallback = p.all.filter((c) => !used.has(String(c.hex).toLowerCase()));
+    return fallback.length > 0 ? randomElement(fallback, rng) : null;
+}
+
+function getAccentColour(p, existingColours) {
+    const used = makeUsedSet(existingColours);
+    const accentPool = buildAccentPool(p, used);
+
+    if (accentPool.length === 0) return null;
+    return findAccentColour(existingColours.filter(Boolean), accentPool);
+}
+
+function generateComplementaryAnchors({ pool, rng = Math.random } = {}) {
     const p = resolvePool(pool);
     const colours = p.all;
 
     const base = randomElement(colours, rng);
-
-    const complement = findClosestColour(
+    const secondary = findClosestColour(
         { h: (base.h + 180) % 360, s: base.s, l: base.l },
         colours,
         [base.hex],
         { rng }
     );
 
-    const metallic = p.metallic ?? colours.filter((c) => c.type === "Metallic");
-    const metal = metallic.length ? randomElement(metallic, rng) : randomElement(colours, rng);
-
-    if (!withAccent) return [base, complement, metal];
-
-    const used = makeUsedSet([base, complement, metal]);
-    const accentPool = buildAccentPool(p, used);
-    const accent = findAccentColour([base, complement, metal], accentPool);
-
-    return [base, complement, metal, accent];
+    return [base, secondary];
 }
 
-export function generateSplitComplementaryColours({ withAccent = true, pool, rng = Math.random } = {}) {
+function generateSplitComplementaryAnchors({ pool, rng = Math.random } = {}) {
     const p = resolvePool(pool);
     const colours = p.all;
 
@@ -169,17 +178,10 @@ export function generateSplitComplementaryColours({ withAccent = true, pool, rng
     const colourA = findClosestColour(targetA, colours, [base.hex], { rng });
     const colourB = findClosestColour(targetB, colours, [base.hex, colourA?.hex], { rng });
 
-    if (!withAccent) return [base, colourA, colourB];
-
-    const used = makeUsedSet([base, colourA, colourB]);
-    const accentPool = buildAccentPool(p, used);
-    const accent = findAccentColour([base, colourA, colourB], accentPool);
-
-    return [base, colourA, colourB, accent];
+    return [base, colourA, colourB];
 }
 
-
-export function generateTriadicColours({ withAccent = true, pool, rng = Math.random } = {}) {
+function generateTriadicAnchors({ pool, rng = Math.random } = {}) {
     const p = resolvePool(pool);
     const colours = p.all;
 
@@ -191,16 +193,10 @@ export function generateTriadicColours({ withAccent = true, pool, rng = Math.ran
     const colourA = findClosestColour(targetA, colours, [base.hex], { rng });
     const colourB = findClosestColour(targetB, colours, [base.hex, colourA?.hex], { rng });
 
-    if (!withAccent) return [base, colourA, colourB];
-
-    const used = makeUsedSet([base, colourA, colourB]);
-    const accentPool = buildAccentPool(p, used);
-    const accent = findAccentColour([base, colourA, colourB], accentPool);
-
-    return [base, colourA, colourB, accent];
+    return [base, colourA, colourB];
 }
 
-export function generateTetradicColours({ pool, rng = Math.random } = {}) {
+function generateTetradicAnchors({ pool, rng = Math.random } = {}) {
     const p = resolvePool(pool);
     const colours = p.all;
 
@@ -217,7 +213,7 @@ export function generateTetradicColours({ pool, rng = Math.random } = {}) {
     return [base, colour2, colour3, colour4];
 }
 
-export function generateAnalogousColours({ withAccent = true, pool, rng = Math.random } = {}) {
+function generateAnalogousAnchors({ pool, rng = Math.random } = {}) {
     const p = resolvePool(pool);
     const colours = p.all;
 
@@ -229,13 +225,7 @@ export function generateAnalogousColours({ withAccent = true, pool, rng = Math.r
     const colourA = findClosestColour({ h: hueA, s: base.s, l: base.l }, colours, [base.hex], { rng });
     const colourB = findClosestColour({ h: hueB, s: base.s, l: base.l }, colours, [base.hex, colourA?.hex], { rng });
 
-    if (!withAccent) return [base, colourA, colourB];
-
-    const used = makeUsedSet([base, colourA, colourB]);
-    const accentPool = buildAccentPool(p, used);
-    const accent = findAccentColour([base, colourA, colourB], accentPool);
-
-    return [base, colourA, colourB, accent];
+    return [base, colourA, colourB];
 }
 
 function shuffleInPlace(arr, rng = Math.random) {
@@ -246,23 +236,116 @@ function shuffleInPlace(arr, rng = Math.random) {
     return arr;
 }
 
-export function generateFullyRandomColours(count, { pool, rng = Math.random } = {}) {
+function generateRandomAnchors(count, { pool, rng = Math.random } = {}) {
     if (typeof count !== "number" || count < 2) {
-        throw new Error("generateFullyRandomScheme: 'count' must be a number ≥ 2");
+        throw new Error("generateRandomAnchors: 'count' must be a number ≥ 2");
     }
 
     const p = resolvePool(pool);
-    const colours = p.all;
+    const shuffled = shuffleInPlace([...p.all], rng);
+    return shuffled.slice(0, count);
+}
 
-    const shuffled = shuffleInPlace([...colours], rng);
-    const baseColours = shuffled.slice(0, count - 1);
+function getAnchorsByHarmony(harmony, { pool, rng = Math.random } = {}) {
+    switch (harmony) {
+        case "random":
+            return generateRandomAnchors(3, { pool, rng });
+        case "complementary":
+            return generateComplementaryAnchors({ pool, rng });
+        case "splitcomplementary":
+            return generateSplitComplementaryAnchors({ pool, rng });
+        case "triadic":
+            return generateTriadicAnchors({ pool, rng });
+        case "tetradic":
+            return generateTetradicAnchors({ pool, rng });
+        case "analogous":
+            return generateAnalogousAnchors({ pool, rng });
+        default:
+            throw new Error(`Unknown harmony mode: ${harmony}`);
+    }
+}
 
-    const used = makeUsedSet(baseColours);
+export function generateChapterSchemeColours(harmony, { pool, rng = Math.random } = {}) {
+    const p = resolvePool(pool);
+    const anchors = getAnchorsByHarmony(harmony, { pool: p, rng });
 
-    const nonMetal =
-        shuffled.find((c) => c.type !== "Metallic" && !used.has(String(c.hex).toLowerCase())) ??
-        shuffled.find((c) => !used.has(String(c.hex).toLowerCase())) ??
-        baseColours[baseColours.length - 1];
+    const primary = anchors[0] ?? null;
+    const secondary = anchors[1] ?? anchors[0] ?? null;
 
-    return [...baseColours, nonMetal];
+    switch (harmony) {
+        case "random":
+        case "complementary": {
+            const used = makeUsedSet([primary, secondary]);
+            const metal = getMetalColour(p, used, rng);
+            return [primary, secondary, metal];
+        }
+
+        case "splitcomplementary":
+        case "triadic":
+        case "analogous": {
+            const tertiary = anchors[2] ?? anchors[1] ?? anchors[0] ?? null;
+            return [primary, secondary, tertiary];
+        }
+
+        default: {
+            const used = makeUsedSet([primary, secondary]);
+            const metal = getMetalColour(p, used, rng);
+            return [primary, secondary, metal];
+        }
+    }
+}
+
+export function generateChaosSchemeColours(harmony, { pool, rng = Math.random } = {}) {
+    const p = resolvePool(pool);
+    const anchors = getAnchorsByHarmony(harmony, { pool: p, rng });
+
+    const primary = anchors[0] ?? null;
+    const secondary = anchors[1] ?? anchors[0] ?? null;
+
+    switch (harmony) {
+        case "complementary": {
+            const used = makeUsedSet([primary, secondary]);
+            const metal = getMetalColour(p, used, rng);
+            const accent = getAccentColour(p, [primary, secondary, metal]);
+            return [primary, secondary, metal, accent];
+        }
+
+        case "splitcomplementary":
+        case "triadic":
+        case "analogous": {
+            const tertiary = anchors[2] ?? anchors[1] ?? anchors[0] ?? null;
+            const accent = getAccentColour(p, [primary, secondary, tertiary]);
+            return [primary, secondary, tertiary, accent];
+        }
+
+        case "tetradic": {
+            const tertiary = anchors[2] ?? anchors[1] ?? anchors[0] ?? null;
+            const accent = anchors[3] ?? getAccentColour(p, [primary, secondary, tertiary]);
+            return [primary, secondary, tertiary, accent];
+        }
+
+        case "random": {
+            const tertiary = anchors[2] ?? anchors[1] ?? anchors[0] ?? null;
+            const accent = getAccentColour(p, [primary, secondary, tertiary]);
+            return [primary, secondary, tertiary, accent];
+        }
+
+        default: {
+            const used = makeUsedSet([primary, secondary]);
+            const metal = getMetalColour(p, used, rng);
+            const accent = getAccentColour(p, [primary, secondary, metal]);
+            return [primary, secondary, metal, accent];
+        }
+    }
+}
+
+export function generateEldarSchemeColours(harmony, { pool, rng = Math.random } = {}) {
+    const p = resolvePool(pool);
+    const anchors = getAnchorsByHarmony(harmony, { pool: p, rng });
+
+    const primary = anchors[0] ?? null;
+    const secondary = anchors[1] ?? anchors[0] ?? null;
+    const accent = getAccentColour(p, [primary, secondary]);
+
+    return [primary, secondary, accent];
 }
