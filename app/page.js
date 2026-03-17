@@ -15,14 +15,14 @@ export default function Home() {
         <fieldset className="fieldset bg-base-100 border-primary w-full border-2 p-4 gap-4 rounded-sm">
           <h2 id="loyalist-section" className="sr-only">Loyalist Chapter Generator</h2>
           <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-primary rounded-sm text-primary-content">Loyalists</legend>
-          <GenerateNewButton variant="Chapter" />
-          <SchemeSearch variant="Chapter" id="chapter-search" />
+          <GenerateNewButton generatorKey="chapter" />
+          <SchemeSearch generatorKey="chapter" />
         </fieldset>
         <fieldset className="fieldset bg-base-100 border-accent w-full border-2 p-4 gap-4 rounded-sm">
           <h2 id="chaos-section" className="sr-only">Chaos Warband Generator</h2>
           <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-accent rounded-sm text-accent-content">Chaos</legend>
-          <GenerateNewButton variant="Chaos" />
-          <SchemeSearch variant="Chaos" id="chaos-search" />
+          <GenerateNewButton generatorKey="chaos" />
+          <SchemeSearch generatorKey="chaos" />
         </fieldset>
 
 
@@ -31,8 +31,8 @@ export default function Home() {
           <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-info rounded-sm text-info-content">
             Eldar
           </legend>
-          <GenerateNewButton variant="Eldar" />
-          <SchemeSearch variant="Eldar" id="warhost-search" />
+          <GenerateNewButton generatorKey="eldar" />
+          <SchemeSearch generatorKey="eldar" />
         </fieldset>
 
 

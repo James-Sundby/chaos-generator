@@ -1,23 +1,20 @@
 export default function EldarAvenger({ primary, secondary, accent, pattern }) {
-    let rightChestArmour, rightChestUndersuit, leftChestArmour, leftChestUndersuit, rightAbs, leftAbs, rightLegArmour, leftLegArmour, rightLegUndersuit, leftLegUndersuit, rightCod, leftCod, rightArmUndersuit, leftArmUndersuit, rightArmArmour, leftArmArmour, rightShoulder, leftShoulder, rightBackVent, leftBackVent, camera, rightHelmet, leftHelmet, rightFacePlate, leftFacePlate, accessories;
+    let rightChestArmour, rightChestUndersuit, leftChestArmour, leftChestUndersuit, rightAbs, leftAbs, rightLegArmour, leftLegArmour, rightLegUndersuit, leftLegUndersuit, rightCod, leftCod, rightArmUndersuit, leftArmUndersuit, rightArmArmour, leftArmArmour, rightShoulder, leftShoulder, rightBackVent, leftBackVent, camera, rightHelmet, leftHelmet, rightFacePlate, leftFacePlate;
 
     const metal = "#3E494A"; // Mechanicus Standard Grey
+    const accessories = accent;
 
     switch (pattern) {
         case "1":
             rightChestArmour = rightChestUndersuit = leftChestArmour = leftChestUndersuit = rightAbs = leftAbs = rightLegArmour = leftLegArmour = rightLegUndersuit = leftLegUndersuit = rightCod = leftCod = leftArmUndersuit = leftArmArmour = rightShoulder = leftShoulder = rightBackVent = leftBackVent = camera = rightFacePlate = leftFacePlate = primary;
 
             rightHelmet = leftHelmet = rightArmUndersuit = rightArmArmour = secondary;
-
-            accessories = accent
             break;
 
         case "2":
             rightChestArmour = rightChestUndersuit = leftChestArmour = leftChestUndersuit = rightAbs = leftAbs = rightLegArmour = leftLegArmour = rightLegUndersuit = leftLegUndersuit = rightCod = leftCod = rightArmUndersuit = leftArmUndersuit = rightArmArmour = leftArmArmour = rightShoulder = leftShoulder = rightBackVent = leftBackVent = camera = primary;
 
             rightHelmet = leftHelmet = rightFacePlate = leftFacePlate = secondary;
-
-            accessories = accent;
             break;
 
         case "3":
@@ -25,78 +22,60 @@ export default function EldarAvenger({ primary, secondary, accent, pattern }) {
 
             rightChestArmour = leftChestArmour = rightLegArmour = leftLegArmour = rightCod = leftCod = rightArmArmour = leftArmArmour = rightShoulder = leftShoulder = rightHelmet = leftHelmet = secondary;
 
-            rightFacePlate = leftFacePlate = accessories = accent;
+            rightFacePlate = leftFacePlate = accent;
             break;
 
         case "4":
             rightChestArmour = rightChestUndersuit = leftChestArmour = leftChestUndersuit = rightAbs = leftAbs = rightLegArmour = leftLegArmour = rightLegUndersuit = leftLegUndersuit = rightCod = leftCod = rightArmUndersuit = leftArmUndersuit = rightArmArmour = leftArmArmour = rightBackVent = leftBackVent = camera = rightFacePlate = leftFacePlate = primary;
 
             rightHelmet = leftHelmet = rightShoulder = leftShoulder = secondary;
-
-            accessories = accent;
             break;
 
         case "5":
             leftChestArmour = leftChestUndersuit = leftAbs = rightLegArmour = rightLegUndersuit = rightCod = leftArmUndersuit = leftArmArmour = leftShoulder = leftBackVent = leftHelmet = leftFacePlate = primary;
 
             rightChestArmour = rightChestUndersuit = rightAbs = leftLegArmour = leftLegUndersuit = leftCod = rightArmUndersuit = rightArmArmour = rightShoulder = rightBackVent = camera = rightHelmet = rightFacePlate = secondary;
-
-            accessories = accent;
             break;
 
         case "6":
             rightChestArmour = rightChestUndersuit = leftChestArmour = leftChestUndersuit = rightAbs = leftAbs = rightLegArmour = leftLegArmour = rightLegUndersuit = leftLegUndersuit = rightCod = leftCod = rightArmUndersuit = leftArmUndersuit = rightArmArmour = leftArmArmour = rightShoulder = leftShoulder = rightBackVent = leftBackVent = camera = rightHelmet = leftHelmet = primary;
 
             rightFacePlate = leftFacePlate = secondary;
-
-            accessories = accent;
             break;
 
         case "7":
             rightChestArmour = rightChestUndersuit = leftChestArmour = leftChestUndersuit = rightAbs = leftAbs = rightLegArmour = leftLegArmour = rightLegUndersuit = leftLegUndersuit = rightCod = leftCod = rightArmUndersuit = leftArmUndersuit = rightArmArmour = leftArmArmour = rightShoulder = leftShoulder = rightBackVent = leftBackVent = camera = rightFacePlate = leftFacePlate = primary;
 
             rightHelmet = leftHelmet = secondary;
-
-            accessories = accent;
             break;
 
         case "8":
             leftChestArmour = leftChestUndersuit = leftAbs = leftLegArmour = leftLegUndersuit = leftCod = leftArmUndersuit = leftArmArmour = leftShoulder = leftBackVent = leftHelmet = leftFacePlate = primary;
 
             rightChestArmour = rightChestUndersuit = rightAbs = rightLegArmour = rightLegUndersuit = rightCod = rightArmUndersuit = rightArmArmour = rightShoulder = rightBackVent = camera = rightHelmet = rightFacePlate = secondary
-
-            accessories = accent;
             break;
 
         case "9":
             rightChestArmour = rightChestUndersuit = leftChestArmour = leftChestUndersuit = rightAbs = leftAbs = rightCod = leftCod = rightArmUndersuit = leftArmUndersuit = rightArmArmour = leftArmArmour = rightShoulder = leftShoulder = rightBackVent = leftBackVent = camera = rightHelmet = leftHelmet = primary;
 
             rightFacePlate = leftFacePlate = rightLegArmour = leftLegArmour = rightLegUndersuit = leftLegUndersuit = secondary;
-
-            accessories = accent;
             break;
 
         case "10":
             rightChestArmour = rightChestUndersuit = leftChestArmour = leftChestUndersuit = rightAbs = leftAbs = rightCod = leftCod = rightShoulder = leftShoulder = rightBackVent = leftBackVent = camera = rightHelmet = leftHelmet = primary;
 
             rightFacePlate = leftFacePlate = rightLegArmour = leftLegArmour = rightLegUndersuit = leftLegUndersuit = rightArmUndersuit = leftArmUndersuit = rightArmArmour = leftArmArmour = secondary;
-
-            accessories = accent;
             break;
 
         case "11":
             rightChestArmour = rightChestUndersuit = leftChestArmour = leftChestUndersuit = rightAbs = leftAbs = rightLegArmour = leftLegArmour = rightLegUndersuit = leftLegUndersuit = rightCod = leftCod = rightHelmet = leftHelmet = rightFacePlate = leftFacePlate = primary;
 
             rightArmUndersuit = leftArmUndersuit = rightArmArmour = leftArmArmour = rightShoulder = leftShoulder = rightBackVent = leftBackVent = camera = secondary;
-
-            accessories = accent;
             break;
 
 
         case "Default":
             rightChestArmour = rightChestUndersuit = leftChestArmour = leftChestUndersuit = rightAbs = leftAbs = rightLegArmour = leftLegArmour = rightLegUndersuit = leftLegUndersuit = rightCod = leftCod = rightArmUndersuit = leftArmUndersuit = rightArmArmour = leftArmArmour = rightShoulder = leftShoulder = rightBackVent = leftBackVent = camera = rightHelmet = leftHelmet = rightFacePlate = leftFacePlate = primary;
-
-            accessories = accent;
     }
 
 

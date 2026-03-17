@@ -1,6 +1,6 @@
 "use client";
 
-import CustomizerCore from "./customizerCore";
+import CustomizerCore from "../../customizerCore";
 import { eldarPatterns } from "@/lib/armourPatterns";
 import { colourList } from "@/lib/colours";
 import { useWarhostStore } from "@/app/stores/warhostStore";
@@ -26,13 +26,12 @@ export default function CustomizerWarhost() {
 
     return (
         <CustomizerCore
-            variant="Eldar"
+            generatorKey="eldar"
             band={band}
             setBand={setBand}
             patterns={eldarPatterns}
             paletteOptionsForIndex={(i) => (i === 2 ? nonMetallics : groupedColors)}
             randomPoolForIndex={(i) => (i === 2 ? nonMetalColourList : colourList)}
-            backBase="/warhost"
         />
     );
 }

@@ -1,35 +1,29 @@
-import Link from "next/link";
-
-
 export const metadata = {
-    title: "Credits & Attribution List",
-    description: "Attribution and credits for fan art, icons, and external assets used in Chapter Generator. Includes contact info for takedown or update requests.",
+    title: "Credits",
+    description:
+        "Credits and attribution for artwork, icons, and external assets used in Chapter Generator, including contact details for update or takedown requests.",
+    alternates: {
+        canonical: "/credits",
+    },
     openGraph: {
-        title: "Credits & Attribution List",
-        description: "Attribution and credits for fan art, icons, and external assets used in Chapter Generator. ",
-        url: "https://chapter-gen.jsundby.dev/credits",
-        siteName: "Chapter Generator",
+        title: "Credits",
+        description:
+            "Credits and attribution for artwork, icons, and external assets used in Chapter Generator.",
+        url: "/credits",
         images: [
             {
-                url: "https://chapter-gen.jsundby.dev/card.png",
+                url: "/card.png",
                 width: 1200,
                 height: 630,
                 alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block.",
             },
         ],
-        locale: 'en_US',
-        type: 'website',
     },
     twitter: {
-        title: "Credits & Attribution List",
-        description: "Attribution and credits for fan art, icons, and external assets used in Chapter Generator. ",
-        card: 'summary_large_image',
-        images: [
-            {
-                url: "https://chapter-gen.jsundby.dev/card.png",
-                alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block."
-            }
-        ],
+        title: "Credits",
+        description:
+            "Credits and attribution for artwork, icons, and external assets used in Chapter Generator.",
+        images: ["/card.png"],
     },
 };
 

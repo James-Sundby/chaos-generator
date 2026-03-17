@@ -5,6 +5,7 @@ import { useState } from "react";
 import TradingCard from "@/app/components/trading-card";
 import { colourList } from "@/lib/colours";
 import { generateSlug } from "@/utils/parseSlugs";
+import { generatorRegistry } from "@/app/components/generatorRegistry";
 import ColorListbox from "./colourSelect";
 
 function ControlRow({ id, label, children, hint }) {
@@ -20,8 +21,7 @@ function ControlRow({ id, label, children, hint }) {
             <div className="join w-full">
                 {typeof children === "function"
                     ? children({ labelId, hintId })
-                    : children
-                }
+                    : children}
             </div>
 
             {hint && (
@@ -35,6 +35,7 @@ function ControlRow({ id, label, children, hint }) {
 
 function SelectControl({ id, options, value, onChange, ariaLabel }) {
     const isGrouped = Array.isArray(options) === false;
+
     return (
         <select
             id={id}
@@ -62,31 +63,22 @@ function SelectControl({ id, options, value, onChange, ariaLabel }) {
     );
 }
 
-/**
- * CustomizerCore
- * Props:
- * - variant: "Chapter" | "Chaos"
- * - band: { warbandName, colors[], pattern, slug, mode }
- * - setBand: (band) => void
- * - patterns: string[]
- * - paletteOptionsForIndex: (i:number)=> (grouped options or flat array)
- * - randomPoolForIndex: (i:number)=> colourList[]   (controls accent non-metallic for Chaos, etc.)
- * - backBase: string ("/chapter" or "/chaos")
- * - hideSecondaryWhenBasic?: boolean (Chaos behavior)
- */
 export default function CustomizerCore({
-    variant = "Chapter",
+    generatorKey,
     band,
     setBand,
     patterns,
     paletteOptionsForIndex,
     randomPoolForIndex,
-    backBase,
     hideSecondaryWhenBasic = false,
-    hasSecondModel = false,
 }) {
     const router = useRouter();
-    const [model, setModel] = useState("marine");
+    const generator = generatorRegistry[generatorKey];
+    const [modelKey, setModelKey] = useState(
+        Object.keys(generator.models)[0]
+    );
+
+    const modelOptions = Object.entries(generator.models);
 
     const updateBand = (updated) => {
         const next = { ...band, ...updated };
@@ -125,9 +117,9 @@ export default function CustomizerCore({
         updateBand({ pattern: next });
     };
 
-    const backHref = `${backBase}/${band.slug}`;
+    const backHref = `${generator.basePath}/${band.slug}`;
     const showSecondary = hideSecondaryWhenBasic ? band.pattern !== "Basic" : true;
-    const colourClass = variant === "Chapter" ? "btn-primary" : "btn-accent";
+    const colourClass = generator.buttonTheme;
 
     const ActionBtn = ({ title, action }) => (
         <button
@@ -142,44 +134,45 @@ export default function CustomizerCore({
                 viewBox="0 0 640 512"
                 className="size-5 fill-current"
                 aria-hidden="true"
-
             >
                 <path d="M274.9 34.3c-28.1-28.1-73.7-28.1-101.8 0L34.3 173.1c-28.1 28.1-28.1 73.7 0 101.8L173.1 413.7c28.1 28.1 73.7 28.1 101.8 0L413.7 274.9c28.1-28.1 28.1-73.7 0-101.8L274.9 34.3zM200 224a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zM96 200a24 24 0 1 1 0 48 24 24 0 1 1 0-48zM224 376a24 24 0 1 1 0-48 24 24 0 1 1 0 48zM352 200a24 24 0 1 1 0 48 24 24 0 1 1 0-48zM224 120a24 24 0 1 1 0-48 24 24 0 1 1 0 48zm96 328c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-192c0-35.3-28.7-64-64-64l-114.3 0c11.6 36 3.1 77-25.4 105.5L320 413.8l0 34.2zM480 328a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
             </svg>
         </button>
     );
+
     return (
         <section className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
             <div className="w-full max-w-96">
-                {hasSecondModel &&
+                {modelOptions.length > 1 && (
                     <fieldset className="mb-2">
                         <legend className="sr-only">Model</legend>
                         <div className="join w-full">
-                            <input
-                                type="radio"
-                                name="model"
-                                className="join-item btn btn-sm flex-1"
-                                aria-label="Marine"
-                                checked={model === "marine"}
-                                onChange={() => setModel("marine")}
-                            />
-                            <input
-                                type="radio"
-                                name="model"
-                                className="join-item btn btn-sm flex-1"
-                                aria-label="Terminator"
-                                checked={model === "terminator"}
-                                onChange={() => setModel("terminator")}
-                            />
+                            {modelOptions.map(([key, model]) => (
+                                <input
+                                    key={key}
+                                    type="radio"
+                                    name={`${generatorKey}-model`}
+                                    className="join-item btn btn-sm flex-1"
+                                    aria-label={model.label}
+                                    checked={modelKey === key}
+                                    onChange={() => setModelKey(key)}
+                                />
+                            ))}
                         </div>
                     </fieldset>
-                }
-                <TradingCard variant={variant} band={band} model={model} />
+                )}
+
+                <TradingCard
+                    generatorKey={generatorKey}
+                    modelKey={modelKey}
+                    band={band}
+                />
             </div>
 
             <div className="card w-full max-w-96 bg-base-200 text-base-content">
-                <div className="card-body ">
+                <div className="card-body">
                     <div className="card-title">Options</div>
+
                     <label className="form-control w-full">
                         <div className="label">
                             <span className="label-text">Name</span>
@@ -193,7 +186,8 @@ export default function CustomizerCore({
                             maxLength={50}
                         />
                     </label>
-                    <ControlRow id="primary-colour" label="Primary colour" >
+
+                    <ControlRow id="primary-colour" label="Primary colour">
                         {({ labelId, hintId }) => (
                             <>
                                 <ColorListbox
@@ -205,10 +199,14 @@ export default function CustomizerCore({
                                     describedById={hintId}
                                     ariaLabel="Primary colour"
                                 />
-                                <ActionBtn title="Random primary colour" action={() => generateNewColor(0)} />
+                                <ActionBtn
+                                    title="Random primary colour"
+                                    action={() => generateNewColor(0)}
+                                />
                             </>
                         )}
                     </ControlRow>
+
                     {showSecondary && (
                         <ControlRow id="secondary-colour" label="Secondary colour">
                             {({ labelId, hintId }) => (
@@ -219,8 +217,8 @@ export default function CustomizerCore({
                                         value={band.colors[1]?.hex}
                                         onChange={(val) => handleColorChange(1, val)}
                                         labelledById={labelId}
-                                        describedById={hintId}           // will be undefined unless you add a hint
-                                        ariaLabel="Secondary colour"     // optional fallback
+                                        describedById={hintId}
+                                        ariaLabel="Secondary colour"
                                     />
                                     <ActionBtn
                                         title="Random secondary colour"
@@ -233,7 +231,7 @@ export default function CustomizerCore({
 
                     <ControlRow
                         id="trim-colour"
-                        label={variant === "Chaos" ? "Trim colour" : "Accent colour"}
+                        label={generatorKey === "chaos" ? "Trim colour" : "Accent colour"}
                     >
                         {({ labelId, hintId }) => (
                             <>
@@ -244,7 +242,7 @@ export default function CustomizerCore({
                                     onChange={(val) => handleColorChange(2, val)}
                                     labelledById={labelId}
                                     describedById={hintId}
-                                    ariaLabel={variant === "Chaos" ? "Trim colour" : "Accent colour"}
+                                    ariaLabel={generatorKey === "chaos" ? "Trim colour" : "Accent colour"}
                                 />
                                 <ActionBtn
                                     title="Random trim colour"
@@ -254,7 +252,7 @@ export default function CustomizerCore({
                         )}
                     </ControlRow>
 
-                    {variant === "Chaos" && (
+                    {generatorKey === "chaos" && (
                         <ControlRow id="accent-colour" label="Accent colour">
                             {({ labelId, hintId }) => (
                                 <>
@@ -275,6 +273,7 @@ export default function CustomizerCore({
                             )}
                         </ControlRow>
                     )}
+
                     <ControlRow id="pattern" label="Pattern">
                         <SelectControl
                             id="pattern"
@@ -285,6 +284,7 @@ export default function CustomizerCore({
                         />
                         <ActionBtn title="Random pattern" action={generateNewPattern} />
                     </ControlRow>
+
                     <button
                         className={`btn ${colourClass} btn-block rounded-sm mt-2`}
                         onClick={() => router.push(backHref)}

@@ -1,38 +1,18 @@
 "use client";
 
 import PendingActionButton from "./pendingActionButton";
-import { createWarbandAndGo } from "@/app/(actions)/createWarband";
-import { createChapterAndGo } from "@/app/(actions)/createChapter";
-import { createWarhostAndGo } from "@/app/(actions)/createWarhost";
-
 import { useSettingsStore } from "@/app/stores/settingsStore";
-
-const GENERATE_VARIANTS = {
-    Chapter: {
-        action: createChapterAndGo,
-        defaultLabel: "Generate a New Chapter",
-    },
-    Chaos: {
-        action: createWarbandAndGo,
-        defaultLabel: "Generate a New Chaos Warband",
-    },
-    Eldar: {
-        action: createWarhostAndGo,
-        defaultLabel: "Generate a New Warhost",
-    },
-};
+import { generatorRegistry } from "./generatorRegistry";
 
 export default function GenerateNewButton({
-    variant = "Chapter",
+    generatorKey = "chapter",
     label,
 }) {
-    const config = GENERATE_VARIANTS[variant] ?? GENERATE_VARIANTS.Chapter;
-    const { action, defaultLabel } = config;
-
+    const config = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
     const settings = useSettingsStore();
 
     return (
-        <form action={action} className="w-full">
+        <form action={config.createAction} className="w-full">
             <input
                 type="hidden"
                 name="settings"
@@ -40,8 +20,8 @@ export default function GenerateNewButton({
                     colourMode: settings.colourMode,
                 })}
             />
-            <PendingActionButton variant={variant}>
-                {label ?? defaultLabel}
+            <PendingActionButton generatorKey={generatorKey}>
+                {label ?? `Generate a New ${config.noun[0].toUpperCase()}${config.noun.slice(1)}`}
             </PendingActionButton>
         </form>
     );

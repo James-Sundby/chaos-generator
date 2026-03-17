@@ -1,34 +1,31 @@
-import CustomizerChaos from "@/app/components/customizerChaos";
+import CustomizerChaos from "@/app/components/wrappers/customizers/customizerChaos";
 
 export const metadata = {
-    title: "Custom Warband",
-    description: "Customize your custom Chaos Space Marine warband with hand-picked colors and patterns. Preview armor schemes and generate a unique warband ID.",
+    title: "Chaos Warband Painter",
+    description:
+        "Customize a Chaos Space Marine warband with hand-picked colours and armour patterns. Preview your scheme and generate a unique shareable ID.",
+    alternates: {
+        canonical: "/chaos-painter",
+    },
     openGraph: {
-        title: "Custom Warband",
-        description: "Customize your custom Chaos Space Marine warband with hand-picked colors and patterns.",
-        url: "https://chapter-gen.jsundby.dev/chaos-painter",
-        siteName: "Chapter Generator",
+        title: "Chaos Warband Painter",
+        description:
+            "Customize a Chaos Space Marine warband with hand-picked colours and armour patterns.",
+        url: "/chaos-painter",
         images: [
             {
-                url: "https://chapter-gen.jsundby.dev/card.png",
+                url: "/card.png",
                 width: 1200,
                 height: 630,
                 alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block.",
             },
         ],
-        locale: 'en_US',
-        type: 'website',
     },
     twitter: {
-        title: "Custom Warband",
-        description: "Customize your custom Chaos Space Marine warband with hand-picked colors and patterns.",
-        card: 'summary_large_image',
-        images: [
-            {
-                url: "https://chapter-gen.jsundby.dev/card.png",
-                alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block."
-            }
-        ],
+        title: "Chaos Warband Painter",
+        description:
+            "Customize a Chaos Space Marine warband with hand-picked colours and armour patterns.",
+        images: ["/card.png"],
     },
 };
 
