@@ -49,6 +49,7 @@ export default function Page() {
                     aria-label="Open the Chapter Customizer tool to generate a new chapter ID"
                     className="link"
                     title="Open the Chapter Customizer tool to generate a new chapter ID"
+                    prefetch={false}
                 >
                     Chapter Customizer
                 </Link>
@@ -58,6 +59,7 @@ export default function Page() {
                     aria-label="Open the Warband Customizer tool to generate a new warband ID"
                     className="link"
                     title="Open the Warband Customizer tool to generate a new warband ID"
+                    prefetch={false}
                 >
                     Warband Customizer
                 </Link>

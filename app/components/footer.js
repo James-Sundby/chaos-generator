@@ -16,6 +16,7 @@ export default function Footer() {
               className="link link-hover"
               aria-label="View asset credits and attributions"
               title="View asset credits and attributions"
+              prefetch={false}
             >
               Credits
             </Link>
@@ -26,6 +27,7 @@ export default function Footer() {
               aria-label="View the help section"
               title="View the help section"
               className="link link-hover"
+              prefetch={false}
             >
               Help
             </Link>
@@ -36,6 +38,7 @@ export default function Footer() {
               aria-label="View our privacy policy"
               title="View our privacy policy"
               className="link link-hover"
+              prefetch={false}
             >
               Privacy
             </Link>
