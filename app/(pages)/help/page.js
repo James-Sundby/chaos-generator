@@ -2,34 +2,31 @@ import { metals } from "@/lib/colourChart";
 import Link from "next/link";
 
 export const metadata = {
-    title: "Help & Conversion Guide",
-    description: "Use this guide to convert old chapter IDs with outdated metal codes into updated versions using hex codes. Includes a colour chart for reference.",
+    title: "Help & ID Conversion Guide",
+    description:
+        "Convert older chapter IDs that use outdated metal colour codes into updated hex-based IDs. Includes a reference chart for matching legacy colours.",
+    alternates: {
+        canonical: "/help",
+    },
     openGraph: {
-        title: "Help & Conversion Guide",
-        description: "Having trouble with old chapter IDs? This guide helps you update them using the new colour codes.",
-        url: "https://chapter-gen.jsundby.dev/help",
-        siteName: "Chapter Generator",
+        title: "Help & ID Conversion Guide",
+        description:
+            "Convert older chapter IDs with legacy metal colour codes into updated hex-based IDs.",
+        url: "/help",
         images: [
             {
-                url: "https://chapter-gen.jsundby.dev/card.png",
+                url: "/card.png",
                 width: 1200,
                 height: 630,
                 alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block.",
             },
         ],
-        locale: 'en_US',
-        type: 'website',
     },
     twitter: {
-        title: "Help & Conversion Guide",
-        description: "Update old metal colour codes with ease using this chart-based guide.",
-        card: 'summary_large_image',
-        images: [
-            {
-                url: "https://chapter-gen.jsundby.dev/card.png",
-                alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block."
-            }
-        ],
+        title: "Help & ID Conversion Guide",
+        description:
+            "Convert older chapter IDs with legacy metal colour codes into updated hex-based IDs.",
+        images: ["/card.png"],
     },
 };
 
@@ -52,6 +49,7 @@ export default function Page() {
                     aria-label="Open the Chapter Customizer tool to generate a new chapter ID"
                     className="link"
                     title="Open the Chapter Customizer tool to generate a new chapter ID"
+                    prefetch={false}
                 >
                     Chapter Customizer
                 </Link>
@@ -61,6 +59,7 @@ export default function Page() {
                     aria-label="Open the Warband Customizer tool to generate a new warband ID"
                     className="link"
                     title="Open the Warband Customizer tool to generate a new warband ID"
+                    prefetch={false}
                 >
                     Warband Customizer
                 </Link>

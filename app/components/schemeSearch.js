@@ -1,56 +1,25 @@
 'use client';
 
-import { useState, useTransition, useEffect, useMemo } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { chaosSearchObjectSchema as chaosSchema } from "@/app/schema/chaos";
-import { chapterSearchObjectSchema as chapterSchema } from "@/app/schema/chapter";
-
-import { warbandSearchServer } from "@/app/(actions)/warbandSearch";
-import { chapterSearchServer } from "@/app/(actions)/chapterSearch";
-
-const BTN_CLASS = {
-    Chaos: "btn-error",
-    Chapter: "btn-primary",
-};
-
-const PLACEHOLDER = {
-    Chaos: "true-sons-63605d-354D4C-66656E-8CC276-center",
-    Chapter: "angels-of-the-gate-FFFFFF-317E57-989C94-blazoned",
-};
+import { generatorRegistry } from "@/app/components/generatorRegistry";
 
 export default function SchemeSearch({
-    variant = "Chaos", // "Chaos" | "Chapter"
+    generatorKey = "chaos",
     id = "scheme-search",
 }) {
+    const generator = generatorRegistry[generatorKey] ?? generatorRegistry.chaos;
+    const searchConfig = generator.search;
+
     const {
         schema,
         serverAction,
         placeholder,
-        btnColour,
         buttonLabel,
         ariaLabel,
-    } = useMemo(() => {
-        if (variant === "Chapter") {
-            return {
-                schema: chapterSchema,
-                serverAction: chapterSearchServer,
-                placeholder: PLACEHOLDER.Chapter,
-                btnColour: BTN_CLASS.Chapter,
-                buttonLabel: "Look up a Chapter",
-                ariaLabel: "Chapter lookup code",
-            };
-        }
-        return {
-            schema: chaosSchema,
-            serverAction: warbandSearchServer,
-            placeholder: PLACEHOLDER.Chaos,
-            btnColour: BTN_CLASS.Chaos,
-            buttonLabel: "Look up a Warband",
-            ariaLabel: "Warband lookup code",
-        };
-    }, [variant]);
+    } = searchConfig;
 
     const {
         register,
@@ -76,7 +45,9 @@ export default function SchemeSearch({
     const onSubmit = ({ q }) => {
         const v = (q ?? "").trim();
         if (!v) return;
+
         setServerError(null);
+
         startTransition(async () => {
             const res = await serverAction({ q: v });
             if (res?.error) setServerError(res.error);
@@ -98,7 +69,6 @@ export default function SchemeSearch({
                     {ariaLabel}
                 </label>
 
-                {/* Input + Button as a single joined control */}
                 <div className="join w-full">
                     <input
                         id={id}
@@ -112,7 +82,7 @@ export default function SchemeSearch({
 
                     <button
                         type="submit"
-                        className={`btn ${btnColour} join-item`}
+                        className={`btn ${generator.buttonTheme} join-item`}
                         aria-busy={pending}
                         disabled={isEmpty || pending}
                         aria-disabled={isEmpty || pending}
@@ -136,7 +106,12 @@ export default function SchemeSearch({
 
                 {hasError && (
                     <div className="label">
-                        <span id={`${id}-error`} role="alert" aria-live="polite" className="label-text-alt text-error">
+                        <span
+                            id={`${id}-error`}
+                            role="alert"
+                            aria-live="polite"
+                            className="label-text-alt text-error"
+                        >
                             {serverError || errors.q?.message}
                         </span>
                     </div>

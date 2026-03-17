@@ -3,7 +3,7 @@
 import { patterns } from "@/lib/armourPatterns";
 import { colourList } from "@/lib/colours";
 import { useWarbandStore } from "@/app/stores/warbandStore";
-import CustomizerCore from "./customizerCore";
+import CustomizerCore from "../../customizerCore";
 
 // grouped options for Chapter
 const groupedColors = {
@@ -19,14 +19,12 @@ export default function CustomizerChapter() {
 
     return (
         <CustomizerCore
-            variant="Chapter"
+            generatorKey="chapter"
             band={band}
             setBand={setBand}
             patterns={patterns}
-            paletteOptionsForIndex={() => groupedColors} // 0..2 all use full grouped set
-            randomPoolForIndex={() => colourList}        // random from all paints
-            backBase="/chapter"
-            hasSecondModel={true}
+            paletteOptionsForIndex={() => groupedColors}
+            randomPoolForIndex={() => colourList}
         />
     );
 }

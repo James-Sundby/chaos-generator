@@ -1,45 +1,50 @@
 import Link from "next/link";
-
-import Background from "./components/background";
-import GenerateNewButton from "./components/generateNewButton";
-import SchemeSearch from "./components/schemeSearch";
+import Background from "@/app/components/background";
+import GenerateNewButton from "@/app/components/generateNewButton";
+import SchemeSearch from "@/app/components/schemeSearch";
 
 export default function Home() {
-  return (<>
-    <section className="relative flex flex-col flex-1 items-center justify-center">
+  return (
+    <section className="relative flex flex-1 flex-col items-center justify-center gap-4 md:gap-8">
       <Background />
-      <h1 className="font-black rounded text-shadow-md p-2 max-w-md xl:max-w-full  text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-center mb-8">
-        Unofficial Warhammer Paint Scheme Generator
-      </h1>
-      <div className="flex flex-col gap-8 items-center w-full max-w-md">
+
+      <section className="max-w-2xl text-center">
+        <h1 className="text-2xl font-black uppercase tracking-wide sm:text-5xl">
+          Chapter Generator
+        </h1>
+        <p className="mt-4 text-base-content sm:text-lg">
+          An unofficial Warhammer hobby tool for generating and customizing paint schemes.
+        </p>
+      </section>
+      <div className="flex flex-col gap-8 items-center w-full max-w-2xl">
         <fieldset className="fieldset bg-base-100 border-primary w-full border-2 p-4 gap-4 rounded-sm">
           <h2 id="loyalist-section" className="sr-only">Loyalist Chapter Generator</h2>
           <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-primary rounded-sm text-primary-content">Loyalists</legend>
-          <GenerateNewButton variant="Chapter" />
-          <SchemeSearch variant="Chapter" id="chapter-search" />
+          <GenerateNewButton generatorKey="chapter" />
+          <SchemeSearch generatorKey="chapter" />
         </fieldset>
         <fieldset className="fieldset bg-base-100 border-accent w-full border-2 p-4 gap-4 rounded-sm">
           <h2 id="chaos-section" className="sr-only">Chaos Warband Generator</h2>
           <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-accent rounded-sm text-accent-content">Chaos</legend>
-          <GenerateNewButton variant="Chaos" />
-          <SchemeSearch variant="Chaos" id="chaos-search" />
+          <GenerateNewButton generatorKey="chaos" />
+          <SchemeSearch generatorKey="chaos" />
         </fieldset>
-
-
         <fieldset className="fieldset bg-base-100 border-info border-2 p-4 gap-4 rounded-sm w-full">
           <h2 id="eldar-section" className="sr-only">Eldar Warhost Generator</h2>
           <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-info rounded-sm text-info-content">
             Eldar
           </legend>
-          <GenerateNewButton variant="Eldar" />
-          <SchemeSearch variant="Eldar" id="warhost-search" />
+          <GenerateNewButton generatorKey="eldar" />
+          <SchemeSearch generatorKey="eldar" />
         </fieldset>
+      </div>
 
-
+      <div className="mt-4 flex w-full max-w-2xl justify-center">
         <Link
           className="btn btn-secondary btn-block rounded-sm"
-          href={"/open-paint"}
+          href="/open-paint"
           aria-label="Open the free paint tool"
+          prefetch={false}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,11 +56,7 @@ export default function Home() {
           </svg>
           Open Paint
         </Link>
-
       </div>
-
     </section>
-
-  </>
   );
 }

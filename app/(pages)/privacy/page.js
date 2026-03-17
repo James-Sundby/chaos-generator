@@ -1,32 +1,29 @@
 export const metadata = {
-    title: "Privacy Policy & Project Information",
-    description: "Read how Chapter Generator handles your data. This fan-made tool avoids tracking and respects your privacy by using only session-based storage.",
+    title: "Privacy Policy",
+    description:
+        "Read how Chapter Generator handles data, storage, and privacy. This fan-made tool avoids tracking and uses only limited session-based storage where needed.",
+    alternates: {
+        canonical: "/privacy",
+    },
     openGraph: {
-        title: "Privacy Policy & Project Information",
-        description: "Learn how Chapter Generator protects your privacy while you design custom Space Marine chapters.",
-        url: "https://chapter-gen.jsundby.dev/privacy",
-        siteName: "Chapter Generator",
+        title: "Privacy Policy",
+        description:
+            "Learn how Chapter Generator handles data, storage, and privacy.",
+        url: "/privacy",
         images: [
             {
-                url: "https://chapter-gen.jsundby.dev/card.png",
+                url: "/card.png",
                 width: 1200,
                 height: 630,
                 alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block.",
             },
         ],
-        locale: 'en_US',
-        type: 'website',
     },
     twitter: {
-        title: "Privacy Policy & Project Information",
-        description: "This fan tool doesn't use cookies or trackers. Find out how your data is handled.",
-        card: 'summary_large_image',
-        images: [
-            {
-                url: "https://chapter-gen.jsundby.dev/card.png",
-                alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block."
-            }
-        ],
+        title: "Privacy Policy",
+        description:
+            "Learn how Chapter Generator handles data, storage, and privacy.",
+        images: ["/card.png"],
     },
 };
 

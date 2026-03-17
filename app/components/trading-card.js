@@ -1,16 +1,20 @@
-import { modelRegistry } from "./modelRegistry";
+import { generatorRegistry } from "./generatorRegistry";
 
 export default function TradingCard({
-    variant = "Chapter", // "Chaos" or "Chapter" or "Eldar"
-    model = "marine",
-    band, //warbandName, namedColors[], slug, patternName, mode
+    generatorKey = "chapter",
+    modelKey,
+    band,
 }) {
-    const { warbandName, colors = [], slug, pattern, mode } = band ?? {};
+    const { name, warbandName, colors = [], slug, pattern, mode } = band ?? {};
+    const displayName = name ?? warbandName;
 
-    const config = modelRegistry[variant] ?? modelRegistry.Chapter;
-    const Model = config.getComponent({ model, band });
-    const modelProps = config.getModelProps({ colors, pattern, model, band });
-    const swatchIndices = config.getSwatchIndices({ colors, pattern, model, band });
+    const generator = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
+    const modelConfig =
+        generator.models[modelKey] ?? Object.values(generator.models)[0];
+
+    const Model = modelConfig.component;
+    const modelProps = modelConfig.getModelProps({ colors, pattern, band });
+    const swatchIndices = generator.getSwatchIndices({ colors, pattern, band });
 
     const paletteNames = swatchIndices
         .map((i) => colors[i]?.name)
@@ -22,17 +26,15 @@ export default function TradingCard({
     return (
         <div id="trading-card" className="card w-full max-w-96 bg-white text-neutral border-8 border-yellow-600">
             <div className="card-body p-2 m-0">
-                <h1 className="card-title justify-center text-center uppercase font-black border-b pb-2 border-base-300">{warbandName}</h1>
+                <h1 className="card-title justify-center text-center uppercase font-black border-b pb-2 border-base-300">
+                    {displayName}
+                </h1>
 
                 <div className="h-[40svh]">
                     <Model {...modelProps} />
                 </div>
 
-                {/* Swatches */}
-                <div
-                    className="join join-horizontal"
-                    aria-label="Color palette"
-                >
+                <div className="join join-horizontal" aria-label="Color palette">
                     {swatchIndices.map((i) => (
                         <div
                             key={i}
@@ -45,19 +47,14 @@ export default function TradingCard({
                     ))}
                 </div>
 
-                {/* Names */}
-                {paletteNames && (
-                    <p className="text-sm font-bold">{paletteNames}</p>
-                )}
+                {paletteNames && <p className="text-sm font-bold">{paletteNames}</p>}
 
-                {/* Palette mode */}
                 {prettyMode && (
                     <p className="text-xs">
                         Palette: <span className="font-normal">{prettyMode}</span>
                     </p>
                 )}
 
-                {/* ID footer */}
                 <div className="card-actions border-t border-base-300 pt-2 text-xs opacity-75 font-mono text-left inline-block max-w-full break-all">
                     ID: {slug}
                 </div>

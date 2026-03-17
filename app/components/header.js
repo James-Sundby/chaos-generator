@@ -9,6 +9,7 @@ export default function Header() {
           href="/"
           className="btn btn-ghost text-lg font-bold rounded-sm"
           aria-label="Back to Chapter Generator home page"
+          prefetch={false}
         >
           Chapter Generator
         </Link>

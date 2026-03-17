@@ -1,34 +1,31 @@
 import FreePaint from "@/app/components/freePaint";
 
 export const metadata = {
-    title: "Loyalist Free Paint",
-    description: "Customize your Space Marine down to the armor segment. Click to colour each section and get a complete list of paints used.",
+    title: "Loyalist Free Paint Tool",
+    description:
+        "Customize a loyalist Space Marine scheme down to individual armour segments. Paint each section manually and get a full breakdown of colours used.",
+    alternates: {
+        canonical: "/open-paint",
+    },
     openGraph: {
-        title: "Loyalist Free Paint",
-        description: "Use detailed armor selection to paint your Space Marine piece by piece.",
-        url: "https://chapter-gen.jsundby.dev/open-paint",
-        siteName: "Chapter Generator",
+        title: "Loyalist Free Paint Tool",
+        description:
+            "Paint a loyalist Space Marine piece by piece with detailed armour section controls.",
+        url: "/open-paint",
         images: [
             {
-                url: "https://chapter-gen.jsundby.dev/card.png",
+                url: "/card.png",
                 width: 1200,
                 height: 630,
                 alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block.",
             },
         ],
-        locale: 'en_US',
-        type: 'website',
     },
     twitter: {
-        title: "Loyalist Free Paint",
-        description: "Click to colour each armor section and get a breakdown of paints used.",
-        card: 'summary_large_image',
-        images: [
-            {
-                url: "https://chapter-gen.jsundby.dev/card.png",
-                alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block."
-            }
-        ],
+        title: "Loyalist Free Paint Tool",
+        description:
+            "Paint a loyalist Space Marine piece by piece with detailed armour section controls.",
+        images: ["/card.png"],
     },
 };
 

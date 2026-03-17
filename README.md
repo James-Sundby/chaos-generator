@@ -1,27 +1,41 @@
-# Space Marine Chapter Generator
+# Chapter Generator
 
-> ⚠️ This is an unofficial fan-made project. Not affiliated with Games Workshop.
+> [!NOTE]
+> This is an unofficial fan-made project and is not affiliated with Games Workshop.
 
-An unofficial web-based tool for Warhammer 40K hobbyists to create unique Space Marine chapter color schemes. Generates random color combinations for armor, weapons, and heraldry.
+Chapter Generator is a web-based hobby tool for creating and customizing Warhammer-inspired paint schemes for multiple faction styles, including loyalist chapters, chaos warbands, and Aeldari warhosts.
 
-![Space Marine Generator Screenshot](./images/main.png)
+It is designed as a fast inspiration tool for painters who want randomized schemes, manual customization, and shareable results.
 
 ## Features
 
-- **Randomized color schemes** – Generates three unique colors for your custom chapter.
-- **Inspiration for painters** – Helps hobbyists visualize original chapter liveries.
-- **Simple and fast** – Generate new schemes with a single click.
-- **Accessible design** – Mobile-friendly interface with a clean UI.
+- **Random scheme generation**  
+  Generate faction-themed colour schemes for loyalist, chaos, and xenos-inspired forces.
 
-## 📸 Screenshots
+- **Multiple faction flows**  
+  Includes support for Space Marine chapters, Chaos warbands, and Aeldari warhosts.
 
-| Home Screen                                            | Chapter Generator                          |
-| ------------------------------------------------------ | ------------------------------------------ |
-| ![Home Screen](./images/homescreen.png)                | ![Chapter Generator](./images/chapter.png) |
+- **Manual customization**  
+  Fine-tune generated schemes with painter tools and custom colour selection.
 
-| Chapter Customizer                                     | Free Paint                                 |
-| ---------------------------------                      | --------------------------------           |
-| ![Chapter Customizer](./images/chapter-customizer.png) | ![Free Paint](./images/free-paint.png)     |
+- **Free Paint mode**  
+  Colour model sections manually and review the paints used.
+
+- **Shareable slug-based results**  
+  Generated schemes can be revisited and shared using unique URLs.
+
+- **Mobile-friendly UI**  
+  Built with a responsive interface for desktop and mobile use.
+
+## Screenshots
+
+| Home Screen                             | Chapter Generator                          |
+| --------------------------------------- | ------------------------------------------ |
+| ![Home Screen](./images/homescreen.png) | ![Chapter Generator](./images/chapter.png) |
+
+| Chapter Customizer                                     | Free Paint                             |
+| ------------------------------------------------------ | -------------------------------------- |
+| ![Chapter Customizer](./images/chapter-customizer.png) | ![Free Paint](./images/free-paint.png) |
 
 ## Getting Started
 
@@ -54,58 +68,43 @@ yarn dev
 
 The app will be available at http://localhost:3000
 
-## API
+## How It Works
 
-The Space Marine Generator includes a dynamic API endpoint that allows users to generate and retrieve Space Marine chapter details based on a unique slug.
+Generated schemes are encoded into shareable slugs. These slugs can be used to:
 
-### **Endpoint**
+- revisit a generated scheme
+- share a scheme with others
+- look up an existing scheme through the search tools
 
-```
-GET /api/chapter-generator
-```
+Different faction flows use their own generation, parsing, and painter logic while sharing common UI components.
 
-### **Query Parameters**
+## State Management
 
-- **slug** _(optional)_ – If provided, the API will parse the slug and return the corresponding warband details. Otherwise, a new warband will be generated.
+This project uses Zustand for client-side state management across faction-specific flows.
 
-### **Response Format**
+Zustand stores are used for:
 
-A successful request returns JSON with the following structure:
-
-```json
-{
-  "message": "new warband",
-  "warbandName": "The Virtuous Storm",
-  "colors": [
-    { "hex": "#664A22", "name": "XV-88" },
-    { "hex": "#8CBDA5", "name": "Gauss Blaster Green" }
-  ],
-  "pattern": "Quartered",
-  "slug": "the-virtuous-storm-664A22-8CBDA5-arms-ldb",
-  "metal": {
-    "code": "ldb",
-    "name": "Leadbelcher",
-    "hex1": "#f0f0f0",
-    "hex2": "#8a8a8a",
-    "hex3": "#152724"
-  }
-}
-```
-
-If the slug is invalid or not provided, a new warband is generated.
-
-## State Management with Zustand
-
-This project uses Zustand for managing application state across various pages. Zustand handles:
-
-- **Generated Warband Data** – Stores chapter name, colors, armor pattern, and associated metal.
+- generated scheme data
+- customizer state
+- painter flows
+- preserving faction data between generation and customization pages
 
 ## Tech Stack
 
-- **Next.js** – React framework for fast and scalable web apps.
-- **Tailwind CSS** – Styling for a clean and modern UI.
-- **Zustand** – Lightweight state management.
-- **Custom API** – Fetches random color combinations and generates Space Marine chapter names dynamically.
+- **Next.js** – App Router-based React framework
+- **Tailwind CSS** – Utility-first styling
+- **daisyUI** – UI component layer built on Tailwind
+- **Zustand** – Lightweight state management
+- **Custom generation/parsing utilities** – Slug generation, parsing, and scheme handling
+
+## Project Goals
+
+This project is intended to help hobbyists:
+
+- break painter’s block
+- explore unusual colour combinations
+- build inspiration for custom forces
+- preview schemes before committing paint to miniatures
 
 ## Contributing
 

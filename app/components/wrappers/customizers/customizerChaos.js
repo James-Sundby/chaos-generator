@@ -1,6 +1,6 @@
 "use client";
 
-import CustomizerCore from "./customizerCore";
+import CustomizerCore from "../../customizerCore";
 import { chaosPatterns } from "@/lib/armourPatterns";
 import { colourList } from "@/lib/colours";
 import { useChaosStore } from "@/app/stores/chaosStore";
@@ -24,7 +24,7 @@ export default function CustomizerChaos() {
 
     return (
         <CustomizerCore
-            variant="Chaos"
+            generatorKey="chaos"
             band={band}
             setBand={setBand}
             patterns={chaosPatterns}
@@ -34,7 +34,6 @@ export default function CustomizerChaos() {
                     ? colourList.filter((c) => c.type !== "Metallic")
                     : colourList
             }
-            backBase="/chaos"
             hideSecondaryWhenBasic
         />
     );
