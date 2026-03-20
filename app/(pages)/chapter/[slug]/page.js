@@ -1,5 +1,5 @@
 import { redirect, notFound } from "next/navigation";
-import { parseFromSlugOrThrow } from "@/utils/chapter";
+import { parseFromSlugOrThrow } from "@/utils/(faction wrappers)/chapter";
 import ChapterView from "@/app/components/wrappers/views/chapterView";
 
 export async function generateMetadata(props) {

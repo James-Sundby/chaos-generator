@@ -80,15 +80,23 @@ export default function CustomizerCore({
 
     const modelOptions = Object.entries(generator.models);
 
+    const patternKey = String(band.pattern ?? "").toLowerCase();
+
     const updateBand = (updated) => {
         const next = { ...band, ...updated };
         const newSlug = generateSlug(
+            generatorKey,
             next.warbandName,
             next.colors,
             next.pattern,
-            "Custom"
+            "custom"
         );
-        setBand({ ...next, slug: newSlug, mode: "Custom" });
+
+        setBand({
+            ...next,
+            slug: newSlug,
+            mode: "custom",
+        });
     };
 
     const handleNameChange = (val) => updateBand({ warbandName: val });
@@ -96,6 +104,8 @@ export default function CustomizerCore({
 
     const handleColorChange = (index, hex) => {
         const color = colourList.find((c) => c.hex === hex);
+        if (!color) return;
+
         const newColors = [...band.colors];
         newColors[index] = color;
         updateBand({ colors: newColors });
@@ -106,6 +116,9 @@ export default function CustomizerCore({
         const currentHex = band.colors[index]?.hex;
         const filtered = pool.filter((c) => c.hex !== currentHex);
         const randomColor = filtered[Math.floor(Math.random() * filtered.length)];
+
+        if (!randomColor) return;
+
         const newColors = [...band.colors];
         newColors[index] = randomColor;
         updateBand({ colors: newColors });
@@ -114,11 +127,14 @@ export default function CustomizerCore({
     const generateNewPattern = () => {
         const pool = patterns.filter((p) => p !== band.pattern);
         const next = pool[Math.floor(Math.random() * pool.length)];
+        if (!next) return;
         updateBand({ pattern: next });
     };
 
     const backHref = `${generator.basePath}/${band.slug}`;
-    const showSecondary = hideSecondaryWhenBasic ? band.pattern !== "Basic" : true;
+    const showSecondary = hideSecondaryWhenBasic
+        ? patternKey !== "basic"
+        : true;
     const colourClass = generator.buttonTheme;
 
     const ActionBtn = ({ title, action }) => (

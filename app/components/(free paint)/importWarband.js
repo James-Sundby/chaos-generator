@@ -1,32 +1,46 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 import { usePainterStore } from "@/app/stores/painterStore";
-import { chapterSearchObjectSchema } from "@/app/schema/chapter";
 import { colourList } from "@/lib/colours";
 import { patterns } from "@/lib/armourPatterns";
 import { chapterModes } from "@/lib/modes";
-import { parseChapterSlug as coreParseChapter, generateSlug } from "@/utils/parseSlugs";
+import { parseSlug, generateSlug } from "@/utils/parseSlugs";
 
-const patternSet = new Set(patterns.map((p) => p.toLowerCase()));
-const colourMap = Object.fromEntries(colourList.map((c) => [c.hex.toLowerCase(), c]));
-const modesSet = new Set(chapterModes.map(m => m.toLowerCase()));
+const chapterImportSchema = z.object({
+    q: z
+        .string()
+        .trim()
+        .min(1, "Enter a chapter slug.")
+        .max(200, "Slug is too long.")
+        .regex(/^[A-Za-z0-9-]+$/, "Only letters, numbers, and hyphens are allowed."),
+});
 
-function parseChapterSlug(slug) {
-    return coreParseChapter(slug, colourMap, patternSet, modesSet);
-}
+const colourMap = Object.fromEntries(
+    colourList.map((c) => [c.hex.toLowerCase(), c])
+);
+
+const chapterParseConfig = {
+    chapter: {
+        colourCount: 3,
+        colourMap,
+        patternsSet: new Set(patterns.map((p) => p.toLowerCase())),
+        modesSet: new Set(chapterModes.map((m) => m.toLowerCase())),
+    },
+};
 
 function setChapterSectionValues(chapter, setColor) {
     const primaryColor = chapter.colors[0].hex;
     const secondaryColor = chapter.colors[1].hex;
     const trimColor = chapter.colors[2].hex;
-    const pattern = chapter.pattern;
+    const patternKey = String(chapter.pattern ?? "").toLowerCase();
 
     const patternMappings = {
-        Arms: {
+        arms: {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
                 "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
@@ -34,154 +48,163 @@ function setChapterSectionValues(chapter, setColor) {
                 "Right-Backpack", "Left-Backpack",
             ],
             secondary: ["Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"],
-            trim: ["Right-Helmet", "Left-Helmet", "Right-Belt", "Left-Belt", "Eagle"]
+            trim: ["Right-Helmet", "Left-Helmet", "Right-Belt", "Left-Belt", "Eagle"],
         },
-        Shoulders: {
+        shoulders: {
             primary: [
                 "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
                 "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
                 "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Right-Hand",
-                "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Forearm", "Left-Forearm", "Left-Hand",
             ],
-            secondary: ["Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
-            ],
-            trim: ["Right-Helmet", "Left-Helmet", "Eagle"]
+            secondary: ["Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad"],
+            trim: ["Right-Helmet", "Left-Helmet", "Eagle"],
         },
-        Legs: {
+        legs: {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
                 "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
                 "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Right-Hand",
-                "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Forearm", "Left-Forearm", "Left-Hand",
             ],
-            secondary: ["Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",],
-            trim: ["Eagle"]
+            secondary: ["Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh"],
+            trim: ["Eagle"],
         },
-        Centered: {
+        centered: {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
                 "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
                 "Right-Backpack", "Left-Backpack", "Right-Hand",
-                "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Forearm", "Left-Forearm", "Left-Hand",
             ],
-            secondary: ["Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
+            secondary: [
+                "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
                 "Right-Belt", "Left-Belt",
             ],
-            trim: ["Eagle"]
+            trim: ["Eagle"],
         },
-        Half: {
+        half: {
             primary: [
                 "Left-Shoulder-Trim", "Left-Shoulder-Pad", "Left-Boot", "Left-Shin", "Left-Thigh",
                 "Left-Helmet", "Cod-Left", "Torso-Left", "Left-Backpack",
-                "Left-Belt", "Left-Forearm", "Left-Hand"
+                "Left-Belt", "Left-Forearm", "Left-Hand",
             ],
-            secondary: ["Right-Shoulder-Trim", "Right-Shoulder-Pad", "Right-Thigh", "Right-Boot", "Right-Shin",
+            secondary: [
+                "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Right-Thigh", "Right-Boot", "Right-Shin",
                 "Cod-Right", "Torso-Right", "Right-Backpack", "Right-Hand", "Right-Forearm", "Right-Belt",
                 "Right-Helmet",
             ],
-            trim: ["Eagle"]
+            trim: ["Eagle"],
         },
-        Quarter: {
+        quarter: {
             primary: [
                 "Right-Thigh", "Right-Boot", "Right-Shin", "Cod-Right", "Torso-Left", "Left-Belt", "Left-Helmet",
-                "Left-Backpack", "Left-Shoulder-Trim", "Left-Shoulder-Pad", "Left-Forearm", "Left-Hand"
-
+                "Left-Backpack", "Left-Shoulder-Trim", "Left-Shoulder-Pad", "Left-Forearm", "Left-Hand",
             ],
-            secondary: ["Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Boot", "Left-Shin", "Left-Thigh",
+            secondary: [
+                "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Boot", "Left-Shin", "Left-Thigh",
                 "Right-Helmet", "Cod-Left", "Torso-Right", "Right-Backpack", "Right-Belt",
-                "Right-Hand", "Right-Forearm",],
-            trim: ["Eagle"]
+                "Right-Hand", "Right-Forearm",
+            ],
+            trim: ["Eagle"],
         },
-        Crusader: {
+        crusader: {
             primary: [
                 "Right-Shoulder-Trim", "Left-Shoulder-Trim", "Right-Thigh", "Right-Boot", "Left-Boot",
                 "Right-Shin", "Left-Shin", "Left-Thigh", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
                 "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Right-Hand",
-                "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Forearm", "Left-Forearm", "Left-Hand",
             ],
-            secondary: ["Right-Shoulder-Pad", "Left-Shoulder-Pad", "Right-Helmet", "Left-Helmet",],
-            trim: ["Eagle"]
+            secondary: ["Right-Shoulder-Pad", "Left-Shoulder-Pad", "Right-Helmet", "Left-Helmet"],
+            trim: ["Eagle"],
         },
-        Disciple: {
+        disciple: {
             primary: [
                 "Right-Shoulder-Trim", "Left-Shoulder-Trim", "Right-Thigh", "Right-Boot", "Left-Boot",
                 "Left-Thigh", "Cod-Right", "Cod-Left", "Right-Backpack", "Left-Backpack", "Right-Belt",
-                "Left-Belt", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Left-Belt", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand",
             ],
-            secondary: ["Right-Shin", "Left-Shin", "Right-Helmet", "Left-Helmet", "Torso-Right",
+            secondary: [
+                "Right-Shin", "Left-Shin", "Right-Helmet", "Left-Helmet", "Torso-Right",
                 "Torso-Left", "Right-Shoulder-Pad", "Left-Shoulder-Pad",
             ],
-            trim: ["Eagle"]
+            trim: ["Eagle"],
         },
-        Talons: {
+        talons: {
             primary: [
                 "Right-Shoulder-Trim", "Left-Shoulder-Trim", "Cod-Right", "Cod-Left", "Torso-Right",
                 "Torso-Left", "Right-Belt", "Left-Belt", "Right-Hand", "Right-Forearm", "Left-Forearm",
-                "Left-Hand"
+                "Left-Hand",
             ],
-            secondary: ["Right-Backpack", "Left-Backpack", "Right-Shoulder-Pad", "Left-Shoulder-Pad",
+            secondary: [
+                "Right-Backpack", "Left-Backpack", "Right-Shoulder-Pad", "Left-Shoulder-Pad",
                 "Right-Helmet", "Left-Helmet", "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin",
                 "Left-Shin", "Left-Thigh",
             ],
-            trim: ["Eagle"]
+            trim: ["Eagle"],
         },
-        Accipiters: {
+        accipiters: {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
-                "Right-Helmet", "Left-Helmet", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Helmet", "Left-Helmet", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand",
             ],
-            secondary: ["Right-Backpack", "Left-Backpack", "Torso-Right", "Torso-Left", "Right-Belt",
+            secondary: [
+                "Right-Backpack", "Left-Backpack", "Torso-Right", "Torso-Left", "Right-Belt",
                 "Left-Belt", "Cod-Right", "Cod-Left", "Right-Thigh", "Right-Boot", "Left-Boot",
                 "Right-Shin", "Left-Shin", "Left-Thigh",
             ],
-            trim: ["Eagle"]
+            trim: ["Eagle"],
         },
-        Blazoned: {
+        blazoned: {
             primary: [
                 "Right-Backpack", "Left-Backpack", "Right-Shoulder-Trim", "Left-Shoulder-Trim",
                 "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left", "Right-Belt", "Left-Belt",
-
             ],
-            secondary: ["Right-Shoulder-Pad", "Left-Shoulder-Pad", "Right-Helmet", "Left-Helmet", "Right-Hand",
+            secondary: [
+                "Right-Shoulder-Pad", "Left-Shoulder-Pad", "Right-Helmet", "Left-Helmet", "Right-Hand",
                 "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
-                "Right-Forearm", "Left-Forearm", "Left-Hand"],
-            trim: ["Eagle"]
+                "Right-Forearm", "Left-Forearm", "Left-Hand",
+            ],
+            trim: ["Eagle"],
         },
-        Eradicant: {
+        eradicant: {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
-                "Right-Backpack", "Left-Backpack", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Backpack", "Left-Backpack", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand",
             ],
-            secondary: ["Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
+            secondary: [
+                "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
                 "Right-Helmet", "Left-Helmet", "Cod-Right", "Cod-Left", "Torso-Right", "Torso-Left",
                 "Right-Belt", "Left-Belt",
             ],
-            trim: ["Eagle"]
+            trim: ["Eagle"],
         },
-        Scythes: {
+        scythes: {
             primary: [
                 "Right-Shoulder-Trim", "Right-Shoulder-Pad", "Left-Shoulder-Trim", "Left-Shoulder-Pad",
                 "Right-Thigh", "Right-Boot", "Left-Boot", "Right-Shin", "Left-Shin", "Left-Thigh",
-                "Right-Helmet", "Left-Helmet", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand"
+                "Right-Helmet", "Left-Helmet", "Right-Hand", "Right-Forearm", "Left-Forearm", "Left-Hand",
             ],
-            secondary: ["Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Cod-Right", "Cod-Left",
+            secondary: [
+                "Right-Backpack", "Left-Backpack", "Right-Belt", "Left-Belt", "Cod-Right", "Cod-Left",
                 "Torso-Right", "Torso-Left",
             ],
-            trim: ["Eagle"]
+            trim: ["Eagle"],
         },
     };
 
-    if (!patternMappings[pattern]) {
-        console.warn("Pattern not recognized:", pattern);
+    if (!patternMappings[patternKey]) {
+        console.warn("Pattern not recognized:", chapter.pattern);
         return;
     }
 
-    const { primary, secondary, trim } = patternMappings[pattern];
+    const { primary, secondary, trim } = patternMappings[patternKey];
     if (primary.length > 0) setColor(primary, primaryColor);
     if (secondary.length > 0) setColor(secondary, secondaryColor);
     if (trim.length > 0) setColor(trim, trimColor);
-    setColor(['Ribbing'], "#3E494A");
+    setColor(["Ribbing"], "#3E494A");
 }
+
 export default function ImportWarband() {
     const { setColor } = usePainterStore();
 
@@ -193,7 +216,7 @@ export default function ImportWarband() {
         formState: { errors, isSubmitting },
         watch,
     } = useForm({
-        resolver: zodResolver(chapterSearchObjectSchema),
+        resolver: zodResolver(chapterImportSchema),
         defaultValues: { q: "" },
         mode: "onSubmit",
         reValidateMode: "onSubmit",
@@ -201,40 +224,48 @@ export default function ImportWarband() {
 
     const q = watch("q");
     const isEmpty = !((q ?? "").trim());
-    const [serverError, setServerError] = useState(null);
 
     const onSubmit = async ({ q }) => {
         const raw = (q ?? "").trim();
         if (!raw) return;
 
         try {
-            const { name, colours, pattern } = parseChapterSlug(raw);
-            const canonical = generateSlug(name, colours, pattern);
+            const parsed = parseSlug(raw, chapterParseConfig);
+
+            if (parsed.faction !== "chapter") {
+                throw new Error("That slug is not a chapter slug.");
+            }
+
+            const canonical = generateSlug(
+                "chapter",
+                parsed.name,
+                parsed.colours,
+                parsed.pattern,
+                parsed.mode
+            );
 
             const chapter = {
-                warbandName: name,
-                colors: colours,
-                pattern,
+                warbandName: parsed.name,
+                colors: parsed.colours,
+                pattern: parsed.pattern,
                 slug: canonical,
+                mode: parsed.mode,
             };
 
             setChapterSectionValues(chapter, setColor);
+
             if (errors.q) clearErrors("q");
-            if (serverError) setServerError(null);
         } catch (e) {
             setError("q", {
                 type: "manual",
                 message: e?.message || "Invalid chapter code. Please try again.",
             });
-            setTimeout(() => clearErrors("q"), 3000);
         }
     };
 
-
     useEffect(() => {
         if (isEmpty && errors.q) clearErrors("q");
-        if (serverError) setServerError(null);
-    }, [isEmpty, errors.q, clearErrors, serverError]);
+    }, [isEmpty, errors.q, clearErrors]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex items-center gap-2 w-full" noValidate>
@@ -242,7 +273,7 @@ export default function ImportWarband() {
                 <input
                     type="text"
                     className={`input input-bordered rounded-lg w-full ${errors.q ? "input-error" : ""}`}
-                    placeholder="angels-of-the-gate-FFFFFF-317E57-989C94-blazoned"
+                    placeholder="chapter-angels-of-the-gate-ffffff-317e57-989c94-blazoned"
                     {...register("q")}
                     aria-invalid={!!errors.q}
                     aria-describedby={errors.q ? "chapterLookupError" : undefined}

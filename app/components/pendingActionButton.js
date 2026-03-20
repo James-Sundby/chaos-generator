@@ -14,7 +14,7 @@ export default function PendingActionButton({
     return (
         <button
             type="submit"
-            className={`btn ${config.buttonTheme} btn-block rounded-sm`}
+            className={`btn ${config.buttonTheme} w-full min-h-fit rounded-sm`}
             disabled={pending}
             aria-busy={pending}
         >

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { generatorRegistry } from "@/app/components/generatorRegistry";
 
+import { debug } from "@/lib/debug";
+
 import TradingCard from "@/app/components/trading-card.js";
 import CustomizerButton from "@/app/components/customizerButton";
 import GenerateNewButton from "@/app/components/generateNewButton";

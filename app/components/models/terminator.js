@@ -6,16 +6,16 @@ export default function Terminator({ primary, secondary, trim, pattern }) {
     const cruxTerminatus = "#DBD1B2"; //Wraithbone
     const lenses = "#54BDCA"; // Baharroth Blue
 
-    switch (pattern) {
-        case "Accipiters":
+    const patternKey = String(pattern ?? "").toLowerCase();
+
+    switch (patternKey) {
+        case "accipiters":
             leftHelmet = rightHelmet = leftShoulder = rightShoulder = leftArm = rightArm = leftForearm = leftHand = rightHand = powerFist = primary;
-
             leftChest = rightChest = leftThigh = rightThigh = leftKnee = rightKnee = leftShin = rightShin = leftBoot = rightBoot = leftHip = rightHip = leftBelt = rightBelt = leftLower = rightLower = codLeft = codRight = secondary;
-
             aquila = trim;
             break;
 
-        case "Arms":
+        case "arms":
             leftShoulder = rightShoulder =
                 leftChest = rightChest =
                 leftThigh = rightThigh =
@@ -35,7 +35,7 @@ export default function Terminator({ primary, secondary, trim, pattern }) {
             leftHelmet = rightHelmet = aquila = trim;
             break;
 
-        case "Blazoned":
+        case "blazoned":
             leftChest = rightChest =
                 leftBelt = rightBelt =
                 codLeft = codRight = leftLower = rightLower = primary;
@@ -56,7 +56,7 @@ export default function Terminator({ primary, secondary, trim, pattern }) {
             aquila = trim;
             break;
 
-        case "Centered":
+        case "centered":
             leftShoulder = rightShoulder =
                 leftArm = rightArm =
                 leftForearm =
@@ -77,7 +77,7 @@ export default function Terminator({ primary, secondary, trim, pattern }) {
             aquila = trim;
             break;
 
-        case "Crusader":
+        case "crusader":
             leftChest = rightChest =
                 leftArm = rightArm =
                 leftForearm =
@@ -94,10 +94,9 @@ export default function Terminator({ primary, secondary, trim, pattern }) {
                 leftShoulder = rightShoulder = secondary;
 
             aquila = leftBelt = rightBelt = trim;
-
             break;
 
-        case "Disciple":
+        case "disciple":
             leftArm = rightArm =
                 leftForearm =
                 leftHand = rightHand =
@@ -117,7 +116,7 @@ export default function Terminator({ primary, secondary, trim, pattern }) {
             leftBelt = rightBelt = aquila = trim;
             break;
 
-        case "Eradicant":
+        case "eradicant":
             leftShoulder = rightShoulder =
                 leftArm = rightArm =
                 leftForearm =
@@ -138,25 +137,23 @@ export default function Terminator({ primary, secondary, trim, pattern }) {
             aquila = trim;
             break;
 
-        case "Half":
-            // Left side primary
+        case "half":
             leftHelmet = leftChest = leftShoulder = leftArm = leftForearm =
                 leftHand = leftThigh = leftKnee = leftShin = leftBoot =
                 leftHip = leftLower = primary;
 
-            // Right side secondary
             rightHelmet = rightChest = rightShoulder = rightArm =
                 rightHand = rightThigh = rightKnee = rightShin = rightBoot =
                 rightHip = rightLower = secondary;
 
-            // Weapon/cods/belts by side
             powerFist = secondary;
-            codLeft = primary; codRight = secondary;
+            codLeft = primary;
+            codRight = secondary;
 
             leftBelt = rightBelt = aquila = trim;
             break;
 
-        case "Legs":
+        case "legs":
             leftHelmet = rightHelmet =
                 leftShoulder = rightShoulder =
                 leftArm = rightArm =
@@ -177,26 +174,24 @@ export default function Terminator({ primary, secondary, trim, pattern }) {
             aquila = trim;
             break;
 
-        case "Quarter":
-            // Primary on left head/torso/arm + right leg block (to mirror your original)
+        case "quarter":
             leftHelmet = leftChest = leftShoulder = leftArm = leftForearm =
                 leftHand = leftHip = leftLower = leftBelt = primary;
 
             rightThigh = rightKnee = rightShin = rightBoot = primary;
             codRight = primary;
 
-            // Secondary on right head/torso/arm + left leg block
             rightHelmet = rightChest = rightShoulder = rightArm =
                 rightHand = rightHip = rightLower = rightBelt = secondary;
 
             leftThigh = leftKnee = leftShin = leftBoot = secondary;
             codLeft = secondary;
 
-            powerFist = secondary; // right-hand weapon follows the right side here
+            powerFist = secondary;
             aquila = trim;
             break;
 
-        case "Scythes":
+        case "scythes":
             leftHelmet = rightHelmet =
                 leftShoulder = rightShoulder =
                 leftArm = rightArm =
@@ -215,7 +210,7 @@ export default function Terminator({ primary, secondary, trim, pattern }) {
             leftBelt = rightBelt = aquila = trim;
             break;
 
-        case "Shoulders":
+        case "shoulders":
             leftChest = rightChest =
                 leftArm = rightArm =
                 leftForearm =
@@ -235,7 +230,7 @@ export default function Terminator({ primary, secondary, trim, pattern }) {
             leftHelmet = rightHelmet = aquila = trim;
             break;
 
-        case "Talons":
+        case "talons":
             leftChest = rightChest =
                 leftArm = rightArm =
                 leftForearm =

@@ -1,5 +1,5 @@
 import { redirect, notFound } from "next/navigation";
-import { parseFromSlugOrThrow } from "@/utils/warband";
+import { parseFromSlugOrThrow } from "@/utils/(faction wrappers)/warband";
 import WarbandView from "@/app/components/wrappers/views/warbandView";
 
 export async function generateMetadata(props) {

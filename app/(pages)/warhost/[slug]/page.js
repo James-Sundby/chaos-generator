@@ -1,5 +1,5 @@
 import { redirect, notFound } from "next/navigation";
-import { parseWarhostFromSlugOrThrow } from "@/utils/warhost";
+import { parseWarhostFromSlugOrThrow } from "@/utils/(faction wrappers)/warhost";
 import WarhostView from "@/app/components/wrappers/views/warhostView";
 
 export async function generateMetadata(props) {
