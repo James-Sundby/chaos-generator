@@ -16,27 +16,34 @@ export default function Home() {
           An unofficial Warhammer hobby tool for generating and customizing paint schemes.
         </p>
       </section>
-      <div className="flex flex-col gap-8 items-center w-full max-w-2xl">
-        <fieldset className="fieldset bg-base-100 border-primary w-full border-2 p-4 gap-4 rounded-sm">
-          <h2 id="loyalist-section" className="sr-only">Loyalist Chapter Generator</h2>
-          <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-primary rounded-sm text-primary-content">Loyalists</legend>
-          <GenerateNewButton generatorKey="chapter" />
-          <SchemeSearch generatorKey="chapter" />
-        </fieldset>
-        <fieldset className="fieldset bg-base-100 border-accent w-full border-2 p-4 gap-4 rounded-sm">
-          <h2 id="chaos-section" className="sr-only">Chaos Warband Generator</h2>
-          <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-accent rounded-sm text-accent-content">Chaos</legend>
-          <GenerateNewButton generatorKey="chaos" />
-          <SchemeSearch generatorKey="chaos" />
-        </fieldset>
-        <fieldset className="fieldset bg-base-100 border-info border-2 p-4 gap-4 rounded-sm w-full">
-          <h2 id="eldar-section" className="sr-only">Eldar Warhost Generator</h2>
-          <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-info rounded-sm text-info-content">
-            Eldar
+
+      <div className="flex gap-4 flex-col sm:flex-row w-full max-w-2xl">
+        <GenerateNewButton generatorKey="chapter" />
+        <GenerateNewButton generatorKey="chaos" />
+        <GenerateNewButton generatorKey="eldar" />
+      </div>
+
+      <div className="flex w-full max-w-2xl flex-col gap-8">
+        <fieldset className="fieldset bg-base-100 border-secondary w-full border-2 p-4 gap-4 rounded-sm">
+          <legend className="text-sm xl:text-base font-semibold px-2 py-1 bg-secondary rounded-sm text-secondary-content">
+            Search Any Scheme
           </legend>
-          <GenerateNewButton generatorKey="eldar" />
-          <SchemeSearch generatorKey="eldar" />
+
+          <p className="text-sm text-base-content/80">
+            Search chapters, chaos warbands, or eldar warhosts using a full faction-prefixed slug.
+          </p>
+
+          <SchemeSearch
+            placeholder="chapter-ravens-of-the-keep-a99d95-440052-989898-eradicant-random"
+            buttonLabel="Look up a Scheme"
+            ariaLabel="Scheme lookup code"
+            buttonTheme="btn-secondary"
+          />
         </fieldset>
+
+
+
+
       </div>
 
       <div className="mt-4 flex w-full max-w-2xl justify-center">

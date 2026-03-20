@@ -3,17 +3,11 @@ import Terminator from "./models/terminator";
 import ChaosMarine from "./models/chaosSpaceMarine";
 import EldarAvenger from "./models/eldarAvenger";
 
-import { createChapterAndGo } from "@/app/(actions)/createChapter";
-import { createWarbandAndGo } from "@/app/(actions)/createWarband";
-import { createWarhostAndGo } from "@/app/(actions)/createWarhost";
-
-import { chaosSearchObjectSchema as chaosSchema } from "@/app/schema/chaos";
-import { chapterSearchObjectSchema as chapterSchema } from "@/app/schema/chapter";
-import { warhostSearchObjectSchema as warhostSchema } from "@/app/schema/warhost";
-
-import { warbandSearchServer } from "@/app/(actions)/warbandSearch";
-import { chapterSearchServer } from "@/app/(actions)/chapterSearch";
-import { warhostSearchServer } from "@/app/(actions)/warhostSearch";
+import {
+    createChapterAndGo,
+    createWarbandAndGo,
+    createWarhostAndGo,
+} from "@/app/(actions)/serverActions";
 
 export const generatorRegistry = {
     chapter: {
@@ -56,12 +50,10 @@ export const generatorRegistry = {
         },
 
         search: {
-            schema: chapterSchema,
-            serverAction: chapterSearchServer,
-            placeholder: "ravens-of-the-keep-a99d95-440052-989898-eradicant-random",
+            placeholder: "chapter-ravens-of-the-keep-a99d95-440052-989898-eradicant-random",
             buttonLabel: "Look up a Chapter",
             ariaLabel: "Chapter lookup code",
-        }
+        },
     },
 
     chaos: {
@@ -95,12 +87,10 @@ export const generatorRegistry = {
         },
 
         search: {
-            schema: chaosSchema,
-            serverAction: warbandSearchServer,
-            placeholder: "the-oathbroken-claws-02134E-4B213C-875408-003D15-half-tetradic",
+            placeholder: "chaos-the-oathbroken-claws-02134e-4b213c-875408-003d15-half-tetradic",
             buttonLabel: "Look up a Warband",
             ariaLabel: "Warband lookup code",
-        }
+        },
     },
 
     eldar: {
@@ -133,11 +123,9 @@ export const generatorRegistry = {
         },
 
         search: {
-            schema: warhostSchema,
-            serverAction: warhostSearchServer,
-            placeholder: "twilightbound-989898-6D655F-2C9BCC-8-analogous",
+            placeholder: "eldar-twilightbound-989898-6d655f-2c9bcc-8-analogous",
             buttonLabel: "Look up a Warhost",
             ariaLabel: "Warhost lookup code",
-        }
+        },
     },
 };

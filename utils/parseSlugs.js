@@ -1,14 +1,23 @@
-export function generateSlug(name, colours, pattern, mode) {
-    const nameSlug = name
+function slugifyName(name) {
+    return name
         .toLowerCase()
         .replace(/[^a-z0-9 ]/g, "")
-        .replace(/\s+/g, "-")
-        .trim();
-    const colourSlug = colours.map(colour => colour.hex.replace("#", "")).join("-");
-    const patternSlug = pattern.toLowerCase();
-    const modeSlug = mode ? `-${mode.toLowerCase()}` : "";
+        .trim()
+        .replace(/\s+/g, "-");
+}
 
-    return `${nameSlug}-${colourSlug}-${patternSlug}${modeSlug}`;
+function deslugifyName(slug) {
+    return slug.replace(/-/g, " ");
+}
+
+export function generateSlug(faction, name, colours, pattern, mode) {
+    const factionSlug = slugifyName(faction);
+    const nameSlug = slugifyName(name);
+    const colourSlug = colours.map(colour => colour.hex.replace("#", "").toLowerCase()).join("-");
+    const patternSlug = String(pattern).toLowerCase();
+    const modeSlug = mode ? `-${String(mode).toLowerCase()}` : "";
+
+    return `${factionSlug}-${nameSlug}-${colourSlug}-${patternSlug}${modeSlug}`;
 }
 
 export function capitalizeName(name) {
@@ -23,141 +32,70 @@ export function capitalizeName(name) {
         .join(" ");
 }
 
-export function parseChaosSlug(slug, colourMap, patternSet, modeSet) {
+export function parseSlug(slug, factionConfig) {
+    if (typeof slug !== "string" || !slug.trim()) {
+        throw new Error("Slug must be a non-empty string.");
+    }
+
     const slugParts = slug.split("-");
+    const faction = slugParts[0]?.toLowerCase();
 
-    if (slugParts.length < 6) {
-        throw new Error("Slug is too short to extract 4 colours and a pattern.");
+    if (!faction) {
+        throw new Error("Slug does not contain a faction segment.");
     }
 
-    let maybeMode = slugParts[slugParts.length - 1];
+    const config = factionConfig[faction];
+    if (!config) {
+        throw new Error("Slug contains an invalid faction segment.");
+    }
+
+    const { colourCount, colourMap, patternsSet, modesSet } = config;
+
+    if (slugParts.length < colourCount + 3) {
+        throw new Error(`Slug is too short to extract ${colourCount} colours and a pattern.`);
+    }
+
+    slugParts.shift();
+
     let mode = null;
-    if (modeSet && modeSet.has(maybeMode.toLowerCase())) {
-        mode = capitalizeName(slugParts.pop()); // consume the mode part
-        if (slugParts.length < 6) {
-            throw new Error("Slug is too short to extract 4 colours and a pattern.");
+    const maybeMode = slugParts[slugParts.length - 1]?.toLowerCase();
+    if (modesSet?.has(maybeMode)) {
+        mode = slugParts.pop().toLowerCase();
+    }
+
+    const pattern = slugParts.pop()?.toLowerCase();
+    if (!pattern || !patternsSet.has(pattern)) {
+        throw new Error(`Invalid pattern code: ${pattern ?? ""}`);
+    }
+
+    const hexColourRegex = /^[0-9a-f]{6}$/i;
+    const colourHexes = [];
+
+    for (let i = 0; i < colourCount; i++) {
+        const hex = slugParts.pop();
+        if (!hex || !hexColourRegex.test(hex)) {
+            throw new Error(`Invalid hex value: ${hex ?? ""}`);
         }
+        colourHexes.unshift(`#${hex.toLowerCase()}`);
     }
 
-    const patternCode = slugParts.pop();
-    if (!patternSet.has(patternCode)) {
-        throw new Error(`Invalid pattern code: ${patternCode}`);
-    }
-    const pattern = capitalizeName(patternCode);
-
-    const colourHex4 = `#${slugParts.pop()}`;
-    const colourHex3 = `#${slugParts.pop()}`;
-    const colourHex2 = `#${slugParts.pop()}`;
-    const colourHex1 = `#${slugParts.pop()}`;
-
-    const hexColourRegex = /^#[0-9A-Fa-f]{6}$/;
-    const allHexes = [colourHex1, colourHex2, colourHex3, colourHex4];
-    if (!allHexes.every(hex => hexColourRegex.test(hex))) {
-        throw new Error("One or more hex values are invalid.");
+    if (slugParts.length === 0) {
+        throw new Error("Slug is missing a name segment.");
     }
 
-    const namedColours = allHexes.map(hex => {
-        const colour = colourMap[hex.toLowerCase()];
-        if (!colour) {
-            throw new Error(`Colour not found for hex: ${hex}`);
-        }
+    const colours = colourHexes.map(hex => {
+        const colour = colourMap[hex];
+        if (!colour) throw new Error(`Colour not found for hex: ${hex}`);
         return colour;
     });
 
-    const name = slugParts.join(" ").replace(/-/g, " ");
-    const warbandName = capitalizeName(name);
+    const name = capitalizeName(deslugifyName(slugParts.join("-")));
 
-    return { name: warbandName, colours: namedColours, pattern, mode };
-}
-
-export function parseChapterSlug(slug, colourMap, patternSet, modeSet) {
-    const slugParts = slug.split("-");
-
-    if (slugParts.length < 5) {
-        throw new Error("Slug is too short to extract 3 colours and a pattern.");
-    }
-
-    let maybeMode = slugParts[slugParts.length - 1];
-    let mode = null;
-    if (modeSet && modeSet.has(maybeMode.toLowerCase())) {
-        mode = capitalizeName(slugParts.pop());
-        if (slugParts.length < 5) {
-            throw new Error("Slug is too short to extract 3 colours and a pattern.");
-        }
-    }
-
-    const patternCode = slugParts.pop();
-    if (!patternSet.has(patternCode)) {
-        throw new Error(`Invalid pattern code: ${patternCode}`);
-    }
-    const pattern = capitalizeName(patternCode);
-
-    const colourHex3 = `#${slugParts.pop()}`;
-    const colourHex2 = `#${slugParts.pop()}`;
-    const colourHex1 = `#${slugParts.pop()}`;
-
-    const hexColourRegex = /^#[0-9A-Fa-f]{6}$/;
-    const allHexes = [colourHex1, colourHex2, colourHex3];
-    if (!allHexes.every(hex => hexColourRegex.test(hex))) {
-        throw new Error("One or more hex values are invalid.");
-    }
-
-    const namedColours = allHexes.map(hex => {
-        const colour = colourMap[hex.toLowerCase()];
-        if (!colour) {
-            throw new Error(`Colour not found for hex: ${hex}`);
-        }
-        return colour;
-    });
-
-    const name = slugParts.join(" ").replace(/-/g, " ");
-    const chapterName = capitalizeName(name);
-
-    return { name: chapterName, colours: namedColours, pattern, mode };
-}
-
-export function parseEldarSlug(slug, colourMap, patternSet, modeSet) {
-    const slugParts = slug.split("-");
-
-    if (slugParts.length < 5) {
-        throw new Error("Slug is too short to extract 3 colours and a pattern.");
-    }
-
-    let maybeMode = slugParts[slugParts.length - 1];
-    let mode = null;
-    if (modeSet && modeSet.has(maybeMode.toLowerCase())) {
-        mode = capitalizeName(slugParts.pop());
-        if (slugParts.length < 5) {
-            throw new Error("Slug is too short to extract 3 colours and a pattern.");
-        }
-    }
-
-    const patternCode = slugParts.pop();
-    if (!patternSet.has(patternCode)) {
-        throw new Error(`Invalid pattern code: ${patternCode}`);
-    }
-    const pattern = capitalizeName(patternCode);
-
-    const colourHex3 = `#${slugParts.pop()}`;
-    const colourHex2 = `#${slugParts.pop()}`;
-    const colourHex1 = `#${slugParts.pop()}`;
-
-    const hexColourRegex = /^#[0-9A-Fa-f]{6}$/;
-    const allHexes = [colourHex1, colourHex2, colourHex3];
-    if (!allHexes.every(hex => hexColourRegex.test(hex))) {
-        throw new Error("One or more hex values are invalid.");
-    }
-
-    const namedColours = allHexes.map(hex => {
-        const colour = colourMap[hex.toLowerCase()];
-        if (!colour) {
-            throw new Error(`Colour not found for hex: ${hex}`);
-        }
-        return colour;
-    });
-
-    const name = slugParts.join(" ").replace(/-/g, " ");
-    const warhostName = capitalizeName(name);
-
-    return { name: warhostName, colours: namedColours, pattern, mode };
+    return {
+        faction,
+        name,
+        colours,
+        pattern,
+        mode,
+    };
 }

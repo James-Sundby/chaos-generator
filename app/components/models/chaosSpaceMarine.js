@@ -8,42 +8,44 @@ export default function ChaosMarine({ primary, secondary, edge, accent, pattern 
     //Also applied to lenses
     const loincloth = accent;
 
-    switch (pattern) {
-        case "Basic":
+    const patternKey = String(pattern ?? "").toLowerCase();
+
+    switch (patternKey) {
+        case "basic":
             leftHelmet = rightHelmet = leftBackpack = rightBackpack = leftChest = rightChest = leftShoulder = rightShoulder = leftArm = rightArm = leftLeg = rightLeg = primary;
             break;
 
-        case "Arms":
+        case "arms":
             leftHelmet = rightHelmet = leftBackpack = rightBackpack = leftChest = rightChest = leftLeg = rightLeg = primary;
             leftShoulder = rightShoulder = leftArm = rightArm = secondary;
             break;
 
-        case "Legs":
+        case "legs":
             leftHelmet = rightHelmet = leftBackpack = rightBackpack = leftChest = rightChest = leftShoulder = rightShoulder = leftArm = rightArm = primary;
             leftLeg = rightLeg = secondary;
             break;
 
-        case "Center":
+        case "center":
             leftBackpack = rightBackpack = leftChest = rightChest = leftShoulder = rightShoulder = primary;
             leftHelmet = rightHelmet = leftArm = rightArm = leftLeg = rightLeg = secondary;
             break;
 
-        case "Half":
+        case "half":
             leftHelmet = leftBackpack = leftChest = leftShoulder = leftArm = leftLeg = primary;
             rightHelmet = rightBackpack = rightChest = rightShoulder = rightArm = rightLeg = secondary;
             break;
 
-        case "Quarter":
+        case "quarter":
             leftHelmet = leftBackpack = leftChest = leftShoulder = leftArm = rightLeg = primary;
             rightHelmet = rightBackpack = rightChest = rightArm = rightShoulder = leftLeg = secondary;
             break;
 
-        case "Shoulders":
+        case "shoulders":
             leftHelmet = rightHelmet = leftBackpack = rightBackpack = leftChest = rightChest = leftArm = rightArm = leftLeg = rightLeg = primary;
             leftShoulder = rightShoulder = secondary;
             break;
 
-        case "Alternating":
+        case "alternating":
             leftHelmet = rightBackpack = leftChest = rightShoulder = leftArm = rightLeg = primary;
             rightHelmet = leftBackpack = rightChest = leftShoulder = rightArm = leftLeg = secondary;
             break;

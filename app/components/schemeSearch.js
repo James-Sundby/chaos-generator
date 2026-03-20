@@ -4,23 +4,16 @@ import { useState, useTransition, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { generatorRegistry } from "@/app/components/generatorRegistry";
+import { schemeSearchObjectSchema } from "@/app/schema/schemeSearch";
+import { schemeSearchServer } from "@/app/(actions)/serverActions";
 
 export default function SchemeSearch({
-    generatorKey = "chaos",
     id = "scheme-search",
+    placeholder = "chapter-ravens-of-the-keep-a99d95-440052-989898-eradicant-random",
+    buttonLabel = "Look up a Scheme",
+    ariaLabel = "Scheme lookup code",
+    buttonTheme = "btn-secondary",
 }) {
-    const generator = generatorRegistry[generatorKey] ?? generatorRegistry.chaos;
-    const searchConfig = generator.search;
-
-    const {
-        schema,
-        serverAction,
-        placeholder,
-        buttonLabel,
-        ariaLabel,
-    } = searchConfig;
-
     const {
         register,
         handleSubmit,
@@ -29,7 +22,7 @@ export default function SchemeSearch({
         watch,
         setFocus,
     } = useForm({
-        resolver: zodResolver(schema),
+        resolver: zodResolver(schemeSearchObjectSchema),
         defaultValues: { q: "" },
         mode: "onSubmit",
         reValidateMode: "onSubmit",
@@ -49,7 +42,7 @@ export default function SchemeSearch({
         setServerError(null);
 
         startTransition(async () => {
-            const res = await serverAction({ q: v });
+            const res = await schemeSearchServer({ q: v });
             if (res?.error) setServerError(res.error);
         });
     };
@@ -58,9 +51,17 @@ export default function SchemeSearch({
     const hasError = !!errors.q || !!serverError;
 
     useEffect(() => {
-        if (serverError) setServerError(null);
-        if (isEmpty && errors.q) clearErrors("q");
+        if (isEmpty) {
+            if (errors.q) clearErrors("q");
+            if (serverError) setServerError(null);
+        }
     }, [isEmpty, errors.q, clearErrors, serverError]);
+
+    useEffect(() => {
+        if (serverError && q?.trim()) {
+            setServerError(null);
+        }
+    }, [q]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit, onInvalid)} noValidate className="w-full">
@@ -82,7 +83,7 @@ export default function SchemeSearch({
 
                     <button
                         type="submit"
-                        className={`btn ${generator.buttonTheme} join-item`}
+                        className={`btn ${buttonTheme} join-item`}
                         aria-busy={pending}
                         disabled={isEmpty || pending}
                         aria-disabled={isEmpty || pending}

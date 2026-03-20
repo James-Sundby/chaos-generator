@@ -4,108 +4,84 @@ export default function SpaceMarine({ primary, secondary, trim, pattern }) {
     const ribbing = "#3E494A"; // Mechanicus Standard Grey
     const lenses = "#54BDCA"; // Baharroth Blue
 
-    switch (pattern) {
-        case "Accipiters":
+    const patternKey = String(pattern ?? "").toLowerCase();
+
+    switch (patternKey) {
+        case "accipiters":
             leftHelmet = rightHelmet = leftShoulder = rightShoulder = leftShoulderTrim = rightShoulderTrim = leftArm = rightArm = leftHand = rightHand = leftArmTrim = rightArmTrim = primary;
-            // 
             leftBackpack = rightBackpack = leftChest = rightChest = leftLegTrim = rightLegTrim = leftBelt = rightBelt = codLeft = codRight = leftThigh = rightThigh = leftShin = rightShin = leftBoot = rightBoot = secondary;
-            // 
             eagle = trim;
             break;
 
-        case "Arms":
+        case "arms":
             leftShoulder = rightShoulder = leftShoulderTrim = rightShoulderTrim = leftBackpack = rightBackpack = leftChest = rightChest = leftLegTrim = rightLegTrim = codLeft = codRight = leftThigh = rightThigh = leftShin = rightShin = leftBoot = rightBoot = primary;
-            // 
             leftHand = rightHand = leftArm = rightArm = leftArmTrim = rightArmTrim = secondary;
-            // 
             leftHelmet = rightHelmet = eagle = leftBelt = rightBelt = trim;
             break;
 
-        case "Blazoned":
+        case "blazoned":
             leftBackpack = rightBackpack = leftChest = rightChest = leftShoulderTrim = rightShoulderTrim = codLeft = codRight = leftBelt = rightBelt = primary;
-            //
             leftHelmet = rightHelmet = leftShoulder = rightShoulder = leftArm = rightArm = leftHand = rightHand = leftArmTrim = rightArmTrim = leftThigh = rightThigh = leftShin = rightShin = leftBoot = rightBoot = leftLegTrim = rightLegTrim = secondary;
-            //
             eagle = trim;
             break;
 
-        case "Centered":
+        case "centered":
             leftBackpack = rightBackpack = leftShoulder = rightShoulder = leftShoulderTrim = rightShoulderTrim = leftArm = rightArm = leftHand = rightHand = leftThigh = rightThigh = leftShin = rightShin = leftBoot = rightBoot = primary;
-            //
             leftHelmet = rightHelmet = leftChest = rightChest = codLeft = codRight = leftBelt = rightBelt = secondary;
-            //
             eagle = leftArmTrim = rightArmTrim = leftLegTrim = rightLegTrim = trim;
             break;
 
-        case "Crusader":
+        case "crusader":
             leftBackpack = rightBackpack = leftChest = rightChest = leftShoulderTrim = rightShoulderTrim = leftArm = rightArm = leftHand = rightHand = leftThigh = rightThigh = leftShin = rightShin = leftBoot = rightBoot = codLeft = codRight = primary;
-            //
             leftHelmet = rightHelmet = leftShoulder = rightShoulder = secondary;
-            //
             eagle = leftBelt = rightBelt = leftArmTrim = rightArmTrim = leftLegTrim = rightLegTrim = trim;
             break;
 
-        case "Disciple":
+        case "disciple":
             leftBackpack = rightBackpack = leftShoulderTrim = rightShoulderTrim = leftArm = rightArm = leftHand = rightHand = leftThigh = rightThigh = leftBoot = rightBoot = codLeft = codRight = leftArmTrim = rightArmTrim = leftLegTrim = rightLegTrim = primary;
-            //
             leftHelmet = rightHelmet = leftChest = rightChest = leftShin = rightShin = leftShoulder = rightShoulder = secondary;
-            //
             leftBelt = rightBelt = eagle = trim;
             break;
 
-        case "Eradicant":
+        case "eradicant":
             leftBackpack = rightBackpack = leftShoulder = rightShoulder = leftShoulderTrim = rightShoulderTrim = leftArm = rightArm = leftHand = rightHand = leftArmTrim = rightArmTrim = primary;
-            //
             leftHelmet = rightHelmet = leftChest = rightChest = codLeft = codRight = leftBelt = rightBelt = leftThigh = rightThigh = leftShin = rightShin = leftBoot = rightBoot = leftLegTrim = rightLegTrim = secondary;
-            //
             eagle = trim;
             break;
 
-        case "Half":
+        case "half":
             leftHelmet = leftBackpack = leftChest = leftShoulder = leftShoulderTrim = leftArm = leftHand = leftThigh = leftShin = leftBoot = codLeft = leftArmTrim = leftLegTrim = primary;
-            //
             rightHelmet = rightBackpack = rightChest = rightShoulderTrim = rightArm = rightHand = rightThigh = rightBoot = codRight = rightShin = rightArmTrim = rightShoulder = rightLegTrim = secondary;
-            //
             leftBelt = rightBelt = eagle = trim;
             break;
 
-        case "Legs":
+        case "legs":
             leftHelmet = rightHelmet = leftBackpack = rightBackpack = leftChest = rightChest = leftShoulder = rightShoulder = leftShoulderTrim = rightShoulderTrim = leftArm = rightArm = leftHand = rightHand = codLeft = codRight = leftBelt = rightBelt = leftArmTrim = rightArmTrim = primary;
-            //
             leftThigh = rightThigh = leftShin = rightShin = leftBoot = rightBoot = leftLegTrim = rightLegTrim = secondary;
-            //
             eagle = trim;
             break;
 
-        case "Quarter":
+        case "quarter":
             leftHelmet = leftBackpack = leftChest = leftShoulder = leftShoulderTrim = leftArm = leftHand = rightThigh = rightShin = rightBoot = codRight = leftBelt = leftArmTrim = rightLegTrim = primary;
-            //
             rightHelmet = rightChest = rightShoulder = rightShoulderTrim = rightArm = rightBackpack = leftBoot = rightBelt = rightArmTrim = codLeft = leftLegTrim = rightHand = leftThigh = leftShin = secondary;
-            //
             eagle = trim;
             break;
 
-        case "Scythes":
+        case "scythes":
             leftHelmet = rightHelmet = leftShoulder = rightShoulder = leftShoulderTrim = rightShoulderTrim = leftArm = rightArm = leftHand = rightHand = leftThigh = rightThigh = leftShin = rightShin = leftBoot = rightBoot = leftArmTrim = rightArmTrim = leftLegTrim = rightLegTrim = primary;
-            //
             leftBackpack = rightBackpack = codLeft = codRight = leftChest = rightChest = secondary;
-            //
             leftBelt = rightBelt = eagle = trim;
             break;
 
-        case "Shoulders":
+        case "shoulders":
             leftBackpack = rightBackpack = leftChest = rightChest = leftArm = rightArm = leftHand = rightHand = leftThigh = rightThigh = leftShin = rightShin = leftBoot = rightBoot = codLeft = codRight = leftBelt = rightBelt = leftArmTrim = rightArmTrim = leftLegTrim = rightLegTrim = primary;
-            //
             leftShoulder = rightShoulder = leftShoulderTrim = rightShoulderTrim = secondary;
-            //
             leftHelmet = rightHelmet = eagle = trim;
             break;
 
-        case "Talons":
+        case "talons":
             leftChest = rightChest = leftShoulderTrim = rightShoulderTrim = leftArm = rightArm = leftHand = rightHand = codLeft = codRight = leftBelt = rightBelt = leftArmTrim = rightArmTrim = primary;
-            //
             leftHelmet = rightHelmet = leftBackpack = rightBackpack = leftShoulder = rightShoulder = leftLegTrim = leftThigh = rightThigh = leftShin = rightShin = leftBoot = rightBoot = rightLegTrim = secondary;
-            //
             eagle = trim;
             break;
 

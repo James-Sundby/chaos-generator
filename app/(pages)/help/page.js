@@ -36,6 +36,23 @@ export default function Page() {
 
             <h1>Help</h1>
 
+            <h2>Scheme ID Update - March 20th, 2026</h2>
+            <p>
+                I&apos;ve recently updated scheme IDs so they now include the faction at the start in order to support a single shared search and make links more consistent across
+                the site.
+            </p>
+            <p>
+                If you&apos;re revisiting a saved URL or bookmark and hit an error, the ID itself is probably still fine, it just needs the faction prefix added to the front.
+            </p>
+            <p>
+                For example:
+            </p>
+            <ul>
+                <li><code>chapter-ravens-of-the-keep-a99d95-440052-989898-eradicant-random</code></li>
+                <li><code>chaos-the-oathbroken-claws-02134e-4b213c-875408-003d15-half-tetradic</code></li>
+                <li><code>eldar-twilightbound-989898-6d655f-2c9bcc-8-analogous</code></li>
+            </ul>
+            <div className="divider"></div>
             <h2>Colour Hex Changes - May 5th, 2025</h2>
             <p>
                 I&apos;ve recently updated the colour codes to match Citadel paint references more accurately.
@@ -65,7 +82,7 @@ export default function Page() {
                 </Link>
                 {" "}to generate a fresh ID.
             </p>
-
+            <div className="divider"></div>
             <h2>Updating Your ID</h2>
             <p>
                 If your old id used a metal code (like <code>ihs</code>), you now need to replace it with the corresponding <strong>hex value</strong> listed below.
