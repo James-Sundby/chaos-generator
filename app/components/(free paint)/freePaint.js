@@ -5,7 +5,7 @@ import { colourList } from "@/lib/colours";
 
 import PaintBySections from "@/app/components/(free paint)/paintBySections";
 import ImportWarband from "@/app/components/(free paint)/importWarband";
-import ColorListbox from "./colourSelect";
+import ColorListbox from "../colourSelect";
 
 import { usePainterStore } from "@/app/stores/painterStore";
 
