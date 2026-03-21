@@ -20,7 +20,7 @@ export default function GenerateNewButton({
                     colourMode: settings.colourMode,
                 })}
             />
-            <PendingActionButton generatorKey={generatorKey}>
+            <PendingActionButton>
                 {label ?? `Generate a New ${config.noun[0].toUpperCase()}${config.noun.slice(1)}`}
             </PendingActionButton>
         </form>

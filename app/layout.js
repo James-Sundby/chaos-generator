@@ -97,7 +97,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="chaos">
+    <html lang="en" >
       <body className={`${inter.className} min-h-screen bg-base-200 text-base-content antialiased`}>
         <div className="flex min-h-screen flex-col">
           <Header />

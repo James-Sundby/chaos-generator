@@ -1,6 +1,8 @@
 import Link from "next/link";
-import GenerateNewButton from "@/app/components/generateNewButton";
 import SchemeSearch from "@/app/components/schemeSearch";
+import SpaceMarine from "@/app/components/models/spaceMarine";
+import ChaosMarine from "@/app/components/models/chaosSpaceMarine";
+import EldarAvenger from "@/app/components/models/eldarAvenger";
 
 const factionCards = [
   {
@@ -10,10 +12,16 @@ const factionCards = [
     mobileTitle: "EMPEROR'S OWN",
     body: "Generate and customize loyalist chapter schemes for your next army or painting project.",
     href: "/loyalists",
-    accent: "border-primary",
-    badge: "badge-primary",
-    button: "btn-primary",
-    ghost: "A",
+    accentBarClass: "bg-faction-loyalist",
+    badgeClass: "badge-loyalist",
+    buttonClass: "btn-primary",
+    ghostModel: SpaceMarine,
+    ghostModelProps: {
+      primary: "#d6d6d6",
+      secondary: "#d6d6d6",
+      trim: "#d6d6d6",
+      pattern: "Quartered",
+    },
   },
   {
     key: "chaos",
@@ -22,10 +30,17 @@ const factionCards = [
     mobileTitle: "LEGIONS OF CHAOS",
     body: "Create warbands, corrupted heraldry, and traitor paint schemes with stronger contrast and trim options.",
     href: "/chaos-hub",
-    accent: "border-accent",
-    badge: "badge-accent",
-    button: "btn-accent",
-    ghost: "Ω",
+    accentBarClass: "bg-faction-chaos",
+    badgeClass: "badge-chaos",
+    buttonClass: "btn-primary",
+    ghostModel: ChaosMarine,
+    ghostModelProps: {
+      primary: "#d6d6d6",
+      secondary: "#d6d6d6",
+      edge: "#d6d6d6",
+      accent: "#d6d6d6",
+      pattern: "Basic",
+    },
   },
   {
     key: "eldar",
@@ -34,10 +49,16 @@ const factionCards = [
     mobileTitle: "ALIEN THREATS",
     body: "Explore Eldar-inspired palettes, patterns, and cleaner alien colour layouts for custom hosts.",
     href: "/xenos",
-    accent: "border-info",
-    badge: "badge-info",
-    button: "btn-info",
-    ghost: "X",
+    accentBarClass: "bg-faction-xenos",
+    badgeClass: "badge-xenos",
+    buttonClass: "btn-primary",
+    ghostModel: EldarAvenger,
+    ghostModelProps: {
+      primary: "#d6d6d6",
+      secondary: "#d6d6d6",
+      accent: "#d6d6d6",
+      pattern: "Default",
+    },
   },
 ];
 
@@ -62,56 +83,58 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mb-8 grid grid-cols-1 gap-6 md:mb-12 lg:grid-cols-3">
-        {factionCards.map((card) => (
-          <div
-            key={card.key}
-            className="card relative overflow-hidden rounded-none border border-base-300 bg-base-100 shadow-sm"
-          >
+      <section className="mb-8 grid grid-cols-1 gap-6 md:mb-12 md:grid-cols-3">
+        {factionCards.map((card) => {
+          const GhostModel = card.ghostModel;
+
+          return (
             <div
-              className={`absolute left-0 top-0 h-full w-1 ${card.key === "chapter"
-                ? "bg-primary"
-                : card.key === "chaos"
-                  ? "bg-accent"
-                  : "bg-info"
-                }`}
-            />
+              key={card.key}
+              className="card relative overflow-hidden rounded-none border border-base-300 bg-base-100 shadow-sm"
+            >
+              <div className={`absolute left-0 top-0 h-full w-1 ${card.accentBarClass}`} />
 
-            <div className="pointer-events-none absolute -right-4 -top-6 text-[7rem] font-black leading-none opacity-5 sm:text-[9rem] lg:-right-6 lg:-top-10 lg:text-[13rem]">
-              {card.ghost}
-            </div>
+              {GhostModel && (
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-6 top-1 hidden h-[80%] w-[80%] opacity-[0.08] md:block"
+                >
+                  <GhostModel {...card.ghostModelProps} />
+                </div>
+              )}
 
-            <div className="card-body relative z-10 justify-between p-6 sm:p-8">
-              <div>
-                <div className={`badge ${card.badge} badge-sm mb-4 rounded-none uppercase tracking-[0.2em]`}>
-                  {card.label}
+              <div className="card-body relative z-10 justify-between p-6 sm:p-8">
+                <div>
+                  <div className={`badge badge-sm mb-4 rounded-none uppercase tracking-[0.2em] ${card.badgeClass}`}>
+                    {card.label}
+                  </div>
+
+                  <h2 className="text-2xl font-black uppercase leading-none tracking-tight sm:text-3xl md:hidden">
+                    {card.mobileTitle}
+                  </h2>
+
+                  <h2 className="mb-4 hidden whitespace-pre-line text-3xl font-black uppercase leading-none tracking-tight md:block lg:text-5xl">
+                    {card.title}
+                  </h2>
+
+                  <p className="hidden max-w-xs text-sm leading-relaxed text-base-content/70 md:block">
+                    {card.body}
+                  </p>
                 </div>
 
-                <h2 className="text-2xl font-black uppercase leading-none tracking-tight sm:text-3xl lg:hidden">
-                  {card.mobileTitle}
-                </h2>
-
-                <h2 className="mb-4 hidden whitespace-pre-line text-4xl font-black uppercase leading-none tracking-tight lg:block lg:text-5xl">
-                  {card.title}
-                </h2>
-
-                <p className="hidden max-w-xs text-sm leading-relaxed text-base-content/70 lg:block">
-                  {card.body}
-                </p>
-              </div>
-
-              <div className="card-actions mt-6">
-                <Link
-                  href={card.href}
-                  className={`btn w-full rounded-none ${card.button}`}
-                  prefetch={false}
-                >
-                  Open Hub
-                </Link>
+                <div className="card-actions mt-6">
+                  <Link
+                    href={card.href}
+                    className={`btn w-full rounded-none ${card.buttonClass}`}
+                    prefetch={false}
+                  >
+                    Open Hub
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </section>
 
       <section className="relative z-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
@@ -139,7 +162,7 @@ export default function Home() {
           <div className="card-body">
             <div className="mb-4">
               <h2 className="mb-1 text-xs font-bold uppercase tracking-[0.25em] text-primary">
-                Tools
+                Legacy Tools
               </h2>
               <p className="text-sm text-base-content/75">
                 Jump straight into free painting and manual colour testing.
@@ -160,7 +183,7 @@ export default function Home() {
               >
                 <path d="M162.4 6c-1.5-3.6-5-6-8.9-6l-19 0c-3.9 0-7.5 2.4-8.9 6L104.9 57.7c-3.2 8-14.6 8-17.8 0L66.4 6c-1.5-3.6-5-6-8.9-6L48 0C21.5 0 0 21.5 0 48L0 224l0 22.4L0 256l9.6 0 364.8 0 9.6 0 0-9.6 0-22.4 0-176c0-26.5-21.5-48-48-48L230.5 0c-3.9 0-7.5 2.4-8.9 6L200.9 57.7c-3.2 8-14.6 8-17.8 0L162.4 6zM0 288l0 32c0 35.3 28.7 64 64 64l64 0 0 64c0 35.3 28.7 64 64 64s64-28.7 64-64l0-64 64 0c35.3 0 64-28.7 64-64l0-32L0 288zM192 432a16 16 0 1 1 0 32 16 16 0 1 1 0-32z" />
               </svg>
-              Open Paint
+              Primaris Paint
             </Link>
           </div>
         </div>

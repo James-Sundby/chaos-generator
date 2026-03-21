@@ -1,4 +1,5 @@
 import FactionHub from "@/app/components/factionHub";
+import EldarAvenger from "@/app/components/models/eldarAvenger";
 
 const xenosCards = [
     {
@@ -9,10 +10,16 @@ const xenosCards = [
         body: "Explore Eldar-inspired palettes, patterns, and cleaner alien colour layouts for custom hosts.",
         href: "/warhost",
         generatorKey: "eldar",
-        accentBar: "bg-info",
-        badgeClass: "badge-info",
-        buttonClass: "btn-info",
-        ghost: "A",
+        accentBarClass: "bg-faction-xenos",
+        badgeClass: "badge-xenos",
+        buttonClass: "btn-primary",
+        ghostModel: EldarAvenger,
+        ghostModelProps: {
+            primary: "#d9d9d9",
+            secondary: "#d9d9d9",
+            accent: "#d9d9d9",
+            pattern: "1",
+        },
         status: "live",
     },
     {
@@ -21,24 +28,12 @@ const xenosCards = [
         title: "T'AU\nHUNTER\nCADRE",
         mobileTitle: "T'AU HUNTER CADRE",
         body: "Placeholder hub for sept colours, clean panel armour, and disciplined ranged-war aesthetic schemes.",
-        accentBar: "bg-secondary",
-        badgeClass: "badge-secondary",
-        buttonClass: "btn-secondary",
+        accentBarClass: "bg-faction-xenos",
+        badgeClass: "badge-xenos",
+        buttonClass: "btn-primary",
         ghost: "T",
         status: "coming-soon",
     },
-    // {
-    //     key: "orks",
-    //     label: "Orks",
-    //     title: "ORK\nWARBAND",
-    //     mobileTitle: "ORK WARBAND",
-    //     body: "Placeholder hub for scrap-built armour, clan-inspired palettes, and loud high-contrast combinations.",
-    //     accentBar: "bg-success",
-    //     badgeClass: "badge-success",
-    //     buttonClass: "btn-success",
-    //     ghost: "W",
-    //     status: "coming-soon",
-    // },
 ];
 
 export default function XenosPage() {

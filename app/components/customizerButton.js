@@ -10,7 +10,7 @@ export default function CustomizerButton({
 
     return (
         <Link
-            className={`btn ${config.buttonTheme} btn-block rounded-sm`}
+            className="btn btn-primary btn-block rounded-none"
             href={config.painterPath}
             aria-label={aria}
             title={aria}

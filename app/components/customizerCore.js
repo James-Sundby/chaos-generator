@@ -13,10 +13,16 @@ function ControlRow({ id, label, children, hint }) {
     const hintId = hint ? `${id}-hint` : undefined;
 
     return (
-        <div className="form-control w-full">
-            <label id={labelId} htmlFor={id} className="label">
-                <span className="label-text">{label}</span>
-            </label>
+        <div className="w-full">
+            <div className="mb-2">
+                <label
+                    id={labelId}
+                    htmlFor={id}
+                    className="block text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/65"
+                >
+                    {label}
+                </label>
+            </div>
 
             <div className="join w-full">
                 {typeof children === "function"
@@ -25,8 +31,10 @@ function ControlRow({ id, label, children, hint }) {
             </div>
 
             {hint && (
-                <div className="label">
-                    <span id={hintId} className="label-text-alt">{hint}</span>
+                <div className="mt-2">
+                    <span id={hintId} className="text-xs text-base-content/55">
+                        {hint}
+                    </span>
                 </div>
             )}
         </div>
@@ -41,7 +49,7 @@ function SelectControl({ id, options, value, onChange, ariaLabel }) {
             id={id}
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="select select-bordered join-item w-full"
+            className="select select-bordered join-item w-full rounded-none  bg-base-100"
             aria-label={ariaLabel}
         >
             {isGrouped
@@ -73,13 +81,13 @@ export default function CustomizerCore({
     hideSecondaryWhenBasic = false,
 }) {
     const router = useRouter();
-    const generator = generatorRegistry[generatorKey];
+    const generator = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
+
     const [modelKey, setModelKey] = useState(
         Object.keys(generator.models)[0]
     );
 
     const modelOptions = Object.entries(generator.models);
-
     const patternKey = String(band.pattern ?? "").toLowerCase();
 
     const updateBand = (updated) => {
@@ -135,12 +143,11 @@ export default function CustomizerCore({
     const showSecondary = hideSecondaryWhenBasic
         ? patternKey !== "basic"
         : true;
-    const colourClass = generator.buttonTheme;
 
     const ActionBtn = ({ title, action }) => (
         <button
             type="button"
-            className={`btn ${colourClass} join-item btn-square`}
+            className="btn btn-primary join-item btn-square rounded-none"
             title={title}
             aria-label={title}
             onClick={action}
@@ -157,25 +164,22 @@ export default function CustomizerCore({
     );
 
     return (
-        <section className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
-            <div className="w-full max-w-96">
+        <section className="mx-auto my-auto flex w-full max-w-7xl flex-col items-center justify-center gap-6 md:flex-row md:items-stretch lg:gap-16">
+            <div className="relative w-full max-w-105 shrink-0">
                 {modelOptions.length > 1 && (
-                    <fieldset className="mb-2">
-                        <legend className="sr-only">Model</legend>
-                        <div className="join w-full">
-                            {modelOptions.map(([key, model]) => (
-                                <input
-                                    key={key}
-                                    type="radio"
-                                    name={`${generatorKey}-model`}
-                                    className="join-item btn btn-sm flex-1"
-                                    aria-label={model.label}
-                                    checked={modelKey === key}
-                                    onChange={() => setModelKey(key)}
-                                />
-                            ))}
-                        </div>
-                    </fieldset>
+                    <div className="join mb-3 flex w-full md:hidden">
+                        {modelOptions.map(([key, model]) => (
+                            <input
+                                key={key}
+                                type="radio"
+                                name={`${generatorKey}-model-mobile`}
+                                className="join-item btn flex-1 rounded-none border-base-300 text-xs font-bold uppercase tracking-[0.18em]"
+                                aria-label={model.label}
+                                checked={modelKey === key}
+                                onChange={() => setModelKey(key)}
+                            />
+                        ))}
+                    </div>
                 )}
 
                 <TradingCard
@@ -185,23 +189,45 @@ export default function CustomizerCore({
                 />
             </div>
 
-            <div className="card w-full max-w-96 bg-base-200 text-base-content">
-                <div className="card-body">
-                    <div className="card-title">Options</div>
+            <div className="flex w-full max-w-105 flex-col gap-4 md:flex-1">
+                <h2 className="text-3xl font-black uppercase leading-none tracking-tight sm:text-4xl lg:text-5xl">
+                    Customizer
+                </h2>
+                {/* 
+                <p className="max-w-xl text-sm leading-relaxed text-base-content/70 md:text-base">
+                    Refine colours, patterns, and naming data manually before returning to the archive entry.
+                </p> */}
 
-                    <label className="form-control w-full">
-                        <div className="label">
-                            <span className="label-text">Name</span>
+                {modelOptions.length > 1 && (
+                    <div className="hidden md:block">
+                        <div className="join flex w-full">
+                            {modelOptions.map(([key, model]) => (
+                                <input
+                                    key={key}
+                                    type="radio"
+                                    name={`${generatorKey}-model-desktop`}
+                                    className="join-item btn flex-1 rounded-none border-base-300 text-xs font-bold uppercase tracking-[0.18em]"
+                                    aria-label={model.label}
+                                    checked={modelKey === key}
+                                    onChange={() => setModelKey(key)}
+                                />
+                            ))}
                         </div>
-
+                    </div>
+                )}
+                <div className="flex flex-col gap-4 ">
+                    <div>
+                        <label className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/65">
+                            {generator.noun} Name
+                        </label>
                         <input
                             type="text"
                             value={band.warbandName}
                             onChange={(e) => handleNameChange(e.target.value)}
-                            className="input input-bordered w-full"
+                            className="input input-bordered w-full rounded-none border-base-300 bg-base-100"
                             maxLength={50}
                         />
-                    </label>
+                    </div>
 
                     <ControlRow id="primary-colour" label="Primary colour">
                         {({ labelId, hintId }) => (
@@ -268,6 +294,7 @@ export default function CustomizerCore({
                         )}
                     </ControlRow>
 
+
                     {generatorKey === "chaos" && (
                         <ControlRow id="accent-colour" label="Accent colour">
                             {({ labelId, hintId }) => (
@@ -291,24 +318,32 @@ export default function CustomizerCore({
                     )}
 
                     <ControlRow id="pattern" label="Pattern">
-                        <SelectControl
-                            id="pattern"
-                            options={patterns.map((p) => ({ name: p, value: p }))}
-                            value={band.pattern}
-                            onChange={handlePatternChange}
-                            ariaLabel="Pattern"
-                        />
-                        <ActionBtn title="Random pattern" action={generateNewPattern} />
+                        <>
+                            <SelectControl
+                                id="pattern"
+                                options={patterns.map((p) => ({ name: p, value: p }))}
+                                value={band.pattern}
+                                onChange={handlePatternChange}
+                                ariaLabel="Pattern"
+                            />
+                            <ActionBtn title="Random pattern" action={generateNewPattern} />
+                        </>
                     </ControlRow>
 
-                    <button
-                        className={`btn ${colourClass} btn-block rounded-sm mt-2`}
-                        onClick={() => router.push(backHref)}
-                        type="button"
-                    >
-                        Back to Randomizer
-                    </button>
+
                 </div>
+
+
+
+
+                <button
+                    className="btn btn-primary rounded-none"
+                    onClick={() => router.push(backHref)}
+                    type="button"
+                >
+                    Back to Archive Entry
+                </button>
+
             </div>
         </section>
     );

@@ -2,6 +2,8 @@ import Link from "next/link";
 import GenerateNewButton from "@/app/components/generateNewButton";
 
 export default function FactionHub({ eyebrow, title, intro, cards }) {
+
+
     return (
         <section className="relative flex flex-col">
             <section className="relative z-10 mb-8 flex flex-col md:mb-12">
@@ -21,20 +23,26 @@ export default function FactionHub({ eyebrow, title, intro, cards }) {
                 </div>
             </section>
 
-            <section className="mb-8 grid grid-cols-1 gap-6 md:mb-12 lg:grid-cols-3">
+            <section className="mb-8 grid grid-cols-1 gap-6 md:mb-12 md:grid-cols-3">
                 {cards.map((card) => {
                     const isComingSoon = card.status === "coming-soon";
+                    const GhostModel = card.ghostModel;
 
                     return (
                         <div
                             key={card.key}
                             className="card relative overflow-hidden rounded-none border border-base-300 bg-base-100 shadow-sm"
                         >
-                            <div className={`absolute left-0 top-0 h-full w-1 ${card.accentBar}`} />
+                            <div className={`absolute left-0 top-0 h-full w-1 ${card.accentBarClass}`} />
 
-                            <div className="pointer-events-none absolute -right-4 -top-6 text-[7rem] font-black leading-none opacity-5 sm:text-[9rem] lg:-right-6 lg:-top-10 lg:text-[13rem]">
-                                {card.ghost}
-                            </div>
+                            {GhostModel && (
+                                <div
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute -right-6 top-1 hidden h-[80%] w-[80%] opacity-[0.08] md:block"
+                                >
+                                    <GhostModel {...card.ghostModelProps} />
+                                </div>
+                            )}
 
                             <div className="card-body relative z-10 justify-between p-6 sm:p-8">
                                 <div>

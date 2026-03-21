@@ -35,6 +35,15 @@ export const generatorRegistry = {
             sourceLabel: "Lineage",
         },
 
+        faction: {
+            key: "loyalist",
+            accentBarClass: "bg-faction-loyalist",
+            badgeClass: "badge-loyalist",
+            textClass: "text-faction-loyalist",
+            buttonClass: "btn-faction-loyalist",
+            softBgClass: "bg-faction-loyalist-soft",
+        },
+
         models: {
             marine: {
                 label: "Marine",
@@ -97,6 +106,15 @@ export const generatorRegistry = {
             sourceLabel: "Allegiance",
         },
 
+        faction: {
+            key: "chaos",
+            accentBarClass: "bg-faction-chaos",
+            badgeClass: "badge-chaos",
+            textClass: "text-faction-chaos",
+            buttonClass: "btn-faction-chaos",
+            softBgClass: "bg-faction-chaos-soft",
+        },
+
         models: {
             marine: {
                 label: "Chaos Marine",
@@ -148,6 +166,15 @@ export const generatorRegistry = {
             paletteLabel: "Warhost Palette",
             idLabel: "Archive ID",
             sourceLabel: "Origin",
+        },
+
+        faction: {
+            key: "xenos",
+            accentBarClass: "bg-faction-xenos",
+            badgeClass: "badge-xenos",
+            textClass: "text-faction-xenos",
+            buttonClass: "btn-faction-xenos",
+            softBgClass: "bg-faction-xenos-soft",
         },
 
         models: {

@@ -1,4 +1,5 @@
 import FactionHub from "@/app/components/factionHub";
+import ChaosMarine from "@/app/components/models/chaosSpaceMarine";
 
 const chaosCards = [
     {
@@ -9,12 +10,19 @@ const chaosCards = [
         body: "Create warbands, corrupted heraldry, and traitor paint schemes with stronger contrast and trim options.",
         href: "/chaos",
         generatorKey: "chaos",
-        accentBar: "bg-accent",
-        badgeClass: "badge-accent",
-        buttonClass: "btn-accent",
-        ghost: "Ω",
+        accentBarClass: "bg-faction-chaos",
+        badgeClass: "badge-chaos",
+        buttonClass: "btn-primary",
+        ghostModel: ChaosMarine,
+        ghostModelProps: {
+            primary: "#d9d9d9",
+            secondary: "#d9d9d9",
+            edge: "#d9d9d9",
+            accent: "#d9d9d9",
+            pattern: "Basic",
+        },
         status: "live",
-    }
+    },
 ];
 
 export default function ChaosHubPage() {

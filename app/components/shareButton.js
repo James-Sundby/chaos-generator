@@ -33,7 +33,7 @@ export default function ShareButton({
     return (
         <>
             <button
-                className={`btn ${config.buttonTheme} btn-block rounded-sm`}
+                className="btn btn-primary btn-block rounded-none"
                 onClick={handleShare}
                 aria-label={aria}
                 title={aria}
@@ -44,7 +44,7 @@ export default function ShareButton({
 
             {copied && (
                 <div className="toast">
-                    <div className="alert alert-info">
+                    <div className="alert alert-info rounded-none">
                         <span>Link copied to clipboard!</span>
                     </div>
                 </div>

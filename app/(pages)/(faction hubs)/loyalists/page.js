@@ -1,5 +1,7 @@
 import FactionHub from "@/app/components/factionHub";
 
+import SpaceMarine from "@/app/components/models/spaceMarine";
+
 const loyalistCards = [
     {
         key: "space-marines",
@@ -9,10 +11,16 @@ const loyalistCards = [
         body: "Generate and customize loyalist chapter schemes for your next army or painting project.",
         href: "/chapter",
         generatorKey: "chapter",
-        accentBar: "bg-primary",
-        badgeClass: "badge-primary",
+        accentBarClass: "bg-faction-loyalist",
+        badgeClass: "badge-loyalist",
         buttonClass: "btn-primary",
-        ghost: "A",
+        ghostModel: SpaceMarine,
+        ghostModelProps: {
+            primary: "#d9d9d9",
+            secondary: "#d9d9d9",
+            trim: "#d9d9d9",
+            pattern: "Shoulders",
+        },
         status: "live",
     },
     {
@@ -21,24 +29,11 @@ const loyalistCards = [
         title: "SISTERS\nOF\nBATTLE",
         mobileTitle: "SISTERS OF BATTLE",
         body: "Placeholder hub for ecclesiastic armour palettes, robes, and Order colour layouts.",
-        accentBar: "bg-secondary",
-        badgeClass: "badge-secondary",
-        buttonClass: "btn-secondary",
-        ghost: "✦",
+        accentBarClass: "bg-faction-loyalist",
+        badgeClass: "badge-loyalist",
+        buttonClass: "btn-primary",
         status: "coming-soon",
     },
-    // {
-    //     key: "guard",
-    //     label: "Militarum",
-    //     title: "IMPERIAL\nGUARD",
-    //     mobileTitle: "IMPERIAL GUARD",
-    //     body: "Placeholder hub for regiment uniforms, armour panels, and practical campaign colour schemes.",
-    //     accentBar: "bg-accent",
-    //     badgeClass: "badge-accent",
-    //     buttonClass: "btn-accent",
-    //     ghost: "I",
-    //     status: "coming-soon",
-    // },
 ];
 
 export default function LoyalistsPage() {
