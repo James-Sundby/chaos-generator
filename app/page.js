@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import RecentSchemeArchive from "./components/recentSchemeArchive";
+import CogitatorBox from "./components/cogitatorBox";
 
 const SchemeSearch = dynamic(() => import("@/app/components/schemeSearch"), {
   ssr: false,
@@ -99,48 +101,42 @@ const factionCards = [
 
 export default function Home() {
   return (
-    <section className="relative flex flex-col my-auto">
-      <section className="relative z-10 mb-8 flex flex-col md:mb-12">
-        <div className="max-w-3xl">
-          <span className="badge badge-outline badge-primary mb-4 rounded-none px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
-            Archive Terminal
-          </span>
-
-          <div className="flex flex-col gap-3">
-            <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl lg:text-7xl">
-              Chapter Generator
-            </h1>
-            <p className="max-w-2xl text-sm leading-relaxed text-base-content/75 sm:text-lg">
-              An unofficial Warhammer hobby tool for generating, searching, and customizing
-              paint schemes for loyalists, chaos warbands, and xenos forces.
-            </p>
-          </div>
+    <div className="flex flex-col gap-8 md:gap-12">
+      <section className="max-w-3xl">
+        <div className="flex flex-col gap-3">
+          <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl lg:text-7xl">
+            Chapter Generator
+          </h1>
+          <p className="max-w-2xl text-sm leading-relaxed text-base-content/75 sm:text-lg">
+            An unofficial Warhammer hobby tool for generating, searching, and customizing
+            paint schemes for loyalists, chaos warbands, and xenos forces.
+          </p>
         </div>
       </section>
 
-      <section className="mb-8 grid grid-cols-1 gap-6 md:mb-12 md:grid-cols-3">
+      <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {factionCards.map((card) => {
           const GhostModel = card.ghostModel;
 
           return (
-            <div
+            <article
               key={card.key}
               className="card relative overflow-hidden rounded-none border border-base-300 bg-base-100 shadow-sm"
             >
-              <div className={`absolute left-0 top-0 h-full w-1 ${card.accentBarClass}`} />
+              <div className={`absolute inset-y-0 left-0 w-1 ${card.accentBarClass}`} />
 
-              {GhostModel && (
+              {GhostModel ? (
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-6 top-1 hidden h-[80%] w-[80%] opacity-[0.08] md:block"
                 >
                   <GhostModel {...card.ghostModelProps} />
                 </div>
-              )}
+              ) : null}
 
-              <div className="card-body relative z-10 flex flex-col justify-between gap-6 p-6 sm:p-8">
+              <div className="card-body relative flex flex-col justify-between gap-6 p-6 sm:p-8">
                 <div className="flex flex-col gap-4">
-                  <h2 className="text-2xl font-black uppercase leading-none tracking-tight sm:text-3xl md:hidden">
+                  <h2 className="text-2xl font-black uppercase leading-none tracking-tight md:hidden">
                     {card.mobileTitle}
                   </h2>
 
@@ -148,10 +144,9 @@ export default function Home() {
                     {card.title}
                   </h2>
 
-                  <p className="md:max-w-xs text-sm leading-relaxed text-base-content/70">
+                  <p className="text-sm leading-relaxed text-base-content/70 md:max-w-xs">
                     {card.body}
                   </p>
-
 
                   <div className="flex flex-wrap gap-2">
                     {card.tags.map((tag) => (
@@ -159,38 +154,36 @@ export default function Home() {
                         key={tag}
                         className={`badge badge-sm rounded-none px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] ${card.badgeClass}`}
                       >
-
                         {tag}
                       </span>
                     ))}
                   </div>
-
                 </div>
 
                 <div className="card-actions">
                   <Link
                     href={card.href}
-                    className={`btn w-full rounded-none ${card.buttonClass}`}
                     prefetch={false}
+                    className={`btn w-full rounded-none ${card.buttonClass}`}
                   >
                     Open {card.label} Hub
                   </Link>
                 </div>
               </div>
-            </div>
+            </article>
           );
         })}
       </section>
 
-      <section className="relative z-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="card border border-base-300 bg-base-100 shadow-sm">
+      <section>
+        <div className="card rounded-none border border-base-300 bg-base-100 shadow-sm">
           <div className="card-body flex flex-col gap-4 p-6 sm:p-8">
             <div className="flex flex-col gap-1">
-              <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">
+              <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
                 Search Any Scheme
               </h2>
               <p className="text-sm text-base-content/75">
-                Search chapters, chaos warbands, or eldar warhosts using a full faction-prefixed slug.
+                Search archived schemes using their full id, including faction prefix and palette data.
               </p>
             </div>
 
@@ -198,12 +191,16 @@ export default function Home() {
               placeholder="chapter-ravens-of-the-keep-a99d95-440052-989898-eradicant-random"
               buttonLabel="Look up a Scheme"
               ariaLabel="Scheme lookup code"
-              buttonTheme="btn-secondary"
+              buttonTheme="btn-primary"
             />
           </div>
         </div>
+      </section>
 
-        <div className="card border border-base-300 bg-base-100 shadow-sm">
+      <RecentSchemeArchive />
+
+      <section className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
+        <div className="card rounded-none border border-base-300 bg-base-100 shadow-sm">
           <div className="card-body flex flex-col gap-4 p-6 sm:p-8">
             <div className="flex flex-col gap-1">
               <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
@@ -215,10 +212,10 @@ export default function Home() {
             </div>
 
             <Link
-              className="btn btn-secondary w-full rounded-none"
               href="/open-paint"
-              aria-label="Open the free paint tool"
               prefetch={false}
+              aria-label="Open the free paint tool"
+              className="btn btn-secondary w-full rounded-none"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -232,7 +229,16 @@ export default function Home() {
             </Link>
           </div>
         </div>
+
+        <CogitatorBox
+          lines={[
+            "> Archive link established.",
+            "> Heraldic variance within accepted threshold.",
+            "> Local palette records ready for designation.",
+            "> Awaiting further input.",
+          ]}
+        />
       </section>
-    </section>
+    </div>
   );
 }

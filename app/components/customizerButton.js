@@ -10,12 +10,12 @@ export default function CustomizerButton({
 
     return (
         <Link
-            className="btn btn-primary btn-block rounded-none"
             href={config.painterPath}
+            className="btn btn-primary w-full rounded-none"
             aria-label={aria}
             title={aria}
         >
-            <span>{label ?? "Customize"}</span>
+            {label ?? "Customize"}
         </Link>
     );
 }

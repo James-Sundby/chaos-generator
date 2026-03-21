@@ -1,34 +1,30 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+const defaultChapter = {
+    warbandName: 'Sample',
+    slug: 'sample',
+    pattern: 'Arms',
+    colors: [
+        { name: "White Scar", hex: "#FFFFFF" },
+        { name: "White Scar", hex: "#FFFFFF" },
+        { name: "White Scar", hex: "#FFFFFF" },
+    ],
+    message: '',
+    mode: '',
+    isSample: true,
+}
+
 export const useWarbandStore = create(
     persist(
         (set, get) => ({
-            warband: {
-                warbandName: 'Sample',
-                slug: 'sample',
-                pattern: 'Arms',
-                colors: [
-                    { name: "White Scar", hex: "#FFFFFF" },
-                    { name: "White Scar", hex: "#FFFFFF" },
-                    { name: "White Scar", hex: "#FFFFFF" },
-                ],
-                message: '',
-                mode: '',
-            },
+            warband: defaultChapter,
             setWarband: (data) => {
-                set((state) => ({ warband: { ...state.warband, ...data } }))
+                set((state) => ({ warband: { ...state.warband, ...data, isSample: false } }))
             },
             resetWarband: () => {
                 set({
-                    warband: {
-                        warbandName: '',
-                        slug: '',
-                        pattern: '',
-                        colors: [],
-                        message: '',
-                        mode: '',
-                    },
+                    warband: defaultChapter,
                 });
             },
         }),

@@ -1,37 +1,34 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+
+const defaultChaosWarband = {
+    warbandName: 'Sample',
+    slug: 'sample',
+    pattern: 'Basic',
+    colors: [
+        { name: "White Scar", hex: "#FFFFFF" },
+        { name: "White Scar", hex: "#FFFFFF" },
+        { name: "White Scar", hex: "#FFFFFF" },
+        { name: "White Scar", hex: "#FFFFFF" },
+    ],
+    message: '',
+    mode: '',
+    isSample: true,
+}
+
 export const useChaosStore = create(
     persist(
         (set, get) => ({
-            chaosBand: {
-                warbandName: 'Sample',
-                slug: 'sample',
-                pattern: 'Basic',
-                colors: [
-                    { name: "White Scar", hex: "#FFFFFF" },
-                    { name: "White Scar", hex: "#FFFFFF" },
-                    { name: "White Scar", hex: "#FFFFFF" },
-                    { name: "White Scar", hex: "#FFFFFF" },
-                ],
-                message: '',
-                mode: '',
-            },
+            chaosBand: defaultChaosWarband,
             setChaosBand: (data) => {
                 set((state) => ({
-                    chaosBand: { ...state.chaosBand, ...data }
+                    chaosBand: { ...state.chaosBand, ...data, isSample: false }
                 }));
             },
             resetChaosBand: () => {
                 set({
-                    chaosBand: {
-                        warbandName: '',
-                        slug: '',
-                        pattern: '',
-                        colors: [],
-                        message: '',
-                        mode: '',
-                    },
+                    chaosBand: defaultChaosWarband,
                 });
             },
         }),

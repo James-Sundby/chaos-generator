@@ -1,15 +1,12 @@
 import Link from "next/link";
 import GenerateNewButton from "@/app/components/generateNewButton";
+import CogitatorBox from "./cogitatorBox";
 
-export default function FactionHub({ eyebrow, title, intro, cards }) {
+export default function FactionHub({ eyebrow, title, intro, cards, cogitator }) {
     return (
-        <section className="relative flex flex-col my-auto">
+        <section className="relative flex flex-col">
             <section className="relative z-10 mb-8 flex flex-col md:mb-12">
                 <div className="max-w-4xl">
-                    <span className="badge badge-outline badge-primary mb-4 rounded-none px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
-                        {eyebrow}
-                    </span>
-
                     <div className="flex flex-col gap-3">
                         <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl lg:text-7xl">
                             {title}
@@ -59,7 +56,7 @@ export default function FactionHub({ eyebrow, title, intro, cards }) {
                                         {card.title}
                                     </h2>
 
-                                    <p className="md:max-w-xs text-sm leading-relaxed text-base-content/70">
+                                    <p className="max-w-xs text-sm leading-relaxed text-base-content/70">
                                         {card.body}
                                     </p>
                                 </div>
@@ -90,6 +87,14 @@ export default function FactionHub({ eyebrow, title, intro, cards }) {
                     );
                 })}
             </section>
+
+            {cogitator ? (
+                <section className="relative">
+                    <CogitatorBox
+                        lines={cogitator.lines}
+                    />
+                </section>
+            ) : null}
         </section>
     );
 }
