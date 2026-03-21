@@ -18,7 +18,7 @@ export const useRecentSchemesStore = create(
         }),
         {
             name: "recent-schemes",
-            storage: createJSONStorage(() => sessionStorage),
+            storage: createJSONStorage(() => localStorage),
             partialize: (state) => ({ schemes: state.schemes }),
         }
     )
