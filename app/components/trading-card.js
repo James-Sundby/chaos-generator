@@ -6,9 +6,11 @@ export default function TradingCard({
     band,
 }) {
     const { name, warbandName, colors = [], slug, pattern, mode } = band ?? {};
-    const displayName = name ?? warbandName;
+    const displayName = name ?? warbandName ?? "Unknown";
 
     const generator = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
+    const copy = generator.copy ?? {};
+
     const modelConfig =
         generator.models[modelKey] ?? Object.values(generator.models)[0];
 
@@ -18,45 +20,69 @@ export default function TradingCard({
 
     const paletteNames = swatchIndices
         .map((i) => colors[i]?.name)
-        .filter(Boolean)
-        .join(", ");
+        .filter(Boolean);
 
-    const prettyMode = mode === "Splitcomplementary" ? "Split Complementary" : mode;
+    const prettyMode =
+        mode === "splitcomplementary" ? "Split Complementary" : mode;
 
     return (
-        <div id="trading-card" className="card w-full max-w-96 bg-white text-neutral border-8 border-yellow-600">
-            <div className="card-body p-2 m-0">
-                <h1 className="card-title justify-center text-center uppercase font-black border-b pb-2 border-base-300">
+        <div
+            id="trading-card"
+            className="relative flex w-full flex-col overflow-hidden border-12 border-primary bg-white text-neutral-content shadow-xl"
+        >
+            <div className="bg-primary px-4 py-3 text-center text-primary-content">
+                <span className="block text-[10px] font-bold uppercase tracking-[0.2em] opacity-70">
+                    {copy.cardTopLabel ?? "ARCHIVE ENTRY"}
+                </span>
+                <h1 className="mt-1 text-2xl font-black uppercase leading-none tracking-tight sm:text-3xl">
                     {displayName}
                 </h1>
+            </div>
 
-                <div className="h-[40svh]">
-                    <Model {...modelProps} />
+            <div className="relative flex h-[40svh] items-center justify-center p-2">
+                <Model {...modelProps} />
+            </div>
+
+            <div className="space-y-4 bg-base-200/80 p-5">
+                <div className="space-y-2">
+                    <span className="block text-[9px] uppercase tracking-[0.2em] text-base-content/55">
+                        {copy.paletteLabel ?? "Colour Palette"}
+                    </span>
+
+                    <div className="flex h-8 gap-1" aria-label="Color palette">
+                        {swatchIndices.map((i) => (
+                            <div
+                                key={i}
+                                className="tooltip flex-1 border border-black/5"
+                                data-tip={colors[i]?.name}
+                                style={{ backgroundColor: colors[i]?.hex }}
+                                aria-label={colors[i]?.name}
+                                title={colors[i]?.name}
+                            />
+                        ))}
+                    </div>
                 </div>
 
-                <div className="join join-horizontal" aria-label="Color palette">
-                    {swatchIndices.map((i) => (
-                        <div
-                            key={i}
-                            className="join-item h-8 w-full border border-neutral tooltip"
-                            data-tip={colors[i]?.name}
-                            style={{ backgroundColor: colors[i]?.hex }}
-                            aria-label={colors[i]?.name}
-                            title={colors[i]?.name}
-                        />
-                    ))}
-                </div>
+                <div className="border-t border-base-300 pt-4">
+                    {paletteNames.length > 0 && (
+                        <p className="text-[11px] font-bold uppercase tracking-[0.08em]">
+                            {paletteNames.join(", ")}
+                        </p>
+                    )}
 
-                {paletteNames && <p className="text-sm font-bold">{paletteNames}</p>}
+                    <div className="mt-3 flex items-end justify-between gap-4">
+                        <div>
+                            {prettyMode && (
+                                <p className="text-[11px] uppercase tracking-[0.12em] text-base-content/70">
+                                    Palette: {prettyMode}
+                                </p>
+                            )}
 
-                {prettyMode && (
-                    <p className="text-xs">
-                        Palette: <span className="font-normal">{prettyMode}</span>
-                    </p>
-                )}
-
-                <div className="card-actions border-t border-base-300 pt-2 text-xs opacity-75 font-mono text-left inline-block max-w-full break-all">
-                    ID: {slug}
+                            <p className="mt-1 max-w-full break-all font-mono text-sm text-base-content/55">
+                                {copy.idLabel ?? "ID"}: {slug}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
