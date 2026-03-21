@@ -8,6 +8,17 @@ import CustomizerButton from "@/app/components/customizerButton";
 import GenerateNewButton from "@/app/components/generateNewButton";
 import ShareButton from "@/app/components/shareButton";
 
+function pickStableText(options = [], seed = "") {
+    if (!options.length) return null;
+
+    let hash = 0;
+    for (let i = 0; i < seed.length; i += 1) {
+        hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
+    }
+
+    return options[hash % options.length];
+}
+
 export default function GeneratorView({
     generatorKey,
     band,
@@ -28,6 +39,11 @@ export default function GeneratorView({
         band?.mode === "splitcomplementary" || band?.mode === "Splitcomplementary"
             ? "Split Complementary"
             : band?.mode;
+
+    const heroDescription =
+        pickStableText(copy.heroDescriptions, band?.slug ?? displayName) ??
+        copy.heroDescription ??
+        "Technical readouts indicate a viable faction colour identity suitable for further refinement, customization, or archive export.";
 
     return (
         <section className="mx-auto my-auto flex w-full max-w-7xl flex-col items-center justify-center gap-6 md:flex-row md:items-stretch lg:gap-16">
@@ -62,8 +78,7 @@ export default function GeneratorView({
                     </h2>
 
                     <p className="mt-4 max-w-xl text-sm leading-relaxed text-base-content/70 md:text-base">
-                        {copy.heroDescription ??
-                            "Technical readouts indicate a viable faction colour identity suitable for further refinement, customization, or archive export."}
+                        {heroDescription}
                     </p>
                 </div>
 

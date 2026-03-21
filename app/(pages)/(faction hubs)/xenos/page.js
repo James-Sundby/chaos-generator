@@ -7,7 +7,7 @@ const xenosCards = [
         label: "Aeldari",
         title: "AELDARI\nWARHOST",
         mobileTitle: "AELDARI WARHOST",
-        body: "Explore Eldar-inspired palettes, patterns, and cleaner alien colour layouts for custom hosts.",
+        body: "Generate sleek xenos schemes for the warhosts of an ancient, dying alien empire.",
         href: "/warhost",
         generatorKey: "eldar",
         accentBarClass: "bg-faction-xenos",
@@ -27,7 +27,7 @@ const xenosCards = [
         label: "T'au Empire",
         title: "T'AU\nHUNTER\nCADRE",
         mobileTitle: "T'AU HUNTER CADRE",
-        body: "Placeholder hub for sept colours, clean panel armour, and disciplined ranged-war aesthetic schemes.",
+        body: "Coming soon: sept colours, pristine armour, and disciplined schemes in service to the Greater Good.",
         accentBarClass: "bg-faction-xenos",
         badgeClass: "badge-xenos",
         buttonClass: "btn-primary",
@@ -41,7 +41,7 @@ export default function XenosPage() {
         <FactionHub
             eyebrow="Xenos Archive"
             title="Xenos Forge"
-            intro="Access alien war palettes, non-imperial heraldry, and distinct visual systems for custom xenos factions."
+            intro="Generate schemes for alien forces beyond the Imperium, from ancient warhosts to fast-striking hunter cadres."
             cards={xenosCards}
         />
     );

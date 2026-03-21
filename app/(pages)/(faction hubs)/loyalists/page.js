@@ -8,7 +8,8 @@ const loyalistCards = [
         label: "Astartes",
         title: "SPACE\nMARINES",
         mobileTitle: "SPACE MARINES",
-        body: "Generate and customize loyalist chapter schemes for your next army or painting project.",
+        body: "Generate schemes worthy of the Adeptus Astartes, from ancient brotherhoods to newly founded scions of the Imperium.",
+        tags: ["Space Marines"],
         href: "/chapter",
         generatorKey: "chapter",
         accentBarClass: "bg-faction-loyalist",
@@ -28,7 +29,7 @@ const loyalistCards = [
         label: "Sororitas",
         title: "SISTERS\nOF\nBATTLE",
         mobileTitle: "SISTERS OF BATTLE",
-        body: "Placeholder hub for ecclesiastic armour palettes, robes, and Order colour layouts.",
+        body: "Coming soon: armour, robes, and sacred colours fit for the Emperor's most zealous daughters.",
         accentBarClass: "bg-faction-loyalist",
         badgeClass: "badge-loyalist",
         buttonClass: "btn-primary",
@@ -41,7 +42,7 @@ export default function LoyalistsPage() {
         <FactionHub
             eyebrow="Loyalist Archive"
             title="Loyalist Forge"
-            intro="Generate sanctioned heraldry, regiment colours, and faithful wargear schemes for defenders of the Imperium."
+            intro="Generate schemes for the Imperium’s loyal defenders, from the Adeptus Astartes to other faithful servants of the Throne."
             cards={loyalistCards}
         />
     );

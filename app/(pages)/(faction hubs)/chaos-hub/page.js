@@ -7,7 +7,7 @@ const chaosCards = [
         label: "Heretic Astartes",
         title: "CHAOS\nSPACE\nMARINES",
         mobileTitle: "CHAOS MARINES",
-        body: "Create warbands, corrupted heraldry, and traitor paint schemes with stronger contrast and trim options.",
+        body: "Forge corrupted schemes worthy of traitor warbands, blasphemous heraldry, and armour long given over to ruin.",
         href: "/chaos",
         generatorKey: "chaos",
         accentBarClass: "bg-faction-chaos",
@@ -30,7 +30,7 @@ export default function ChaosHubPage() {
         <FactionHub
             eyebrow="Heretic Archive"
             title="Chaos Forge"
-            intro="Build warband identities, corrupted armour schemes, and faction palettes drawn from the long war."
+            intro="Create corrupted schemes for traitor warbands, profane heraldry, and forces shaped by the Long War."
             cards={chaosCards}
         />
     );

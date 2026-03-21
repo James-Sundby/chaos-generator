@@ -23,8 +23,12 @@ export const generatorRegistry = {
             completionBadge: "Generation Complete",
             classification: "Adeptus Astartes",
             statusLabel: "Sanctioned",
-            heroDescription:
-                "Technical readouts indicate a viable chapter colour identity, with palette balance and heraldic contrast suitable for further refinement, customization, or archive export.",
+            heroDescriptions: [
+                "Archive logic confirms a viable chapter identity, with balanced heraldry, disciplined contrast, and colours worthy of service to the Throne.",
+                "A stable chapter livery has been identified, suitable for immediate field use, later refinement, or preservation within the archive.",
+                "Palette analysis suggests a credible Adeptus Astartes scheme, with strong chapter character and clean heraldic separation across the armour plate.",
+                "Technical readouts indicate a sanctioned chapter colour identity, fit for successor lineages, crusading hosts, and further customization.",
+            ],
             modelSectionLabel: "Armour Designation",
             generateLabel: "Generate New Chapter",
             customizeLabel: "Customize Chapter",
@@ -94,8 +98,12 @@ export const generatorRegistry = {
             completionBadge: "Generation Complete",
             classification: "Heretic Astartes",
             statusLabel: "Traitor",
-            heroDescription:
-                "Warp-tainted analysis confirms a stable warband livery with strong trim separation, corrupted heraldic cohesion, and a clear battlefield silhouette.",
+            heroDescriptions: [
+                "Warp-tainted analysis confirms a stable warband livery, with profane trim balance and a silhouette fit for the Long War.",
+                "Corrupted heraldic markers remain coherent across the plate, suggesting a warband identity worthy of terror, conquest, and display.",
+                "Archive corruption detected: this livery exhibits strong trim separation, blasphemous colour discipline, and clear battlefield presence.",
+                "The machine-spirit recoils, yet the results are undeniable: a viable traitor scheme fit for renegades, reavers, and damned champions.",
+            ],
             modelSectionLabel: "Armour Designation",
             generateLabel: "Generate New Warband",
             customizeLabel: "Customize Warband",
@@ -156,8 +164,12 @@ export const generatorRegistry = {
             completionBadge: "Generation Complete",
             classification: "Aeldari Warhost",
             statusLabel: "Catalogued",
-            heroDescription:
-                "Warhost analysis indicates a cohesive alien palette structure with clean panel contrast, strong visual rhythm, and a distinct host identity.",
+            heroDescriptions: [
+                "Warhost analysis indicates a sleek alien palette with elegant contrast, measured rhythm, and colours fit for a dying empire.",
+                "Archive augurs record a cohesive xenos identity, with bright panel separation and a refined warhost silhouette.",
+                "This scheme carries the hallmarks of an ordered alien host: clean contrast, disciplined ornament, and an unmistakable martial presence.",
+                "Visual analysis confirms a distinct warhost livery, suitable for swift blade-work, disciplined volleys, and ancient pride.",
+            ],
             modelSectionLabel: "Aspect Designation",
             generateLabel: "Generate New Warhost",
             customizeLabel: "Customize Warhost",
