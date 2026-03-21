@@ -74,7 +74,7 @@ export default function SchemeSearch({
                     <input
                         id={id}
                         {...register("q")}
-                        className={`input input-bordered join-item w-full ${hasError ? "input-error" : ""}`}
+                        className={`input rounded-none input-bordered join-item w-full ${hasError ? "input-error" : ""}`}
                         placeholder={placeholder}
                         autoComplete="off"
                         aria-invalid={hasError}
@@ -83,7 +83,7 @@ export default function SchemeSearch({
 
                     <button
                         type="submit"
-                        className={`btn ${buttonTheme} join-item`}
+                        className={`btn ${buttonTheme} join-item rounded-none`}
                         aria-busy={pending}
                         disabled={isEmpty || pending}
                         aria-disabled={isEmpty || pending}

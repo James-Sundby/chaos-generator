@@ -4,8 +4,8 @@ import "./globals.css";
 import Header from "./components/header";
 import Footer from "./components/footer";
 
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -97,11 +97,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="chaos">
-      <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
-        <Header />
-        <main className="container mx-auto px-4 md:px-8 flex flex-col flex-1 justify-center gap-4 md:gap-8">{children}</main>
-        <Footer />
+    <html lang="en" >
+      <body className={`${inter.className} min-h-screen bg-base-200 text-base-content antialiased`}>
+        <div className="flex min-h-screen flex-col">
+          <Header />
+          <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-6 md:px-8 md:py-10">
+            {children}
+          </main>
+          <Footer />
+        </div>
         <Analytics />
         <SpeedInsights />
       </body>

@@ -1,34 +1,49 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "@tailwindcss/typography";
 
+/* Light theme */
 @plugin "daisyui/theme" {
-  name: "chaos";
+  name: "archivist";
   default: true;
-  prefersdark: true;
-  color-scheme: "dark";
-  --color-base-100: oklch(24.353% 0 0);
-  --color-base-200: oklch(22.648% 0 0);
-  --color-base-300: oklch(20.944% 0 0);
-  --color-base-content: oklch(84.87% 0 0);
-  --color-primary: oklch(41.703% 0.099 251.473);
-  --color-primary-content: oklch(88.34% 0.019 251.473);
-  --color-secondary: oklch(64.092% 0.027 229.389);
-  --color-secondary-content: oklch(12.818% 0.005 229.389);
-  --color-accent: oklch(39% 0.141 25.723);
-  --color-accent-content: oklch(100% 0 0);
-  --color-neutral: oklch(27.441% 0.013 253.041);
-  --color-neutral-content: oklch(85.488% 0.002 253.041);
-  --color-info: oklch(43% 0.162 303.724);
-  --color-info-content: oklch(97% 0.014 308.299);
-  --color-success: oklch(70.226% 0.094 156.596);
-  --color-success-content: oklch(14.045% 0.018 156.596);
-  --color-warning: oklch(77.482% 0.115 81.519);
-  --color-warning-content: oklch(15.496% 0.023 81.519);
-  --color-error: oklch(51.61% 0.146 29.674);
-  --color-error-content: oklch(90.322% 0.029 29.674);
-  --radius-selector: 0.25rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.25rem;
+  prefersdark: false;
+  color-scheme: "light";
+
+  /* archive surfaces */
+  --color-base-100: oklch(97.5% 0 0);
+  --color-base-200: oklch(95.8% 0 0);
+  --color-base-300: oklch(91.5% 0.01 85);
+  --color-base-content: oklch(17% 0 0);
+
+  /* archivist seal */
+  --color-primary: oklch(70% 0.14 85);
+  --color-primary-content: oklch(18% 0.03 85);
+
+  /* structural metal */
+  --color-secondary: oklch(42% 0.01 80);
+  --color-secondary-content: oklch(97% 0 0);
+
+  /* restrained utility accent */
+  --color-accent: oklch(58% 0.04 70);
+  --color-accent-content: oklch(98% 0 0);
+
+  --color-neutral: oklch(26% 0.01 260);
+  --color-neutral-content: oklch(88% 0.01 260);
+
+  --color-info: oklch(58% 0.09 245);
+  --color-info-content: oklch(97% 0.01 245);
+
+  --color-success: oklch(68% 0.1 155);
+  --color-success-content: oklch(18% 0.02 155);
+
+  --color-warning: oklch(78% 0.13 85);
+  --color-warning-content: oklch(20% 0.03 85);
+
+  --color-error: oklch(56% 0.16 28);
+  --color-error-content: oklch(96% 0.02 28);
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
@@ -36,4 +51,183 @@
   --noise: 0;
 }
 
-@plugin "@tailwindcss/typography";
+/* Dark theme */
+@plugin "daisyui/theme" {
+  name: "archivist-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: "dark";
+
+  /* archive vault surfaces */
+  --color-base-100: oklch(18% 0.01 260);
+  --color-base-200: oklch(21% 0.01 260);
+  --color-base-300: oklch(26% 0.01 260);
+  --color-base-content: oklch(91% 0.01 85);
+
+  /* archivist seal gold - slightly brighter in dark mode */
+  --color-primary: oklch(76% 0.14 85);
+  --color-primary-content: oklch(18% 0.03 85);
+
+  /* structural metal */
+  --color-secondary: oklch(62% 0.015 85);
+  --color-secondary-content: oklch(16% 0.01 85);
+
+  /* restrained utility accent */
+  --color-accent: oklch(66% 0.05 75);
+  --color-accent-content: oklch(16% 0.01 75);
+
+  --color-neutral: oklch(28% 0.01 260);
+  --color-neutral-content: oklch(88% 0.01 260);
+
+  --color-info: oklch(68% 0.1 245);
+  --color-info-content: oklch(18% 0.02 245);
+
+  --color-success: oklch(74% 0.11 155);
+  --color-success-content: oklch(18% 0.02 155);
+
+  --color-warning: oklch(82% 0.13 85);
+  --color-warning-content: oklch(20% 0.03 85);
+
+  --color-error: oklch(66% 0.16 28);
+  --color-error-content: oklch(18% 0.03 28);
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@plugin "daisyui" {
+  themes:
+    archivist --default,
+    archivist-dark --prefersdark;
+}
+
+/* Faction identity tokens - light defaults */
+:root {
+  --faction-loyalist: oklch(52% 0.11 250);
+  --faction-loyalist-soft: oklch(90% 0.03 250);
+
+  --faction-chaos: oklch(50% 0.17 28);
+  --faction-chaos-soft: oklch(91% 0.03 28);
+
+  --faction-xenos: oklch(60% 0.12 200);
+  --faction-xenos-soft: oklch(91% 0.03 200);
+}
+
+/* Faction tuning for dark mode */
+:root:has(html[data-theme="archivist-dark"]),
+html[data-theme="archivist-dark"] {
+  --faction-loyalist: oklch(70% 0.1 250);
+  --faction-loyalist-soft: oklch(30% 0.03 250);
+
+  --faction-chaos: oklch(68% 0.15 28);
+  --faction-chaos-soft: oklch(31% 0.04 28);
+
+  --faction-xenos: oklch(74% 0.11 200);
+  --faction-xenos-soft: oklch(32% 0.03 200);
+}
+
+@theme {
+  --color-faction-loyalist: var(--faction-loyalist);
+  --color-faction-loyalist-soft: var(--faction-loyalist-soft);
+
+  --color-faction-chaos: var(--faction-chaos);
+  --color-faction-chaos-soft: var(--faction-chaos-soft);
+
+  --color-faction-xenos: var(--faction-xenos);
+  --color-faction-xenos-soft: var(--faction-xenos-soft);
+}
+
+.text-faction-loyalist {
+  color: var(--faction-loyalist);
+}
+.text-faction-chaos {
+  color: var(--faction-chaos);
+}
+.text-faction-xenos {
+  color: var(--faction-xenos);
+}
+
+.bg-faction-loyalist {
+  background-color: var(--faction-loyalist);
+}
+.bg-faction-chaos {
+  background-color: var(--faction-chaos);
+}
+.bg-faction-xenos {
+  background-color: var(--faction-xenos);
+}
+
+.bg-faction-loyalist-soft {
+  background-color: var(--faction-loyalist-soft);
+}
+.bg-faction-chaos-soft {
+  background-color: var(--faction-chaos-soft);
+}
+.bg-faction-xenos-soft {
+  background-color: var(--faction-xenos-soft);
+}
+
+.border-faction-loyalist {
+  border-color: var(--faction-loyalist);
+}
+.border-faction-chaos {
+  border-color: var(--faction-chaos);
+}
+.border-faction-xenos {
+  border-color: var(--faction-xenos);
+}
+
+.badge-loyalist {
+  background-color: var(--faction-loyalist-soft);
+  color: var(--faction-loyalist);
+  border: 1px solid
+    color-mix(in oklab, var(--faction-loyalist) 20%, transparent);
+}
+
+.badge-chaos {
+  background-color: var(--faction-chaos-soft);
+  color: var(--faction-chaos);
+  border: 1px solid color-mix(in oklab, var(--faction-chaos) 20%, transparent);
+}
+
+.badge-xenos {
+  background-color: var(--faction-xenos-soft);
+  color: var(--faction-xenos);
+  border: 1px solid color-mix(in oklab, var(--faction-xenos) 20%, transparent);
+}
+
+.btn-faction-loyalist {
+  background: transparent;
+  color: var(--faction-loyalist);
+  border: 1px solid var(--faction-loyalist);
+}
+
+.btn-faction-loyalist:hover {
+  background: color-mix(in oklab, var(--faction-loyalist) 10%, transparent);
+}
+
+.btn-faction-chaos {
+  background: transparent;
+  color: var(--faction-chaos);
+  border: 1px solid var(--faction-chaos);
+}
+
+.btn-faction-chaos:hover {
+  background: color-mix(in oklab, var(--faction-chaos) 10%, transparent);
+}
+
+.btn-faction-xenos {
+  background: transparent;
+  color: var(--faction-xenos);
+  border: 1px solid var(--faction-xenos);
+}
+
+.btn-faction-xenos:hover {
+  background: color-mix(in oklab, var(--faction-xenos) 10%, transparent);
+}

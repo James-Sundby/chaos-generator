@@ -19,6 +19,31 @@ export const generatorRegistry = {
         buttonTheme: "btn-primary",
         createAction: createChapterAndGo,
 
+        copy: {
+            completionBadge: "Generation Complete",
+            classification: "Adeptus Astartes",
+            statusLabel: "Sanctioned",
+            heroDescription:
+                "Technical readouts indicate a viable chapter colour identity, with palette balance and heraldic contrast suitable for further refinement, customization, or archive export.",
+            modelSectionLabel: "Armour Designation",
+            generateLabel: "Generate New Chapter",
+            customizeLabel: "Customize Chapter",
+            shareLabel: "Share Chapter",
+            cardTopLabel: "ADEPTUS ASTARTES",
+            paletteLabel: "Colour Palette",
+            idLabel: "Archive ID",
+            sourceLabel: "Lineage",
+        },
+
+        faction: {
+            key: "loyalist",
+            accentBarClass: "bg-faction-loyalist",
+            badgeClass: "badge-loyalist",
+            textClass: "text-faction-loyalist",
+            buttonClass: "btn-faction-loyalist",
+            softBgClass: "bg-faction-loyalist-soft",
+        },
+
         models: {
             marine: {
                 label: "Marine",
@@ -65,6 +90,31 @@ export const generatorRegistry = {
         buttonTheme: "btn-accent",
         createAction: createWarbandAndGo,
 
+        copy: {
+            completionBadge: "Generation Complete",
+            classification: "Heretic Astartes",
+            statusLabel: "Traitor",
+            heroDescription:
+                "Warp-tainted analysis confirms a stable warband livery with strong trim separation, corrupted heraldic cohesion, and a clear battlefield silhouette.",
+            modelSectionLabel: "Armour Designation",
+            generateLabel: "Generate New Warband",
+            customizeLabel: "Customize Warband",
+            shareLabel: "Share Warband",
+            cardTopLabel: "HERETIC ASTARTES",
+            paletteLabel: "Warband Palette",
+            idLabel: "Archive ID",
+            sourceLabel: "Allegiance",
+        },
+
+        faction: {
+            key: "chaos",
+            accentBarClass: "bg-faction-chaos",
+            badgeClass: "badge-chaos",
+            textClass: "text-faction-chaos",
+            buttonClass: "btn-faction-chaos",
+            softBgClass: "bg-faction-chaos-soft",
+        },
+
         models: {
             marine: {
                 label: "Chaos Marine",
@@ -101,6 +151,31 @@ export const generatorRegistry = {
         painterPath: "/warhost-painter",
         buttonTheme: "btn-info",
         createAction: createWarhostAndGo,
+
+        copy: {
+            completionBadge: "Generation Complete",
+            classification: "Aeldari Warhost",
+            statusLabel: "Catalogued",
+            heroDescription:
+                "Warhost analysis indicates a cohesive alien palette structure with clean panel contrast, strong visual rhythm, and a distinct host identity.",
+            modelSectionLabel: "Aspect Designation",
+            generateLabel: "Generate New Warhost",
+            customizeLabel: "Customize Warhost",
+            shareLabel: "Share Warhost",
+            cardTopLabel: "XENOS HOST",
+            paletteLabel: "Warhost Palette",
+            idLabel: "Archive ID",
+            sourceLabel: "Origin",
+        },
+
+        faction: {
+            key: "xenos",
+            accentBarClass: "bg-faction-xenos",
+            badgeClass: "badge-xenos",
+            textClass: "text-faction-xenos",
+            buttonClass: "btn-faction-xenos",
+            softBgClass: "bg-faction-xenos-soft",
+        },
 
         models: {
             avenger: {
