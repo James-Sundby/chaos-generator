@@ -11,7 +11,7 @@ export default function PendingActionButton({
     return (
         <button
             type="submit"
-            className="btn btn-primary w-full min-h-fit rounded-none"
+            className="btn btn-primary w-full rounded-none"
             disabled={pending}
             aria-busy={pending}
         >

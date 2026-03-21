@@ -12,6 +12,7 @@ const defaultWarhost = {
     ],
     message: '',
     mode: '',
+    isSample: true
 };
 
 export const useWarhostStore = create(
@@ -20,7 +21,7 @@ export const useWarhostStore = create(
             warhost: defaultWarhost,
             setWarhost: (data) => {
                 set((state) => ({
-                    warhost: { ...state.warhost, ...data },
+                    warhost: { ...state.warhost, ...data, isSample: false },
                 }));
             },
             resetWarhost: () => {

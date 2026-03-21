@@ -1,21 +1,17 @@
 import Link from "next/link";
 import GenerateNewButton from "@/app/components/generateNewButton";
+import CogitatorBox from "./cogitatorBox";
 
-export default function FactionHub({ eyebrow, title, intro, cards }) {
-
-
+export default function FactionHub({ eyebrow, title, intro, cards, cogitator }) {
     return (
         <section className="relative flex flex-col">
             <section className="relative z-10 mb-8 flex flex-col md:mb-12">
                 <div className="max-w-4xl">
-                    <span className="badge badge-outline badge-primary mb-4 rounded-none px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
-                        {eyebrow}
-                    </span>
-
-                    <div>
-                        <h1 className="mb-3 text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl lg:text-7xl">
+                    <div className="flex flex-col gap-3">
+                        <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl lg:text-7xl">
                             {title}
                         </h1>
+
                         <p className="max-w-2xl text-sm leading-relaxed text-base-content/75 sm:text-lg">
                             {intro}
                         </p>
@@ -44,36 +40,28 @@ export default function FactionHub({ eyebrow, title, intro, cards }) {
                                 </div>
                             )}
 
-                            <div className="card-body relative z-10 justify-between p-6 sm:p-8">
-                                <div>
-                                    <div className="mb-4 flex flex-wrap items-center gap-2">
-                                        <div
-                                            className={`badge badge-sm rounded-none uppercase tracking-[0.2em] ${card.badgeClass}`}
-                                        >
-                                            {card.label}
+                            <div className="card-body relative z-10 flex flex-col justify-between gap-6 p-6 sm:p-8">
+                                <div className="flex flex-col gap-4">
+                                    {isComingSoon ? (
+                                        <div className="badge badge-outline badge-warning badge-sm w-fit rounded-none uppercase tracking-[0.2em]">
+                                            Coming Soon
                                         </div>
-
-                                        {isComingSoon && (
-                                            <div className="badge badge-outline badge-warning badge-sm rounded-none uppercase tracking-[0.2em]">
-                                                Coming Soon
-                                            </div>
-                                        )}
-                                    </div>
+                                    ) : null}
 
                                     <h2 className="text-2xl font-black uppercase leading-none tracking-tight sm:text-3xl lg:hidden">
                                         {card.mobileTitle}
                                     </h2>
 
-                                    <h2 className="mb-4 hidden whitespace-pre-line text-4xl font-black uppercase leading-none tracking-tight lg:block lg:text-5xl">
+                                    <h2 className="hidden whitespace-pre-line text-4xl font-black uppercase leading-none tracking-tight lg:block lg:text-5xl">
                                         {card.title}
                                     </h2>
 
-                                    <p className="hidden max-w-xs text-sm leading-relaxed text-base-content/70 lg:block">
+                                    <p className="max-w-xs text-sm leading-relaxed text-base-content/70">
                                         {card.body}
                                     </p>
                                 </div>
 
-                                <div className="card-actions mt-6">
+                                <div className="card-actions">
                                     {isComingSoon ? (
                                         <button
                                             className="btn btn-outline w-full rounded-none"
@@ -99,6 +87,14 @@ export default function FactionHub({ eyebrow, title, intro, cards }) {
                     );
                 })}
             </section>
+
+            {cogitator ? (
+                <section className="relative">
+                    <CogitatorBox
+                        lines={cogitator.lines}
+                    />
+                </section>
+            ) : null}
         </section>
     );
 }

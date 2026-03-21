@@ -9,8 +9,6 @@ export default function TradingCard({
     const displayName = name ?? warbandName ?? "Unknown";
 
     const generator = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
-    const copy = generator.copy ?? {};
-
     const modelConfig =
         generator.models[modelKey] ?? Object.values(generator.models)[0];
 
@@ -22,29 +20,28 @@ export default function TradingCard({
         .map((i) => colors[i]?.name)
         .filter(Boolean);
 
-    const prettyMode =
-        mode === "splitcomplementary" ? "Split Complementary" : mode;
-
     return (
         <div
             id="trading-card"
-            className="relative flex w-full flex-col overflow-hidden border-12 border-primary bg-white text-neutral-content shadow-xl"
+            className="relative flex w-full flex-col overflow-hidden rounded-none border-12 border-primary bg-white text-neutral-content shadow-xl"
         >
-            <div className="bg-primary pb-4 text-center text-primary-content">
+            <div className="bg-primary px-4 py-4 text-center text-primary-content">
                 <h1 className="text-2xl font-black uppercase leading-none tracking-tight sm:text-3xl">
                     {displayName}
                 </h1>
             </div>
+
             <div className="relative flex h-[40svh] items-center justify-center p-2">
                 <Model {...modelProps} />
             </div>
-            <div className="space-y-4 bg-base-200/80 p-5">
-                <div className="space-y-2">
+
+            <div className="flex flex-col gap-4 bg-base-200/80 p-5">
+                <div className="flex flex-col gap-2">
                     <div className="flex h-8 gap-1" aria-label="Color palette">
                         {swatchIndices.map((i) => (
                             <div
                                 key={i}
-                                className="tooltip flex-1 border border-black/5"
+                                className="tooltip flex-1 rounded-none border border-black/5"
                                 data-tip={colors[i]?.name}
                                 style={{ backgroundColor: colors[i]?.hex }}
                                 aria-label={colors[i]?.name}
@@ -53,18 +50,15 @@ export default function TradingCard({
                         ))}
                     </div>
                 </div>
-                <div className="flex flex-col justify-between gap-4">
+
+                <div className="flex flex-col gap-4">
                     {paletteNames.length > 0 && (
-                        <p className="text-[14px] text-base-content font-bold uppercase tracking-[0.08em]">
+                        <p className="text-[14px] font-bold uppercase tracking-[0.08em] text-base-content">
                             {paletteNames.join(", ")}
                         </p>
                     )}
-                    {prettyMode && (
-                        <p className="text-[11px] uppercase tracking-[0.12em] text-base-content/70">
-                            Palette: {prettyMode}
-                        </p>
-                    )}
-                    <p className="pt-1 border-t border-base-content/55 max-w-full break-all font-mono text-sm text-base-content/55">
+
+                    <p className="max-w-full break-all border-t border-base-content/55 pt-4 font-mono text-sm text-base-content/55">
                         ID: {slug}
                     </p>
                 </div>

@@ -13,16 +13,14 @@ function ControlRow({ id, label, children, hint }) {
     const hintId = hint ? `${id}-hint` : undefined;
 
     return (
-        <div className="w-full">
-            <div className="mb-2">
-                <label
-                    id={labelId}
-                    htmlFor={id}
-                    className="block text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/65"
-                >
-                    {label}
-                </label>
-            </div>
+        <div className="flex w-full flex-col gap-2">
+            <label
+                id={labelId}
+                htmlFor={id}
+                className="text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/65"
+            >
+                {label}
+            </label>
 
             <div className="join w-full">
                 {typeof children === "function"
@@ -30,13 +28,11 @@ function ControlRow({ id, label, children, hint }) {
                     : children}
             </div>
 
-            {hint && (
-                <div className="mt-2">
-                    <span id={hintId} className="text-xs text-base-content/55">
-                        {hint}
-                    </span>
-                </div>
-            )}
+            {hint ? (
+                <span id={hintId} className="text-xs text-base-content/55">
+                    {hint}
+                </span>
+            ) : null}
         </div>
     );
 }
@@ -190,13 +186,14 @@ export default function CustomizerCore({
             </div>
 
             <div className="flex w-full max-w-105 flex-col gap-4 md:flex-1">
-                <h2 className="text-3xl font-black uppercase leading-none tracking-tight sm:text-4xl lg:text-5xl">
-                    Customizer
-                </h2>
-                {/* 
-                <p className="max-w-xl text-sm leading-relaxed text-base-content/70 md:text-base">
-                    Refine colours, patterns, and naming data manually before returning to the archive entry.
-                </p> */}
+                <div className="flex flex-col gap-2">
+                    <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
+                        Manual Refit
+                    </p>
+                    <h2 className="text-3xl font-black uppercase leading-none tracking-tight sm:text-4xl lg:text-5xl">
+                        Customizer
+                    </h2>
+                </div>
 
                 {modelOptions.length > 1 && (
                     <div className="hidden md:block">

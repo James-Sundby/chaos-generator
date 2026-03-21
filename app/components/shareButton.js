@@ -13,37 +13,45 @@ export default function ShareButton({
 
     const aria = `Share this ${config.noun}`;
 
-    const handleShare = () => {
+    const handleShare = async () => {
         const url = `${window.location.origin}${config.basePath}/${slug}`;
         const shareTitle = `Check out this ${config.noun}!`;
         const shareText = title ?? "";
 
         if (navigator.share) {
-            navigator
-                .share({ title: shareTitle, text: `${shareTitle} ${shareText}`.trim(), url })
-                .catch(() => { });
-        } else {
-            navigator.clipboard.writeText(url).then(() => {
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
-            });
+            try {
+                await navigator.share({
+                    title: shareTitle,
+                    text: `${shareTitle} ${shareText}`.trim(),
+                    url,
+                });
+            } catch {
+                // user cancelled or share failed
+            }
+            return;
+        }
+
+        if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(url);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
         }
     };
 
     return (
         <>
             <button
-                className="btn btn-primary btn-block rounded-none"
+                type="button"
+                className="btn btn-primary w-full rounded-none"
                 onClick={handleShare}
                 aria-label={aria}
                 title={aria}
-                type="button"
             >
-                <span>Share</span>
+                Share
             </button>
 
             {copied && (
-                <div className="toast">
+                <div className="toast toast-end toast-bottom">
                     <div className="alert alert-info rounded-none">
                         <span>Link copied to clipboard!</span>
                     </div>
