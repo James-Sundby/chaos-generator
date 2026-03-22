@@ -1,7 +1,7 @@
 import "server-only";
 
 import { randomElement } from "@/utils/randomElement";
-import { chaosPatterns, patterns as loyalistPatterns, eldarPatterns } from "@/lib/armourPatterns";
+import { chaosPatterns, patterns as loyalistPatterns, eldarPatterns } from "@/lib/data/armourPatterns";
 
 const NON_CONTRAST_LOYALIST_PATTERNS = new Set([
     "Half", "Quarter"

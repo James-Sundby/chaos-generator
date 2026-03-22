@@ -2,10 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import TradingCard from "@/app/components/trading-card";
-import { colourList } from "@/lib/colours";
+import TradingCard from "@/app/components/tradingCard";
+import { colourList } from "@/lib/data/colours";
 import { generateSlug } from "@/utils/parseSlugs";
-import { generatorRegistry } from "@/app/components/generatorRegistry";
+import { generatorRegistry } from "@/lib/generators/index";
 import ColorListbox from "./colourSelect";
 
 function ControlRow({ id, label, children, hint }) {

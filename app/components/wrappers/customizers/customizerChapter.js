@@ -1,7 +1,7 @@
 "use client";
 
-import { patterns } from "@/lib/armourPatterns";
-import { colourList } from "@/lib/colours";
+import { patterns } from "@/lib/data/armourPatterns";
+import { colourList } from "@/lib/data/colours";
 import { useWarbandStore } from "@/app/stores/warbandStore";
 import CustomizerCore from "../../customizerCore";
 

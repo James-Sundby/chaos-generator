@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { generatorRegistry } from "@/app/components/generatorRegistry";
+import { generatorRegistry } from "@/lib/generators/index";
 
-import TradingCard from "@/app/components/trading-card";
+import TradingCard from "@/app/components/tradingCard";
 import CustomizerButton from "@/app/components/customizerButton";
 import GenerateNewButton from "@/app/components/generateNewButton";
 import ShareButton from "@/app/components/shareButton";

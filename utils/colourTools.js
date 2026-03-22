@@ -1,6 +1,6 @@
 import "server-only";
 
-import { colourList } from "@/lib/colours";
+import { colourList } from "@/lib/data/colours";
 import { randomElement } from "@/utils/randomElement";
 
 function resolvePool(pool) {

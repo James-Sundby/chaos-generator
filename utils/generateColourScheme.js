@@ -1,6 +1,6 @@
 import "server-only";
 
-import { colourList } from "@/lib/colours";
+import { colourList } from "@/lib/data/colours";
 import { generateChapterSchemeColours, generateChaosSchemeColours, generateEldarSchemeColours } from "./colourTools";
 
 function prepPool(list) {

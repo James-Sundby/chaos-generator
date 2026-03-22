@@ -1,5 +1,5 @@
 import FactionHub from "@/app/components/factionHub";
-import SpaceMarine from "@/app/components/models/spaceMarine";
+import SpaceMarine from "@/lib/models/spaceMarine";
 
 export const metadata = {
     title: "Loyalist Forge",

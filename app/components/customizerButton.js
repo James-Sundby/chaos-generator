@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { generatorRegistry } from "./generatorRegistry";
+import { generatorRegistry } from "@/lib/generators/index";
 
 export default function CustomizerButton({
     generatorKey = "chapter",

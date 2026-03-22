@@ -1,8 +1,8 @@
 import "server-only";
 import { cache } from "react";
-import { colourList } from "@/lib/colours";
-import { patterns as loyalistPatterns, chaosPatterns, eldarPatterns } from "@/lib/armourPatterns";
-import { chapterModes, chaosModes, eldarModes } from "@/lib/modes";
+import { colourList } from "@/lib/data/colours";
+import { patterns as loyalistPatterns, chaosPatterns, eldarPatterns } from "@/lib/data/armourPatterns";
+import { chapterModes, chaosModes, eldarModes } from "@/lib/data/modes";
 import { generateChapterName, generateWarbandName, generateEldarName } from "@/utils/generateNames";
 import { generateChapterScheme, generateWarbandScheme, generateEldarScheme } from "@/utils/generateColourScheme";
 import { generateLoyalistPattern, generateChaosPattern, generateEldarPattern } from "@/utils/generatePatterns";

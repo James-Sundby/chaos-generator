@@ -3,13 +3,13 @@ import "server-only";
 import { randomElement } from "@/utils/randomElement";
 import { normalizeName } from "@/utils/normalizeNames";
 
-import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives as chaosAdjectives } from "@/lib/chaosData";
-import { virtues, warriorTerms as loyalTerms, placesOrEntities, adjectives as loyalAdjectives, animals } from "@/lib/loyalData";
-import { eldarAdjectives, eldarWarriorTerms, eldarAbstracts, eldarCelestial } from "@/lib/eldarData";
+import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives as chaosAdjectives } from "@/lib/names/chaosNameParts";
+import { virtues, warriorTerms as loyalTerms, placesOrEntities, adjectives as loyalAdjectives, animals } from "@/lib/names/chapterNameParts";
+import { eldarAdjectives, eldarWarriorTerms, eldarAbstracts, eldarCelestial } from "@/lib/names/eldarNameParts";
 
 
-import { OFFICIAL_CHAPTER_BLACKLIST } from "@/lib/blacklistChapter";
-import { OFFICIAL_CHAOS_WARBAND_BLACKLIST } from "@/lib/blacklistChaos";
+import { OFFICIAL_CHAPTER_BLACKLIST } from "@/lib/names/blacklistChapter";
+import { OFFICIAL_CHAOS_WARBAND_BLACKLIST } from "@/lib/names/blacklistChaos";
 
 const OFFICIAL_WARHOST_BLACKLIST = new Set();
 

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { generatorRegistry } from "./generatorRegistry";
+import { generatorRegistry } from "@/lib/generators/index";
+
 
 export default function ShareButton({
     generatorKey = "chapter",
