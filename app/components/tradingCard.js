@@ -1,4 +1,4 @@
-import { generatorRegistry } from "./generatorRegistry";
+import { generatorRegistry } from "@/lib/generators/index";
 
 export default function TradingCard({
     generatorKey = "chapter",

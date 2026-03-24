@@ -72,18 +72,31 @@ export default function Page() {
 
             </p>
 
-            <h2>4. Session Storage</h2>
+            <h2>4. Browser Storage</h2>
             <p>
-                This site uses your browser&apos;s <strong>sessionStorage</strong> to temporarily store chapter data and paint schemes during your session. This data:
+                This site uses browser storage on your device to improve the user experience without requiring accounts or cookies.
+            </p>
+
+            <h3>Local Storage</h3>
+            <p>
+                <strong>localStorage</strong> may be used to store things like app settings and saved scheme history. This data:
             </p>
             <ul>
                 <li>Is stored locally in your browser</li>
-                <li>Is cleared automatically when you close the browser tab or window</li>
-                <li>Is never sent to any server, database, or third-party service</li>
+                <li>May remain available after you close the tab or browser</li>
+                <li>Remains until you clear it or your browser removes it</li>
+                <li>Is never sent to any server, database, or third-party service by this site</li>
             </ul>
+
+            <h3>Session Storage</h3>
             <p>
-                This is done to provide a better user experience without the need for user accounts or cookies.
+                <strong>sessionStorage</strong> may be used for temporary in-session data while you use the site. This data:
             </p>
+            <ul>
+                <li>Is stored locally in your browser</li>
+                <li>Is typically cleared when the tab or browser session ends</li>
+                <li>Is never sent to any server, database, or third-party service by this site</li>
+            </ul>
 
             <h2>5. Questions or Requests</h2>
             <p>

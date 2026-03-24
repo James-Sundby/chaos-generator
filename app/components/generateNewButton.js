@@ -2,14 +2,14 @@
 
 import PendingActionButton from "./pendingActionButton";
 import { useSettingsStore } from "@/app/stores/settingsStore";
-import { generatorRegistry } from "./generatorRegistry";
+import { generatorRegistry } from "@/lib/generators/index";
 
 export default function GenerateNewButton({
     generatorKey = "chapter",
     label,
 }) {
     const config = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
-    const settings = useSettingsStore();
+    const colourMode = useSettingsStore((s) => s.colourMode);
 
     return (
         <form action={config.createAction} className="w-full">
@@ -17,7 +17,7 @@ export default function GenerateNewButton({
                 type="hidden"
                 name="settings"
                 value={JSON.stringify({
-                    colourMode: settings.colourMode,
+                    colourMode: colourMode,
                 })}
             />
             <PendingActionButton>

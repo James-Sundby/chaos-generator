@@ -6,9 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import { usePainterStore } from "@/app/stores/painterStore";
-import { colourList } from "@/lib/colours";
-import { patterns } from "@/lib/armourPatterns";
-import { chapterModes } from "@/lib/modes";
+import { colourList } from "@/lib/data/colours";
+import { patterns } from "@/lib/data/armourPatterns";
+import { chapterModes } from "@/lib/data/modes";
 import { parseSlug, generateSlug } from "@/utils/parseSlugs";
 
 const chapterImportSchema = z.object({

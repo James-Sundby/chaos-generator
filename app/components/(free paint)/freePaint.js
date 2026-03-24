@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { colourList } from "@/lib/colours";
+import { colourList } from "@/lib/data/colours";
 
 import PaintBySections from "@/app/components/(free paint)/paintBySections";
 import ImportWarband from "@/app/components/(free paint)/importWarband";

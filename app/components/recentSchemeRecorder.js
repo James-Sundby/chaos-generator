@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRecentSchemesStore } from "@/app/stores/recentSchemesStore";
-import { generatorRegistry } from "@/app/components/generatorRegistry";
+import { generatorRegistry } from "@/lib/generators/index";
 
 export default function RecentSchemeRecorder({ generatorKey, band }) {
     const addScheme = useRecentSchemesStore((s) => s.addScheme);

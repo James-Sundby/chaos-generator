@@ -15,7 +15,7 @@ const SchemeSearch = dynamic(() => import("@/app/components/schemeSearch"), {
 });
 
 const SpaceMarineGhost = dynamic(
-  () => import("@/app/components/models/spaceMarine"),
+  () => import("@/lib/models/spaceMarine"),
   {
     ssr: false,
     loading: () => <div className="h-full w-full" aria-hidden="true" />,
@@ -23,7 +23,7 @@ const SpaceMarineGhost = dynamic(
 );
 
 const ChaosMarineGhost = dynamic(
-  () => import("@/app/components/models/chaosSpaceMarine"),
+  () => import("@/lib/models/chaosSpaceMarine"),
   {
     ssr: false,
     loading: () => <div className="h-full w-full" aria-hidden="true" />,
@@ -31,7 +31,7 @@ const ChaosMarineGhost = dynamic(
 );
 
 const EldarAvengerGhost = dynamic(
-  () => import("@/app/components/models/eldarAvenger"),
+  () => import("@/lib/models/eldarAvenger"),
   {
     ssr: false,
     loading: () => <div className="h-full w-full" aria-hidden="true" />,
@@ -45,7 +45,7 @@ const factionCards = [
     title: "THE\nEMPEROR'S\nOWN",
     mobileTitle: "EMPEROR'S OWN",
     body: "Generate and customize schemes for the Imperium's loyal defenders, from Space Marine chapters to other servants of the Throne.",
-    tags: ["Space Marines"],
+    tags: ["Space Marines", "Sisters of Battle"],
     href: "/loyalists",
     accentBarClass: "bg-faction-loyalist",
     badgeClass: "badge-loyalist",

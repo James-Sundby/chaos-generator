@@ -2,10 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import TradingCard from "@/app/components/trading-card";
-import { colourList } from "@/lib/colours";
+import TradingCard from "@/app/components/tradingCard";
+import { colourList } from "@/lib/data/colours";
 import { generateSlug } from "@/utils/parseSlugs";
-import { generatorRegistry } from "@/app/components/generatorRegistry";
+import { generatorRegistry } from "@/lib/generators/index";
 import ColorListbox from "./colourSelect";
 
 function ControlRow({ id, label, children, hint }) {
@@ -270,7 +270,7 @@ export default function CustomizerCore({
 
                     <ControlRow
                         id="trim-colour"
-                        label={generatorKey === "chaos" ? "Trim colour" : "Accent colour"}
+                        label={generatorKey === "chaos" || "sisters" ? "Trim colour" : "Accent colour"}
                     >
                         {({ labelId, hintId }) => (
                             <>
@@ -281,7 +281,7 @@ export default function CustomizerCore({
                                     onChange={(val) => handleColorChange(2, val)}
                                     labelledById={labelId}
                                     describedById={hintId}
-                                    ariaLabel={generatorKey === "chaos" ? "Trim colour" : "Accent colour"}
+                                    ariaLabel={generatorKey === "chaos" || "sisters" ? "Trim colour" : "Accent colour"}
                                 />
                                 <ActionBtn
                                     title="Random trim colour"
@@ -292,7 +292,7 @@ export default function CustomizerCore({
                     </ControlRow>
 
 
-                    {generatorKey === "chaos" && (
+                    {generatorKey === "chaos" || "sisters" && (
                         <ControlRow id="accent-colour" label="Accent colour">
                             {({ labelId, hintId }) => (
                                 <>

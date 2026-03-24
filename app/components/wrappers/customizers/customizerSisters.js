@@ -1,40 +1,41 @@
 "use client";
 
 import CustomizerCore from "../../customizerCore";
-import { chaosPatterns } from "@/lib/data/armourPatterns";
+import { sistersPatterns } from "@/lib/data/armourPatterns";
 import { colourList } from "@/lib/data/colours";
-import { useChaosStore } from "@/app/stores/chaosStore";
+import { useSistersStore } from "@/app/stores/sistersStore";
 
-// grouped options for Chaos
 const groupedColors = {
     Base: colourList.filter((c) => c.type === "Base"),
     Layer: colourList.filter((c) => c.type === "Layer"),
     Contrast: colourList.filter((c) => c.type === "Contrast"),
     Metallic: colourList.filter((c) => c.type === "Metallic"),
 };
+
 const nonMetallics = {
     Base: groupedColors.Base,
     Layer: groupedColors.Layer,
     Contrast: groupedColors.Contrast,
 };
 
-export default function CustomizerChaos() {
-    const band = useChaosStore((s) => s.chaosBand);
-    const setBand = useChaosStore((s) => s.setChaosBand);
+const nonMetallicPool = colourList.filter((c) => c.type !== "Metallic");
+
+export default function CustomizerSisters() {
+    const band = useSistersStore((s) => s.order);
+    const setBand = useSistersStore((s) => s.setOrder);
 
     return (
         <CustomizerCore
-            generatorKey="chaos"
+            generatorKey="sisters"
             band={band}
             setBand={setBand}
-            patterns={chaosPatterns}
-            paletteOptionsForIndex={(i) => (i === 3 ? nonMetallics : groupedColors)}
-            randomPoolForIndex={(i) =>
-                i === 3
-                    ? colourList.filter((c) => c.type !== "Metallic")
-                    : colourList
+            patterns={sistersPatterns}
+            paletteOptionsForIndex={(i) =>
+                i === 1 || i === 3 ? nonMetallics : groupedColors
             }
-            hideSecondaryWhenBasic
+            randomPoolForIndex={(i) =>
+                i === 1 || i === 3 ? nonMetallicPool : colourList
+            }
         />
     );
 }

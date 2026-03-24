@@ -1,4 +1,4 @@
-import { metals } from "@/lib/colourChart";
+import { metals } from "@/lib/data/colourChart";
 import Link from "next/link";
 
 export const metadata = {

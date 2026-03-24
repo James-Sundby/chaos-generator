@@ -1,5 +1,5 @@
 import FactionHub from "@/app/components/factionHub";
-import ChaosMarine from "@/app/components/models/chaosSpaceMarine";
+import ChaosMarine from "@/lib/models/chaosSpaceMarine";
 
 export const metadata = {
     title: "Chaos Forge",
