@@ -51,6 +51,10 @@ export default function GeneratorView({
             <RecentSchemeRecorder generatorKey={generatorKey} band={band} />
             <section className="mx-auto my-auto flex w-full max-w-7xl flex-col items-center justify-center gap-6 md:flex-row md:items-stretch lg:gap-16">
                 <div className="relative w-full max-w-105 shrink-0">
+                    <h1 className="text-2xl font-black uppercase leading-none tracking-tight text-center mb-3 md:hidden">
+                        {displayName}
+                    </h1>
+
                     {modelOptions.length > 1 && (
                         <div className="join mb-3 flex w-full md:hidden">
                             {modelOptions.map(([key, model]) => (
@@ -76,9 +80,9 @@ export default function GeneratorView({
 
                 <div className="flex w-full max-w-105 flex-col-reverse gap-4 md:flex-1 md:flex-col">
                     <div className="hidden md:block">
-                        <h2 className="text-3xl font-black uppercase leading-none tracking-tight sm:text-4xl lg:text-5xl">
+                        <h1 className="text-3xl font-black uppercase leading-none tracking-tight sm:text-4xl lg:text-5xl">
                             {displayName}
-                        </h2>
+                        </h1>
 
                         <p className="mt-4 max-w-xl text-sm leading-relaxed text-base-content/70 md:text-base">
                             {heroDescription}

@@ -83,6 +83,13 @@ export default function XenosPage() {
                     "> Purity seals advised.",
                 ],
             }}
+            meta={{
+                archive: "Xenos Archive",
+                era: "M41",
+                location: "Ordo Xenos // Restricted",
+                status: "Status: Monitored",
+                statusClassName: "text-faction-xenos",
+            }}
         />
     );
 }

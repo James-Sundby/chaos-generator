@@ -94,6 +94,13 @@ export default function LoyalistsPage() {
                     "> Clearance maintained.",
                 ],
             }}
+            meta={{
+                archive: "Imperial Archive",
+                era: "M41",
+                location: "Segmentum Solar // Sol",
+                status: "Status: Operational",
+                statusClassName: "text-faction-loyalist",
+            }}
         />
     );
 }

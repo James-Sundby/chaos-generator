@@ -1,34 +1,10 @@
 "use client";
 
 import { useRef } from "react";
-import { useSettingsStore } from "@/app/stores/settingsStore";
-
-const OPTIONS = [
-    {
-        value: "default",
-        label: "Default",
-        description:
-            "Uses the Citadel range of Base, Layer, and Metallic paints.",
-    },
-    {
-        value: "contrast",
-        label: "Contrast",
-        description:
-            "Limits paint selection to Citadel Contrast paints only. Some split-panel armour patterns are unavailable.",
-    },
-    {
-        value: "sm2",
-        label: "Space Marine 2",
-        description:
-            "Limits paint selection to the colours available in Space Marine 2.",
-    },
-];
+import SettingsPanel from "./settingsPanel";
 
 export default function SettingsButton() {
     const dialogRef = useRef(null);
-
-    const colourMode = useSettingsStore((s) => s.colourMode);
-    const setColourMode = useSettingsStore((s) => s.setColourMode);
 
     const openModal = () => dialogRef.current?.showModal();
     const closeModal = () => dialogRef.current?.close();
@@ -82,69 +58,15 @@ export default function SettingsButton() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-3 px-6 py-5 sm:px-8 sm:py-6">
-                        {OPTIONS.map((option) => {
-                            const selected = colourMode === option.value;
-
-                            return (
-                                <label
-                                    key={option.value}
-                                    className={[
-                                        "group relative flex cursor-pointer flex-col gap-4 overflow-hidden border p-4 transition sm:p-5",
-                                        "rounded-none",
-                                        selected
-                                            ? "border-primary bg-primary/5"
-                                            : "border-base-300 bg-base-100 hover:border-base-content/30 hover:bg-base-200/40",
-                                    ].join(" ")}
-                                >
-                                    <input
-                                        type="radio"
-                                        name="colourMode"
-                                        className="sr-only"
-                                        checked={selected}
-                                        onChange={() => setColourMode(option.value)}
-                                    />
-
-                                    <div className="flex items-start justify-between gap-4">
-                                        <div className="flex min-w-0 flex-col gap-2">
-                                            <div className="text-lg font-black uppercase leading-none tracking-tight sm:text-xl">
-                                                {option.label}
-                                            </div>
-
-                                            <p className="max-w-2xl text-sm leading-relaxed text-base-content/75">
-                                                {option.description}
-                                            </p>
-                                        </div>
-
-                                        <div className="flex shrink-0 items-start">
-                                            <div
-                                                className={[
-                                                    "flex size-5 items-center justify-center border",
-                                                    selected
-                                                        ? "border-primary bg-primary text-primary-content"
-                                                        : "border-base-content/30 bg-base-100",
-                                                ].join(" ")}
-                                                aria-hidden="true"
-                                            >
-                                                {selected ? (
-                                                    <svg viewBox="0 0 512 512" className="size-3 fill-current">
-                                                        <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416z" />
-                                                    </svg>
-                                                ) : null}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-                            );
-                        })}
+                    <div className="px-6 py-5 sm:px-8 sm:py-6">
+                        <SettingsPanel />
                     </div>
 
-                    <div className="flex flex-col gap-4 border-t border-base-300 px-6 py-5 sm:px-8 sm:py-6">
-                        <div className="flex flex-col gap-2 text-sm leading-relaxed text-base-content/75">
+                    <div className="border-t border-base-300 px-6 py-5 sm:px-8 sm:py-6">
+                        <div className="mb-4 flex flex-col gap-2 text-sm leading-relaxed text-base-content/75">
                             <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
                                 Note
                             </h3>
-
                             <ul className="flex flex-col gap-1">
                                 <li>This affects newly generated schemes only.</li>
                                 <li>Manual customization remains unrestricted.</li>
@@ -152,13 +74,11 @@ export default function SettingsButton() {
                         </div>
 
                         <div className="flex justify-end">
-                            <button
-                                type="button"
-                                className="btn btn-primary rounded-none"
-                                onClick={closeModal}
-                            >
-                                Close
-                            </button>
+                            <form method="dialog">
+                                <button type="submit" className="btn btn-primary rounded-none">
+                                    Close
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

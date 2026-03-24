@@ -190,9 +190,9 @@ export default function CustomizerCore({
                     <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
                         Manual Refit
                     </p>
-                    <h2 className="text-3xl font-black uppercase leading-none tracking-tight sm:text-4xl lg:text-5xl">
+                    <h1 className="text-3xl font-black uppercase leading-none tracking-tight sm:text-4xl lg:text-5xl">
                         Customizer
-                    </h2>
+                    </h1>
                 </div>
 
                 {modelOptions.length > 1 && (

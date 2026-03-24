@@ -71,6 +71,13 @@ export default function ChaosHubPage() {
                     "> Proceed with due suspicion.",
                 ],
             }}
+            meta={{
+                archive: "Heretic Archive",
+                era: "M41",
+                location: "Eye of Terror // Classified",
+                status: "Status: Compromised",
+                statusClassName: "text-faction-chaos",
+            }}
         />
     );
 }
