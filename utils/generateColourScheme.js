@@ -1,20 +1,29 @@
 import "server-only";
 
 import { colourList } from "@/lib/data/colours";
-import { generateChapterSchemeColours, generateChaosSchemeColours, generateEldarSchemeColours } from "./colourTools";
+import { generateChapterSchemeColours, generateChaosSchemeColours, generateEldarSchemeColours, generateSistersSchemeColours } from "./colourTools";
 
 function prepPool(list) {
     const metallic = [];
+    const nonMetallic = [];
     const accentCandidates = [];
 
     for (const c of list) {
-        if (c.type === "Metallic") metallic.push(c);
-        if (c.type !== "Metallic" && c.s > 30 && c.l > 30) accentCandidates.push(c);
+        if (c.type === "Metallic") {
+            metallic.push(c);
+        } else {
+            nonMetallic.push(c);
+
+            if (c.s > 30 && c.l > 30) {
+                accentCandidates.push(c);
+            }
+        }
     }
 
     return Object.freeze({
         all: list,
         metallic,
+        nonMetallic,
         accentCandidates,
     });
 }
@@ -74,6 +83,14 @@ const eldarStrategies = [
     { mode: "analogous", weight: 2, fn: (pool, rng) => generateEldarSchemeColours("analogous", { pool, rng }) },
 ];
 
+const sistersStrategies = [
+    { mode: "random", weight: 1, fn: (pool, rng) => generateSistersSchemeColours("random", { pool, rng }) },
+    { mode: "complementary", weight: 4, fn: (pool, rng) => generateSistersSchemeColours("complementary", { pool, rng }) },
+    { mode: "analogous", weight: 3, fn: (pool, rng) => generateSistersSchemeColours("analogous", { pool, rng }) },
+];
+
+
 export const generateWarbandScheme = schemeGenerator(chaosStrategies);
 export const generateChapterScheme = schemeGenerator(chapterStrategies);
 export const generateEldarScheme = schemeGenerator(eldarStrategies);
+export const generateSistersScheme = schemeGenerator(sistersStrategies);

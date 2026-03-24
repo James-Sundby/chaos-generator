@@ -97,6 +97,7 @@ export function findClosestColour(
     return topK[idx].colour;
 }
 
+
 export function findAccentColour(existingColours, candidatePool) {
     if (!Array.isArray(existingColours) || existingColours.length === 0) {
         throw new Error("findAccentColour: existingColours must be a non-empty array.");
@@ -149,6 +150,27 @@ function getAccentColour(p, existingColours) {
 
     if (accentPool.length === 0) return null;
     return findAccentColour(existingColours.filter(Boolean), accentPool);
+}
+
+function getNonMetalColour(p, used, rng = Math.random) {
+    const nonMetallic = p.nonMetallic ?? p.all.filter((c) => c.type !== "Metallic");
+    const candidates = nonMetallic.filter((c) => !used.has(String(c.hex).toLowerCase()));
+
+    if (candidates.length > 0) return randomElement(candidates, rng);
+    if (nonMetallic.length > 0) return randomElement(nonMetallic, rng);
+
+    const fallback = p.all.filter((c) => !used.has(String(c.hex).toLowerCase()));
+    return fallback.length > 0 ? randomElement(fallback, rng) : null;
+}
+
+function findClosestNonMetalColour(
+    target,
+    p,
+    excludeHexes = [],
+    options = {}
+) {
+    const nonMetallic = p.nonMetallic ?? p.all.filter((c) => c.type !== "Metallic");
+    return findClosestColour(target, nonMetallic, excludeHexes, options);
 }
 
 function generateComplementaryAnchors({ pool, rng = Math.random } = {}) {
@@ -348,4 +370,58 @@ export function generateEldarSchemeColours(harmony, { pool, rng = Math.random } 
     const accent = getAccentColour(p, [primary, secondary]);
 
     return [primary, secondary, accent];
+}
+
+export function generateSistersSchemeColours(harmony, { pool, rng = Math.random } = {}) {
+    const p = resolvePool(pool);
+    const anchors = getAnchorsByHarmony(harmony, { pool: p, rng });
+
+    const primary = anchors[0] ?? null;
+
+    const secondaryUsed = makeUsedSet([primary]);
+    const secondaryTarget = anchors[1] ?? anchors[0] ?? null;
+
+    const secondary =
+        secondaryTarget &&
+            secondaryTarget.type !== "Metallic" &&
+            !secondaryUsed.has(String(secondaryTarget.hex).toLowerCase())
+            ? secondaryTarget
+            : findClosestNonMetalColour(
+                secondaryTarget,
+                p,
+                Array.from(secondaryUsed),
+                { rng }
+            ) ?? getNonMetalColour(p, secondaryUsed, rng);
+
+    switch (harmony) {
+        case "random": {
+            const edgeUsed = makeUsedSet([primary, secondary]);
+            const edgeTarget = anchors[2] ?? anchors[1] ?? anchors[0] ?? null;
+
+            const edge =
+                edgeTarget &&
+                    edgeTarget.type !== "Metallic" &&
+                    !edgeUsed.has(String(edgeTarget.hex).toLowerCase())
+                    ? edgeTarget
+                    : findClosestNonMetalColour(
+                        edgeTarget,
+                        p,
+                        Array.from(edgeUsed),
+                        { rng }
+                    ) ?? getNonMetalColour(p, edgeUsed, rng);
+
+            const accent = getAccentColour(p, [primary, secondary, edge]);
+            return [primary, secondary, edge, accent];
+        }
+
+        case "complementary":
+        case "analogous":
+        default: {
+            const edgeUsed = makeUsedSet([primary, secondary]);
+            const edge = getMetalColour(p, edgeUsed, rng);
+            const accent = getAccentColour(p, [primary, secondary, edge]);
+
+            return [primary, secondary, edge, accent];
+        }
+    }
 }

@@ -4,7 +4,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 const defaultWarhost = {
     warbandName: 'Sample',
     slug: 'sample',
-    pattern: 'Basic',
+    pattern: '1',
     colors: [
         { name: "White Scar", hex: "#FFFFFF" },
         { name: "White Scar", hex: "#FFFFFF" },

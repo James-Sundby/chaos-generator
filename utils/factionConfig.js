@@ -1,11 +1,11 @@
 import "server-only";
 import { cache } from "react";
 import { colourList } from "@/lib/data/colours";
-import { patterns as loyalistPatterns, chaosPatterns, eldarPatterns } from "@/lib/data/armourPatterns";
-import { chapterModes, chaosModes, eldarModes } from "@/lib/data/modes";
-import { generateChapterName, generateWarbandName, generateEldarName } from "@/utils/generateNames";
-import { generateChapterScheme, generateWarbandScheme, generateEldarScheme } from "@/utils/generateColourScheme";
-import { generateLoyalistPattern, generateChaosPattern, generateEldarPattern } from "@/utils/generatePatterns";
+import { patterns as loyalistPatterns, chaosPatterns, eldarPatterns, sistersPatterns } from "@/lib/data/armourPatterns";
+import { chapterModes, chaosModes, eldarModes, sistersModes } from "@/lib/data/modes";
+import { generateChapterName, generateWarbandName, generateEldarName, generateSistersName } from "@/utils/generateNames";
+import { generateChapterScheme, generateWarbandScheme, generateEldarScheme, generateSistersScheme } from "@/utils/generateColourScheme";
+import { generateLoyalistPattern, generateChaosPattern, generateEldarPattern, generateSistersPattern } from "@/utils/generatePatterns";
 
 const getColourMap = cache(() =>
     Object.fromEntries(colourList.map(c => [c.hex.toLowerCase(), c]))
@@ -48,6 +48,19 @@ export const getFactionConfig = cache(() => {
             generateScheme: generateEldarScheme,
             generatePattern: generateEldarPattern,
             resultKey: "warhost",
+            displayNameKey: "warbandName",
+            colourMap,
+        },
+
+        sisters: {
+            slug: "sisters",
+            colourCount: 4,
+            patternsSet: new Set(sistersPatterns.map((p) => p.toLowerCase())),
+            modesSet: new Set(sistersModes.map((m) => m.toLowerCase())),
+            generateName: generateSistersName,
+            generateScheme: generateSistersScheme,
+            generatePattern: generateSistersPattern,
+            resultKey: "order",
             displayNameKey: "warbandName",
             colourMap,
         },

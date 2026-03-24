@@ -4,7 +4,7 @@ import CogitatorBox from "./cogitatorBox";
 
 export default function FactionHub({ eyebrow, title, intro, cards, cogitator }) {
     return (
-        <section className="relative flex flex-col">
+        <section className="relative flex flex-col my-auto">
             <section className="relative z-10 mb-8 flex flex-col md:mb-12">
                 <div className="max-w-4xl">
                     <div className="flex flex-col gap-3">

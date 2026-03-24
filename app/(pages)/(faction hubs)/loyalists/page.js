@@ -1,5 +1,6 @@
 import FactionHub from "@/app/components/factionHub";
 import SpaceMarine from "@/lib/models/spaceMarine";
+import SisterOfBattle from "@/lib/models/sisterOfBattle";
 
 export const metadata = {
     title: "Loyalist Forge",
@@ -57,11 +58,22 @@ const loyalistCards = [
         label: "Sororitas",
         title: "SISTERS\nOF\nBATTLE",
         mobileTitle: "SISTERS OF BATTLE",
-        body: "Coming soon: armour, robes, and sacred colours fit for the Emperor's most zealous daughters.",
+        body: "Generate sacred armour schemes for the Adepta Sororitas, with disciplined heraldry, ceremonial contrast, and colours fit for the Emperor's most zealous daughters.",
+        tags: ["Adepta Sororitas"],
+        href: "/sisters",
+        generatorKey: "sisters",
         accentBarClass: "bg-faction-loyalist",
         badgeClass: "badge-loyalist",
         buttonClass: "btn-primary",
-        status: "coming-soon",
+        ghostModel: SisterOfBattle,
+        ghostModelProps: {
+            primary: "#d9d9d9",
+            secondary: "#d9d9d9",
+            edge: "#d9d9d9",
+            accent: "#d9d9d9",
+            pattern: "1",
+        },
+        status: "live",
     },
 ];
 

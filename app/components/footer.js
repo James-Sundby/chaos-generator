@@ -82,7 +82,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <div className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/40 md:text-right">
+          <div className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/70 md:text-right">
             Unofficial hobby project
           </div>
         </div>

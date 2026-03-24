@@ -9,18 +9,19 @@ import { generateSlug, parseSlug } from "@/utils/parseSlugs";
 import { createChapter } from "@/utils/(faction wrappers)/chapter";
 import { createWarband } from "@/utils/(faction wrappers)/warband";
 import { createWarhost } from "@/utils/(faction wrappers)/warhost";
+import { createSisters } from "@/utils/(faction wrappers)/sisters";
+
+const ROUTE_BASE_BY_FACTION = {
+    chapter: "/chapter",
+    chaos: "/chaos",
+    eldar: "/warhost",
+    sisters: "/sisters",
+};
 
 function getRouteBaseFromFaction(faction) {
-    switch (faction) {
-        case "chapter":
-            return "/chapter";
-        case "chaos":
-            return "/chaos";
-        case "eldar":
-            return "/warhost";
-        default:
-            throw new Error("bad-slug");
-    }
+    const routeBase = ROUTE_BASE_BY_FACTION[faction];
+    if (!routeBase) throw new Error("bad-slug");
+    return routeBase;
 }
 
 function parseSettings(raw) {
@@ -30,7 +31,12 @@ function parseSettings(raw) {
     try {
         const parsed = JSON.parse(String(raw));
         const colourMode = parsed?.colourMode;
-        if (colourMode === "default" || colourMode === "sm2" || colourMode === "contrast") {
+
+        if (
+            colourMode === "default" ||
+            colourMode === "sm2" ||
+            colourMode === "contrast"
+        ) {
             return { colourMode };
         }
     } catch { }
@@ -90,4 +96,10 @@ export async function createWarhostAndGo(formData) {
     const settings = parseSettings(formData.get("settings"));
     const entity = createWarhost(settings);
     redirect(`/warhost/${entity.slug}`);
+}
+
+export async function createSistersAndGo(formData) {
+    const settings = parseSettings(formData.get("settings"));
+    const entity = createSisters(settings);
+    redirect(`/sisters/${entity.slug}`);
 }

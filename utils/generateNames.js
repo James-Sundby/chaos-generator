@@ -6,10 +6,12 @@ import { normalizeName } from "@/utils/normalizeNames";
 import { chaoticDescriptors, darkEntities, warriorTerms, abstractNouns, adjectives as chaosAdjectives } from "@/lib/names/chaosNameParts";
 import { virtues, warriorTerms as loyalTerms, placesOrEntities, adjectives as loyalAdjectives, animals } from "@/lib/names/chapterNameParts";
 import { eldarAdjectives, eldarWarriorTerms, eldarAbstracts, eldarCelestial } from "@/lib/names/eldarNameParts";
+import { sororitasAdjectives, sororitasRelics, sororitasFigures } from "@/lib/names/sistersNameParts";
 
 
 import { OFFICIAL_CHAPTER_BLACKLIST } from "@/lib/names/blacklistChapter";
 import { OFFICIAL_CHAOS_WARBAND_BLACKLIST } from "@/lib/names/blacklistChaos";
+import { OFFICIAL_SORORITAS_ORDER_BLACKLIST } from "@/lib/names/blacklistSisters";
 
 const OFFICIAL_WARHOST_BLACKLIST = new Set();
 
@@ -93,3 +95,17 @@ export const generateEldarName = nameGenerator({
     blacklist: OFFICIAL_WARHOST_BLACKLIST,
     mode: "Warhost"
 });
+
+const sistersFormulas = [
+    () => `Order of the ${randomElement(sororitasAdjectives)} ${randomElement(sororitasFigures)}`,
+    () => `Order of the ${randomElement(sororitasRelics)} and ${randomElement(sororitasRelics)}`,
+    () => `Order of Our ${randomElement(sororitasAdjectives)} ${randomElement(sororitasFigures)}`,
+    () => `Order of the ${randomElement(sororitasFigures)} of the ${randomElement(sororitasRelics)}`,
+    () => `Order of the ${randomElement(sororitasAdjectives)} ${randomElement(sororitasRelics)} Eternal`,
+]
+
+export const generateSistersName = nameGenerator({
+    formulae: sistersFormulas,
+    blacklist: OFFICIAL_SORORITAS_ORDER_BLACKLIST,
+    mode: "Order"
+})

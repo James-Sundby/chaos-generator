@@ -45,7 +45,7 @@ const factionCards = [
     title: "THE\nEMPEROR'S\nOWN",
     mobileTitle: "EMPEROR'S OWN",
     body: "Generate and customize schemes for the Imperium's loyal defenders, from Space Marine chapters to other servants of the Throne.",
-    tags: ["Space Marines"],
+    tags: ["Space Marines", "Sisters of Battle"],
     href: "/loyalists",
     accentBarClass: "bg-faction-loyalist",
     badgeClass: "badge-loyalist",
