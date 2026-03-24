@@ -270,7 +270,7 @@ export default function CustomizerCore({
 
                     <ControlRow
                         id="trim-colour"
-                        label={generatorKey === "chaos" || "sisters" ? "Trim colour" : "Accent colour"}
+                        label={generatorKey === "chaos" || generatorKey === "sisters" ? "Trim colour" : "Accent colour"}
                     >
                         {({ labelId, hintId }) => (
                             <>
@@ -292,7 +292,7 @@ export default function CustomizerCore({
                     </ControlRow>
 
 
-                    {generatorKey === "chaos" || "sisters" && (
+                    {generatorKey === "chaos" || generatorKey === "sisters" && (
                         <ControlRow id="accent-colour" label="Accent colour">
                             {({ labelId, hintId }) => (
                                 <>
