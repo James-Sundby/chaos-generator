@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import MetaBar from "./components/metaBar";
 import RecentSchemeArchive from "./components/recentSchemeArchive";
 import CogitatorBox from "./components/cogitatorBox";
 
@@ -104,7 +105,10 @@ export default function Home() {
     <div className="flex flex-col gap-8 md:gap-12">
       <section className="max-w-3xl">
         <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl lg:text-7xl">
+
+          <MetaBar />
+
+          <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl xl:text-7xl">
             Chapter Generator
           </h1>
           <p className="max-w-2xl text-sm leading-relaxed text-base-content/75 sm:text-lg">
