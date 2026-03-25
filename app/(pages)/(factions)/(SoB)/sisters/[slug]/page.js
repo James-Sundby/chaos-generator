@@ -7,18 +7,18 @@ export async function generateMetadata(props) {
     const params = await props.params;
 
     try {
-        const { order, canonical } = parseFromSlugOrThrow(params.slug);
-        const colorNames = order.colors.map((c) => c.name).join(", ");
+        const { sisters, canonical } = parseFromSlugOrThrow(params.slug);
+        const colorNames = sisters.colors.map((c) => c.name).join(", ");
 
         return {
-            title: order.warbandName,
-            description: `Custom order: ${order.warbandName} using ${colorNames}, in the "${order.pattern}" pattern.`,
+            title: sisters.name,
+            description: `Custom order: ${sisters.name} using ${colorNames}, in the "${sisters.pattern}" pattern.`,
             alternates: {
                 canonical: `/sisters/${canonical}`,
             },
             openGraph: {
-                title: order.warbandName,
-                description: `Custom Adepta Sororitas scheme: ${colorNames} in the ${order.pattern} pattern.`,
+                title: sisters.name,
+                description: `Custom Adepta Sororitas scheme: ${colorNames} in the ${sisters.pattern} pattern.`,
                 url: `/sisters/${canonical}`,
                 images: [
                     {
@@ -30,8 +30,8 @@ export async function generateMetadata(props) {
                 ],
             },
             twitter: {
-                title: order.warbandName,
-                description: `Adepta Sororitas paint scheme: ${colorNames} in the "${order.pattern}" pattern.`,
+                title: sisters.name,
+                description: `Adepta Sororitas paint scheme: ${colorNames} in the "${sisters.pattern}" pattern.`,
                 images: ["/card.png"],
             },
         };
@@ -50,12 +50,12 @@ export default async function Page(props) {
     const params = await props.params;
 
     try {
-        const { order, canonical } = parseFromSlugOrThrow(params.slug);
+        const { sisters, canonical } = parseFromSlugOrThrow(params.slug);
         if (canonical !== params.slug) redirect(`/sisters/${canonical}`);
         return (
             <>
-                <GeneratorStoreHydrator generatorKey="sisters" entity={order} />
-                <GeneratorView generatorKey="sisters" band={order} />
+                <GeneratorStoreHydrator generatorKey="sisters" entity={sisters} />
+                <GeneratorView generatorKey="sisters" band={sisters} />
             </>
         );
     } catch {

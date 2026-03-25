@@ -245,7 +245,7 @@ export default function ImportWarband() {
             );
 
             const chapter = {
-                warbandName: parsed.name,
+                name: parsed.name,
                 colors: parsed.colours,
                 pattern: parsed.pattern,
                 slug: canonical,

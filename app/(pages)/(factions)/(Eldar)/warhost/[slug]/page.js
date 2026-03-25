@@ -7,18 +7,18 @@ export async function generateMetadata(props) {
     const params = await props.params;
 
     try {
-        const { warhost, canonical } = parseWarhostFromSlugOrThrow(params.slug);
-        const colourNames = warhost.colors.map((c) => c.name).join(", ");
+        const { eldar, canonical } = parseWarhostFromSlugOrThrow(params.slug);
+        const colourNames = eldar.colors.map((c) => c.name).join(", ");
 
         return {
-            title: warhost.warbandName,
-            description: `Custom Aeldari warhost: ${warhost.warbandName} using ${colourNames} in the "${warhost.pattern}" pattern.`,
+            title: eldar.name,
+            description: `Custom Aeldari warhost: ${eldar.name} using ${colourNames} in the "${eldar.pattern}" pattern.`,
             alternates: {
                 canonical: `/warhost/${canonical}`,
             },
             openGraph: {
-                title: warhost.warbandName,
-                description: `Aeldari colour scheme: ${colourNames} in the ${warhost.pattern} pattern.`,
+                title: eldar.name,
+                description: `Aeldari colour scheme: ${colourNames} in the ${eldar.pattern} pattern.`,
                 url: `/warhost/${canonical}`,
                 images: [
                     {
@@ -30,8 +30,8 @@ export async function generateMetadata(props) {
                 ],
             },
             twitter: {
-                title: warhost.warbandName,
-                description: `Custom Aeldari warhost: ${warhost.warbandName} using ${colourNames} in the "${warhost.pattern}" pattern.`,
+                title: eldar.name,
+                description: `Custom Aeldari warhost: ${eldar.name} using ${colourNames} in the "${eldar.pattern}" pattern.`,
                 images: ["/card.png"],
             },
         };
@@ -50,13 +50,13 @@ export default async function Page(props) {
     const params = await props.params;
 
     try {
-        const { warhost, canonical } = parseWarhostFromSlugOrThrow(params.slug);
+        const { eldar, canonical } = parseWarhostFromSlugOrThrow(params.slug);
         if (canonical !== params.slug) redirect(`/warhost/${canonical}`);
 
         return (
             <>
-                <GeneratorStoreHydrator generatorKey="eldar" entity={warhost} />
-                <GeneratorView generatorKey="eldar" band={warhost} />
+                <GeneratorStoreHydrator generatorKey="eldar" entity={eldar} />
+                <GeneratorView generatorKey="eldar" band={eldar} />
             </>
         );
     } catch {

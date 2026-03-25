@@ -5,7 +5,7 @@ export function createWarhost(settings) {
     const entity = createFactionEntity("eldar", settings);
 
     return {
-        warbandName: entity.name,
+        name: entity.name,
         colors: entity.colors,
         pattern: entity.pattern,
         slug: entity.slug,
@@ -21,8 +21,8 @@ export function parseWarhostFromSlugOrThrow(slug) {
     }
 
     return {
-        warhost: {
-            warbandName: entity.name,
+        eldar: {
+            name: entity.name,
             colors: entity.colors,
             pattern: entity.pattern,
             slug: entity.slug,

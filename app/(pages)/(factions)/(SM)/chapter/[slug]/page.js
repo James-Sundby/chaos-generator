@@ -11,13 +11,13 @@ export async function generateMetadata(props) {
         const colorNames = chapter.colors.map((c) => c.name).join(", ");
 
         return {
-            title: chapter.warbandName,
-            description: `Custom chapter: ${chapter.warbandName} using ${colorNames}, in the "${chapter.pattern}" pattern.`,
+            title: chapter.name,
+            description: `Custom chapter: ${chapter.name} using ${colorNames}, in the "${chapter.pattern}" pattern.`,
             alternates: {
                 canonical: `/chapter/${canonical}`,
             },
             openGraph: {
-                title: chapter.warbandName,
+                title: chapter.name,
                 description: `Custom Space Marine scheme: ${colorNames} in the ${chapter.pattern} pattern.`,
                 url: `/chapter/${canonical}`,
                 images: [
@@ -30,7 +30,7 @@ export async function generateMetadata(props) {
                 ],
             },
             twitter: {
-                title: chapter.warbandName,
+                title: chapter.name,
                 description: `Space Marine paint scheme: ${colorNames} in the "${chapter.pattern}" pattern.`,
                 images: ["/card.png"],
             },

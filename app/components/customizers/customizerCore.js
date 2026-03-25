@@ -99,7 +99,7 @@ export default function CustomizerCore({
         const next = { ...band, ...updated };
         const newSlug = generateSlug(
             generatorKey,
-            next.warbandName,
+            next.name,
             next.colors,
             next.pattern,
             "custom"
@@ -112,7 +112,7 @@ export default function CustomizerCore({
         });
     };
 
-    const handleNameChange = (val) => updateBand({ warbandName: val });
+    const handleNameChange = (val) => updateBand({ name: val });
     const handlePatternChange = (val) => updateBand({ pattern: val });
 
     const handleColorChange = (index, hex) => {
@@ -230,7 +230,7 @@ export default function CustomizerCore({
                         </label>
                         <input
                             type="text"
-                            value={band.warbandName}
+                            value={band.name}
                             onChange={(e) => handleNameChange(e.target.value)}
                             className="input input-bordered w-full rounded-none border-base-300 bg-base-100"
                             maxLength={50}

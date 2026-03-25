@@ -1,15 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { generatorRegistry } from "@/lib/generators";
+
 import GenerateNewButton from "@/app/components/generateNewButton";
 import CustomizerButton from "@/app/components/customizerButton";
 import ShareButton from "@/app/components/shareButton";
-
-const RecentSchemeRecorder = dynamic(
-    () => import("@/app/components/recentSchemeRecorder"),
-    { ssr: false }
-);
+import RecentSchemeRecorder from "../recentSchemeRecorder";
 
 export default function GeneratorActions({
     generatorKey,

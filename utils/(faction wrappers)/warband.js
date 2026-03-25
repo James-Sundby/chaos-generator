@@ -5,7 +5,7 @@ export function createWarband(settings) {
     const entity = createFactionEntity("chaos", settings);
 
     return {
-        warbandName: entity.name,
+        name: entity.name,
         colors: entity.colors,
         pattern: entity.pattern,
         slug: entity.slug,
@@ -21,8 +21,8 @@ export function parseFromSlugOrThrow(slug) {
     }
 
     return {
-        band: {
-            warbandName: entity.name,
+        chaos: {
+            name: entity.name,
             colors: entity.colors,
             pattern: entity.pattern,
             slug: entity.slug,

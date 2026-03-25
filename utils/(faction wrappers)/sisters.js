@@ -5,7 +5,7 @@ export function createSisters(settings) {
     const entity = createFactionEntity("sisters", settings);
 
     return {
-        warbandName: entity.name,
+        name: entity.name,
         colors: entity.colors,
         pattern: entity.pattern,
         slug: entity.slug,
@@ -21,8 +21,8 @@ export function parseFromSlugOrThrow(slug) {
     }
 
     return {
-        order: {
-            warbandName: entity.name,
+        sisters: {
+            name: entity.name,
             colors: entity.colors,
             pattern: entity.pattern,
             slug: entity.slug,

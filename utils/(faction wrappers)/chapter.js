@@ -5,7 +5,7 @@ export function createChapter(settings) {
     const entity = createFactionEntity("chapter", settings);
 
     return {
-        warbandName: entity.name,
+        name: entity.name,
         colors: entity.colors,
         pattern: entity.pattern,
         slug: entity.slug,
@@ -22,7 +22,7 @@ export function parseFromSlugOrThrow(slug) {
 
     return {
         chapter: {
-            warbandName: entity.name,
+            name: entity.name,
             colors: entity.colors,
             pattern: entity.pattern,
             slug: entity.slug,

@@ -7,18 +7,18 @@ export async function generateMetadata(props) {
     const params = await props.params;
 
     try {
-        const { band, canonical } = parseFromSlugOrThrow(params.slug);
-        const colourNames = band.colors.map((c) => c.name).join(", ");
+        const { chaos, canonical } = parseFromSlugOrThrow(params.slug);
+        const colourNames = chaos.colors.map((c) => c.name).join(", ");
 
         return {
-            title: band.warbandName,
-            description: `Custom Chaos warband: ${band.warbandName} using ${colourNames} in the "${band.pattern}" pattern.`,
+            title: chaos.name,
+            description: `Custom Chaos warband: ${chaos.name} using ${colourNames} in the "${chaos.pattern}" pattern.`,
             alternates: {
                 canonical: `/chaos/${canonical}`,
             },
             openGraph: {
-                title: band.warbandName,
-                description: `Chaos Space Marine scheme: ${colourNames} in the ${band.pattern} pattern.`,
+                title: chaos.name,
+                description: `Chaos Space Marine scheme: ${colourNames} in the ${chaos.pattern} pattern.`,
                 url: `/chaos/${canonical}`,
                 images: [
                     {
@@ -30,8 +30,8 @@ export async function generateMetadata(props) {
                 ],
             },
             twitter: {
-                title: band.warbandName,
-                description: `Custom Chaos warband: ${band.warbandName} using ${colourNames} in the "${band.pattern}" pattern.`,
+                title: chaos.name,
+                description: `Custom Chaos warband: ${chaos.name} using ${colourNames} in the "${chaos.pattern}" pattern.`,
                 images: ["/card.png"],
             },
         };
@@ -49,12 +49,14 @@ export async function generateMetadata(props) {
 export default async function Page(props) {
     const params = await props.params;
     try {
-        const { band, canonical } = parseFromSlugOrThrow(params.slug);
+        const { chaos, canonical } = parseFromSlugOrThrow(params.slug);
+        console.log("params", params);
         if (canonical !== params.slug) redirect(`/chaos/${canonical}`);
         return (
             <>
-                <GeneratorStoreHydrator generatorKey="chaos" entity={band} />
-                <GeneratorView generatorKey="chaos" band={band} />
+
+                <GeneratorStoreHydrator generatorKey="chaos" entity={chaos} />
+                <GeneratorView generatorKey="chaos" band={chaos} />
             </>
         );
     } catch {
