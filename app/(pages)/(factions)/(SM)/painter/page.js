@@ -1,4 +1,4 @@
-import CustomizerChapter from "@/app/components/wrappers/customizers/customizerChapter";
+import CustomizerEntry from "@/app/components/customizers/customizerEntry";
 
 export const metadata = {
     title: "Chapter Painter",
@@ -31,5 +31,5 @@ export const metadata = {
 
 
 export default function Page() {
-    return <CustomizerChapter />;
+    return <CustomizerEntry generatorKey="chapter" />;
 }

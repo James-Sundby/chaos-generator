@@ -1,6 +1,7 @@
 import { redirect, notFound } from "next/navigation";
 import { parseFromSlugOrThrow } from "@/utils/(faction wrappers)/chapter";
-import ChapterView from "@/app/components/wrappers/views/chapterView";
+import GeneratorView from "@/app/components/generator/generatorView";
+import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
 
 export async function generateMetadata(props) {
     const params = await props.params;
@@ -50,7 +51,12 @@ export default async function Page(props) {
     try {
         const { chapter, canonical } = parseFromSlugOrThrow(params.slug);
         if (canonical !== params.slug) redirect(`/chapter/${canonical}`);
-        return <ChapterView initialChapter={chapter} />;
+        return (
+            <>
+                <GeneratorStoreHydrator generatorKey="chapter" entity={chapter} />
+                <GeneratorView generatorKey="chapter" band={chapter} defaultModelKey="marine" />
+            </>
+        );
     } catch {
         notFound();
     }

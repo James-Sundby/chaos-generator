@@ -1,4 +1,4 @@
-import CustomizerWarhost from "@/app/components/wrappers/customizers/customizerWarhost";
+import CustomizerEntry from "@/app/components/customizers/customizerEntry";
 
 export const metadata = {
     title: "Warhost Painter",
@@ -30,5 +30,5 @@ export const metadata = {
 };
 
 export default function Page() {
-    return <CustomizerWarhost />;
+    return <CustomizerEntry generatorKey="eldar" />;
 }

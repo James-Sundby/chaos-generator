@@ -1,6 +1,7 @@
 import { redirect, notFound } from "next/navigation";
 import { parseWarhostFromSlugOrThrow } from "@/utils/(faction wrappers)/warhost";
-import WarhostView from "@/app/components/wrappers/views/warhostView";
+import GeneratorView from "@/app/components/generator/generatorView";
+import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
 
 export async function generateMetadata(props) {
     const params = await props.params;
@@ -52,7 +53,12 @@ export default async function Page(props) {
         const { warhost, canonical } = parseWarhostFromSlugOrThrow(params.slug);
         if (canonical !== params.slug) redirect(`/warhost/${canonical}`);
 
-        return <WarhostView initialBand={warhost} />;
+        return (
+            <>
+                <GeneratorStoreHydrator generatorKey="eldar" entity={warhost} />
+                <GeneratorView generatorKey="eldar" band={warhost} />
+            </>
+        );
     } catch {
         notFound();
     }

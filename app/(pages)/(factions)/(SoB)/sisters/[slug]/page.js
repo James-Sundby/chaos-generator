@@ -1,6 +1,7 @@
 import { redirect, notFound } from "next/navigation";
 import { parseFromSlugOrThrow } from "@/utils/(faction wrappers)/sisters";
-import SistersView from "@/app/components/wrappers/views/sistersView";
+import GeneratorView from "@/app/components/generator/generatorView";
+import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
 
 export async function generateMetadata(props) {
     const params = await props.params;
@@ -51,7 +52,12 @@ export default async function Page(props) {
     try {
         const { order, canonical } = parseFromSlugOrThrow(params.slug);
         if (canonical !== params.slug) redirect(`/sisters/${canonical}`);
-        return <SistersView initialOrder={order} />;
+        return (
+            <>
+                <GeneratorStoreHydrator generatorKey="sisters" entity={order} />
+                <GeneratorView generatorKey="sisters" band={order} />
+            </>
+        );
     } catch {
         notFound();
     }
