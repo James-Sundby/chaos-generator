@@ -1,4 +1,4 @@
-import CustomizerWarhost from "@/app/components/wrappers/customizers/customizerWarhost";
+import CustomizerWarhost from "@/app/components/customizers/customizerWarhost";
 
 export const metadata = {
     title: "Warhost Painter",

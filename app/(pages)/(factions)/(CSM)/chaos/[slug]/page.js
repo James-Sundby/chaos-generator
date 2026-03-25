@@ -1,6 +1,7 @@
 import { redirect, notFound } from "next/navigation";
 import { parseFromSlugOrThrow } from "@/utils/(faction wrappers)/warband";
-import WarbandView from "@/app/components/wrappers/views/warbandView";
+import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
+import GeneratorView from "@/app/components/generator/generatorView";
 
 export async function generateMetadata(props) {
     const params = await props.params;
@@ -50,7 +51,12 @@ export default async function Page(props) {
     try {
         const { band, canonical } = parseFromSlugOrThrow(params.slug);
         if (canonical !== params.slug) redirect(`/chaos/${canonical}`);
-        return <WarbandView initialBand={band} />;
+        return (
+            <>
+                <GeneratorStoreHydrator generatorKey="chaos" entity={band} />
+                <GeneratorView generatorKey="chaos" band={band} />
+            </>
+        );
     } catch {
         notFound();
     }

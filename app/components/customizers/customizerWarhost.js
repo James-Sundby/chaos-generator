@@ -1,6 +1,6 @@
 "use client";
 
-import CustomizerCore from "../../customizerCore";
+import CustomizerCore from "../customizerCore";
 import { eldarPatterns } from "@/lib/data/armourPatterns";
 import { colourList } from "@/lib/data/colours";
 import { useWarhostStore } from "@/app/stores/warhostStore";

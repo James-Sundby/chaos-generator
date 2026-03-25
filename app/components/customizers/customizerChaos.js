@@ -1,6 +1,6 @@
 "use client";
 
-import CustomizerCore from "../../customizerCore";
+import CustomizerCore from "../customizerCore";
 import { chaosPatterns } from "@/lib/data/armourPatterns";
 import { colourList } from "@/lib/data/colours";
 import { useChaosStore } from "@/app/stores/chaosStore";

@@ -1,4 +1,4 @@
-import CustomizerChapter from "@/app/components/wrappers/customizers/customizerChapter";
+import CustomizerChapter from "@/app/components/customizers/customizerChapter";
 
 export const metadata = {
     title: "Chapter Painter",

@@ -1,4 +1,4 @@
-import CustomizerChaos from "@/app/components/wrappers/customizers/customizerChaos";
+import CustomizerChaos from "@/app/components/customizers/customizerChaos";
 
 export const metadata = {
     title: "Chaos Warband Painter",

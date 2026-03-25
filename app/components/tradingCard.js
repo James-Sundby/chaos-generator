@@ -5,8 +5,7 @@ export default function TradingCard({
     modelKey,
     band,
 }) {
-    const { name, warbandName, colors = [], slug, pattern, mode } = band ?? {};
-    const displayName = name ?? warbandName ?? "Unknown";
+    const { colors = [], slug, pattern } = band ?? {};
 
     const generator = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
     const modelConfig =
@@ -25,12 +24,6 @@ export default function TradingCard({
             id="trading-card"
             className="relative flex w-full flex-col overflow-hidden rounded-none border-12 border-primary bg-white text-neutral-content shadow-xl"
         >
-            {/* <div className="bg-primary px-4 py-4 text-center text-primary-content">
-                <h1 className="text-2xl font-black uppercase leading-none tracking-tight sm:text-3xl">
-                    {displayName}
-                </h1>
-            </div> */}
-
             <div className="relative flex h-[50svh] items-center justify-center p-2">
                 <Model {...modelProps} />
             </div>

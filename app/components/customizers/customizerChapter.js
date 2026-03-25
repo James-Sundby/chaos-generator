@@ -3,7 +3,7 @@
 import { patterns } from "@/lib/data/armourPatterns";
 import { colourList } from "@/lib/data/colours";
 import { useWarbandStore } from "@/app/stores/warbandStore";
-import CustomizerCore from "../../customizerCore";
+import CustomizerCore from "../customizerCore";
 
 // grouped options for Chapter
 const groupedColors = {

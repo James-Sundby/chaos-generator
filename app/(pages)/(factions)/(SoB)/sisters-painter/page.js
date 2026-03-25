@@ -1,4 +1,4 @@
-import CustomizerSisters from "@/app/components/wrappers/customizers/customizerSisters";
+import CustomizerSisters from "@/app/components/customizers/customizerSisters";
 
 export const metadata = {
     title: "Order Painter",

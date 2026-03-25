@@ -1,6 +1,6 @@
 "use client";
 
-import CustomizerCore from "../../customizerCore";
+import CustomizerCore from "../customizerCore";
 import { sistersPatterns } from "@/lib/data/armourPatterns";
 import { colourList } from "@/lib/data/colours";
 import { useSistersStore } from "@/app/stores/sistersStore";
