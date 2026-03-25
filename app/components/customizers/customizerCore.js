@@ -67,6 +67,15 @@ function SelectControl({ id, options, value, onChange, ariaLabel }) {
     );
 }
 
+function formatPatternLabel(pattern) {
+    if (!pattern) return "";
+
+    return String(pattern)
+        .replace(/([a-z])([A-Z])/g, "$1 $2")
+        .replace(/[-_]/g, " ")
+        .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 export default function CustomizerCore({
     generatorKey,
     band,
@@ -140,6 +149,7 @@ export default function CustomizerCore({
         ? patternKey !== "basic"
         : true;
 
+
     const ActionBtn = ({ title, action }) => (
         <button
             type="button"
@@ -158,6 +168,7 @@ export default function CustomizerCore({
             </svg>
         </button>
     );
+
 
     return (
         <section className="mx-auto my-auto flex w-full max-w-7xl flex-col items-center justify-center gap-6 md:flex-row md:items-stretch lg:gap-16">
@@ -270,7 +281,7 @@ export default function CustomizerCore({
 
                     <ControlRow
                         id="trim-colour"
-                        label={generatorKey === "chaos" || generatorKey === "sisters" ? "Trim colour" : "Accent colour"}
+                        label={(generatorKey === "chaos" || generatorKey === "sisters") ? "Trim colour" : "Accent colour"}
                     >
                         {({ labelId, hintId }) => (
                             <>
@@ -292,7 +303,7 @@ export default function CustomizerCore({
                     </ControlRow>
 
 
-                    {generatorKey === "chaos" || generatorKey === "sisters" && (
+                    {(generatorKey === "chaos" || generatorKey === "sisters") && (
                         <ControlRow id="accent-colour" label="Accent colour">
                             {({ labelId, hintId }) => (
                                 <>
@@ -318,7 +329,7 @@ export default function CustomizerCore({
                         <>
                             <SelectControl
                                 id="pattern"
-                                options={patterns.map((p) => ({ name: p, value: p }))}
+                                options={patterns.map((p) => ({ name: formatPatternLabel(p), value: p }))}
                                 value={band.pattern}
                                 onChange={handlePatternChange}
                                 ariaLabel="Pattern"
