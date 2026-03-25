@@ -6,7 +6,7 @@ import TradingCard from "@/app/components/tradingCard";
 import { colourList } from "@/lib/data/colours";
 import { generateSlug } from "@/utils/parseSlugs";
 import { generatorRegistry } from "@/lib/generators/index";
-import ColorListbox from "./colourSelect";
+import ColorListbox from "../colourSelect";
 
 function ControlRow({ id, label, children, hint }) {
     const labelId = `${id}-label`;
