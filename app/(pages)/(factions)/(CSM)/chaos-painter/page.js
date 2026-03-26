@@ -1,5 +1,4 @@
-
-import CustomizerEntry from "@/app/components/customizers/customizerEntry";
+import ChaosCustomizerView from "@/app/components/customizers/chaosCustomizerView";
 
 export const metadata = {
     title: "Chaos Warband Painter",
@@ -32,5 +31,5 @@ export const metadata = {
 
 
 export default function Page() {
-    return <CustomizerEntry generatorKey="chaos" />;
+    return <ChaosCustomizerView />;
 }

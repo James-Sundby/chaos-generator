@@ -2,11 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import TradingCard from "@/app/components/tradingCardBase";
+import TradingCardBase from "@/app/components/tradingCardBase";
 import { colourList } from "@/lib/data/colours";
 import { generateSlug } from "@/utils/parseSlugs";
-import { generatorRegistry } from "@/lib/generators/index";
-import ColorListbox from "../colourSelect";
+import ColorListbox from "@/app/components/colourSelect";
 
 function ControlRow({ id, label, children, hint }) {
     const labelId = `${id}-label`;
@@ -45,7 +44,7 @@ function SelectControl({ id, options, value, onChange, ariaLabel }) {
             id={id}
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="select select-bordered join-item w-full rounded-none  bg-base-100"
+            className="select select-bordered join-item w-full rounded-none bg-base-100"
             aria-label={ariaLabel}
         >
             {isGrouped
@@ -76,7 +75,7 @@ function formatPatternLabel(pattern) {
         .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-export default function CustomizerCore({
+export default function CustomizerBase({
     generatorKey,
     band,
     setBand,
@@ -84,15 +83,19 @@ export default function CustomizerCore({
     paletteOptionsForIndex,
     randomPoolForIndex,
     hideSecondaryWhenBasic = false,
+    modelConfig,
+    noun = "scheme",
+    basePath = "",
+    thirdColourLabel = "Accent colour",
+    fourthColourLabel = "Accent colour",
+    showFourthColour = false,
 }) {
     const router = useRouter();
-    const generator = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
 
-    const [modelKey, setModelKey] = useState(
-        Object.keys(generator.models)[0]
-    );
+    const modelKeys = Object.keys(modelConfig.models ?? {});
+    const [modelKey, setModelKey] = useState(modelKeys[0]);
 
-    const modelOptions = Object.entries(generator.models);
+    const modelOptions = Object.entries(modelConfig.models ?? {});
     const patternKey = String(band.pattern ?? "").toLowerCase();
 
     const updateBand = (updated) => {
@@ -144,11 +147,25 @@ export default function CustomizerCore({
         updateBand({ pattern: next });
     };
 
-    const backHref = `${generator.basePath}/${band.slug}`;
+    const backHref = `${basePath}/${band.slug}`;
     const showSecondary = hideSecondaryWhenBasic
         ? patternKey !== "basic"
         : true;
 
+    const resolvedModel =
+        modelConfig.models[modelKey] ?? Object.values(modelConfig.models)[0];
+
+    const Model = resolvedModel.component;
+    const modelProps = resolvedModel.getModelProps({
+        colors: band.colors,
+        pattern: band.pattern,
+        band,
+    });
+    const swatchIndices = modelConfig.getSwatchIndices({
+        colors: band.colors,
+        pattern: band.pattern,
+        band,
+    });
 
     const ActionBtn = ({ title, action }) => (
         <button
@@ -164,11 +181,10 @@ export default function CustomizerCore({
                 className="size-5 fill-current"
                 aria-hidden="true"
             >
-                <path d="M274.9 34.3c-28.1-28.1-73.7-28.1-101.8 0L34.3 173.1c-28.1 28.1-28.1 73.7 0 101.8L173.1 413.7c28.1 28.1 73.7 28.1 101.8 0L413.7 274.9c28.1-28.1 28.1-73.7 0-101.8L274.9 34.3zM200 224a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zM96 200a24 24 0 1 1 0 48 24 24 0 1 1 0-48zM224 376a24 24 0 1 1 0-48 24 24 0 1 1 0 48zM352 200a24 24 0 1 1 0 48 24 24 0 1 1 0-48zM224 120a24 24 0 1 1 0-48 24 24 0 1 1 0 48zm96 328c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-192c0-35.3-28.7-64-64-64l-114.3 0c11.6 36 3.1 77-25.4 105.5L320 413.8l0 34.2zM480 328a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
+                <path d="M274.9 34.3c-28.1-28.1-73.7-28.1-101.8 0L34.3 173.1c-28.1 28.1-28.1 73.7 0 101.8L173.1 413.7c28.1 28.1 73.7 28.1 101.8 0L413.7 274.9c28.1-28.1 28.1-73.7 0-101.8L274.9 34.3zM200 224a24 24 0 1 1 48 0 24 24 0 1 1-48 0zM96 200a24 24 0 1 1 0 48 24 24 0 1 1 0-48zM224 376a24 24 0 1 1 0-48 24 24 0 1 1 0 48zM352 200a24 24 0 1 1 0 48 24 24 0 1 1 0-48zM224 120a24 24 0 1 1 0-48 24 24 0 1 1 0 48zm96 328c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-192c0-35.3-28.7-64-64-64l-114.3 0c11.6 36 3.1 77-25.4 105.5L320 413.8l0 34.2zM480 328a24 24 0 1 1 0 48 24 24 0 1 1 0-48z" />
             </svg>
         </button>
     );
-
 
     return (
         <section className="mx-auto my-auto flex w-full max-w-7xl flex-col items-center justify-center gap-6 md:flex-row md:items-stretch lg:gap-16">
@@ -189,10 +205,12 @@ export default function CustomizerCore({
                     </div>
                 )}
 
-                <TradingCard
-                    generatorKey={generatorKey}
-                    modelKey={modelKey}
-                    band={band}
+                <TradingCardBase
+                    Model={Model}
+                    modelProps={modelProps}
+                    swatchIndices={swatchIndices}
+                    colors={band.colors}
+                    slug={band.slug}
                 />
             </div>
 
@@ -223,10 +241,11 @@ export default function CustomizerCore({
                         </div>
                     </div>
                 )}
-                <div className="flex flex-col gap-4 ">
+
+                <div className="flex flex-col gap-4">
                     <div>
                         <label className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/65">
-                            {generator.noun} Name
+                            {noun} Name
                         </label>
                         <input
                             type="text"
@@ -279,45 +298,41 @@ export default function CustomizerCore({
                         </ControlRow>
                     )}
 
-                    <ControlRow
-                        id="trim-colour"
-                        label={(generatorKey === "chaos" || generatorKey === "sisters") ? "Trim colour" : "Accent colour"}
-                    >
+                    <ControlRow id="third-colour" label={thirdColourLabel}>
                         {({ labelId, hintId }) => (
                             <>
                                 <ColorListbox
-                                    id="trim-colour"
+                                    id="third-colour"
                                     options={paletteOptionsForIndex(2)}
                                     value={band.colors[2]?.hex}
                                     onChange={(val) => handleColorChange(2, val)}
                                     labelledById={labelId}
                                     describedById={hintId}
-                                    ariaLabel={generatorKey === "chaos" || "sisters" ? "Trim colour" : "Accent colour"}
+                                    ariaLabel={thirdColourLabel}
                                 />
                                 <ActionBtn
-                                    title="Random trim colour"
+                                    title={`Random ${thirdColourLabel.toLowerCase()}`}
                                     action={() => generateNewColor(2)}
                                 />
                             </>
                         )}
                     </ControlRow>
 
-
-                    {(generatorKey === "chaos" || generatorKey === "sisters") && (
-                        <ControlRow id="accent-colour" label="Accent colour">
+                    {showFourthColour && (
+                        <ControlRow id="fourth-colour" label={fourthColourLabel}>
                             {({ labelId, hintId }) => (
                                 <>
                                     <ColorListbox
-                                        id="accent-colour"
+                                        id="fourth-colour"
                                         options={paletteOptionsForIndex(3)}
                                         value={band.colors[3]?.hex}
                                         onChange={(val) => handleColorChange(3, val)}
                                         labelledById={labelId}
                                         describedById={hintId}
-                                        ariaLabel="Accent colour"
+                                        ariaLabel={fourthColourLabel}
                                     />
                                     <ActionBtn
-                                        title="Random accent colour"
+                                        title={`Random ${fourthColourLabel.toLowerCase()}`}
                                         action={() => generateNewColor(3)}
                                     />
                                 </>
@@ -329,20 +344,21 @@ export default function CustomizerCore({
                         <>
                             <SelectControl
                                 id="pattern"
-                                options={patterns.map((p) => ({ name: formatPatternLabel(p), value: p }))}
+                                options={patterns.map((p) => ({
+                                    name: formatPatternLabel(p),
+                                    value: p,
+                                }))}
                                 value={band.pattern}
                                 onChange={handlePatternChange}
                                 ariaLabel="Pattern"
                             />
-                            <ActionBtn title="Random pattern" action={generateNewPattern} />
+                            <ActionBtn
+                                title="Random pattern"
+                                action={generateNewPattern}
+                            />
                         </>
                     </ControlRow>
-
-
                 </div>
-
-
-
 
                 <button
                     className="btn btn-primary rounded-none"
@@ -351,7 +367,6 @@ export default function CustomizerCore({
                 >
                     Back to Archive Entry
                 </button>
-
             </div>
         </section>
     );

@@ -1,6 +1,6 @@
 import { redirect, notFound } from "next/navigation";
 import { parseEntity } from "@/utils/factionEntity";
-import GeneratorView from "@/app/components/generator/generatorCore";
+import SistersGeneratorView from "@/app/components/generator/views/sistersGeneratorView";
 import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
 
 export async function generateMetadata(props) {
@@ -52,10 +52,11 @@ export default async function Page(props) {
     try {
         const { entity: sisters, canonical } = parseEntity("sisters", params.slug);
         if (canonical !== params.slug) redirect(`/sisters/${canonical}`);
+
         return (
             <>
                 <GeneratorStoreHydrator generatorKey="sisters" entity={sisters} />
-                <GeneratorView generatorKey="sisters" band={sisters} />
+                <SistersGeneratorView band={sisters} />
             </>
         );
     } catch {

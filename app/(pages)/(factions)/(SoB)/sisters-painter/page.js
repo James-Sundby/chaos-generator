@@ -1,4 +1,4 @@
-import CustomizerEntry from "@/app/components/customizers/customizerEntry";
+import SistersCustomizerView from "@/app/components/customizers/sistersCustomizerView";
 
 export const metadata = {
     title: "Order Painter",
@@ -30,5 +30,5 @@ export const metadata = {
 };
 
 export default function Page() {
-    return <CustomizerEntry generatorKey="sisters" />;
+    return <SistersCustomizerView />;
 }

@@ -54,9 +54,9 @@ export default function RecentSchemeArchive() {
                                 </div>
 
                                 <div className="flex shrink-0 items-center gap-1">
-                                    {scheme.colors?.map((hex) => (
+                                    {scheme.colors?.map((hex, index) => (
                                         <span
-                                            key={hex}
+                                            key={`${hex}-${index}`}
                                             className="h-4 w-4 rounded-none border border-base-300"
                                             style={{ backgroundColor: hex }}
                                             aria-hidden="true"

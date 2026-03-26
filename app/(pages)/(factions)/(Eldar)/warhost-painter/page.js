@@ -1,4 +1,4 @@
-import CustomizerEntry from "@/app/components/customizers/customizerEntry";
+import EldarCustomizerView from "@/app/components/customizers/eldarCustomizerView";
 
 export const metadata = {
     title: "Warhost Painter",
@@ -30,5 +30,5 @@ export const metadata = {
 };
 
 export default function Page() {
-    return <CustomizerEntry generatorKey="eldar" />;
+    return <EldarCustomizerView />;
 }
