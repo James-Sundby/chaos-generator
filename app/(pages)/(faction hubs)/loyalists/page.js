@@ -1,4 +1,7 @@
 import FactionHub from "@/app/components/factionHub";
+import { createChapterAndGo, createSistersAndGo } from "@/app/(actions)/serverActions";
+import { meta as chapterMeta } from "@/lib/factions/chapter/meta";
+import { meta as sistersMeta } from "@/lib/factions/sisters/meta";
 import SpaceMarine from "@/lib/factions/chapter/models/spaceMarine";
 import SisterOfBattle from "@/lib/factions/sisters/models/sisterOfBattle";
 
@@ -40,10 +43,12 @@ const loyalistCards = [
         body: "Generate schemes worthy of the Adeptus Astartes, from ancient brotherhoods to newly founded scions of the Imperium.",
         tags: ["Space Marines"],
         href: "/chapter",
-        generatorKey: "chapter",
-        accentBarClass: "bg-faction-loyalist",
-        badgeClass: "badge-loyalist",
-        buttonClass: "btn-primary",
+        createAction: createChapterAndGo,
+        noun: chapterMeta.noun,
+        generateLabel: chapterMeta.copy.generateLabel,
+        accentBarClass: chapterMeta.faction.accentBarClass,
+        badgeClass: chapterMeta.faction.badgeClass,
+        buttonClass: chapterMeta.buttonTheme,
         ghostModel: SpaceMarine,
         ghostModelProps: {
             primary: "#d9d9d9",
@@ -61,10 +66,12 @@ const loyalistCards = [
         body: "Generate sacred armour schemes for the Adepta Sororitas, with disciplined heraldry, ceremonial contrast, and colours fit for the Emperor's most zealous daughters.",
         tags: ["Adepta Sororitas"],
         href: "/sisters",
-        generatorKey: "sisters",
-        accentBarClass: "bg-faction-loyalist",
-        badgeClass: "badge-loyalist",
-        buttonClass: "btn-primary",
+        createAction: createSistersAndGo,
+        noun: sistersMeta.noun,
+        generateLabel: sistersMeta.copy.generateLabel,
+        accentBarClass: sistersMeta.faction.accentBarClass,
+        badgeClass: sistersMeta.faction.badgeClass,
+        buttonClass: sistersMeta.buttonTheme,
         ghostModel: SisterOfBattle,
         ghostModelProps: {
             primary: "#d9d9d9",

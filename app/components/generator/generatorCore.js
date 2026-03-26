@@ -1,8 +1,19 @@
-import { generatorRegistry } from "@/lib/generators";
+import { chapterGenerator } from "@/lib/generators/chapter";
+import { chaosGenerator } from "@/lib/generators/chaos";
+import { eldarGenerator } from "@/lib/generators/eldar";
+import { sistersGenerator } from "@/lib/generators/sisters";
+
 import GeneratorActions from "@/app/components/generator/generatorActions";
 import GeneratorModelProvider from "@/app/components/generator/generatorModelProvider";
 import GeneratorModelSwitcher from "@/app/components/generator/generatorModelSwitcher";
 import GeneratorTradingCardPane from "@/app/components/generator/generatorTradingCardPane";
+
+const generatorMap = {
+    chapter: chapterGenerator,
+    chaos: chaosGenerator,
+    eldar: eldarGenerator,
+    sisters: sistersGenerator,
+};
 
 function pickStableText(options = [], seed = "") {
     if (!options.length) return null;
@@ -35,7 +46,7 @@ export default function GeneratorView({
     band,
     defaultModelKey,
 }) {
-    const generator = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
+    const generator = generatorMap[generatorKey] ?? chapterGenerator;
     const copy = generator.copy ?? {};
     const faction = generator.faction ?? {};
     const hasMultipleModels = Object.keys(generator.models ?? {}).length > 1;
@@ -50,9 +61,14 @@ export default function GeneratorView({
         copy.heroDescription ??
         "Technical readouts indicate a viable faction identity suitable for refinement, customization, or archive preservation.";
 
+    const modelOptions = Object.entries(generator.models ?? {}).map(([key, model]) => ({
+        key,
+        label: model.label,
+    }));
+
     return (
         <GeneratorModelProvider
-            generatorKey={generatorKey}
+            modelOptions={modelOptions}
             defaultModelKey={defaultModelKey}
         >
             <section className="mx-auto my-auto flex w-full max-w-7xl flex-col items-center justify-center gap-6 md:flex-row md:items-stretch lg:gap-16">
@@ -129,6 +145,13 @@ export default function GeneratorView({
                     </div>
 
                     <GeneratorActions
+                        createAction={generator.createAction}
+                        noun={generator.noun}
+                        variant={generator.variant}
+                        painterPath={generator.painterPath}
+                        basePath={generator.basePath}
+                        copy={generator.copy}
+                        group={generator.group}
                         generatorKey={generatorKey}
                         band={band}
                         displayName={displayName}

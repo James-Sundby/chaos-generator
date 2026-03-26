@@ -1,5 +1,5 @@
 import { redirect, notFound } from "next/navigation";
-import { parseEntity } from "@/utils/factionEntity"; import GeneratorView from "@/app/components/generator/generatorView";
+import { parseEntity } from "@/utils/factionEntity"; import GeneratorView from "@/app/components/generator/generatorCore";
 import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
 
 export async function generateMetadata(props) {

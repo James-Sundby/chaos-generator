@@ -59,7 +59,8 @@ export function parseSlug(slug, factionConfig) {
 
     let mode = null;
     const maybeMode = slugParts[slugParts.length - 1]?.toLowerCase();
-    if (modesSet?.has(maybeMode)) {
+    const isCustomMode = maybeMode === "custom";
+    if (isCustomMode || modesSet?.has(maybeMode)) {
         mode = slugParts.pop().toLowerCase();
     }
 

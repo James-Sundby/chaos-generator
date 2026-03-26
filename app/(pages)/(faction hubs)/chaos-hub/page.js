@@ -1,4 +1,6 @@
 import FactionHub from "@/app/components/factionHub";
+import { createWarbandAndGo } from "@/app/(actions)/serverActions";
+import { meta as chaosMeta } from "@/lib/factions/chaos/meta";
 import ChaosMarine from "@/lib/factions/chaos/models/chaosSpaceMarine";
 
 export const metadata = {
@@ -38,10 +40,12 @@ const chaosCards = [
         mobileTitle: "CHAOS MARINES",
         body: "Forge corrupted schemes worthy of traitor warbands, blasphemous heraldry, and armour long given over to ruin.",
         href: "/chaos",
-        generatorKey: "chaos",
-        accentBarClass: "bg-faction-chaos",
-        badgeClass: "badge-chaos",
-        buttonClass: "btn-primary",
+        createAction: createWarbandAndGo,
+        noun: chaosMeta.noun,
+        generateLabel: chaosMeta.copy.generateLabel,
+        accentBarClass: chaosMeta.faction.accentBarClass,
+        badgeClass: chaosMeta.faction.badgeClass,
+        buttonClass: chaosMeta.buttonTheme,
         ghostModel: ChaosMarine,
         ghostModelProps: {
             primary: "#d9d9d9",
