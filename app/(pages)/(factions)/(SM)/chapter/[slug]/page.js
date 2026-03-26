@@ -1,13 +1,12 @@
 import { redirect, notFound } from "next/navigation";
-import { parseFromSlugOrThrow } from "@/utils/(faction wrappers)/chapter";
-import GeneratorView from "@/app/components/generator/generatorView";
+import { parseEntity } from "@/utils/factionEntity"; import GeneratorView from "@/app/components/generator/generatorView";
 import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
 
 export async function generateMetadata(props) {
     const params = await props.params;
 
     try {
-        const { chapter, canonical } = parseFromSlugOrThrow(params.slug);
+        const { entity: chapter, canonical } = parseEntity("chapter", params.slug);
         const colorNames = chapter.colors.map((c) => c.name).join(", ");
 
         return {
@@ -49,7 +48,7 @@ export async function generateMetadata(props) {
 export default async function Page(props) {
     const params = await props.params;
     try {
-        const { chapter, canonical } = parseFromSlugOrThrow(params.slug);
+        const { entity: chapter, canonical } = parseEntity("chapter", params.slug);
         if (canonical !== params.slug) redirect(`/chapter/${canonical}`);
         return (
             <>

@@ -1,5 +1,5 @@
 import { redirect, notFound } from "next/navigation";
-import { parseWarhostFromSlugOrThrow } from "@/utils/(faction wrappers)/warhost";
+import { parseEntity } from "@/utils/factionEntity";
 import GeneratorView from "@/app/components/generator/generatorView";
 import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
 
@@ -7,7 +7,7 @@ export async function generateMetadata(props) {
     const params = await props.params;
 
     try {
-        const { eldar, canonical } = parseWarhostFromSlugOrThrow(params.slug);
+        const { entity: eldar, canonical } = parseEntity("eldar", params.slug);
         const colourNames = eldar.colors.map((c) => c.name).join(", ");
 
         return {
@@ -50,7 +50,7 @@ export default async function Page(props) {
     const params = await props.params;
 
     try {
-        const { eldar, canonical } = parseWarhostFromSlugOrThrow(params.slug);
+        const { entity: eldar, canonical } = parseEntity("eldar", params.slug);
         if (canonical !== params.slug) redirect(`/warhost/${canonical}`);
 
         return (

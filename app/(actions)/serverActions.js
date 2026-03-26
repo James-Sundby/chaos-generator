@@ -5,11 +5,7 @@ import { redirect } from "next/navigation";
 import { schemeSearchObjectSchema } from "@/app/schema/schemeSearch";
 import { getFactionConfig } from "@/utils/factionConfig";
 import { generateSlug, parseSlug } from "@/utils/parseSlugs";
-
-import { createChapter } from "@/utils/(faction wrappers)/chapter";
-import { createWarband } from "@/utils/(faction wrappers)/warband";
-import { createWarhost } from "@/utils/(faction wrappers)/warhost";
-import { createSisters } from "@/utils/(faction wrappers)/sisters";
+import { createEntityData } from "@/utils/factionEntity";
 
 const ROUTE_BASE_BY_FACTION = {
     chapter: "/chapter",
@@ -82,24 +78,24 @@ export async function schemeSearchServer(payload) {
 
 export async function createChapterAndGo(formData) {
     const settings = parseSettings(formData.get("settings"));
-    const entity = createChapter(settings);
+    const entity = createEntityData("chapter", settings)
     redirect(`/chapter/${entity.slug}`);
 }
 
 export async function createWarbandAndGo(formData) {
     const settings = parseSettings(formData.get("settings"));
-    const entity = createWarband(settings);
+    const entity = createEntityData("chaos", settings)
     redirect(`/chaos/${entity.slug}`);
 }
 
 export async function createWarhostAndGo(formData) {
     const settings = parseSettings(formData.get("settings"));
-    const entity = createWarhost(settings);
+    const entity = createEntityData("eldar", settings)
     redirect(`/warhost/${entity.slug}`);
 }
 
 export async function createSistersAndGo(formData) {
     const settings = parseSettings(formData.get("settings"));
-    const entity = createSisters(settings);
+    const entity = createEntityData("sisters", settings)
     redirect(`/sisters/${entity.slug}`);
 }

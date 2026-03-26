@@ -1,5 +1,5 @@
 import { redirect, notFound } from "next/navigation";
-import { parseFromSlugOrThrow } from "@/utils/(faction wrappers)/sisters";
+import { parseEntity } from "@/utils/factionEntity";
 import GeneratorView from "@/app/components/generator/generatorView";
 import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
 
@@ -7,7 +7,7 @@ export async function generateMetadata(props) {
     const params = await props.params;
 
     try {
-        const { sisters, canonical } = parseFromSlugOrThrow(params.slug);
+        const { entity: sisters, canonical } = parseEntity("sisters", params.slug);
         const colorNames = sisters.colors.map((c) => c.name).join(", ");
 
         return {
@@ -50,7 +50,7 @@ export default async function Page(props) {
     const params = await props.params;
 
     try {
-        const { sisters, canonical } = parseFromSlugOrThrow(params.slug);
+        const { entity: sisters, canonical } = parseEntity("sisters", params.slug);
         if (canonical !== params.slug) redirect(`/sisters/${canonical}`);
         return (
             <>
