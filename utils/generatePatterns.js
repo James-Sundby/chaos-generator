@@ -4,11 +4,11 @@ import { randomElement } from "@/utils/randomElement";
 import { chaosPatterns, patterns as loyalistPatterns, eldarPatterns, sistersPatterns } from "@/lib/data/armourPatterns";
 
 const NON_CONTRAST_LOYALIST_PATTERNS = new Set([
-    "Half", "Quarter"
+    "half", "quarter"
 ]);
 
 const NON_CONTRAST_CHAOS_PATTERNS = new Set([
-    "Half", "Quarter", "Alternating",
+    "half", "quarter", "alternating",
 ]);
 
 const NON_CONTRAST_ELDAR_PATTERNS = new Set([

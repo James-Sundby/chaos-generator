@@ -1,23 +1,22 @@
 import { redirect, notFound } from "next/navigation";
-import { parseFromSlugOrThrow } from "@/utils/(faction wrappers)/chapter";
-import GeneratorView from "@/app/components/generator/generatorView";
+import { parseEntity } from "@/utils/factionEntity"; import GeneratorView from "@/app/components/generator/generatorView";
 import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
 
 export async function generateMetadata(props) {
     const params = await props.params;
 
     try {
-        const { chapter, canonical } = parseFromSlugOrThrow(params.slug);
+        const { entity: chapter, canonical } = parseEntity("chapter", params.slug);
         const colorNames = chapter.colors.map((c) => c.name).join(", ");
 
         return {
-            title: chapter.warbandName,
-            description: `Custom chapter: ${chapter.warbandName} using ${colorNames}, in the "${chapter.pattern}" pattern.`,
+            title: chapter.name,
+            description: `Custom chapter: ${chapter.name} using ${colorNames}, in the "${chapter.pattern}" pattern.`,
             alternates: {
                 canonical: `/chapter/${canonical}`,
             },
             openGraph: {
-                title: chapter.warbandName,
+                title: chapter.name,
                 description: `Custom Space Marine scheme: ${colorNames} in the ${chapter.pattern} pattern.`,
                 url: `/chapter/${canonical}`,
                 images: [
@@ -30,7 +29,7 @@ export async function generateMetadata(props) {
                 ],
             },
             twitter: {
-                title: chapter.warbandName,
+                title: chapter.name,
                 description: `Space Marine paint scheme: ${colorNames} in the "${chapter.pattern}" pattern.`,
                 images: ["/card.png"],
             },
@@ -49,7 +48,7 @@ export async function generateMetadata(props) {
 export default async function Page(props) {
     const params = await props.params;
     try {
-        const { chapter, canonical } = parseFromSlugOrThrow(params.slug);
+        const { entity: chapter, canonical } = parseEntity("chapter", params.slug);
         if (canonical !== params.slug) redirect(`/chapter/${canonical}`);
         return (
             <>

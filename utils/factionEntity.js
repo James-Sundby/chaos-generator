@@ -5,7 +5,17 @@ import { generateSlug, parseSlug } from "@/utils/parseSlugs";
 
 const slugRegex = /^[a-zA-Z0-9-]+$/;
 
-export function createFactionEntity(faction, settings) {
+function toEntityData(entity) {
+    return {
+        name: entity.name,
+        colors: entity.colors,
+        pattern: entity.pattern,
+        slug: entity.slug,
+        mode: entity.mode,
+    };
+}
+
+export function createEntity(faction, settings) {
     const configMap = getFactionConfig();
     const config = configMap[faction];
 
@@ -28,7 +38,11 @@ export function createFactionEntity(faction, settings) {
     };
 }
 
-export function parseFactionEntityFromSlugOrThrow(slug) {
+export function createEntityData(faction, settings) {
+    return toEntityData(createEntity(faction, settings));
+}
+
+export function parseSlugEntity(slug) {
     if (!slug || !slugRegex.test(slug)) {
         throw new Error("bad-slug");
     }
@@ -53,6 +67,19 @@ export function parseFactionEntityFromSlugOrThrow(slug) {
             slug: canonical,
             mode: parsed.mode,
         },
+        canonical,
+    };
+}
+
+export function parseEntity(faction, slug) {
+    const { entity, canonical } = parseSlugEntity(slug);
+
+    if (entity.faction !== faction) {
+        throw new Error("wrong-faction");
+    }
+
+    return {
+        entity: toEntityData(entity),
         canonical,
     };
 }

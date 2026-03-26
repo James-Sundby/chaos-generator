@@ -24,7 +24,7 @@ export const getFactionConfig = cache(() => {
             generateScheme: generateChapterScheme,
             generatePattern: generateLoyalistPattern,
             resultKey: "chapter",
-            displayNameKey: "warbandName",
+            displayNameKey: "name",
             colourMap,
         },
         chaos: {
@@ -35,8 +35,8 @@ export const getFactionConfig = cache(() => {
             generateName: generateWarbandName,
             generateScheme: generateWarbandScheme,
             generatePattern: generateChaosPattern,
-            resultKey: "band",
-            displayNameKey: "warbandName",
+            resultKey: "chaos",
+            displayNameKey: "name",
             colourMap,
         },
         eldar: {
@@ -47,8 +47,8 @@ export const getFactionConfig = cache(() => {
             generateName: generateEldarName,
             generateScheme: generateEldarScheme,
             generatePattern: generateEldarPattern,
-            resultKey: "warhost",
-            displayNameKey: "warbandName",
+            resultKey: "eldar",
+            displayNameKey: "name",
             colourMap,
         },
 
@@ -60,8 +60,8 @@ export const getFactionConfig = cache(() => {
             generateName: generateSistersName,
             generateScheme: generateSistersScheme,
             generatePattern: generateSistersPattern,
-            resultKey: "order",
-            displayNameKey: "warbandName",
+            resultKey: "sisters",
+            displayNameKey: "name",
             colourMap,
         },
     };
