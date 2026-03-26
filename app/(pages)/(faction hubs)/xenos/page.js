@@ -1,5 +1,5 @@
 import FactionHub from "@/app/components/factionHub";
-import EldarAvenger from "@/lib/models/eldarAvenger";
+import EldarAvenger from "@/lib/factions/eldar/models/eldarAvenger";
 
 export const metadata = {
     title: "Xenos Forge",

@@ -3,7 +3,7 @@ import "server-only";
 import { colourList } from "@/lib/data/colours";
 import { randomElement } from "@/utils/randomElement";
 
-function resolvePool(pool) {
+export function resolvePool(pool) {
     if (pool && Array.isArray(pool.all) && pool.all.length > 0) return pool;
 
     if (Array.isArray(pool) && pool.length > 0) return { all: pool };
@@ -124,16 +124,16 @@ export function findAccentColour(existingColours, candidatePool) {
     return bestAccent;
 }
 
-function makeUsedSet(colours) {
+export function makeUsedSet(colours) {
     return new Set(colours.filter(Boolean).map((c) => String(c.hex).toLowerCase()));
 }
 
-function buildAccentPool(p, used) {
+export function buildAccentPool(p, used) {
     const source = p.accentCandidates ?? p.all.filter((c) => c.type !== "Metallic" && c.s > 30 && c.l > 30);
     return source.filter((c) => !used.has(String(c.hex).toLowerCase()));
 }
 
-function getMetalColour(p, used, rng = Math.random) {
+export function getMetalColour(p, used, rng = Math.random) {
     const metallic = p.metallic ?? p.all.filter((c) => c.type === "Metallic");
     const candidates = metallic.filter((c) => !used.has(String(c.hex).toLowerCase()));
 
@@ -144,7 +144,7 @@ function getMetalColour(p, used, rng = Math.random) {
     return fallback.length > 0 ? randomElement(fallback, rng) : null;
 }
 
-function getAccentColour(p, existingColours) {
+export function getAccentColour(p, existingColours) {
     const used = makeUsedSet(existingColours);
     const accentPool = buildAccentPool(p, used);
 
@@ -152,7 +152,7 @@ function getAccentColour(p, existingColours) {
     return findAccentColour(existingColours.filter(Boolean), accentPool);
 }
 
-function getNonMetalColour(p, used, rng = Math.random) {
+export function getNonMetalColour(p, used, rng = Math.random) {
     const nonMetallic = p.nonMetallic ?? p.all.filter((c) => c.type !== "Metallic");
     const candidates = nonMetallic.filter((c) => !used.has(String(c.hex).toLowerCase()));
 
@@ -163,7 +163,7 @@ function getNonMetalColour(p, used, rng = Math.random) {
     return fallback.length > 0 ? randomElement(fallback, rng) : null;
 }
 
-function findClosestNonMetalColour(
+export function findClosestNonMetalColour(
     target,
     p,
     excludeHexes = [],
@@ -173,7 +173,7 @@ function findClosestNonMetalColour(
     return findClosestColour(target, nonMetallic, excludeHexes, options);
 }
 
-function generateComplementaryAnchors({ pool, rng = Math.random } = {}) {
+export function generateComplementaryAnchors({ pool, rng = Math.random } = {}) {
     const p = resolvePool(pool);
     const colours = p.all;
 
@@ -188,7 +188,7 @@ function generateComplementaryAnchors({ pool, rng = Math.random } = {}) {
     return [base, secondary];
 }
 
-function generateSplitComplementaryAnchors({ pool, rng = Math.random } = {}) {
+export function generateSplitComplementaryAnchors({ pool, rng = Math.random } = {}) {
     const p = resolvePool(pool);
     const colours = p.all;
 
@@ -203,7 +203,7 @@ function generateSplitComplementaryAnchors({ pool, rng = Math.random } = {}) {
     return [base, colourA, colourB];
 }
 
-function generateTriadicAnchors({ pool, rng = Math.random } = {}) {
+export function generateTriadicAnchors({ pool, rng = Math.random } = {}) {
     const p = resolvePool(pool);
     const colours = p.all;
 
@@ -218,7 +218,7 @@ function generateTriadicAnchors({ pool, rng = Math.random } = {}) {
     return [base, colourA, colourB];
 }
 
-function generateTetradicAnchors({ pool, rng = Math.random } = {}) {
+export function generateTetradicAnchors({ pool, rng = Math.random } = {}) {
     const p = resolvePool(pool);
     const colours = p.all;
 
@@ -235,7 +235,7 @@ function generateTetradicAnchors({ pool, rng = Math.random } = {}) {
     return [base, colour2, colour3, colour4];
 }
 
-function generateAnalogousAnchors({ pool, rng = Math.random } = {}) {
+export function generateAnalogousAnchors({ pool, rng = Math.random } = {}) {
     const p = resolvePool(pool);
     const colours = p.all;
 
@@ -250,7 +250,7 @@ function generateAnalogousAnchors({ pool, rng = Math.random } = {}) {
     return [base, colourA, colourB];
 }
 
-function shuffleInPlace(arr, rng = Math.random) {
+export function shuffleInPlace(arr, rng = Math.random) {
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(rng() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -258,7 +258,7 @@ function shuffleInPlace(arr, rng = Math.random) {
     return arr;
 }
 
-function generateRandomAnchors(count, { pool, rng = Math.random } = {}) {
+export function generateRandomAnchors(count, { pool, rng = Math.random } = {}) {
     if (typeof count !== "number" || count < 2) {
         throw new Error("generateRandomAnchors: 'count' must be a number ≥ 2");
     }
@@ -268,7 +268,7 @@ function generateRandomAnchors(count, { pool, rng = Math.random } = {}) {
     return shuffled.slice(0, count);
 }
 
-function getAnchorsByHarmony(harmony, { pool, rng = Math.random } = {}) {
+export function getAnchorsByHarmony(harmony, { pool, rng = Math.random } = {}) {
     switch (harmony) {
         case "random":
             return generateRandomAnchors(3, { pool, rng });
@@ -284,144 +284,5 @@ function getAnchorsByHarmony(harmony, { pool, rng = Math.random } = {}) {
             return generateAnalogousAnchors({ pool, rng });
         default:
             throw new Error(`Unknown harmony mode: ${harmony}`);
-    }
-}
-
-export function generateChapterSchemeColours(harmony, { pool, rng = Math.random } = {}) {
-    const p = resolvePool(pool);
-    const anchors = getAnchorsByHarmony(harmony, { pool: p, rng });
-
-    const primary = anchors[0] ?? null;
-    const secondary = anchors[1] ?? anchors[0] ?? null;
-
-    switch (harmony) {
-        case "random":
-        case "complementary": {
-            const used = makeUsedSet([primary, secondary]);
-            const metal = getMetalColour(p, used, rng);
-            return [primary, secondary, metal];
-        }
-
-        case "splitcomplementary":
-        case "triadic":
-        case "analogous": {
-            const tertiary = anchors[2] ?? anchors[1] ?? anchors[0] ?? null;
-            return [primary, secondary, tertiary];
-        }
-
-        default: {
-            const used = makeUsedSet([primary, secondary]);
-            const metal = getMetalColour(p, used, rng);
-            return [primary, secondary, metal];
-        }
-    }
-}
-
-export function generateChaosSchemeColours(harmony, { pool, rng = Math.random } = {}) {
-    const p = resolvePool(pool);
-    const anchors = getAnchorsByHarmony(harmony, { pool: p, rng });
-
-    const primary = anchors[0] ?? null;
-    const secondary = anchors[1] ?? anchors[0] ?? null;
-
-    switch (harmony) {
-        case "complementary": {
-            const used = makeUsedSet([primary, secondary]);
-            const metal = getMetalColour(p, used, rng);
-            const accent = getAccentColour(p, [primary, secondary, metal]);
-            return [primary, secondary, metal, accent];
-        }
-
-        case "splitcomplementary":
-        case "triadic":
-        case "analogous": {
-            const tertiary = anchors[2] ?? anchors[1] ?? anchors[0] ?? null;
-            const accent = getAccentColour(p, [primary, secondary, tertiary]);
-            return [primary, secondary, tertiary, accent];
-        }
-
-        case "tetradic": {
-            const tertiary = anchors[2] ?? anchors[1] ?? anchors[0] ?? null;
-            const accent = anchors[3] ?? getAccentColour(p, [primary, secondary, tertiary]);
-            return [primary, secondary, tertiary, accent];
-        }
-
-        case "random": {
-            const tertiary = anchors[2] ?? anchors[1] ?? anchors[0] ?? null;
-            const accent = getAccentColour(p, [primary, secondary, tertiary]);
-            return [primary, secondary, tertiary, accent];
-        }
-
-        default: {
-            const used = makeUsedSet([primary, secondary]);
-            const metal = getMetalColour(p, used, rng);
-            const accent = getAccentColour(p, [primary, secondary, metal]);
-            return [primary, secondary, metal, accent];
-        }
-    }
-}
-
-export function generateEldarSchemeColours(harmony, { pool, rng = Math.random } = {}) {
-    const p = resolvePool(pool);
-    const anchors = getAnchorsByHarmony(harmony, { pool: p, rng });
-
-    const primary = anchors[0] ?? null;
-    const secondary = anchors[1] ?? anchors[0] ?? null;
-    const accent = getAccentColour(p, [primary, secondary]);
-
-    return [primary, secondary, accent];
-}
-
-export function generateSistersSchemeColours(harmony, { pool, rng = Math.random } = {}) {
-    const p = resolvePool(pool);
-    const anchors = getAnchorsByHarmony(harmony, { pool: p, rng });
-
-    const primary = anchors[0] ?? null;
-
-    const secondaryUsed = makeUsedSet([primary]);
-    const secondaryTarget = anchors[1] ?? anchors[0] ?? null;
-
-    const secondary =
-        secondaryTarget &&
-            secondaryTarget.type !== "Metallic" &&
-            !secondaryUsed.has(String(secondaryTarget.hex).toLowerCase())
-            ? secondaryTarget
-            : findClosestNonMetalColour(
-                secondaryTarget,
-                p,
-                Array.from(secondaryUsed),
-                { rng }
-            ) ?? getNonMetalColour(p, secondaryUsed, rng);
-
-    switch (harmony) {
-        case "random": {
-            const edgeUsed = makeUsedSet([primary, secondary]);
-            const edgeTarget = anchors[2] ?? anchors[1] ?? anchors[0] ?? null;
-
-            const edge =
-                edgeTarget &&
-                    edgeTarget.type !== "Metallic" &&
-                    !edgeUsed.has(String(edgeTarget.hex).toLowerCase())
-                    ? edgeTarget
-                    : findClosestNonMetalColour(
-                        edgeTarget,
-                        p,
-                        Array.from(edgeUsed),
-                        { rng }
-                    ) ?? getNonMetalColour(p, edgeUsed, rng);
-
-            const accent = getAccentColour(p, [primary, secondary, edge]);
-            return [primary, secondary, edge, accent];
-        }
-
-        case "complementary":
-        case "analogous":
-        default: {
-            const edgeUsed = makeUsedSet([primary, secondary]);
-            const edge = getMetalColour(p, edgeUsed, rng);
-            const accent = getAccentColour(p, [primary, secondary, edge]);
-
-            return [primary, secondary, edge, accent];
-        }
     }
 }

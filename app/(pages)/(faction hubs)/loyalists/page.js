@@ -1,6 +1,6 @@
 import FactionHub from "@/app/components/factionHub";
-import SpaceMarine from "@/lib/models/spaceMarine";
-import SisterOfBattle from "@/lib/models/sisterOfBattle";
+import SpaceMarine from "@/lib/factions/chapter/models/spaceMarine";
+import SisterOfBattle from "@/lib/factions/sisters/models/sisterOfBattle";
 
 export const metadata = {
     title: "Loyalist Forge",

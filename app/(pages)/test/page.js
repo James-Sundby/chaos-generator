@@ -1,4 +1,4 @@
-import SisterOfBattle from "@/lib/models/sisterOfBattle";
+import SisterOfBattle from "@/lib/factions/sisters/models/sisterOfBattle";
 
 export default function TestPage() {
     return (
