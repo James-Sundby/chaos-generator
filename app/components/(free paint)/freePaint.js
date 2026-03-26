@@ -9,8 +9,6 @@ import ColorListbox from "../colourSelect";
 
 import { usePainterStore } from "@/app/stores/painterStore";
 
-import { debug } from "@/lib/debug";
-
 const groupedColors = {
     Base: colourList.filter((c) => c.type === "Base"),
     Layer: colourList.filter((c) => c.type === "Layer"),
