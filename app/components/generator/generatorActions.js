@@ -1,5 +1,3 @@
-"use client";
-
 import { generatorRegistry } from "@/lib/generators";
 
 import GenerateNewButton from "@/app/components/generateNewButton";

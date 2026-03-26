@@ -1,43 +1,11 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import MetaBar from "./components/metaBar";
 import RecentSchemeArchive from "./components/recentSchemeArchive";
 import CogitatorBox from "./components/cogitatorBox";
-
-const SchemeSearch = dynamic(() => import("@/app/components/schemeSearch"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full">
-      <div className="h-12 w-full border border-base-300 bg-base-100" aria-hidden="true" />
-    </div>
-  ),
-});
-
-const SpaceMarineGhost = dynamic(
-  () => import("@/lib/models/spaceMarine"),
-  {
-    ssr: false,
-    loading: () => <div className="h-full w-full" aria-hidden="true" />,
-  }
-);
-
-const ChaosMarineGhost = dynamic(
-  () => import("@/lib/models/chaosSpaceMarine"),
-  {
-    ssr: false,
-    loading: () => <div className="h-full w-full" aria-hidden="true" />,
-  }
-);
-
-const EldarAvengerGhost = dynamic(
-  () => import("@/lib/models/eldarAvenger"),
-  {
-    ssr: false,
-    loading: () => <div className="h-full w-full" aria-hidden="true" />,
-  }
-);
+import SpaceMarine from "@/lib/models/spaceMarine";
+import ChaosMarine from "@/lib/models/chaosSpaceMarine";
+import EldarAvenger from "@/lib/models/eldarAvenger";
+import SchemeSearch from "@/app/components/schemeSearch";
 
 const factionCards = [
   {
@@ -51,7 +19,7 @@ const factionCards = [
     accentBarClass: "bg-faction-loyalist",
     badgeClass: "badge-loyalist",
     buttonClass: "btn-primary",
-    ghostModel: SpaceMarineGhost,
+    ghostModel: SpaceMarine,
     ghostModelProps: {
       primary: "#d6d6d6",
       secondary: "#d6d6d6",
@@ -70,7 +38,7 @@ const factionCards = [
     accentBarClass: "bg-faction-chaos",
     badgeClass: "badge-chaos",
     buttonClass: "btn-primary",
-    ghostModel: ChaosMarineGhost,
+    ghostModel: ChaosMarine,
     ghostModelProps: {
       primary: "#d6d6d6",
       secondary: "#d6d6d6",
@@ -90,7 +58,7 @@ const factionCards = [
     accentBarClass: "bg-faction-xenos",
     badgeClass: "badge-xenos",
     buttonClass: "btn-primary",
-    ghostModel: EldarAvengerGhost,
+    ghostModel: EldarAvenger,
     ghostModelProps: {
       primary: "#d6d6d6",
       secondary: "#d6d6d6",
