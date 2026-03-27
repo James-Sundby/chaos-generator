@@ -1,4 +1,4 @@
-import EldarCustomizerView from "@/app/components/customizers/eldarCustomizerView";
+import EldarCustomizerView from "@/app/components/customizers/views/eldarCustomizerView";
 
 export const metadata = {
     title: "Warhost Painter",

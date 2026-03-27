@@ -54,11 +54,15 @@ export async function schemeSearchServer(payload) {
         };
     }
 
+    let canonicalParsed;
+    let canonical;
+    let basePath;
+
     try {
         const config = getFactionConfig();
-        const canonicalParsed = parseSlug(parsed.data.q, config);
+        canonicalParsed = parseSlug(parsed.data.q, config);
 
-        const canonical = generateSlug(
+        canonical = generateSlug(
             canonicalParsed.faction,
             canonicalParsed.name,
             canonicalParsed.colours,
@@ -66,9 +70,7 @@ export async function schemeSearchServer(payload) {
             canonicalParsed.mode || undefined
         );
 
-        const { basePath } = getFactionEntry(canonicalParsed.faction);
-
-        redirect(`${basePath}/${canonical}`);
+        ({ basePath } = getFactionEntry(canonicalParsed.faction));
     } catch (e) {
         return {
             error:
@@ -76,6 +78,8 @@ export async function schemeSearchServer(payload) {
                 "That id could not be used. Double-check and try again.",
         };
     }
+
+    redirect(`${basePath}/${canonical}`);
 }
 
 export async function createChapterAndGo(formData) {

@@ -1,4 +1,4 @@
-import ChapterCustomizerView from "@/app/components/customizers/chapterCustomizerView";
+import ChapterCustomizerView from "@/app/components/customizers/views/chapterCustomizerView";
 
 export const metadata = {
     title: "Chapter Painter",

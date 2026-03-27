@@ -89,6 +89,49 @@ export default function EldarGeneratorView({
                         </div>
                     )}
 
+                    <div className="border-b border-base-300 pb-4 hidden md:block">
+                        <div className="flex flex-wrap gap-x-8 gap-y-4">
+                            <div>
+                                <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/55">
+                                    Classification
+                                </span>
+                                <span className={`text-sm font-bold uppercase ${faction.textClass ?? ""}`}>
+                                    {copy.classification ?? generator.variant}
+                                </span>
+                            </div>
+
+                            {prettyMode && (
+                                <div>
+                                    <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/55">
+                                        Palette Mode
+                                    </span>
+                                    <span className="text-sm font-bold uppercase">{prettyMode}</span>
+                                </div>
+                            )}
+
+                            {band?.source && (
+                                <div>
+                                    <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/55">
+                                        {copy.sourceLabel ?? "Source"}
+                                    </span>
+                                    <span className="text-sm font-bold uppercase">{band.source}</span>
+                                </div>
+                            )}
+
+                            <div>
+                                <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/55">
+                                    Archive Status
+                                </span>
+                                <span
+                                    className={`inline-block px-2 py-1 text-xs font-bold uppercase tracking-[0.15em] ${faction.badgeClass ?? "badge-primary"
+                                        }`}
+                                >
+                                    {copy.statusLabel ?? "Active"}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
                     <GeneratorActions
                         createAction={generator.createAction}
                         noun={generator.noun}

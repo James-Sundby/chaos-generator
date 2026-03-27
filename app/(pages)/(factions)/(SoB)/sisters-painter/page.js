@@ -1,4 +1,4 @@
-import SistersCustomizerView from "@/app/components/customizers/sistersCustomizerView";
+import SistersCustomizerView from "@/app/components/customizers/views/sistersCustomizerView";
 
 export const metadata = {
     title: "Order Painter",

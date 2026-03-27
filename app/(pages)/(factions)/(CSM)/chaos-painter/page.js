@@ -1,4 +1,4 @@
-import ChaosCustomizerView from "@/app/components/customizers/chaosCustomizerView";
+import ChaosCustomizerView from "@/app/components/customizers/views/chaosCustomizerView";
 
 export const metadata = {
     title: "Chaos Warband Painter",
