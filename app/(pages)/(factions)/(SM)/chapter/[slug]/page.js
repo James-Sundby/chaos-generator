@@ -1,6 +1,7 @@
 import { redirect, notFound } from "next/navigation";
-import { parseEntity } from "@/utils/factionEntity"; import GeneratorView from "@/app/components/generator/generatorView";
+import { parseEntity } from "@/utils/factionEntity";
 import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
+import ChapterGeneratorView from "@/app/components/generator/views/chapterGeneratorView";
 
 export async function generateMetadata(props) {
     const params = await props.params;
@@ -14,24 +15,6 @@ export async function generateMetadata(props) {
             description: `Custom chapter: ${chapter.name} using ${colorNames}, in the "${chapter.pattern}" pattern.`,
             alternates: {
                 canonical: `/chapter/${canonical}`,
-            },
-            openGraph: {
-                title: chapter.name,
-                description: `Custom Space Marine scheme: ${colorNames} in the ${chapter.pattern} pattern.`,
-                url: `/chapter/${canonical}`,
-                images: [
-                    {
-                        url: "/card.png",
-                        width: 1200,
-                        height: 630,
-                        alt: "Line-art image of a Space Marine. Text overlay: Stuck with primer? Generate a chapter and break the block.",
-                    },
-                ],
-            },
-            twitter: {
-                title: chapter.name,
-                description: `Space Marine paint scheme: ${colorNames} in the "${chapter.pattern}" pattern.`,
-                images: ["/card.png"],
             },
         };
     } catch {
@@ -47,13 +30,15 @@ export async function generateMetadata(props) {
 
 export default async function Page(props) {
     const params = await props.params;
+
     try {
         const { entity: chapter, canonical } = parseEntity("chapter", params.slug);
         if (canonical !== params.slug) redirect(`/chapter/${canonical}`);
+
         return (
             <>
                 <GeneratorStoreHydrator generatorKey="chapter" entity={chapter} />
-                <GeneratorView generatorKey="chapter" band={chapter} defaultModelKey="marine" />
+                <ChapterGeneratorView band={chapter} defaultModelKey="marine" />
             </>
         );
     } catch {

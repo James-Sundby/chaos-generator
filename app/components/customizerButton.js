@@ -1,16 +1,15 @@
 import Link from "next/link";
-import { generatorRegistry } from "@/lib/generators/index";
 
 export default function CustomizerButton({
-    generatorKey = "chapter",
+    painterPath,
+    noun = "scheme",
     label,
 }) {
-    const config = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
-    const aria = label ?? `Customize your ${config.noun}`;
+    const aria = label ?? `Customize your ${noun}`;
 
     return (
         <Link
-            href={config.painterPath}
+            href={painterPath}
             className="btn btn-primary w-full rounded-none"
             aria-label={aria}
             title={aria}

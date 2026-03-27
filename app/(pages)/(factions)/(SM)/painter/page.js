@@ -1,4 +1,4 @@
-import CustomizerEntry from "@/app/components/customizers/customizerEntry";
+import ChapterCustomizerView from "@/app/components/customizers/views/chapterCustomizerView";
 
 export const metadata = {
     title: "Chapter Painter",
@@ -31,5 +31,5 @@ export const metadata = {
 
 
 export default function Page() {
-    return <CustomizerEntry generatorKey="chapter" />;
+    return <ChapterCustomizerView />;
 }

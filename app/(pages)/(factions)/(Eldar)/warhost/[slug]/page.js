@@ -1,7 +1,7 @@
 import { redirect, notFound } from "next/navigation";
 import { parseEntity } from "@/utils/factionEntity";
-import GeneratorView from "@/app/components/generator/generatorView";
 import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
+import EldarGeneratorView from "@/app/components/generator/views/eldarGeneratorView";
 
 export async function generateMetadata(props) {
     const params = await props.params;
@@ -56,7 +56,7 @@ export default async function Page(props) {
         return (
             <>
                 <GeneratorStoreHydrator generatorKey="eldar" entity={eldar} />
-                <GeneratorView generatorKey="eldar" band={eldar} />
+                <EldarGeneratorView band={eldar} />
             </>
         );
     } catch {

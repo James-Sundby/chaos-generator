@@ -1,22 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { generatorRegistry } from "@/lib/generators/index";
-
 
 export default function ShareButton({
-    generatorKey = "chapter",
+    basePath,
+    noun = "scheme",
     slug,
     title,
 }) {
     const [copied, setCopied] = useState(false);
-    const config = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
 
-    const aria = `Share this ${config.noun}`;
+    const aria = `Share this ${noun}`;
 
     const handleShare = async () => {
-        const url = `${window.location.origin}${config.basePath}/${slug}`;
-        const shareTitle = `Check out this ${config.noun}!`;
+        const url = `${window.location.origin}${basePath}/${slug}`;
+        const shareTitle = `Check out this ${noun}!`;
         const shareText = title ?? "";
 
         if (navigator.share) {

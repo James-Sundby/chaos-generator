@@ -1,20 +1,10 @@
-import { generatorRegistry } from "@/lib/generators/index";
-
-export default function TradingCard({
-    generatorKey = "chapter",
-    modelKey,
-    band,
+export default function TradingCardBase({
+    Model,
+    modelProps,
+    swatchIndices,
+    colors = [],
+    slug,
 }) {
-    const { colors = [], slug, pattern } = band ?? {};
-
-    const generator = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
-    const modelConfig =
-        generator.models[modelKey] ?? Object.values(generator.models)[0];
-
-    const Model = modelConfig.component;
-    const modelProps = modelConfig.getModelProps({ colors, pattern, band });
-    const swatchIndices = generator.getSwatchIndices({ colors, pattern, band });
-
     const paletteNames = swatchIndices
         .map((i) => colors[i]?.name)
         .filter(Boolean);

@@ -3,7 +3,14 @@ import GenerateNewButton from "@/app/components/generateNewButton";
 import CogitatorBox from "./cogitatorBox";
 import MetaBar from "./metaBar";
 
-export default function FactionHub({ eyebrow, title, intro, cards, cogitator, meta }) {
+export default function FactionHub({
+    eyebrow,
+    title,
+    intro,
+    cards,
+    cogitator,
+    meta,
+}) {
     return (
         <>
             <section className="relative flex flex-col">
@@ -11,6 +18,7 @@ export default function FactionHub({ eyebrow, title, intro, cards, cogitator, me
                     <div className="max-w-4xl">
                         <div className="flex flex-col gap-3">
                             {meta ? <MetaBar {...meta} /> : null}
+
                             <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl lg:text-7xl">
                                 {title}
                             </h1>
@@ -73,15 +81,19 @@ export default function FactionHub({ eyebrow, title, intro, cards, cogitator, me
                                             >
                                                 Coming Soon
                                             </button>
-                                        ) : card.generatorKey ? (
-                                            <GenerateNewButton generatorKey={card.generatorKey} />
+                                        ) : card.createAction ? (
+                                            <GenerateNewButton
+                                                action={card.createAction}
+                                                noun={card.noun}
+                                                label={card.generateLabel}
+                                            />
                                         ) : (
                                             <Link
                                                 href={card.href || "#"}
                                                 className={`btn w-full rounded-none ${card.buttonClass || "btn-primary"}`}
                                                 prefetch={false}
                                             >
-                                                Open Section
+                                                {card.linkLabel || "Open Section"}
                                             </Link>
                                         )}
                                     </div>
@@ -91,15 +103,12 @@ export default function FactionHub({ eyebrow, title, intro, cards, cogitator, me
                     })}
                 </section>
             </section>
+
             {cogitator ? (
                 <section className="relative mt-auto">
-                    <CogitatorBox
-                        lines={cogitator.lines}
-                    />
+                    <CogitatorBox lines={cogitator.lines} />
                 </section>
             ) : null}
-
-
         </>
     );
 }

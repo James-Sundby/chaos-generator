@@ -1,6 +1,6 @@
 "use client";
 
-import TradingCard from "@/app/components/tradingCard";
+import TradingCard from "@/app/components/tradingCardBase";
 import GeneratorModelSwitcher from "@/app/components/generator/generatorModelSwitcher";
 import { useGeneratorModel } from "@/app/components/generator/generatorModelProvider";
 

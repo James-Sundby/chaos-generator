@@ -2,9 +2,9 @@ import Link from "next/link";
 import MetaBar from "./components/metaBar";
 import RecentSchemeArchive from "./components/recentSchemeArchive";
 import CogitatorBox from "./components/cogitatorBox";
-import SpaceMarine from "@/lib/models/spaceMarine";
-import ChaosMarine from "@/lib/models/chaosSpaceMarine";
-import EldarAvenger from "@/lib/models/eldarAvenger";
+import SpaceMarine from "@/lib/factions/chapter/models/spaceMarine";
+import ChaosMarine from "@/lib/factions/chaos/models/chaosSpaceMarine";
+import EldarAvenger from "@/lib/factions/eldar/models/eldarAvenger";
 import SchemeSearch from "@/app/components/schemeSearch";
 
 const factionCards = [

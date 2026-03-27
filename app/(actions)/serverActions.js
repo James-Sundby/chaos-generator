@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import { redirect } from "next/navigation";
 
@@ -6,19 +6,6 @@ import { schemeSearchObjectSchema } from "@/app/schema/schemeSearch";
 import { getFactionConfig } from "@/utils/factionConfig";
 import { generateSlug, parseSlug } from "@/utils/parseSlugs";
 import { createEntityData } from "@/utils/factionEntity";
-
-const ROUTE_BASE_BY_FACTION = {
-    chapter: "/chapter",
-    chaos: "/chaos",
-    eldar: "/warhost",
-    sisters: "/sisters",
-};
-
-function getRouteBaseFromFaction(faction) {
-    const routeBase = ROUTE_BASE_BY_FACTION[faction];
-    if (!routeBase) throw new Error("bad-slug");
-    return routeBase;
-}
 
 function parseSettings(raw) {
     const defaults = { colourMode: "default" };
@@ -40,6 +27,22 @@ function parseSettings(raw) {
     return defaults;
 }
 
+function getFactionEntry(faction) {
+    const entry = getFactionConfig()[faction];
+    if (!entry) {
+        throw new Error("bad-faction");
+    }
+    return entry;
+}
+
+async function createFactionAndGo(faction, formData) {
+    const settings = parseSettings(formData.get("settings"));
+    const entity = createEntityData(faction, settings);
+    const { basePath } = getFactionEntry(faction);
+
+    redirect(`${basePath}/${entity.slug}`);
+}
+
 export async function schemeSearchServer(payload) {
     const parsed = schemeSearchObjectSchema.safeParse(payload);
 
@@ -51,12 +54,13 @@ export async function schemeSearchServer(payload) {
         };
     }
 
+    let canonicalParsed;
     let canonical;
-    let routeBase;
+    let basePath;
 
     try {
         const config = getFactionConfig();
-        const canonicalParsed = parseSlug(parsed.data.q, config);
+        canonicalParsed = parseSlug(parsed.data.q, config);
 
         canonical = generateSlug(
             canonicalParsed.faction,
@@ -66,36 +70,30 @@ export async function schemeSearchServer(payload) {
             canonicalParsed.mode || undefined
         );
 
-        routeBase = getRouteBaseFromFaction(canonicalParsed.faction);
+        ({ basePath } = getFactionEntry(canonicalParsed.faction));
     } catch (e) {
         return {
-            error: e?.message || "That id could not be used. Double-check and try again.",
+            error:
+                e?.message ||
+                "That id could not be used. Double-check and try again.",
         };
     }
 
-    redirect(`${routeBase}/${canonical}`);
+    redirect(`${basePath}/${canonical}`);
 }
 
 export async function createChapterAndGo(formData) {
-    const settings = parseSettings(formData.get("settings"));
-    const entity = createEntityData("chapter", settings)
-    redirect(`/chapter/${entity.slug}`);
+    return createFactionAndGo("chapter", formData);
 }
 
 export async function createWarbandAndGo(formData) {
-    const settings = parseSettings(formData.get("settings"));
-    const entity = createEntityData("chaos", settings)
-    redirect(`/chaos/${entity.slug}`);
+    return createFactionAndGo("chaos", formData);
 }
 
 export async function createWarhostAndGo(formData) {
-    const settings = parseSettings(formData.get("settings"));
-    const entity = createEntityData("eldar", settings)
-    redirect(`/warhost/${entity.slug}`);
+    return createFactionAndGo("eldar", formData);
 }
 
 export async function createSistersAndGo(formData) {
-    const settings = parseSettings(formData.get("settings"));
-    const entity = createEntityData("sisters", settings)
-    redirect(`/sisters/${entity.slug}`);
+    return createFactionAndGo("sisters", formData);
 }

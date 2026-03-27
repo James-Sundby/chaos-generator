@@ -2,26 +2,27 @@
 
 import PendingActionButton from "./pendingActionButton";
 import { useSettingsStore } from "@/app/stores/settingsStore";
-import { generatorRegistry } from "@/lib/generators/index";
 
 export default function GenerateNewButton({
-    generatorKey = "chapter",
+    action,
+    noun = "scheme",
     label,
 }) {
-    const config = generatorRegistry[generatorKey] ?? generatorRegistry.chapter;
     const colourMode = useSettingsStore((s) => s.colourMode);
 
     return (
-        <form action={config.createAction} className="w-full">
+        <form action={action} className="w-full">
             <input
                 type="hidden"
                 name="settings"
                 value={JSON.stringify({
-                    colourMode: colourMode,
+                    colourMode,
                 })}
             />
+
             <PendingActionButton>
-                {label ?? `Generate a New ${config.noun[0].toUpperCase()}${config.noun.slice(1)}`}
+                {label ??
+                    `Generate a New ${noun[0].toUpperCase()}${noun.slice(1)}`}
             </PendingActionButton>
         </form>
     );

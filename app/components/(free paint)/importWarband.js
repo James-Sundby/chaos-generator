@@ -7,8 +7,8 @@ import { z } from "zod";
 
 import { usePainterStore } from "@/app/stores/painterStore";
 import { colourList } from "@/lib/data/colours";
-import { patterns } from "@/lib/data/armourPatterns";
-import { chapterModes } from "@/lib/data/modes";
+import { patterns } from "@/lib/factions/chapter/patternOptions";
+import { factionModes as chapterModes } from "@/lib/factions/chapter/modes";
 import { parseSlug, generateSlug } from "@/utils/parseSlugs";
 
 const chapterImportSchema = z.object({

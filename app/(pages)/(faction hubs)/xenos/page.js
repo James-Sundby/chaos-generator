@@ -1,5 +1,7 @@
 import FactionHub from "@/app/components/factionHub";
-import EldarAvenger from "@/lib/models/eldarAvenger";
+import { createWarhostAndGo } from "@/app/(actions)/serverActions";
+import { meta as eldarMeta } from "@/lib/factions/eldar/meta";
+import EldarAvenger from "@/lib/factions/eldar/models/eldarAvenger";
 
 export const metadata = {
     title: "Xenos Forge",
@@ -27,7 +29,6 @@ export const metadata = {
         description:
             "Generate paint schemes for alien warhosts, xenos factions, and non-Imperial forces including Aeldari-inspired designs.",
         images: ["/card.png"],
-
     },
 };
 
@@ -39,10 +40,12 @@ const xenosCards = [
         mobileTitle: "AELDARI WARHOST",
         body: "Generate sleek xenos schemes for the warhosts of an ancient, dying alien empire.",
         href: "/warhost",
-        generatorKey: "eldar",
-        accentBarClass: "bg-faction-xenos",
-        badgeClass: "badge-xenos",
-        buttonClass: "btn-primary",
+        createAction: createWarhostAndGo,
+        noun: eldarMeta.noun,
+        generateLabel: eldarMeta.copy.generateLabel,
+        accentBarClass: eldarMeta.faction.accentBarClass,
+        badgeClass: eldarMeta.faction.badgeClass,
+        buttonClass: eldarMeta.buttonTheme,
         ghostModel: EldarAvenger,
         ghostModelProps: {
             primary: "#d9d9d9",

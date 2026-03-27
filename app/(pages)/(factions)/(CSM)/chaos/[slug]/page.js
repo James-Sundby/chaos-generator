@@ -1,7 +1,7 @@
 import { redirect, notFound } from "next/navigation";
 import { parseEntity } from "@/utils/factionEntity";
 import GeneratorStoreHydrator from "@/app/components/generator/generatorStoreHydrator";
-import GeneratorView from "@/app/components/generator/generatorView";
+import ChaosGeneratorView from "@/app/components/generator/views/chaosGeneratorView";
 
 export async function generateMetadata(props) {
     const params = await props.params;
@@ -48,14 +48,15 @@ export async function generateMetadata(props) {
 
 export default async function Page(props) {
     const params = await props.params;
+
     try {
         const { entity: chaos, canonical } = parseEntity("chaos", params.slug);
         if (canonical !== params.slug) redirect(`/chaos/${canonical}`);
+
         return (
             <>
-
                 <GeneratorStoreHydrator generatorKey="chaos" entity={chaos} />
-                <GeneratorView generatorKey="chaos" band={chaos} />
+                <ChaosGeneratorView band={chaos} />
             </>
         );
     } catch {
