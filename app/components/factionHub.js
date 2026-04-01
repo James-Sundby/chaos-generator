@@ -35,6 +35,13 @@ export default function FactionHub({
                         const isComingSoon = card.status === "coming-soon";
                         const GhostModel = card.ghostModel;
 
+                        const ghostModelProps =
+                            GhostModel && card.ghostModelGetProps
+                                ? card.ghostModelGetProps(card.ghostModelInput)
+                                : card.ghostModelProps;
+
+                        const canRenderGhost = GhostModel && ghostModelProps;
+
                         return (
                             <div
                                 key={card.key}
@@ -42,14 +49,14 @@ export default function FactionHub({
                             >
                                 <div className={`absolute left-0 top-0 h-full w-1 ${card.accentBarClass}`} />
 
-                                {GhostModel && (
+                                {canRenderGhost ? (
                                     <div
                                         aria-hidden="true"
                                         className="pointer-events-none absolute -right-6 top-1 hidden h-[80%] w-[80%] opacity-[0.08] md:block"
                                     >
-                                        <GhostModel {...card.ghostModelProps} />
+                                        <GhostModel {...ghostModelProps} />
                                     </div>
-                                )}
+                                ) : null}
 
                                 <div className="card-body relative z-10 flex flex-col justify-between gap-6 p-6 sm:p-8">
                                     <div className="flex flex-col gap-4">

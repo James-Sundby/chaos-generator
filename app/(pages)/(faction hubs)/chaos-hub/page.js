@@ -47,13 +47,22 @@ const chaosCards = [
         badgeClass: chaosMeta.faction.badgeClass,
         buttonClass: chaosMeta.buttonTheme,
         ghostModel: ChaosMarine,
-        ghostModelProps: {
-            primary: "#d9d9d9",
-            secondary: "#d9d9d9",
-            edge: "#d9d9d9",
-            accent: "#d9d9d9",
+        ghostModelInput: {
+            colors: [
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+            ],
             pattern: "Basic",
         },
+        ghostModelGetProps: ({ colors, pattern }) => ({
+            primary: colors[0],
+            secondary: colors[1],
+            accent: colors[2],
+            edge: colors[3],
+            pattern,
+        }),
         status: "live",
     },
 ];
