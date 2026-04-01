@@ -1,6 +1,28 @@
 import { Fragment, useMemo } from "react";
 import { Listbox, Transition, ListboxButton, ListboxOptions, ListboxOption, } from "@headlessui/react";
 
+function getSwatchStyle(option) {
+    if (!option) {
+        return { backgroundColor: "transparent" };
+    }
+
+    if (option.type === "Metallic" && option.metallic) {
+        return {
+            background: `radial-gradient(
+                circle at 32% 28%,
+                ${option.metallic.highlight} 0%,
+                ${option.metallic.mid} 32%,
+                ${option.metallic.shadow} 78%,
+                ${option.metallic.shadow} 100%
+            )`,
+        };
+    }
+
+    return {
+        backgroundColor: option.hex || "transparent",
+    };
+}
+
 export default function ColorListbox({
     id,
     options,
@@ -44,10 +66,15 @@ export default function ColorListbox({
                     className={`select select-bordered join-item w-full ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                     <span className="flex items-center gap-2 truncate">
-                        <span
+                        {/* <span
                             aria-hidden
                             className="size-4 rounded border border-base-300"
                             style={{ backgroundColor: selectedOption ? getHex(selectedOption) : "transparent" }}
+                        /> */}
+                        <span
+                            aria-hidden
+                            className="size-4 rounded border border-base-300"
+                            style={getSwatchStyle(selectedOption)}
                         />
                         <span className="truncate">{selectedOption?.name ?? "Select…"}</span>
                     </span>
@@ -77,10 +104,15 @@ export default function ColorListbox({
                                         >
                                             {() => (
                                                 <>
-                                                    <span
+                                                    {/* <span
                                                         aria-hidden
                                                         className="h-4 w-4 rounded border border-base-300"
                                                         style={{ backgroundColor: getHex(opt) }}
+                                                    /> */}
+                                                    <span
+                                                        aria-hidden
+                                                        className="h-4 w-4 rounded border border-base-300"
+                                                        style={getSwatchStyle(opt)}
                                                     />
                                                     <span className="truncate" title={opt.name}>{opt.name}</span>
                                                 </>

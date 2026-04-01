@@ -1,3 +1,25 @@
+function getSwatchStyle(color) {
+    if (!color) {
+        return { backgroundColor: "transparent" };
+    }
+
+    if (color.type === "Metallic" && color.metallic) {
+        return {
+            background: `radial-gradient(
+                circle at 32% 28%,
+                ${color.metallic.highlight} 0%,
+                ${color.metallic.mid} 32%,
+                ${color.metallic.shadow} 78%,
+                ${color.metallic.shadow} 100%
+            )`,
+        };
+    }
+
+    return {
+        backgroundColor: color.hex,
+    };
+}
+
 export default function TradingCardBase({
     Model,
     modelProps,
@@ -26,7 +48,7 @@ export default function TradingCardBase({
                                 key={i}
                                 className="tooltip flex-1 rounded-none border border-black/5"
                                 data-tip={colors[i]?.name}
-                                style={{ backgroundColor: colors[i]?.hex }}
+                                style={getSwatchStyle(colors[i])}
                                 aria-label={colors[i]?.name}
                                 title={colors[i]?.name}
                             />

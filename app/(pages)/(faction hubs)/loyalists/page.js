@@ -50,12 +50,20 @@ const loyalistCards = [
         badgeClass: chapterMeta.faction.badgeClass,
         buttonClass: chapterMeta.buttonTheme,
         ghostModel: SpaceMarine,
-        ghostModelProps: {
-            primary: "#d9d9d9",
-            secondary: "#d9d9d9",
-            trim: "#d9d9d9",
+        ghostModelInput: {
+            colors: [
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+            ],
             pattern: "Shoulders",
         },
+        ghostModelGetProps: ({ colors, pattern }) => ({
+            primary: colors[0],
+            secondary: colors[1],
+            trim: colors[2],
+            pattern,
+        }),
         status: "live",
     },
     {
@@ -73,13 +81,22 @@ const loyalistCards = [
         badgeClass: sistersMeta.faction.badgeClass,
         buttonClass: sistersMeta.buttonTheme,
         ghostModel: SisterOfBattle,
-        ghostModelProps: {
-            primary: "#d9d9d9",
-            secondary: "#d9d9d9",
-            edge: "#d9d9d9",
-            accent: "#d9d9d9",
+        ghostModelInput: {
+            colors: [
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+            ],
             pattern: "1",
         },
+        ghostModelGetProps: ({ colors, pattern }) => ({
+            primary: colors[0],
+            secondary: colors[1],
+            edge: colors[2],
+            accent: colors[3],
+            pattern,
+        }),
         status: "live",
     },
 ];

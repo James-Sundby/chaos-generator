@@ -20,12 +20,20 @@ const factionCards = [
     badgeClass: "badge-loyalist",
     buttonClass: "btn-primary",
     ghostModel: SpaceMarine,
-    ghostModelProps: {
-      primary: "#d6d6d6",
-      secondary: "#d6d6d6",
-      trim: "#d6d6d6",
-      pattern: "Quartered",
+    ghostModelInput: {
+      colors: [
+        { name: "Test", hex: "#d6d6d6", type: "Base" },
+        { name: "Test", hex: "#d6d6d6", type: "Base" },
+        { name: "Test", hex: "#d6d6d6", type: "Base" },
+      ],
+      pattern: "Shoulders",
     },
+    ghostModelGetProps: ({ colors, pattern }) => ({
+      primary: colors[0],
+      secondary: colors[1],
+      trim: colors[2],
+      pattern,
+    }),
   },
   {
     key: "chaos",
@@ -39,13 +47,22 @@ const factionCards = [
     badgeClass: "badge-chaos",
     buttonClass: "btn-primary",
     ghostModel: ChaosMarine,
-    ghostModelProps: {
-      primary: "#d6d6d6",
-      secondary: "#d6d6d6",
-      edge: "#d6d6d6",
-      accent: "#d6d6d6",
+    ghostModelInput: {
+      colors: [
+        { name: "Test", hex: "#d6d6d6", type: "Base" },
+        { name: "Test", hex: "#d6d6d6", type: "Base" },
+        { name: "Test", hex: "#d6d6d6", type: "Base" },
+        { name: "Test", hex: "#d6d6d6", type: "Base" },
+      ],
       pattern: "Basic",
     },
+    ghostModelGetProps: ({ colors, pattern }) => ({
+      primary: colors[0],
+      secondary: colors[1],
+      accent: colors[2],
+      edge: colors[3],
+      pattern,
+    }),
   },
   {
     key: "eldar",
@@ -59,12 +76,20 @@ const factionCards = [
     badgeClass: "badge-xenos",
     buttonClass: "btn-primary",
     ghostModel: EldarAvenger,
-    ghostModelProps: {
-      primary: "#d6d6d6",
-      secondary: "#d6d6d6",
-      accent: "#d6d6d6",
-      pattern: "Default",
+    ghostModelInput: {
+      colors: [
+        { name: "Test", hex: "#d6d6d6", type: "Base" },
+        { name: "Test", hex: "#d6d6d6", type: "Base" },
+        { name: "Test", hex: "#d6d6d6", type: "Base" },
+      ],
+      pattern: "1",
     },
+    ghostModelGetProps: ({ colors, pattern }) => ({
+      primary: colors[0],
+      secondary: colors[1],
+      accent: colors[2],
+      pattern,
+    }),
   },
 ];
 
@@ -89,6 +114,7 @@ export default function Home() {
       <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {factionCards.map((card) => {
           const GhostModel = card.ghostModel;
+          const ghostModelProps = card.ghostModelGetProps(card.ghostModelInput);
 
           return (
             <article
@@ -102,7 +128,7 @@ export default function Home() {
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-6 top-1 hidden h-[80%] w-[80%] opacity-[0.08] md:block"
                 >
-                  <GhostModel {...card.ghostModelProps} />
+                  <GhostModel {...ghostModelProps} />
                 </div>
               ) : null}
 
