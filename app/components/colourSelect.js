@@ -66,11 +66,6 @@ export default function ColorListbox({
                     className={`select select-bordered join-item w-full ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                     <span className="flex items-center gap-2 truncate">
-                        {/* <span
-                            aria-hidden
-                            className="size-4 rounded border border-base-300"
-                            style={{ backgroundColor: selectedOption ? getHex(selectedOption) : "transparent" }}
-                        /> */}
                         <span
                             aria-hidden
                             className="size-4 rounded border border-base-300"
@@ -104,11 +99,6 @@ export default function ColorListbox({
                                         >
                                             {() => (
                                                 <>
-                                                    {/* <span
-                                                        aria-hidden
-                                                        className="h-4 w-4 rounded border border-base-300"
-                                                        style={{ backgroundColor: getHex(opt) }}
-                                                    /> */}
                                                     <span
                                                         aria-hidden
                                                         className="h-4 w-4 rounded border border-base-300"

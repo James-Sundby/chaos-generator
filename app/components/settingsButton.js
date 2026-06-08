@@ -17,7 +17,7 @@ export default function SettingsButton() {
         <>
             <button
                 type="button"
-                className="btn btn-ghost btn-sm gap-2 rounded-none uppercase tracking-[0.16em]"
+                className="btn btn-ghost btn-sm gap-2 rounded-none uppercase tracking-[0.16em] hidden md:inline-flex"
                 onClick={openModal}
                 aria-label="Open generator settings"
             >
@@ -34,7 +34,7 @@ export default function SettingsButton() {
 
             <dialog
                 ref={dialogRef}
-                className="modal"
+                className="modal [&:not([open])]:hidden"
                 onClick={handleBackdropClick}
                 aria-labelledby="settings-title"
             >
@@ -75,7 +75,7 @@ export default function SettingsButton() {
 
                         <div className="flex justify-end">
                             <form method="dialog">
-                                <button type="submit" className="btn btn-primary rounded-none">
+                                <button type="submit" className="btn btn-primary rounded-none" aria-label="Close settings">
                                     Close
                                 </button>
                             </form>
