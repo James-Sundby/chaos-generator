@@ -99,7 +99,7 @@ export default function Header() {
         <div className="navbar-start min-w-0">
           <Link
             href="/"
-            className="truncate text-lg font-black uppercase tracking-tight sm:text-2xl"
+            className="text-lg font-black uppercase tracking-tight sm:text-2xl"
             aria-label="Back to Chapter Generator home page"
             prefetch={false}
           >
@@ -201,9 +201,9 @@ export default function Header() {
             )}
           </div>
 
-          <div className="hidden md:flex">
-            <SettingsButton />
-          </div>
+
+          <SettingsButton />
+
         </div>
       </nav>
     </header>

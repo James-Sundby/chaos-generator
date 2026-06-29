@@ -4,14 +4,13 @@ export default function Footer() {
   return (
     <footer className="border-t border-base-300 bg-base-100">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-8 md:px-8">
-        <p className="max-w-3xl text-center text-xs text-base-content/70 md:text-left">
+        <p className="text-center text-xs text-base-content ">
           This is a fan-made project and is not affiliated with or endorsed by Games Workshop.
           No challenge to their trademarks or intellectual property is intended.
         </p>
-
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <nav aria-label="Footer">
-            <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-semibold uppercase tracking-[0.18em] text-base-content/70 md:justify-start">
+          <nav aria-label="Footer Navigation" className="w-full">
+            <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-semibold uppercase tracking-[0.18em] text-base-content">
               <li>
                 <Link
                   href="/credits"
@@ -81,10 +80,6 @@ export default function Footer() {
               </li>
             </ul>
           </nav>
-
-          <div className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/70 md:text-right">
-            Unofficial hobby project
-          </div>
         </div>
       </div>
     </footer>

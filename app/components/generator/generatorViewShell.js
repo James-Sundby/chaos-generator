@@ -1,24 +1,12 @@
-import { chapterGenerator } from "@/lib/generators/chapter";
-import { chaosGenerator } from "@/lib/generators/chaos";
-import { eldarGenerator } from "@/lib/generators/eldar";
-import { sistersGenerator } from "@/lib/generators/sisters";
-
 import GeneratorActions from "@/app/components/generator/generatorActions";
 import GeneratorModelProvider from "@/app/components/generator/generatorModelProvider";
 import GeneratorModelSwitcher from "@/app/components/generator/generatorModelSwitcher";
-import GeneratorTradingCardPane from "@/app/components/generator/generatorTradingCardPane";
-
-const generatorMap = {
-    chapter: chapterGenerator,
-    chaos: chaosGenerator,
-    eldar: eldarGenerator,
-    sisters: sistersGenerator,
-};
 
 function pickStableText(options = [], seed = "") {
     if (!options.length) return null;
 
     let hash = 0;
+
     for (let i = 0; i < seed.length; i += 1) {
         hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
     }
@@ -41,15 +29,24 @@ function formatMode(mode) {
         .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-export default function GeneratorView({
-    generatorKey = "chapter",
+export default function GeneratorViewShell({
+    generatorKey,
+    generator,
     band,
     defaultModelKey,
+    TradingCardPane,
 }) {
-    const generator = generatorMap[generatorKey] ?? chapterGenerator;
     const copy = generator.copy ?? {};
     const faction = generator.faction ?? {};
-    const hasMultipleModels = Object.keys(generator.models ?? {}).length > 1;
+
+    const modelOptions = Object.entries(generator.models ?? {}).map(
+        ([key, model]) => ({
+            key,
+            label: model.label,
+        })
+    );
+
+    const hasMultipleModels = modelOptions.length > 1;
 
     const displayName =
         band?.name ?? band?.warbandName ?? `Unknown ${generator.variant}`;
@@ -61,22 +58,13 @@ export default function GeneratorView({
         copy.heroDescription ??
         "Technical readouts indicate a viable faction identity suitable for refinement, customization, or archive preservation.";
 
-    const modelOptions = Object.entries(generator.models ?? {}).map(([key, model]) => ({
-        key,
-        label: model.label,
-    }));
-
     return (
         <GeneratorModelProvider
             modelOptions={modelOptions}
             defaultModelKey={defaultModelKey}
         >
             <section className="mx-auto my-auto flex w-full max-w-7xl flex-col items-center justify-center gap-6 md:flex-row md:items-stretch lg:gap-16">
-                <GeneratorTradingCardPane
-                    generatorKey={generatorKey}
-                    band={band}
-                    displayName={displayName}
-                />
+                <TradingCardPane band={band} displayName={displayName} />
 
                 <div className="flex w-full max-w-105 flex-col gap-4 md:flex-1">
                     <div className="hidden md:block">
@@ -101,13 +89,16 @@ export default function GeneratorView({
                         </div>
                     )}
 
-                    <div className="border-b border-base-300 pb-4 hidden md:block">
+                    <div className="hidden border-b border-base-300 pb-4 md:block">
                         <div className="flex flex-wrap gap-x-8 gap-y-4">
                             <div>
                                 <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/55">
                                     Classification
                                 </span>
-                                <span className={`text-sm font-bold uppercase ${faction.textClass ?? ""}`}>
+                                <span
+                                    className={`text-sm font-bold uppercase ${faction.textClass ?? ""
+                                        }`}
+                                >
                                     {copy.classification ?? generator.variant}
                                 </span>
                             </div>
@@ -117,7 +108,9 @@ export default function GeneratorView({
                                     <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/55">
                                         Palette Mode
                                     </span>
-                                    <span className="text-sm font-bold uppercase">{prettyMode}</span>
+                                    <span className="text-sm font-bold uppercase">
+                                        {prettyMode}
+                                    </span>
                                 </div>
                             )}
 
@@ -126,7 +119,9 @@ export default function GeneratorView({
                                     <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/55">
                                         {copy.sourceLabel ?? "Source"}
                                     </span>
-                                    <span className="text-sm font-bold uppercase">{band.source}</span>
+                                    <span className="text-sm font-bold uppercase">
+                                        {band.source}
+                                    </span>
                                 </div>
                             )}
 
@@ -150,7 +145,7 @@ export default function GeneratorView({
                         variant={generator.variant}
                         painterPath={generator.painterPath}
                         basePath={generator.basePath}
-                        copy={generator.copy}
+                        copy={copy}
                         group={generator.group}
                         generatorKey={generatorKey}
                         band={band}

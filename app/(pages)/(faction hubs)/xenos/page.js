@@ -2,6 +2,7 @@ import FactionHub from "@/app/components/factionHub";
 import { createWarhostAndGo } from "@/app/(actions)/serverActions";
 import { meta as eldarMeta } from "@/lib/factions/eldar/meta";
 import EldarAvenger from "@/lib/factions/eldar/models/eldarAvenger";
+import FireWarrior from "@/lib/factions/tau/models/fireWarrior";
 
 export const metadata = {
     title: "Xenos Forge",
@@ -72,7 +73,21 @@ const xenosCards = [
         accentBarClass: "bg-faction-xenos",
         badgeClass: "badge-xenos",
         buttonClass: "btn-primary",
-        ghost: "T",
+        ghostModel: FireWarrior,
+        ghostModelInput: {
+            colors: [
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+                { name: "Test", hex: "#d6d6d6", type: "Base" },
+            ],
+            pattern: "Basic",
+        },
+        ghostModelGetProps: ({ colors, pattern }) => ({
+            primary: colors[0],
+            secondary: colors[1],
+            accent: colors[2],
+            pattern,
+        }),
         status: "coming-soon",
     },
 ];
