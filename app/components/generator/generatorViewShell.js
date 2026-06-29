@@ -39,13 +39,7 @@ export default function GeneratorViewShell({
     const copy = generator.copy ?? {};
     const faction = generator.faction ?? {};
 
-    const modelOptions = Object.entries(generator.models ?? {}).map(
-        ([key, model]) => ({
-            key,
-            label: model.label,
-        })
-    );
-
+    const modelOptions = generator.modelOptions ?? [];
     const hasMultipleModels = modelOptions.length > 1;
 
     const displayName =
