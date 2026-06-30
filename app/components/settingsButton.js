@@ -1,12 +1,22 @@
 "use client";
 
-import { useRef } from "react";
-import SettingsPanel from "./settingsPanel";
+import { useRef, useState } from "react";
+import dynamic from "next/dynamic";
+
+const SettingsPanel = dynamic(() => import("./settingsPanel"), {
+    ssr: false,
+});
 
 export default function SettingsButton() {
     const dialogRef = useRef(null);
+    const [hasOpened, setHasOpened] = useState(false);
 
-    const openModal = () => dialogRef.current?.showModal();
+
+    const openModal = () => {
+        setHasOpened(true);
+        requestAnimationFrame(() => dialogRef.current?.showModal());
+    };
+
     const closeModal = () => dialogRef.current?.close();
 
     const handleBackdropClick = (e) => {
@@ -59,7 +69,7 @@ export default function SettingsButton() {
                     </div>
 
                     <div className="px-6 py-5 sm:px-8 sm:py-6">
-                        <SettingsPanel />
+                        {hasOpened ? <SettingsPanel /> : null}
                     </div>
 
                     <div className="border-t border-base-300 px-6 py-5 sm:px-8 sm:py-6">
