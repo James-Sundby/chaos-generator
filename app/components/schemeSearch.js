@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { schemeSearchServer } from "@/app/(actions)/serverActions";
 
-export default function SchemeSearchLite({
+export default function SchemeSearch({
     id = "scheme-search",
     placeholder = "chapter-ravens-of-the-keep-a99d95-440052-989898-eradicant-random",
     buttonLabel = "Look up a Scheme",
