@@ -4,7 +4,7 @@ import { chaosGenerator } from "@/lib/generators/chaos";
 
 export default function ChaosGeneratorView({
     band,
-    defaultModelKey = "marine",
+    defaultModelKey,
 }) {
     return (
         <GeneratorViewShell
