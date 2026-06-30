@@ -2,8 +2,6 @@ import FactionHub from "@/app/components/factionHub";
 import { createChapterAndGo, createSistersAndGo } from "@/app/(actions)/serverActions";
 import { meta as chapterMeta } from "@/lib/factions/chapter/meta";
 import { meta as sistersMeta } from "@/lib/factions/sisters/meta";
-import SpaceMarine from "@/lib/factions/chapter/models/spaceMarine";
-import SisterOfBattle from "@/lib/factions/sisters/models/sisterOfBattle";
 
 export const metadata = {
     title: "Loyalist Forge",
@@ -34,6 +32,8 @@ export const metadata = {
     },
 };
 
+const testPaint = { name: "Test", hex: "#d6d6d6", type: "Base" };
+
 const loyalistCards = [
     {
         key: "space-marines",
@@ -49,21 +49,13 @@ const loyalistCards = [
         accentBarClass: chapterMeta.faction.accentBarClass,
         badgeClass: chapterMeta.faction.badgeClass,
         buttonClass: chapterMeta.buttonTheme,
-        ghostModel: SpaceMarine,
-        ghostModelInput: {
-            colors: [
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-            ],
+        ghostModel: "chapter",
+        ghostModelProps: {
+            primary: testPaint,
+            secondary: testPaint,
+            trim: testPaint,
             pattern: "Shoulders",
         },
-        ghostModelGetProps: ({ colors, pattern }) => ({
-            primary: colors[0],
-            secondary: colors[1],
-            trim: colors[2],
-            pattern,
-        }),
         status: "live",
     },
     {
@@ -80,23 +72,14 @@ const loyalistCards = [
         accentBarClass: sistersMeta.faction.accentBarClass,
         badgeClass: sistersMeta.faction.badgeClass,
         buttonClass: sistersMeta.buttonTheme,
-        ghostModel: SisterOfBattle,
-        ghostModelInput: {
-            colors: [
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-            ],
+        ghostModel: "sisters",
+        ghostModelProps: {
+            primary: testPaint,
+            secondary: testPaint,
+            edge: testPaint,
+            accent: testPaint,
             pattern: "1",
         },
-        ghostModelGetProps: ({ colors, pattern }) => ({
-            primary: colors[0],
-            secondary: colors[1],
-            edge: colors[2],
-            accent: colors[3],
-            pattern,
-        }),
         status: "live",
     },
 ];

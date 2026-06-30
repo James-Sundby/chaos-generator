@@ -16,7 +16,7 @@ const RecentSchemeArchive = dynamic(() => import("./recentSchemeArchive"), {
                     </p>
                 </div>
 
-                <div className="rounded-none border border-dashed border-base-300 px-4 py-5 text-sm text-base-content/60">
+                <div className="rounded-none border border-dashed border-base-300 px-4 py-5 text-sm text-base-content/75">
                     Loading local archive…
                 </div>
             </div>

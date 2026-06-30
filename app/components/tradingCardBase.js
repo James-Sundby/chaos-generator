@@ -49,7 +49,7 @@ export default function TradingCardBase({
                                 className="tooltip flex-1 rounded-none border border-black/5"
                                 data-tip={colors[i]?.name}
                                 style={getSwatchStyle(colors[i])}
-                                aria-label={colors[i]?.name}
+                                // aria-label={colors[i]?.name}
                                 title={colors[i]?.name}
                             />
                         ))}
@@ -63,8 +63,8 @@ export default function TradingCardBase({
                         </p>
                     )}
 
-                    <p className="max-w-full break-all border-t border-base-content/55 pt-4 font-mono text-sm text-base-content/55">
-                        ID: {slug}
+                    <p className="max-w-full break-all border-t border-base-content/55 pt-4 font-mono text-sm text-base-content/75">
+                        <span className="font-bold">ID: </span>{slug}
                     </p>
                 </div>
             </div>

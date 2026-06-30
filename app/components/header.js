@@ -126,7 +126,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={link.href}
-                      className="inline-flex items-center rounded-box px-3 py-2 text-base-content/70 transition-colors hover:text-primary"
+                      className="inline-flex items-center rounded-box px-3 py-2 text-base-content/75 transition-colors hover:text-primary"
                     >
                       {link.label}
                     </Link>
@@ -160,7 +160,7 @@ export default function Header() {
                 id="mobile-site-nav"
                 className="absolute right-0 top-[calc(100%+0.75rem)] z-30 w-[min(20rem,calc(100vw-2rem))] rounded-box border border-base-300 bg-base-100 p-2 shadow-xl"
               >
-                <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-base-content/50">
+                <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-base-content/75">
                   Generator Hubs
                 </div>
 
@@ -183,7 +183,7 @@ export default function Header() {
                   })}
                 </ul>
 
-                <div className="mt-2 border-t border-base-300 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-base-content/50">
+                <div className="mt-2 border-t border-base-300 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-base-content/75">
                   Generator Settings
                 </div>
 
@@ -191,7 +191,7 @@ export default function Header() {
                   <SettingsPanel compact />
                 </div>
 
-                <div className="mt-2 border-t border-base-300 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-base-content/50">
+                <div className="mt-2 border-t border-base-300 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-base-content/75">
                   Other
                 </div>
 

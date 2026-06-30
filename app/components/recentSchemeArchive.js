@@ -32,7 +32,7 @@ export default function RecentSchemeArchive() {
                 </div>
 
                 {schemes.length === 0 ? (
-                    <div className="rounded-none border border-dashed border-base-300 px-4 py-5 text-sm text-base-content/60">
+                    <div className="rounded-none border border-dashed border-base-300 px-4 py-5 text-sm text-base-content/75">
                         No archived schemes yet. Generate one to begin building your local archive.
                     </div>
                 ) : (
@@ -45,7 +45,7 @@ export default function RecentSchemeArchive() {
                                 className="flex items-center justify-between gap-4 rounded-none border border-base-300 px-4 py-3 transition-colors hover:border-base-content/30 hover:bg-base-200/40"
                             >
                                 <div className="flex min-w-0 flex-col gap-1">
-                                    <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-base-content/45">
+                                    <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-base-content/75">
                                         {groupLabel(scheme.group)} · {scheme.description}
                                     </div>
                                     <div className="truncate text-sm font-bold uppercase tracking-[0.08em]">

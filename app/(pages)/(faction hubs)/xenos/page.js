@@ -33,6 +33,8 @@ export const metadata = {
     },
 };
 
+const testPaint = { name: "Test", hex: "#d6d6d6", type: "Base" };
+
 const xenosCards = [
     {
         key: "aeldari",
@@ -47,21 +49,13 @@ const xenosCards = [
         accentBarClass: eldarMeta.faction.accentBarClass,
         badgeClass: eldarMeta.faction.badgeClass,
         buttonClass: eldarMeta.buttonTheme,
-        ghostModel: EldarAvenger,
-        ghostModelInput: {
-            colors: [
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-            ],
+        ghostModel: "eldar",
+        ghostModelProps: {
+            primary: testPaint,
+            secondary: testPaint,
+            accent: testPaint,
             pattern: "1",
         },
-        ghostModelGetProps: ({ colors, pattern }) => ({
-            primary: colors[0],
-            secondary: colors[1],
-            accent: colors[2],
-            pattern,
-        }),
         status: "live",
     },
     {
@@ -73,21 +67,13 @@ const xenosCards = [
         accentBarClass: "bg-faction-xenos",
         badgeClass: "badge-xenos",
         buttonClass: "btn-primary",
-        ghostModel: FireWarrior,
-        ghostModelInput: {
-            colors: [
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-            ],
+        ghostModel: "tau",
+        ghostModelProps: {
+            primary: testPaint,
+            secondary: testPaint,
+            accent: testPaint,
             pattern: "Basic",
         },
-        ghostModelGetProps: ({ colors, pattern }) => ({
-            primary: colors[0],
-            secondary: colors[1],
-            accent: colors[2],
-            pattern,
-        }),
         status: "coming-soon",
     },
 ];

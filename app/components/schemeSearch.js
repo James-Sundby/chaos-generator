@@ -75,6 +75,7 @@ export default function SchemeSearch({
                         className={`btn ${buttonTheme} join-item rounded-none`}
                         disabled={isEmpty || pending}
                         aria-busy={pending}
+                        aria-label={buttonLabel}
                     >
                         {pending ? (
                             <span className="loading loading-spinner loading-sm" aria-hidden="true" />

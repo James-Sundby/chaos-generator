@@ -66,7 +66,7 @@ export default function GeneratorViewShell({
                             {displayName}
                         </h1>
 
-                        <p className="mt-4 max-w-xl text-sm leading-relaxed text-base-content/70 md:text-base">
+                        <p className="mt-4 max-w-xl text-sm leading-relaxed text-base-content/75 md:text-base">
                             {heroDescription}
                         </p>
                     </div>
@@ -86,7 +86,7 @@ export default function GeneratorViewShell({
                     <div className="hidden border-b border-base-300 pb-4 md:block">
                         <div className="flex flex-wrap gap-x-8 gap-y-4">
                             <div>
-                                <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/55">
+                                <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/75">
                                     Classification
                                 </span>
                                 <span
@@ -99,7 +99,7 @@ export default function GeneratorViewShell({
 
                             {prettyMode && (
                                 <div>
-                                    <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/55">
+                                    <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/75">
                                         Palette Mode
                                     </span>
                                     <span className="text-sm font-bold uppercase">
@@ -110,7 +110,7 @@ export default function GeneratorViewShell({
 
                             {band?.source && (
                                 <div>
-                                    <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/55">
+                                    <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/75">
                                         {copy.sourceLabel ?? "Source"}
                                     </span>
                                     <span className="text-sm font-bold uppercase">
@@ -120,7 +120,7 @@ export default function GeneratorViewShell({
                             )}
 
                             <div>
-                                <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/55">
+                                <span className="mb-1 block text-[10px] uppercase tracking-[0.2em] text-base-content/75">
                                     Archive Status
                                 </span>
                                 <span

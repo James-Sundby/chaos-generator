@@ -2,6 +2,7 @@ import Link from "next/link";
 import GenerateNewButton from "@/app/components/generateNewButton";
 import CogitatorBox from "./cogitatorBox";
 import MetaBar from "./metaBar";
+import GhostModelLoader from "./ghostModelLoader";
 
 export default function FactionHub({
     eyebrow,
@@ -33,14 +34,7 @@ export default function FactionHub({
                 <section className="mb-8 grid grid-cols-1 gap-6 md:mb-12 md:grid-cols-3">
                     {cards.map((card) => {
                         const isComingSoon = card.status === "coming-soon";
-                        const GhostModel = card.ghostModel;
-
-                        const ghostModelProps =
-                            GhostModel && card.ghostModelGetProps
-                                ? card.ghostModelGetProps(card.ghostModelInput)
-                                : card.ghostModelProps;
-
-                        const canRenderGhost = GhostModel && ghostModelProps;
+                        const canRenderGhost = card.ghostModel && card.ghostModelProps;
 
                         return (
                             <div
@@ -50,12 +44,10 @@ export default function FactionHub({
                                 <div className={`absolute left-0 top-0 h-full w-1 ${card.accentBarClass}`} />
 
                                 {canRenderGhost ? (
-                                    <div
-                                        aria-hidden="true"
-                                        className="pointer-events-none absolute -right-6 top-1 hidden h-[80%] w-[80%] opacity-[0.08] md:block"
-                                    >
-                                        <GhostModel {...ghostModelProps} />
-                                    </div>
+                                    <GhostModelLoader
+                                        model={card.ghostModel}
+                                        modelProps={card.ghostModelProps}
+                                    />
                                 ) : null}
 
                                 <div className="card-body relative z-10 flex flex-col justify-between gap-6 p-6 sm:p-8">
@@ -74,7 +66,7 @@ export default function FactionHub({
                                             {card.title}
                                         </h2>
 
-                                        <p className="max-w-xs text-sm leading-relaxed text-base-content/70">
+                                        <p className="max-w-xs text-sm leading-relaxed text-base-content/75">
                                             {card.body}
                                         </p>
                                     </div>

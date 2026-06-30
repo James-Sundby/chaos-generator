@@ -1,7 +1,6 @@
 import FactionHub from "@/app/components/factionHub";
 import { createWarbandAndGo } from "@/app/(actions)/serverActions";
 import { meta as chaosMeta } from "@/lib/factions/chaos/meta";
-import ChaosMarine from "@/lib/factions/chaos/models/chaosSpaceMarine";
 
 export const metadata = {
     title: "Chaos Forge",
@@ -32,6 +31,8 @@ export const metadata = {
     },
 };
 
+const testPaint = { name: "Test", hex: "#d6d6d6", type: "Base" };
+
 const chaosCards = [
     {
         key: "chaos-marines",
@@ -46,23 +47,14 @@ const chaosCards = [
         accentBarClass: chaosMeta.faction.accentBarClass,
         badgeClass: chaosMeta.faction.badgeClass,
         buttonClass: chaosMeta.buttonTheme,
-        ghostModel: ChaosMarine,
-        ghostModelInput: {
-            colors: [
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-                { name: "Test", hex: "#d6d6d6", type: "Base" },
-            ],
+        ghostModel: "chaos",
+        ghostModelProps: {
+            primary: testPaint,
+            secondary: testPaint,
+            accent: testPaint,
+            edge: testPaint,
             pattern: "Basic",
         },
-        ghostModelGetProps: ({ colors, pattern }) => ({
-            primary: colors[0],
-            secondary: colors[1],
-            accent: colors[2],
-            edge: colors[3],
-            pattern,
-        }),
         status: "live",
     },
 ];
