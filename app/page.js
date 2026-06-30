@@ -2,10 +2,10 @@ import Link from "next/link";
 import MetaBar from "./components/metaBar";
 import RecentSchemeArchive from "./components/recentSchemeArchiveLoader";
 import CogitatorBox from "./components/cogitatorBox";
-import SpaceMarine from "@/lib/factions/chapter/models/spaceMarine";
-import ChaosMarine from "@/lib/factions/chaos/models/chaosSpaceMarine";
-import EldarAvenger from "@/lib/factions/eldar/models/eldarAvenger";
+import GhostModelLoader from "./components/ghostModelLoader";
 import SchemeSearch from "@/app/components/schemeSearch";
+
+const testPaint = { name: "Test", hex: "#d6d6d6", type: "Base" };
 
 const factionCards = [
   {
@@ -19,21 +19,13 @@ const factionCards = [
     accentBarClass: "bg-faction-loyalist",
     badgeClass: "badge-loyalist",
     buttonClass: "btn-primary",
-    ghostModel: SpaceMarine,
-    ghostModelInput: {
-      colors: [
-        { name: "Test", hex: "#d6d6d6", type: "Base" },
-        { name: "Test", hex: "#d6d6d6", type: "Base" },
-        { name: "Test", hex: "#d6d6d6", type: "Base" },
-      ],
+    ghostModel: "chapter",
+    ghostModelProps: {
+      primary: testPaint,
+      secondary: testPaint,
+      trim: testPaint,
       pattern: "Shoulders",
     },
-    ghostModelGetProps: ({ colors, pattern }) => ({
-      primary: colors[0],
-      secondary: colors[1],
-      trim: colors[2],
-      pattern,
-    }),
   },
   {
     key: "chaos",
@@ -46,23 +38,14 @@ const factionCards = [
     accentBarClass: "bg-faction-chaos",
     badgeClass: "badge-chaos",
     buttonClass: "btn-primary",
-    ghostModel: ChaosMarine,
-    ghostModelInput: {
-      colors: [
-        { name: "Test", hex: "#d6d6d6", type: "Base" },
-        { name: "Test", hex: "#d6d6d6", type: "Base" },
-        { name: "Test", hex: "#d6d6d6", type: "Base" },
-        { name: "Test", hex: "#d6d6d6", type: "Base" },
-      ],
+    ghostModel: "chaos",
+    ghostModelProps: {
+      primary: testPaint,
+      secondary: testPaint,
+      accent: testPaint,
+      edge: testPaint,
       pattern: "Basic",
     },
-    ghostModelGetProps: ({ colors, pattern }) => ({
-      primary: colors[0],
-      secondary: colors[1],
-      accent: colors[2],
-      edge: colors[3],
-      pattern,
-    }),
   },
   {
     key: "eldar",
@@ -75,21 +58,13 @@ const factionCards = [
     accentBarClass: "bg-faction-xenos",
     badgeClass: "badge-xenos",
     buttonClass: "btn-primary",
-    ghostModel: EldarAvenger,
-    ghostModelInput: {
-      colors: [
-        { name: "Test", hex: "#d6d6d6", type: "Base" },
-        { name: "Test", hex: "#d6d6d6", type: "Base" },
-        { name: "Test", hex: "#d6d6d6", type: "Base" },
-      ],
+    ghostModel: "eldar",
+    ghostModelProps: {
+      primary: testPaint,
+      secondary: testPaint,
+      accent: testPaint,
       pattern: "1",
     },
-    ghostModelGetProps: ({ colors, pattern }) => ({
-      primary: colors[0],
-      secondary: colors[1],
-      accent: colors[2],
-      pattern,
-    }),
   },
 ];
 
@@ -98,12 +73,12 @@ export default function Home() {
     <div className="flex flex-col gap-8 md:gap-12">
       <section className="max-w-3xl">
         <div className="flex flex-col gap-3">
-
           <MetaBar />
 
           <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl xl:text-7xl">
             Chapter Generator
           </h1>
+
           <p className="max-w-2xl text-sm leading-relaxed text-base-content/75 sm:text-lg">
             An unofficial Warhammer hobby tool for generating, searching, and customizing
             paint schemes for loyalists, chaos warbands, and xenos forces.
@@ -112,74 +87,66 @@ export default function Home() {
       </section>
 
       <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {factionCards.map((card) => {
-          const GhostModel = card.ghostModel;
-          const ghostModelProps = card.ghostModelGetProps(card.ghostModelInput);
+        {factionCards.map((card) => (
+          <article
+            key={card.key}
+            className="card relative overflow-hidden rounded-none border border-base-300 bg-base-100 shadow-sm"
+          >
+            <div className={`absolute inset-y-0 left-0 w-1 ${card.accentBarClass}`} />
 
-          return (
-            <article
-              key={card.key}
-              className="card relative overflow-hidden rounded-none border border-base-300 bg-base-100 shadow-sm"
-            >
-              <div className={`absolute inset-y-0 left-0 w-1 ${card.accentBarClass}`} />
+            <GhostModelLoader
+              model={card.ghostModel}
+              modelProps={card.ghostModelProps}
+            />
 
-              {GhostModel ? (
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -right-6 top-1 hidden h-[80%] w-[80%] opacity-[0.08] md:block"
-                >
-                  <GhostModel {...ghostModelProps} />
-                </div>
-              ) : null}
+            <div className="card-body relative flex flex-col justify-between gap-6 p-6 sm:p-8">
+              <div className="flex flex-col gap-4">
+                <h2 className="text-2xl font-black uppercase leading-none tracking-tight md:hidden">
+                  {card.mobileTitle}
+                </h2>
 
-              <div className="card-body relative flex flex-col justify-between gap-6 p-6 sm:p-8">
-                <div className="flex flex-col gap-4">
-                  <h2 className="text-2xl font-black uppercase leading-none tracking-tight md:hidden">
-                    {card.mobileTitle}
-                  </h2>
+                <h2 className="hidden whitespace-pre-line text-3xl font-black uppercase leading-none tracking-tight md:block lg:text-5xl">
+                  {card.title}
+                </h2>
 
-                  <h2 className="hidden whitespace-pre-line text-3xl font-black uppercase leading-none tracking-tight md:block lg:text-5xl">
-                    {card.title}
-                  </h2>
+                <p className="text-sm leading-relaxed text-base-content/70 md:max-w-xs">
+                  {card.body}
+                </p>
 
-                  <p className="text-sm leading-relaxed text-base-content/70 md:max-w-xs">
-                    {card.body}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2">
-                    {card.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className={`badge badge-sm rounded-none px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] ${card.badgeClass}`}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="card-actions">
-                  <Link
-                    href={card.href}
-                    prefetch={false}
-                    className={`btn w-full rounded-none ${card.buttonClass}`}
-                  >
-                    Open {card.label} Hub
-                  </Link>
+                <div className="flex flex-wrap gap-2">
+                  {card.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className={`badge badge-sm rounded-none px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] ${card.badgeClass}`}
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </article>
-          );
-        })}
+
+              <div className="card-actions">
+                <Link
+                  href={card.href}
+                  prefetch={false}
+                  className={`btn w-full rounded-none ${card.buttonClass}`}
+                >
+                  Open {card.label} Hub
+                </Link>
+              </div>
+            </div>
+          </article>
+        ))}
       </section>
 
       <section>
         <div className="card rounded-none border border-base-300 bg-base-100 shadow-sm">
           <div className="card-body flex flex-col gap-4 p-6 sm:p-8">
             <div className="flex flex-col gap-1">
-              <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
+              <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-base-content">
                 Search Any Scheme
               </h2>
+
               <p className="text-sm text-base-content/75">
                 Search archived schemes using their full id, including faction prefix and palette data.
               </p>
@@ -201,9 +168,10 @@ export default function Home() {
         <div className="card rounded-none border border-base-300 bg-base-100 shadow-sm">
           <div className="card-body flex flex-col gap-4 p-6 sm:p-8">
             <div className="flex flex-col gap-1">
-              <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-primary">
+              <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-base-content">
                 Legacy Tools
               </h2>
+
               <p className="text-sm text-base-content/75">
                 Jump straight into free painting and manual colour testing.
               </p>

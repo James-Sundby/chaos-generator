@@ -27,10 +27,28 @@ const EldarAvengerGhost = dynamic(
     }
 );
 
+const SisterOfBattleGhost = dynamic(
+    () => import("@/lib/factions/sisters/models/sisterOfBattle"),
+    {
+        ssr: false,
+        loading: () => null,
+    }
+);
+
+const FireWarriorGhost = dynamic(
+    () => import("@/lib/factions/tau/models/fireWarrior"),
+    {
+        ssr: false,
+        loading: () => null,
+    }
+);
+
 const modelMap = {
     chapter: SpaceMarineGhost,
     chaos: ChaosMarineGhost,
     eldar: EldarAvengerGhost,
+    sisters: SisterOfBattleGhost,
+    tau: FireWarriorGhost,
 };
 
 function useIsMdUp() {
@@ -57,22 +75,6 @@ function useIsMdUp() {
 
 export default function GhostModelLoader({ model, modelProps }) {
     const isMdUp = useIsMdUp();
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        if (!isMdUp) {
-            setIsVisible(false);
-            return;
-        }
-
-        const frame = requestAnimationFrame(() => {
-            setIsVisible(true);
-        });
-
-        return () => {
-            cancelAnimationFrame(frame);
-        };
-    }, [isMdUp]);
 
     if (!isMdUp) return null;
 
@@ -83,11 +85,7 @@ export default function GhostModelLoader({ model, modelProps }) {
     return (
         <div
             aria-hidden="true"
-            className={[
-                "pointer-events-none absolute -right-6 top-1 h-[80%] w-[80%]",
-                "transition-opacity duration-300 ease-in",
-                isVisible ? "opacity-[0.08]" : "opacity-0",
-            ].join(" ")}
+            className="pointer-events-none absolute -right-6 top-1 h-[80%] w-[80%] opacity-[0.08]"
         >
             <GhostModel {...modelProps} />
         </div>

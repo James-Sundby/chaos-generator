@@ -16,7 +16,7 @@ function ControlRow({ id, label, children, hint }) {
             <label
                 id={labelId}
                 htmlFor={id}
-                className="text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/65"
+                className="text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/75"
             >
                 {label}
             </label>
@@ -28,7 +28,7 @@ function ControlRow({ id, label, children, hint }) {
             </div>
 
             {hint ? (
-                <span id={hintId} className="text-xs text-base-content/55">
+                <span id={hintId} className="text-xs text-base-content/75">
                     {hint}
                 </span>
             ) : null}
@@ -244,7 +244,7 @@ export default function CustomizerBase({
 
                 <div className="flex flex-col gap-4">
                     <div>
-                        <label className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/65">
+                        <label className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-base-content/75">
                             {noun} Name
                         </label>
                         <input
