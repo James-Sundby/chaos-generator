@@ -52,10 +52,18 @@ function weightedRandomSelect(strategies, rng = Math.random) {
 }
 
 export function createSchemeGenerator(strategies) {
+    if (!Array.isArray(strategies) || strategies.length === 0) {
+        throw new Error("createSchemeGenerator expects at least one strategy.");
+    }
+
     return (settings, { rng = Math.random } = {}) => {
         const pool = getPool(settings);
         const strategy = weightedRandomSelect(strategies, rng);
         const colours = strategy.fn(pool, rng);
+
+        if (!Array.isArray(colours) || colours.length === 0) {
+            throw new Error(`Scheme strategy "${strategy.mode}" returned no colours.`);
+        }
 
         return {
             colours,
