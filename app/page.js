@@ -1,6 +1,6 @@
 import Link from "next/link";
 import MetaBar from "./components/metaBar";
-import RecentSchemeArchive from "./components/recentSchemeArchive";
+import RecentSchemeArchive from "./components/recentSchemeArchiveLoader";
 import CogitatorBox from "./components/cogitatorBox";
 import SpaceMarine from "@/lib/factions/chapter/models/spaceMarine";
 import ChaosMarine from "@/lib/factions/chaos/models/chaosSpaceMarine";

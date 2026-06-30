@@ -4,7 +4,12 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import SettingsButton from "./settingsButton";
-import SettingsPanel from "./settingsPanel";
+
+import dynamic from "next/dynamic";
+
+const SettingsPanel = dynamic(() => import("./settingsPanel"), {
+  ssr: false,
+});
 
 const navLinks = [
   { href: "/loyalists", label: "Loyalist" },
