@@ -1,8 +1,6 @@
 import FactionHub from "@/app/components/factionHub";
 import { createWarhostAndGo } from "@/app/(actions)/serverActions";
 import { meta as eldarMeta } from "@/lib/factions/eldar/meta";
-import EldarAvenger from "@/lib/factions/eldar/models/eldarAvenger";
-import FireWarrior from "@/lib/factions/tau/models/fireWarrior";
 
 export const metadata = {
     title: "Xenos Forge",
