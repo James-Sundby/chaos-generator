@@ -231,3 +231,13 @@ html[data-theme="archivist-dark"] {
 .btn-faction-xenos:hover {
   background: color-mix(in oklab, var(--faction-xenos) 10%, transparent);
 }
+
+.free-paint-section > path:first-child {
+  transition:
+    filter 140ms ease,
+    opacity 140ms ease;
+}
+
+.free-paint-section:hover > path:first-child {
+  filter: brightness(1.5);
+}

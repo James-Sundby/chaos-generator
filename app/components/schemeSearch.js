@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { schemeSearchServer } from "@/app/(actions)/serverActions";
 
 export default function SchemeSearch({
@@ -13,9 +13,15 @@ export default function SchemeSearch({
     const [q, setQ] = useState("");
     const [serverError, setServerError] = useState(null);
     const [pending, startTransition] = useTransition();
+    const [hasMounted, setHasMounted] = useState(false);
+
+    useEffect(() => {
+        setHasMounted(true);
+    }, []);
 
     const value = q.trim();
     const isEmpty = !value;
+    const submitDisabled = hasMounted ? isEmpty || pending : false;
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -73,7 +79,7 @@ export default function SchemeSearch({
                     <button
                         type="submit"
                         className={`btn ${buttonTheme} join-item rounded-none`}
-                        disabled={isEmpty || pending}
+                        disabled={submitDisabled}
                         aria-busy={pending}
                         aria-label={buttonLabel}
                     >
