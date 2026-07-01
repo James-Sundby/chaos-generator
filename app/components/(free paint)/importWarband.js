@@ -33,11 +33,18 @@ const chapterParseConfig = {
     },
 };
 
+const DEFAULT_RIBBING_PAINT_NAME = "Mechanicus Standard Grey";
+
+const defaultRibbingPaint = colourList.find(
+    (paint) => paint.name === DEFAULT_RIBBING_PAINT_NAME
+);
+
 function setChapterSectionValues(chapter, setColor) {
     const primaryColor = chapter.colors[0].hex;
     const secondaryColor = chapter.colors[1].hex;
     const trimColor = chapter.colors[2].hex;
     const patternKey = String(chapter.pattern ?? "").toLowerCase();
+
 
     const patternMappings = {
         arms: {
@@ -202,7 +209,7 @@ function setChapterSectionValues(chapter, setColor) {
     if (primary.length > 0) setColor(primary, primaryColor);
     if (secondary.length > 0) setColor(secondary, secondaryColor);
     if (trim.length > 0) setColor(trim, trimColor);
-    setColor(["Ribbing"], "#3E494A");
+    setColor(["Ribbing"], defaultRibbingPaint?.hex ?? "#39484A");
 }
 
 export default function ImportWarband() {
@@ -272,7 +279,7 @@ export default function ImportWarband() {
             <div className="indicator w-full">
                 <input
                     type="text"
-                    className={`input input-bordered rounded-lg w-full ${errors.q ? "input-error" : ""}`}
+                    className={`input input-bordered w-full ${errors.q ? "input-error" : ""}`}
                     placeholder="chapter-angels-of-the-gate-ffffff-317e57-989c94-blazoned"
                     {...register("q")}
                     aria-invalid={!!errors.q}
@@ -290,7 +297,7 @@ export default function ImportWarband() {
             </div>
             <button
                 type="submit"
-                className={`btn btn-primary rounded-lg items-center justify-center ${isSubmitting ? "loading" : ""}`}
+                className={`btn btn-primary items-center justify-center ${isSubmitting ? "loading" : ""}`}
                 disabled={isSubmitting || isEmpty}
                 aria-label="Import a Chapter"
             >
