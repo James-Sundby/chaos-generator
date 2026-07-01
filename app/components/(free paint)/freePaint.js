@@ -28,19 +28,19 @@ export default function FreePaint() {
                 : [...prev, sectionId]
         );
         setSelectedColor("");
-        debug("Setting selectedSections to: ", selectedSections);
-        debug("Selected color: ", selectedColor);
+        // debug("Setting selectedSections to: ", selectedSections);
+        // debug("Selected color: ", selectedColor);
 
     };
 
     const handleColorChange = (value) => {
         const color = colourList.find((c) => c.hex === value);
-        debug("color:", color)
+        // debug("color:", color)
         if (!selectedSections.length) return;
         setColor(selectedSections, color.hex);
-        debug("Setting: ", selectedSections, " to ", color.name);
+        // debug("Setting: ", selectedSections, " to ", color.name);
         setSelectedColor(value);
-        debug("Set selected color to :", value);
+        // debug("Set selected color to :", value);
 
     };
 
@@ -53,7 +53,7 @@ export default function FreePaint() {
         <section className="flex flex-1 flex-col justify-center items-center gap-4 p-4">
             <h1 className="font-semibold text-2xl text-center">Free Paint - Loyalist</h1>
 
-            <aside className="w-full max-w-96 sm:max-w-[52rem] ">
+            <aside className="w-full max-w-96 sm:max-w-208 ">
                 <ImportWarband />
             </aside>
 
