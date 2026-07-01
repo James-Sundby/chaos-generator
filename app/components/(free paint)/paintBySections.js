@@ -5,34 +5,6 @@ const colourMap = Object.fromEntries(
     colourList.map((paint) => [paint.hex.toLowerCase(), paint])
 );
 
-function getPaintByHex(hex) {
-    if (!hex) return null;
-
-    return colourMap[String(hex).toLowerCase()] ?? null;
-}
-
-function isMetallic(paint) {
-    return paint?.type === "Metallic" && paint?.metallic;
-}
-
-function getMetallicGradientId(hex) {
-    return `free-paint-metal-${String(hex).replace("#", "").toLowerCase()}`;
-}
-
-function getSectionFill(hex) {
-    const paint = getPaintByHex(hex);
-
-    if (isMetallic(paint)) {
-        return `url(#${getMetallicGradientId(paint.hex)})`;
-    }
-
-    return hex || "#ffffff";
-}
-
-function normalizedColor(hex) {
-    return String(hex || "#ffffff").toLowerCase();
-}
-
 const SECTION_PATHS = {
     "Right-Shoulder-Trim": {
         d: "M785.783,196.814L904.248,530.57L1097.66,464.337L1084.26,428.004L927.222,481.622C927.222,481.622 823.01,183.527 822.739,183.806L785.783,196.814Z",
@@ -165,82 +137,54 @@ const VISUAL_PATHS = {
     },
 };
 
-function VisualPath({ d, fill, transform, active = false }) {
+const BASIC_VISUAL_SECTION_IDS = [
+    "Left-Shoulder-Trim", "Right-Shoulder-Trim", "Left-Shoulder-Pad", "Right-Shoulder-Pad", "Left-Arm", "Right-Arm", "Left-Leg", "Right-Leg", "Left-Shin", "Right-Shin", "Belt", "Eagle", "Ribbing",
+];
+
+function getPaintByHex(hex) {
+    if (!hex) return null;
+
+    return colourMap[String(hex).toLowerCase()] ?? null;
+}
+
+function isMetallic(paint) {
+    return paint?.type === "Metallic" && paint?.metallic;
+}
+
+function getMetallicGradientId(hex) {
+    return `free-paint-metal-${String(hex).replace("#", "").toLowerCase()}`;
+}
+
+function getSectionFill(hex) {
+    const paint = getPaintByHex(hex);
+
+    if (isMetallic(paint)) {
+        return `url(#${getMetallicGradientId(paint.hex)})`;
+    }
+
+    return hex || "#ffffff";
+}
+
+
+function VisualPath({ d, fill }) {
     return (
         <path
             d={d}
             fill={fill}
-            transform={transform}
             pointerEvents="none"
-            style={{
-                filter: active ? "brightness(1.5)" : undefined,
-                transition: "filter 140ms ease, opacity 140ms ease",
-            }}
         />
     );
 }
 
-function VisualSection({ id, sectionColors, hoveredSection }) {
+function VisualSection({ id, sectionColors }) {
     const path = SECTION_PATHS[id];
     if (!path) return null;
 
     return (
         <VisualPath
             d={path.d}
-            transform={path.transform}
             fill={getSectionFill(sectionColors[id])}
-            active={hoveredSection === id}
         />
-    );
-}
-
-function PaintPair({ leftId, rightId, sectionColors, hoveredSection }) {
-    const leftPath = SECTION_PATHS[leftId];
-    const rightPath = SECTION_PATHS[rightId];
-
-    if (!leftPath || !rightPath) return null;
-
-    const leftHex = sectionColors[leftId];
-    const rightHex = sectionColors[rightId];
-
-    const sameColor = normalizedColor(leftHex) === normalizedColor(rightHex);
-
-    if (sameColor) {
-        const fill = getSectionFill(leftHex || rightHex);
-
-        return (
-            <g data-visual-pair={`${leftId}-${rightId}`} pointerEvents="none">
-                <VisualPath
-                    d={leftPath.d}
-                    transform={leftPath.transform}
-                    fill={fill}
-                    active={hoveredSection === leftId}
-                />
-                <VisualPath
-                    d={rightPath.d}
-                    transform={rightPath.transform}
-                    fill={fill}
-                    active={hoveredSection === rightId}
-                />
-            </g>
-        );
-    }
-
-    return (
-        <>
-            <VisualPath
-                d={leftPath.d}
-                transform={leftPath.transform}
-                fill={getSectionFill(leftHex)}
-                active={hoveredSection === leftId}
-            />
-            <VisualPath
-                d={rightPath.d}
-                transform={rightPath.transform}
-                fill={getSectionFill(rightHex)}
-                active={hoveredSection === rightId}
-            />
-        </>
     );
 }
 
@@ -252,7 +196,6 @@ function HitSection({ id, onSelect, onHoverStart, onHoverEnd }) {
         <path
             id={id}
             d={path.d}
-            transform={path.transform}
             fill="transparent"
             pointerEvents="fill"
             className="free-paint-section"
@@ -272,7 +215,6 @@ function SelectedSection({ id, selectedSections }) {
     return (
         <path
             d={path.d}
-            transform={path.transform}
             fill="currentColor"
             fillOpacity="0.12"
             stroke="currentColor"
@@ -316,7 +258,6 @@ function SpaceMarineVisualPath({ path, fill }) {
     return (
         <path
             d={path.d}
-            transform={path.transform}
             fill={fill}
             pointerEvents="none"
         />
@@ -344,33 +285,6 @@ function VisualHelmet({ sectionColors }) {
             />
             <SpaceMarineVisualPath
                 path={VISUAL_PATHS.Helmet.right}
-                fill={getSectionFill(rightHex)}
-            />
-        </>
-    );
-}
-
-function VisualCod({ sectionColors }) {
-    const leftHex = sectionColors["Cod-Left"];
-    const rightHex = sectionColors["Cod-Right"];
-
-    if (sameColor(leftHex, rightHex)) {
-        return (
-            <SpaceMarineVisualPath
-                path={VISUAL_PATHS.Cod.combined}
-                fill={getSectionFill(leftHex)}
-            />
-        );
-    }
-
-    return (
-        <>
-            <SpaceMarineVisualPath
-                path={VISUAL_PATHS.Cod.left}
-                fill={getSectionFill(leftHex)}
-            />
-            <SpaceMarineVisualPath
-                path={VISUAL_PATHS.Cod.right}
                 fill={getSectionFill(rightHex)}
             />
         </>
@@ -477,9 +391,8 @@ function HoverSection({ id }) {
     return (
         <path
             d={path.d}
-            transform={path.transform}
             fill="white"
-            fillOpacity="0.18"
+            fillOpacity="0.25"
             pointerEvents="none"
         />
     );
@@ -544,40 +457,13 @@ export default function PaintBySections({
                 <VisualTorsoAndCod sectionColors={sectionColors} />
                 <VisualBackpack sectionColors={sectionColors} />
 
-                <PaintPair
-                    leftId="Left-Shoulder-Trim"
-                    rightId="Right-Shoulder-Trim"
-                    sectionColors={sectionColors}
-                    hoveredSection={hoveredSection}
-                />
-                <PaintPair
-                    leftId="Left-Shoulder-Pad"
-                    rightId="Right-Shoulder-Pad"
-                    sectionColors={sectionColors}
-                    hoveredSection={hoveredSection}
-                />
-                <PaintPair
-                    leftId="Left-Arm"
-                    rightId="Right-Arm"
-                    sectionColors={sectionColors}
-                    hoveredSection={hoveredSection}
-                />
-
-                <PaintPair
-                    leftId="Left-Leg"
-                    rightId="Right-Leg"
-                    sectionColors={sectionColors}
-                    hoveredSection={hoveredSection}
-                />
-                <PaintPair
-                    leftId="Left-Shin"
-                    rightId="Right-Shin"
-                    sectionColors={sectionColors}
-                    hoveredSection={hoveredSection}
-                />
-                <VisualSection id="Belt" sectionColors={sectionColors} hoveredSection={hoveredSection} />
-                <VisualSection id="Eagle" sectionColors={sectionColors} hoveredSection={hoveredSection} />
-                <VisualSection id="Ribbing" sectionColors={sectionColors} hoveredSection={hoveredSection} />
+                {BASIC_VISUAL_SECTION_IDS.map((id) => (
+                    <VisualSection
+                        key={id}
+                        id={id}
+                        sectionColors={sectionColors}
+                    />
+                ))}
             </g>
 
             <g id="hit-layer">
