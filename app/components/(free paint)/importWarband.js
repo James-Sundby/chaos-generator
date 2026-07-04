@@ -368,7 +368,7 @@ export default function ImportWarband() {
                     type="text"
                     className={`input input-bordered w-full rounded-none border-base-300 bg-base-100 ${errors.q ? "input-error" : ""
                         }`}
-                    placeholder="chapter-angels-of-the-gate-ffffff-317e57-989c94-blazoned"
+                    placeholder="chapter-angels-of-the-gate-ffffff-317e57-989c94-blazoned-random"
                     {...register("q")}
                     aria-invalid={!!errors.q}
                     aria-describedby={

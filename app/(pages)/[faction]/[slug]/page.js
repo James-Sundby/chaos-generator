@@ -65,24 +65,29 @@ export default async function Page(props) {
     const params = await props.params;
     const faction = String(params.faction ?? "").toLowerCase();
 
+    let entity;
+    let canonical;
+
     try {
         getFactionMeta(faction);
 
-        const { entity, canonical } = parseEntity(faction, params.slug);
-
-        if (canonical !== params.slug) {
-            redirect(`/${faction}/${canonical}`);
-        }
-
-        const GeneratorView = await loadGeneratorView(faction);
-
-        return (
-            <>
-                <GeneratorStoreHydrator generatorKey={faction} entity={entity} />
-                <GeneratorView band={entity} />
-            </>
-        );
+        const parsed = parseEntity(faction, params.slug);
+        entity = parsed.entity;
+        canonical = parsed.canonical;
     } catch {
         notFound();
     }
+
+    if (canonical !== params.slug) {
+        redirect(`/${faction}/${canonical}`);
+    }
+
+    const GeneratorView = await loadGeneratorView(faction);
+
+    return (
+        <>
+            <GeneratorStoreHydrator generatorKey={faction} entity={entity} />
+            <GeneratorView band={entity} />
+        </>
+    );
 }

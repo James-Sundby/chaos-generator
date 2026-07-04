@@ -5,7 +5,7 @@ import { schemeSearchServer } from "@/app/(actions)/serverActions";
 
 export default function SchemeSearch({
     id = "scheme-search",
-    placeholder = "chapter-ravens-of-the-keep-a99d95-440052-989898-eradicant-random",
+    placeholder = "chapter-ravens-of-the-keep-989c94-440052-aa7d67-eradicant-random",
     buttonLabel = "Look up a Scheme",
     ariaLabel = "Scheme lookup code",
     buttonTheme = "btn-primary",

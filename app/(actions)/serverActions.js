@@ -1,7 +1,6 @@
 "use server";
 
 import { redirect } from "next/navigation";
-
 import { schemeSearchObjectSchema } from "@/app/schema/schemeSearch";
 import { getFactionConfig } from "@/utils/factionConfig";
 import { generateSlug, parseSlug } from "@/utils/parseSlugs";
